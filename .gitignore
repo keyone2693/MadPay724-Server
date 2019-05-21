@@ -1,0 +1,11 @@
+.vs
+MadPay724.Common/bin
+MadPay724.Common/obj
+MadPay724.Data/bin
+MadPay724.Data/obj
+MadPay724.Presentation/bin
+MadPay724.Presentation/obj
+MadPay724.Repo/bin
+MadPay724.Repo/obj
+MadPay724.Services/bin
+MadPay724.Services/obj
