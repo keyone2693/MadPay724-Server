@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MadPay724.Data.Repositories.Repo;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,6 +17,22 @@ namespace MadPay724.Data.Infrastructure
         }
         #endregion
 
+        #region privaterepository
+        private UserRepository userRepository;
+        public UserRepository UserRepository
+        {
+            get
+            {
+                if (userRepository == null)
+                {
+                    userRepository = new UserRepository(_db);
+                }
+                return userRepository;
+            }
+        }
+        #endregion
+
+
         #region save
         public void Save()
         {
@@ -29,8 +46,13 @@ namespace MadPay724.Data.Infrastructure
 
         #endregion
 
+
         #region dispose
         private bool disposed = false;
+
+
+          
+
         protected virtual void Dispose(bool disposing)
         {
             if (!disposed)
