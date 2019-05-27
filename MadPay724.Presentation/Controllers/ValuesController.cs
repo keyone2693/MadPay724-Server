@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MadPay724.Data.DatabaseContext;
+using MadPay724.Data.Infrastructure;
+using MadPay724.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MadPay724.Presentation.Controllers
@@ -10,11 +13,43 @@ namespace MadPay724.Presentation.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+
+        private readonly IUnitOfWork<MadpayDbContext> _db;
+        public ValuesController(IUnitOfWork<MadpayDbContext> dbContext)
+        {
+            _db = dbContext;
+        }
+
+
         // GET api/values
         [HttpGet]
         public async Task<ActionResult<IEnumerable<string>>> Get()
         {
-            return new string[] { "value1", "value2" };
+
+            //var user = new User()
+            //{
+            //    Address="",
+            //    City="",
+            //    DateOfBirth="",
+            //    Gender="",
+            //    IsAcive=true,
+            //    Name="",
+
+            //    PasswordHash=new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, },
+            //    PasswordSalt= new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, },
+
+            //    PhoneNumber ="",
+            //    Status= true,
+            //    UserName=""
+            //};
+
+            //await _db.UserRepository.InsertAsync(user);
+            //await _db.SaveAsync();
+
+            //var model = await _db.UserRepository.GetAllAsync();
+
+
+            return Ok("sdfsdf");
         }
         // GET api/values/5
         [HttpGet("{id}")]

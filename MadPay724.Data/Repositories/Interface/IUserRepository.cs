@@ -6,7 +6,7 @@ using System.Text;
 
 namespace MadPay724.Data.Repositories.Interface
 {
-    interface IUserRepository: IRepository<User>
+    public interface IUserRepository: IRepository<User>
     {
 
     }
