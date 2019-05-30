@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28803.202
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MadPay724.Data", "MadPay724.Data\MadPay724.Data.csproj", "{4426E5AF-A664-4ECC-9925-1DC35FA6B3C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MadPay724.Data", "MadPay724.Data\MadPay724.Data.csproj", "{4426E5AF-A664-4ECC-9925-1DC35FA6B3C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MadPay724.Common", "MadPay724.Common\MadPay724.Common.csproj", "{46C3BD01-1649-49D7-81EA-932422C9DBA2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MadPay724.Common", "MadPay724.Common\MadPay724.Common.csproj", "{46C3BD01-1649-49D7-81EA-932422C9DBA2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MadPay724.Repo", "MadPay724.Repo\MadPay724.Repo.csproj", "{AC30C59B-FFD0-4BAE-9806-810D1D9ED6A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MadPay724.Repo", "MadPay724.Repo\MadPay724.Repo.csproj", "{AC30C59B-FFD0-4BAE-9806-810D1D9ED6A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MadPay724.Services", "MadPay724.Services\MadPay724.Services.csproj", "{AC29B43D-A79B-438C-ADD4-8BE1B6F47BEB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MadPay724.Services", "MadPay724.Services\MadPay724.Services.csproj", "{AC29B43D-A79B-438C-ADD4-8BE1B6F47BEB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MadPay724.Presentation", "MadPay724.Presentation\MadPay724.Presentation.csproj", "{9F555ECD-276F-4989-8ACD-78A9CFCE51ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MadPay724.Presentation", "MadPay724.Presentation\MadPay724.Presentation.csproj", "{9F555ECD-276F-4989-8ACD-78A9CFCE51ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,0 +1,66 @@
+{
+  "format": 1,
+  "restore": {
+    "E:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Infrastructure\\MadPay724.Infrastructure.csproj": {}
+  },
+  "projects": {
+    "E:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Infrastructure\\MadPay724.Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "E:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Infrastructure\\MadPay724.Infrastructure.csproj",
+        "projectName": "MadPay724.Infrastructure",
+        "projectPath": "E:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Infrastructure\\MadPay724.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\key1-lab\\.nuget\\packages\\",
+        "outputPath": "E:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Infrastructure\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\key1-lab\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Users\\key1-lab\\Documents\\Nuget": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://dotnetfeed.blob.core.windows.net/aspnet-aspnetcore-tooling/index.json": {},
+          "https://dotnetfeed.blob.core.windows.net/aspnet-aspnetcore/index.json": {},
+          "https://dotnetfeed.blob.core.windows.net/aspnet-entityframeworkcore/index.json": {},
+          "https://dotnetfeed.blob.core.windows.net/aspnet-extensions/index.json": {},
+          "https://dotnetfeed.blob.core.windows.net/dotnet-core/index.json": {},
+          "https://dotnetfeed.blob.core.windows.net/dotnet-windowsdesktop/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.0": {
+            "projectReferences": {
+              "E:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Services\\MadPay724.Common.csproj": {
+                "projectPath": "E:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Services\\MadPay724.Common.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.0": {
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": [
+            "Microsoft.NETCore.App"
+          ]
+        }
+      }
+    }
+  }
+}

@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MadPay724.Data.DatabaseContext;
-using MadPay724.Data.Infrastructure;
 using MadPay724.Data.Models;
+using MadPay724.Repo.Infrastructure;
+using MadPay724.Services.Auth.Interface;
+using MadPay724.Services.Auth.Service;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MadPay724.Presentation.Controllers
@@ -15,9 +17,11 @@ namespace MadPay724.Presentation.Controllers
     {
 
         private readonly IUnitOfWork<MadpayDbContext> _db;
-        public ValuesController(IUnitOfWork<MadpayDbContext> dbContext)
+        private readonly IAuthService _authService;
+        public ValuesController(IUnitOfWork<MadpayDbContext> dbContext  , IAuthService authService)
         {
             _db = dbContext;
+            _authService = authService;
         }
 
 
@@ -26,30 +30,26 @@ namespace MadPay724.Presentation.Controllers
         public async Task<ActionResult<IEnumerable<string>>> Get()
         {
 
-            //var user = new User()
-            //{
-            //    Address="",
-            //    City="",
-            //    DateOfBirth="",
-            //    Gender="",
-            //    IsAcive=true,
-            //    Name="",
+            var user = new User()
+            {
+                Address="",
+                City="",
+                DateOfBirth="",
+                Gender="",
+                IsAcive=true,
+                Name="",
 
-            //    PasswordHash=new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, },
-            //    PasswordSalt= new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, },
+                PasswordHash=new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, },
+                PasswordSalt= new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, },
 
-            //    PhoneNumber ="",
-            //    Status= true,
-            //    UserName=""
-            //};
+                PhoneNumber ="",
+                Status= true,
+                UserName=""
+            };
 
-            //await _db.UserRepository.InsertAsync(user);
-            //await _db.SaveAsync();
+           var u =   await _authService.Register(user,"asdkasld");
 
-            //var model = await _db.UserRepository.GetAllAsync();
-
-
-            return Ok("sdfsdf");
+            return Ok(u);
         }
         // GET api/values/5
         [HttpGet("{id}")]

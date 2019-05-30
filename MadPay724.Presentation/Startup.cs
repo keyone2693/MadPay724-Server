@@ -1,17 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 using MadPay724.Data.DatabaseContext;
-using MadPay724.Data.Infrastructure;
+using MadPay724.Repo.Infrastructure;
+using MadPay724.Services.Auth.Interface;
+using MadPay724.Services.Auth.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace MadPay724.Presentation
 {
@@ -32,6 +29,8 @@ namespace MadPay724.Presentation
             services.AddCors();
 
             services.AddScoped<IUnitOfWork<MadpayDbContext> , UnitOfWork<MadpayDbContext>>();
+
+            services.AddScoped<IAuthService , AuthService>();
 
 
         }
