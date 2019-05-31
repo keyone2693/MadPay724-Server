@@ -15,4 +15,9 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Dtos\Api\" />
+    <Folder Include="Dtos\Site\App\" />
+  </ItemGroup>
 </Project>

@@ -27,7 +27,7 @@ namespace MadPay724.Common.Helpers
                         return false;
                 }
             }
-            return true;
+             return true;
         }
     }
 }

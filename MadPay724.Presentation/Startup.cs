@@ -1,14 +1,17 @@
 
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Repo.Infrastructure;
-using MadPay724.Services.Auth.Interface;
-using MadPay724.Services.Auth.Service;
+using MadPay724.Services.Site.Admin.Auth.Interface;
+using MadPay724.Services.Site.Admin.Auth.Service;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace MadPay724.Presentation
 {
@@ -32,6 +35,17 @@ namespace MadPay724.Presentation
 
             services.AddScoped<IAuthService , AuthService>();
 
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(opt =>
+                {
+                    opt.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
 
         }
 
@@ -53,6 +67,7 @@ namespace MadPay724.Presentation
             app.UseCors(p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             ///
             app.UseRouting();
+            app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
