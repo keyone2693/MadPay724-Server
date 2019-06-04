@@ -27,7 +27,7 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
         private readonly IUnitOfWork<MadpayDbContext> _db;
         private readonly IAuthService _authService;
         private readonly IConfiguration _config;
-        public AuthController(IUnitOfWork<MadpayDbContext> dbContext, IAuthService authService,IConfiguration config)
+        public AuthController(IUnitOfWork<MadpayDbContext> dbContext, IAuthService authService, IConfiguration config)
         {
             _db = dbContext;
             _authService = authService;
@@ -42,7 +42,7 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
             if (await _db.UserRepository.UserExists(userForRegisterDto.UserName))
                 return BadRequest(new ReturnMessage()
                 {
-                    status=false,
+                    status = false,
                     title = "خطا",
                     message = "نام کاربری وجود دارد"
                 });
@@ -55,7 +55,7 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
                 Address = "",
                 City = "",
                 Gender = true,
-                DateOfBirth = DateTime.Now,                
+                DateOfBirth = DateTime.Now,
                 IsAcive = true,
                 Status = true
             };
@@ -68,15 +68,19 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
         [HttpPost("login")]
         public async Task<IActionResult> Login(UseForLoginDto useForLoginDto)
         {
+
+            //throw new Exception("asdasd");
+
             var userFromRepo = await _authService.Login(useForLoginDto.UserName, useForLoginDto.Password);
 
             if (userFromRepo == null)
-                return Unauthorized(new ReturnMessage()
-                {
-                    status = false,
-                    title = "خطا",
-                    message = "کاربری با این یوزر و پس وجود ندارد"
-                });
+                return Unauthorized("کاربری با این یوزر و پس وجود ندارد");
+                //return Unauthorized(new ReturnMessage()
+                //{
+                //    status = false,
+                //    title = "خطا",
+                //    message = "کاربری با این یوزر و پس وجود ندارد"
+                //});
 
             var claims = new[]
             {
@@ -101,7 +105,7 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
 
             return Ok(new
             {
-                token=tokenHandler.WriteToken(token)
+                token = tokenHandler.WriteToken(token)
             });
 
         }
