@@ -1,4 +1,6 @@
 
+using System.Collections.Generic;
+using System.Linq;
 using MadPay724.Common.Helpers;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Repo.Infrastructure;
@@ -15,6 +17,11 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using System.Net;
 using System.Text;
+using NSwag;
+using NSwag.Generation.Processors.Security;
+using Microsoft.AspNetCore.Mvc.Versioning;
+
+
 
 namespace MadPay724.Presentation
 {
@@ -32,6 +39,50 @@ namespace MadPay724.Presentation
         {
             services.AddControllers()
                 .AddNewtonsoftJson();
+
+
+            services.AddOpenApiDocument(document =>
+            {
+                document.DocumentName = "Site";
+                document.ApiGroupNames = new[] { "Site" };
+                document.PostProcess = d =>
+                {
+                    d.Info.Title = "Hello world!";
+                    //d.Info.Contact = new OpenApiContact
+                    //{
+                    //    Name = "keyone",
+                    //    Email = string.Empty,
+                    //    Url = "https://twitter.com/keyone"
+                    //};
+                    //d.Info.License = new OpenApiLicense
+                    //{
+                    //    Name = "Use under LICX",
+                    //    Url = "https://example.com/license"
+                    //};
+                };
+
+
+                document.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
+                {
+                    Type = OpenApiSecuritySchemeType.ApiKey,
+                    Name = "Authorization",
+                    In = OpenApiSecurityApiKeyLocation.Header,
+                    Description = "Type into the textbox: Bearer {your JWT token}."
+                });
+
+                document.OperationProcessors.Add(
+                    new AspNetCoreOperationSecurityScopeProcessor("JWT"));
+                //      new OperationSecurityScopeProcessor("JWT"));
+
+
+            });
+            services.AddOpenApiDocument(document =>
+            {
+                document.DocumentName = "Api";
+                document.ApiGroupNames = new[] { "Api" };
+            });
+
+
             services.AddCors();
 
             services.AddScoped<IUnitOfWork<MadpayDbContext> , UnitOfWork<MadpayDbContext>>();
@@ -49,6 +100,9 @@ namespace MadPay724.Presentation
                         ValidateAudience = false
                     };
                 });
+
+      
+
 
         }
 
@@ -85,6 +139,13 @@ namespace MadPay724.Presentation
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+
+
+
+
+            app.UseOpenApi();
+            app.UseSwaggerUi3(); // serve Swagger UI
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
