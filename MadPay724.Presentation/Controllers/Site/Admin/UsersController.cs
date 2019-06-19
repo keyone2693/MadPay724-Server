@@ -29,7 +29,7 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
         [HttpGet]
         public async Task<IActionResult> GetUsers()
         {
-            var users = await _db.UserRepository.GetAllAsync();
+            var users = await _db.UserRepository.GetManyAsync(null,null,"Photos,BankCards");
 
             var usersToReturn = _mapper.Map<IEnumerable<UserFroListDto>>(users);
 
@@ -39,9 +39,9 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUser(string id)
         {
-            var user = await _db.UserRepository.GetByIdAsync(id);
+            var user = await _db.UserRepository.GetManyAsync( p=>p.Id == id , null, "Photos");
 
-            var userToReturn = _mapper.Map<UserForDetailedDto>(user);
+            var userToReturn = _mapper.Map<UserForDetailedDto>(user.SingleOrDefault());
 
             return Ok(userToReturn);
         }
