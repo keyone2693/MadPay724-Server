@@ -38,13 +38,17 @@ namespace MadPay724.Presentation
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers()
-                .AddNewtonsoftJson();
+                .AddNewtonsoftJson(opt =>
+                {
+                    opt.SerializerSettings.ReferenceLoopHandling =
+                    Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                });
 
 
             services.AddOpenApiDocument(document =>
             {
                 document.DocumentName = "Site";
-                document.ApiGroupNames = new[] { "Site" };
+                document.ApiGroupNames = new[] { "Site", "Users" };
                 document.PostProcess = d =>
                 {
                     d.Info.Title = "Hello world!";
