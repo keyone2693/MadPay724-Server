@@ -22,6 +22,7 @@ using NSwag.Generation.Processors.Security;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using MadPay724.Services.Seed.Service;
 using MadPay724.Services.Seed.Interface;
+using AutoMapper;
 
 namespace MadPay724.Presentation
 {
@@ -85,6 +86,7 @@ namespace MadPay724.Presentation
             //    document.DocumentName = "Api";
             //    document.ApiGroupNames = new[] { "Api" };
             //});
+            services.AddAutoMapper(typeof(Startup));
 
             services.AddTransient<ISeedService , SeedService>();
             services.AddCors();

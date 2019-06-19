@@ -16,6 +16,7 @@ using System.Text;
 using Microsoft.Extensions.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authorization;
+using MadPay724.Data.Dtos.Site.Admin.Users;
 
 namespace MadPay724.Presentation.Controllers.Site.Admin
 {
