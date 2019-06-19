@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MadPay724.Data.Migrations
 {
     [DbContext(typeof(MadpayDbContext))]
-    [Migration("20190531133555_userch")]
-    partial class userch
+    [Migration("20190619093643_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -43,6 +43,9 @@ namespace MadPay724.Data.Migrations
                     b.Property<string>("ExpireDateYear")
                         .IsRequired()
                         .HasMaxLength(2);
+
+                    b.Property<string>("OwnerName")
+                        .IsRequired();
 
                     b.Property<string>("Shaba");
 
@@ -104,6 +107,8 @@ namespace MadPay724.Data.Migrations
 
                     b.Property<bool>("IsAcive");
 
+                    b.Property<DateTime>("LastActive");
+
                     b.Property<string>("Name")
                         .IsRequired();
 
@@ -137,7 +142,7 @@ namespace MadPay724.Data.Migrations
             modelBuilder.Entity("MadPay724.Data.Models.Photo", b =>
                 {
                     b.HasOne("MadPay724.Data.Models.User", "User")
-                        .WithMany("Phohots")
+                        .WithMany("Photos")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

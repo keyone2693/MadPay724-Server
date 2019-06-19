@@ -42,6 +42,9 @@ namespace MadPay724.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(2);
 
+                    b.Property<string>("OwnerName")
+                        .IsRequired();
+
                     b.Property<string>("Shaba");
 
                     b.Property<string>("UserId")
@@ -102,6 +105,8 @@ namespace MadPay724.Data.Migrations
 
                     b.Property<bool>("IsAcive");
 
+                    b.Property<DateTime>("LastActive");
+
                     b.Property<string>("Name")
                         .IsRequired();
 
@@ -135,7 +140,7 @@ namespace MadPay724.Data.Migrations
             modelBuilder.Entity("MadPay724.Data.Models.Photo", b =>
                 {
                     b.HasOne("MadPay724.Data.Models.User", "User")
-                        .WithMany("Phohots")
+                        .WithMany("Photos")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

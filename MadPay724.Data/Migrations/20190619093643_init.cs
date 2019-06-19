@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MadPay724.Data.Migrations
 {
-    public partial class initDb : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -20,8 +20,9 @@ namespace MadPay724.Data.Migrations
                     Address = table.Column<string>(nullable: false),
                     PasswordHash = table.Column<byte[]>(nullable: false),
                     PasswordSalt = table.Column<byte[]>(nullable: false),
-                    Gender = table.Column<string>(nullable: true),
-                    DateOfBirth = table.Column<string>(nullable: true),
+                    Gender = table.Column<bool>(nullable: false),
+                    DateOfBirth = table.Column<DateTime>(nullable: false),
+                    LastActive = table.Column<DateTime>(nullable: false),
                     City = table.Column<string>(nullable: true),
                     IsAcive = table.Column<bool>(nullable: false),
                     Status = table.Column<bool>(nullable: false)
@@ -39,6 +40,7 @@ namespace MadPay724.Data.Migrations
                     DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: false),
                     BankName = table.Column<string>(nullable: false),
+                    OwnerName = table.Column<string>(nullable: false),
                     Shaba = table.Column<string>(nullable: true),
                     CardNumber = table.Column<string>(nullable: false),
                     ExpireDateMonth = table.Column<string>(maxLength: 2, nullable: false),

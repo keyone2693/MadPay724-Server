@@ -20,8 +20,8 @@ using System.Text;
 using NSwag;
 using NSwag.Generation.Processors.Security;
 using Microsoft.AspNetCore.Mvc.Versioning;
-
-
+using MadPay724.Services.Seed.Service;
+using MadPay724.Services.Seed.Interface;
 
 namespace MadPay724.Presentation
 {
@@ -76,13 +76,13 @@ namespace MadPay724.Presentation
 
 
             });
-            services.AddOpenApiDocument(document =>
-            {
-                document.DocumentName = "Api";
-                document.ApiGroupNames = new[] { "Api" };
-            });
+            //services.AddOpenApiDocument(document =>
+            //{
+            //    document.DocumentName = "Api";
+            //    document.ApiGroupNames = new[] { "Api" };
+            //});
 
-
+            services.AddTransient<ISeedService , SeedService>();
             services.AddCors();
 
             services.AddScoped<IUnitOfWork<MadpayDbContext> , UnitOfWork<MadpayDbContext>>();
@@ -107,7 +107,7 @@ namespace MadPay724.Presentation
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ISeedService seeder)
         {
             if (env.IsDevelopment())
             {
@@ -133,7 +133,7 @@ namespace MadPay724.Presentation
             }
 
             //app.UseHttpsRedirection();
-
+            //seeder.SeedUsers();
             app.UseCors(p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             ///
             app.UseRouting();
