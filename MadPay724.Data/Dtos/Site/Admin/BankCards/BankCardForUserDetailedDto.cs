@@ -6,6 +6,7 @@ namespace MadPay724.Data.Dtos.Site.Admin.BankCards
 {
     public class BankCardForUserDetailedDto
     {
+        public string Id { get; set; }
         public string BankName { get; set; }
         public string OwnerName { get; set; }
         public string Shaba { get; set; }

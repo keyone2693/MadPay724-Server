@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using MadPay724.Data.DatabaseContext;
@@ -29,7 +30,7 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
         [HttpGet]
         public async Task<IActionResult> GetUsers()
         {
-            var users = await _db.UserRepository.GetManyAsync(null,null,"Photos,BankCards");
+            var users = await _db.UserRepository.GetManyAsync(null, null, "Photos,BankCards");
 
             var usersToReturn = _mapper.Map<IEnumerable<UserFroListDto>>(users);
 
@@ -39,12 +40,24 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUser(string id)
         {
-            var user = await _db.UserRepository.GetManyAsync( p=>p.Id == id , null, "Photos");
-
+            var user = await _db.UserRepository.GetManyAsync(p => p.Id == id, null, "Photos");
             var userToReturn = _mapper.Map<UserForDetailedDto>(user.SingleOrDefault());
-
             return Ok(userToReturn);
         }
-
+        //[Route("GetProfileUser/{id}")]
+        //[HttpGet]
+        //public async Task<IActionResult> GetProfileUser(string id)
+        //{
+        //    if (User.FindFirst(ClaimTypes.NameIdentifier).Value == id)
+        //    {
+        //        var user = await _db.UserRepository.GetManyAsync(p => p.Id == id, null, "Photos");
+        //        var userToReturn = _mapper.Map<UserForDetailedDto>(user.SingleOrDefault());
+        //        return Ok(userToReturn);
+        //    }
+        //    else
+        //    {
+        //        return Unauthorized("شما به این اطلاعات دسترسی ندارید");
+        //    }
+        //}
     }
 }

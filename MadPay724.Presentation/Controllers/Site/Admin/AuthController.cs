@@ -111,32 +111,5 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
             });
 
         }
-
-
-
-
-
-        [AllowAnonymous]
-        [HttpGet("GetValue")]
-        public async Task<IActionResult> GetValue()
-        {
-            return Ok(new ReturnMessage()
-            {
-                status = true,
-                title = "اوکی",
-                message = ""
-            });
-        }
-
-        [HttpGet("GetValues")]
-        public async Task<IActionResult> GetValues()
-        {
-            return Ok(new ReturnMessage()
-            {
-                status = true,
-                title = "اوکی",
-                message = ""
-            });
-        }
     }
 }
