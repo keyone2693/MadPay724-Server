@@ -33,14 +33,20 @@ namespace MadPay724.Repo.Infrastructure
 
 
         #region save
-        public void Save()
+        public bool Save()
         {
-            _db.SaveChanges();
+            if ( _db.SaveChanges() > 0)
+                return true;
+            else
+                return false;
         }
 
-        public async Task<int> SaveAsync()
+        public async Task<bool> SaveAsync()
         {
-            return await _db.SaveChangesAsync();
+            if (await _db.SaveChangesAsync() > 0)
+                return true;
+            else
+                return false;
         }
 
         #endregion

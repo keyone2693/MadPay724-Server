@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
+using MadPay724.Common.ReturnMessages;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Site.Admin.Users;
 using MadPay724.Repo.Infrastructure;
@@ -44,6 +45,36 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
             var userToReturn = _mapper.Map<UserForDetailedDto>(user.SingleOrDefault());
             return Ok(userToReturn);
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateUser(string id, UserForUpdateDto userForUpdateDto)
+        {
+            if(id != User.FindFirst(ClaimTypes.NameIdentifier).Value)
+            {
+                return Unauthorized("شما اجازه ویرایش این کاربر را ندارید");
+            }
+
+            var userFromRepo = await _db.UserRepository.GetByIdAsync(id);
+
+            _mapper.Map(userForUpdateDto, userFromRepo);
+            _db.UserRepository.Update(userFromRepo);
+
+            if(await _db.SaveAsync())
+            {
+                return NoContent();
+            }
+            else{
+                return Unauthorized(new ReturnMessage()
+                {
+                    status = false,
+                    title = "خطا",
+                    message = "خطا در ویرایش"
+                });
+            }
+
+
+        }
+
         //[Route("GetProfileUser/{id}")]
         //[HttpGet]
         //public async Task<IActionResult> GetProfileUser(string id)
