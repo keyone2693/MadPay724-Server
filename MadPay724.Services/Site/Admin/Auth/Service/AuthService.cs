@@ -31,7 +31,7 @@ namespace MadPay724.Services.Site.Admin.Auth.Service
             return user;
         }
 
-        public async Task<User> Register(User user, string password)
+        public async Task<User> Register(User user, Photo photo, string password)
         {
             byte[] passwordHash, passwordSalt;
             Utilities.CreatePasswordHash(password, out passwordHash, out passwordSalt);
@@ -40,6 +40,7 @@ namespace MadPay724.Services.Site.Admin.Auth.Service
             user.PasswordSalt = passwordSalt;
 
             await _db.UserRepository.InsertAsync(user);
+            await _db.PhotoRepository.InsertAsync(photo);
             await _db.SaveAsync();
 
             return user;

@@ -23,6 +23,8 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using MadPay724.Services.Seed.Service;
 using MadPay724.Services.Seed.Interface;
 using AutoMapper;
+using System.IO;
+using Microsoft.Extensions.FileProviders;
 
 namespace MadPay724.Presentation
 {
@@ -38,7 +40,7 @@ namespace MadPay724.Presentation
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers()
+            services.AddMvc(opt=>opt.EnableEndpointRouting = false)
                 .AddNewtonsoftJson(opt =>
                 {
                     opt.SerializerSettings.ReferenceLoopHandling =
@@ -143,22 +145,24 @@ namespace MadPay724.Presentation
 
             //app.UseHttpsRedirection();
             //seeder.SeedUsers();
-            app.UseCors(p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            app.UseCors(p => p.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader().AllowCredentials());
             ///
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
 
 
-
-
             app.UseOpenApi();
             app.UseSwaggerUi3(); // serve Swagger UI
 
-            app.UseEndpoints(endpoints =>
+            app.UseStaticFiles(new StaticFileOptions()
             {
-                endpoints.MapControllers();
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(),@"Files")),
+                RequestPath = new PathString("/Files")
             });
+
+
+            app.UseMvc();
         }
     }
 }

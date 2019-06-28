@@ -29,7 +29,8 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
         private readonly IUnitOfWork<MadpayDbContext> _db;
         private readonly IAuthService _authService;
         private readonly IConfiguration _config;
-        public AuthController(IUnitOfWork<MadpayDbContext> dbContext, IAuthService authService, IConfiguration config)
+        public AuthController(IUnitOfWork<MadpayDbContext> dbContext, IAuthService authService,
+            IConfiguration config)
         {
             _db = dbContext;
             _authService = authService;
@@ -61,8 +62,19 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
                 IsAcive = true,
                 Status = true
             };
+            // var uri = Server.MapPath("~/Files/Pic/profilepic.png");
 
-            var createdUser = await _authService.Register(userToCreate, userForRegisterDto.Password);
+            var photoToCreate = new Photo
+            {
+                UserId = userToCreate.Id,
+                Url = string.Format("{0}://{1}{2}/{3}", Request.Scheme, Request.Host.Value, Request.PathBase.Value, "Files/Pic/profilepic.png"), //"https://res.cloudinary.com/keyone2693/image/upload/v1561717720/768px-Circle-icons-profile.svg.png",
+                Description = "Profile Pic",
+                Alt = "Profile Pic",
+                IsMain = true,
+                PublicId="0"                
+            };
+
+            var createdUser = await _authService.Register(userToCreate, photoToCreate, userForRegisterDto.Password);
 
             return StatusCode(201);
         }
