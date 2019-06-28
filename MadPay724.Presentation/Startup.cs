@@ -86,14 +86,17 @@ namespace MadPay724.Presentation
             //    document.DocumentName = "Api";
             //    document.ApiGroupNames = new[] { "Api" };
             //});
-            services.AddAutoMapper(typeof(Startup));
 
-            services.AddTransient<ISeedService , SeedService>();
+
             services.AddCors();
 
-            services.AddScoped<IUnitOfWork<MadpayDbContext> , UnitOfWork<MadpayDbContext>>();
+            services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
 
+            services.AddAutoMapper(typeof(Startup));
+            services.AddScoped<IUnitOfWork<MadpayDbContext> , UnitOfWork<MadpayDbContext>>();
+            services.AddTransient<ISeedService, SeedService>();
             services.AddScoped<IAuthService , AuthService>();
+            services.AddScoped<IUserService , UserService>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(opt =>

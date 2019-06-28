@@ -8,6 +8,7 @@ using MadPay724.Common.ReturnMessages;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Site.Admin.Users;
 using MadPay724.Repo.Infrastructure;
+using MadPay724.Services.Site.Admin.Auth.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -22,10 +23,12 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
     {
         private readonly IUnitOfWork<MadpayDbContext> _db;
         private readonly IMapper _mapper;
-        public UsersController(IUnitOfWork<MadpayDbContext> dbContext, IMapper mapper)
+        private readonly IUserService _userService;
+        public UsersController(IUnitOfWork<MadpayDbContext> dbContext, IMapper mapper, IUserService userService)
         {
             _db = dbContext;
             _mapper = mapper;
+            _userService = userService;
         }
 
         [HttpGet]
@@ -64,15 +67,43 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
                 return NoContent();
             }
             else{
-                return Unauthorized(new ReturnMessage()
+                return BadRequest(new ReturnMessage()
                 {
                     status = false,
                     title = "خطا",
-                    message = "خطا در ویرایش"
+                    message = $"ویرایش برای کاربر {userForUpdateDto.Name} انجام نشد."
                 });
             }
 
 
+        }
+
+        [Route("ChangeUserPassword/{id}")]
+        [HttpPut]
+        public async Task<IActionResult> ChangeUserPassword(string id, PasswordForChangeDto passwordForChangeDto)
+        {
+            var userFromRepo = await _userService.GetUserForPassChange(id, passwordForChangeDto.OldPassword);
+
+            if (userFromRepo == null)
+                return BadRequest(new ReturnMessage()
+                {
+                    status = false,
+                    title = "خطا",
+                    message = "پسورد قبلی استباه میباشد"
+                });
+
+            if(await _userService.UpdateUserPass(userFromRepo, passwordForChangeDto.NewPassword))
+            {
+                return NoContent();
+            }
+            else{
+                return BadRequest(new ReturnMessage()
+                {
+                    status = false,
+                    title = "خطا",
+                    message = "ویرایش پسورد کاربرانجام نشد."
+                });
+            }
         }
 
         //[Route("GetProfileUser/{id}")]

@@ -3,23 +3,26 @@ using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Models;
 using MadPay724.Repo.Infrastructure;
 using MadPay724.Services.Site.Admin.Auth.Interface;
+using System;
+using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace MadPay724.Services.Site.Admin.Auth.Service
 {
-    public class AuthService : IAuthService
+    public class UserService : IUserService
     {
         private readonly IUnitOfWork<MadpayDbContext> _db;
-        public AuthService(IUnitOfWork<MadpayDbContext> dbContext)
+        public UserService(IUnitOfWork<MadpayDbContext> dbContext)
         {
             _db = dbContext;
         }
 
-        public async Task<User> Login(string username, string password)
+        public async Task<User> GetUserForPassChange(string id, string password)
         {
-            var user = await _db.UserRepository.GetAsync(p => p.UserName == username);
+            var user = await _db.UserRepository.GetByIdAsync(id);
 
-            if(user == null)
+            if (user == null)
             {
                 return null;
             }
@@ -31,22 +34,17 @@ namespace MadPay724.Services.Site.Admin.Auth.Service
             return user;
         }
 
-        public async Task<User> Register(User user, string password)
+        public async Task<bool> UpdateUserPass(User user, string newPassword)
         {
             byte[] passwordHash, passwordSalt;
-            Utilities.CreatePasswordHash(password, out passwordHash, out passwordSalt);
+            Utilities.CreatePasswordHash(newPassword, out passwordHash, out passwordSalt);
 
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
 
-            await _db.UserRepository.InsertAsync(user);
-            await _db.SaveAsync();
+            _db.UserRepository.Update(user);
 
-            return user;
+            return await _db.SaveAsync();
         }
-
-
-
-
     }
 }

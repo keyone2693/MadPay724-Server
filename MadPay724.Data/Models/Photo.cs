@@ -22,7 +22,7 @@ namespace MadPay724.Data.Models
         public string Alt { get; set; }
         [Required]
         public bool IsMain { get; set; }
-
+        public string PublicId { get; set; }
         [Required]
         public string UserId { get; set; }
         public User User { get; set; }
