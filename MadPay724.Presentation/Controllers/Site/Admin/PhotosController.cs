@@ -47,7 +47,7 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
         }
 
         [HttpPost]
-        public async Task<IActionResult> ChangeUserPhoto(string userId, PhotoForProfileDto photoForProfileDto)
+        public async Task<IActionResult> ChangeUserPhoto(string userId, [FromForm]PhotoForProfileDto photoForProfileDto)
         {
             if (userId != User.FindFirst(ClaimTypes.NameIdentifier).Value)
             {
@@ -68,19 +68,17 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
                     var uplaodParams = new ImageUploadParams()
                     {
                         File = new FileDescription(file.Name, stream),
-                        Transformation = new Transformation().Width(250).Height(250).Crop("fill").Gravity("face")
+                        Transformation = new Transformation().Width(50).Height(50).Crop("fill").Gravity("face")
                     };
 
                     updaodResult = _cloudinary.Upload(uplaodParams);
                 }
             }
 
-
             photoForProfileDto.Url = updaodResult.Uri.ToString();
             photoForProfileDto.PublicId = updaodResult.PublicId;
 
             var photo = _mapper.Map<Photo>(photoForProfileDto);
-            photo.IsMain = true;
             photo.UserId = userId;
 
             await _db.PhotoRepository.InsertAsync(photo);

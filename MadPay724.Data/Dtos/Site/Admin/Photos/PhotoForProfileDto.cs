@@ -10,5 +10,9 @@ namespace MadPay724.Data.Dtos.Site.Admin.Photos
         public string Url { get; set; }
         public IFormFile File { get; set; }
         public string PublicId { get; set; }
+
+        public bool IsMain { get; set; } = true;
+        public string Description { get; set; } = "Profile Pic";
+        public string Alt { get; set; } = "Profile Pic";
     }
 }
