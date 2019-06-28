@@ -29,6 +29,21 @@ namespace MadPay724.Repo.Infrastructure
                 return userRepository;
             }
         }
+
+
+        private IPhotoRepository photoRepository;
+        public IPhotoRepository PhotoRepository
+        {
+            get
+            {
+                if (photoRepository == null)
+                {
+                    photoRepository = new PhotoRepository(_db);
+                }
+                return photoRepository;
+            }
+        }
+
         #endregion
 
 
