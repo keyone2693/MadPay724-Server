@@ -92,7 +92,7 @@ namespace MadPay724.Presentation
 
             services.AddCors();
 
-            services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
+            //services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
 
             services.AddAutoMapper(typeof(Startup));
             services.AddScoped<IUnitOfWork<MadpayDbContext> , UnitOfWork<MadpayDbContext>>();
@@ -145,7 +145,7 @@ namespace MadPay724.Presentation
 
             //app.UseHttpsRedirection();
             //seeder.SeedUsers();
-            app.UseCors(p => p.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+            app.UseCors(p => p.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader());
             ///
             app.UseRouting();
             app.UseAuthentication();

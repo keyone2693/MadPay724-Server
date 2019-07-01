@@ -17,6 +17,7 @@ using Microsoft.Extensions.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authorization;
 using MadPay724.Data.Dtos.Site.Admin.Users;
+using AutoMapper;
 
 namespace MadPay724.Presentation.Controllers.Site.Admin
 {
@@ -29,12 +30,15 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
         private readonly IUnitOfWork<MadpayDbContext> _db;
         private readonly IAuthService _authService;
         private readonly IConfiguration _config;
+        private readonly IMapper _mapper;
         public AuthController(IUnitOfWork<MadpayDbContext> dbContext, IAuthService authService,
-            IConfiguration config)
+            IConfiguration config, IMapper mapper)
         {
             _db = dbContext;
             _authService = authService;
             _config = config;
+            _mapper = mapper;
+
         }
 
         [AllowAnonymous]
@@ -117,9 +121,13 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
 
             var token = tokenHandler.CreateToken(tokenDes);
 
+
+            var user = _mapper.Map<UserForDetailedDto>(userFromRepo);
+
             return Ok(new
             {
-                token = tokenHandler.WriteToken(token)
+                token = tokenHandler.WriteToken(token),
+                user
             });
 
         }

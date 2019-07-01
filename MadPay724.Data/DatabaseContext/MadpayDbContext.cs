@@ -16,5 +16,6 @@ namespace MadPay724.Data.DatabaseContext
         public DbSet<User> Users { get; set; }
         public DbSet<Photo> Photos { get; set; }
         public DbSet<BankCard> BankCards { get; set; }
+        public DbSet<Setting> Settings { get; set; }
     }
 }

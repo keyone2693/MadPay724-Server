@@ -3,6 +3,7 @@ using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Models;
 using MadPay724.Repo.Infrastructure;
 using MadPay724.Services.Site.Admin.Auth.Interface;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MadPay724.Services.Site.Admin.Auth.Service
@@ -17,9 +18,10 @@ namespace MadPay724.Services.Site.Admin.Auth.Service
 
         public async Task<User> Login(string username, string password)
         {
-            var user = await _db.UserRepository.GetAsync(p => p.UserName == username);
+            var users = await _db.UserRepository.GetManyAsync(p => p.UserName == username, null, "Photos");
+            var user = users.SingleOrDefault();
 
-            if(user == null)
+            if (user == null)
             {
                 return null;
             }
