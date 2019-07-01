@@ -155,11 +155,11 @@ namespace MadPay724.Presentation
             app.UseOpenApi();
             app.UseSwaggerUi3(); // serve Swagger UI
 
-            app.UseStaticFiles(new StaticFileOptions()
-            {
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(),@"Files")),
-                RequestPath = new PathString("/Files")
-            });
+            //app.UseStaticFiles(new StaticFileOptions()
+            //{
+            //    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(),@"Files")),
+            //    RequestPath = new PathString("/Files")
+            //});
 
 
             app.UseMvc();

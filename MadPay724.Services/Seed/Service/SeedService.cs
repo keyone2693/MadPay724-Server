@@ -3,6 +3,7 @@ using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Models;
 using MadPay724.Repo.Infrastructure;
 using MadPay724.Services.Seed.Interface;
+using Microsoft.AspNetCore.Hosting;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -14,14 +15,13 @@ namespace MadPay724.Services.Seed.Service
         private readonly IUnitOfWork<MadpayDbContext> _db;
         public SeedService(IUnitOfWork<MadpayDbContext> dbContext)
         {
-            _db = dbContext;
+               _db = dbContext;
         }
 
         public void SeedUsers()
         {
-            var userData = System.IO.File.ReadAllText("Files/Json/Seed/UserSeedData.json");
+            var userData = System.IO.File.ReadAllText("wwwroot/Files/Json/Seed/UserSeedData.json");
             var users = JsonConvert.DeserializeObject<IList<User>>(userData);
-
             foreach (var user in users)
             {
                 byte[] passwordHash, passwordSalt;

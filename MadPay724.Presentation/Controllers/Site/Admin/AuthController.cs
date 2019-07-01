@@ -71,7 +71,7 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
             var photoToCreate = new Photo
             {
                 UserId = userToCreate.Id,
-                Url = string.Format("{0}://{1}{2}/{3}", Request.Scheme, Request.Host.Value, Request.PathBase.Value, "Files/Pic/profilepic.png"), //"https://res.cloudinary.com/keyone2693/image/upload/v1561717720/768px-Circle-icons-profile.svg.png",
+                Url = string.Format("{0}://{1}{2}/{3}", Request.Scheme, Request.Host.Value, Request.PathBase.Value, "wwwroot/Files/Pic/profilepic.png"), //"https://res.cloudinary.com/keyone2693/image/upload/v1561717720/768px-Circle-icons-profile.svg.png",
                 Description = "Profile Pic",
                 Alt = "Profile Pic",
                 IsMain = true,

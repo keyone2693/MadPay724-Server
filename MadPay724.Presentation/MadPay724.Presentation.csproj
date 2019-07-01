@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Files\Json\Seed\UserSeedData.json" />
+    <Content Remove="wwwroot\Files\Json\Seed\UserSeedData.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,9 +34,11 @@
   <ItemGroup>
     <Folder Include="Controllers\Api\" />
     <Folder Include="Controllers\Site\App\" />
+    <Folder Include="wwwroot\Files\Pic\Profile\" />
   </ItemGroup>
   
   <ItemGroup>
-    <None Include="Files\Json\Seed\UserSeedData.json" />
+    <None Include="wwwroot\Files\Json\Seed\UserSeedData.json" />
+    <None Include="wwwroot\Files\Pic\profilepic.png" />
   </ItemGroup>
 </Project>
