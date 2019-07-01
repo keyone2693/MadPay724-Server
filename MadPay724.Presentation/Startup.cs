@@ -25,6 +25,8 @@ using MadPay724.Services.Seed.Interface;
 using AutoMapper;
 using System.IO;
 using Microsoft.Extensions.FileProviders;
+using MadPay724.Services.Upload.Interface;
+using MadPay724.Services.Upload.Service;
 
 namespace MadPay724.Presentation
 {
@@ -46,7 +48,6 @@ namespace MadPay724.Presentation
                     opt.SerializerSettings.ReferenceLoopHandling =
                     Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 });
-
 
             services.AddOpenApiDocument(document =>
             {
@@ -99,6 +100,7 @@ namespace MadPay724.Presentation
             services.AddTransient<ISeedService, SeedService>();
             services.AddScoped<IAuthService , AuthService>();
             services.AddScoped<IUserService , UserService>();
+            services.AddScoped<IUploadService, UploadService>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(opt =>
@@ -155,11 +157,11 @@ namespace MadPay724.Presentation
             app.UseOpenApi();
             app.UseSwaggerUi3(); // serve Swagger UI
 
-            //app.UseStaticFiles(new StaticFileOptions()
-            //{
-            //    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(),@"Files")),
-            //    RequestPath = new PathString("/Files")
-            //});
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot")),
+                RequestPath = new PathString("/wwwroot")
+            });
 
 
             app.UseMvc();

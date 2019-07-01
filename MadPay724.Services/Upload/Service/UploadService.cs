@@ -19,11 +19,11 @@ namespace MadPay724.Services.Upload.Service
         private readonly IUnitOfWork<MadpayDbContext> _db;
         private readonly Cloudinary _cloudinary;
         private readonly Setting _setting;
-
         public UploadService(IUnitOfWork<MadpayDbContext> dbContext)
         {
             _db = dbContext;
-            _setting = _db.SettingRepository.GetById(1);
+
+            _setting = _db.SettingRepository.GetById((short)1);
             Account acc = new Account(
               _setting.CloudinaryCloudName,
               _setting.CloudinaryAPIKey,
@@ -32,14 +32,14 @@ namespace MadPay724.Services.Upload.Service
 
             _cloudinary = new Cloudinary(acc);
         }
-        public Task<FileUploadedDto> UploadFile(IFormFile file)
-        {
-            throw new NotImplementedException();
-        }
+        //public Task<FileUploadedDto> UploadFile(IFormFile file)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
 
 
-        public async Task<FileUploadedDto> UploadToLocal(IFormFile file, string WebRootPath , string UrlBegan)
+        public async Task<FileUploadedDto> UploadToLocal(IFormFile file, string userId, string WebRootPath, string UrlBegan)
         {
 
             if (file.Length > 0)
@@ -48,11 +48,11 @@ namespace MadPay724.Services.Upload.Service
                 {
                     string fileName = Path.GetFileName(file.FileName);
                     string fileExtention = Path.GetExtension(fileName);
-                    string fileNewName = string.Format("{0}{1}", Guid.NewGuid(), fileExtention);
-                    string path = Path.Combine(WebRootPath, "Files/Pic/Profile");
+                    string fileNewName = string.Format("{0}{1}", userId, fileExtention);
+                    string path = Path.Combine(WebRootPath, "Files\\Pic\\Profile");
                     string fullPath = Path.Combine(path, fileNewName);
 
-                    using(var stream = new FileStream(fullPath, FileMode.Create))
+                    using (var stream = new FileStream(fullPath, FileMode.Create))
                     {
                         await file.CopyToAsync(stream);
                     }
@@ -62,7 +62,7 @@ namespace MadPay724.Services.Upload.Service
                         Status = true,
                         Message = "با موفقیت در فضای ابری آپلود شد",
                         PublicId = "0",
-                        Url = string.Format("{0}/{1}", UrlBegan, "wwwroot/Files/Pic/profilepic.png")
+                        Url = string.Format("{0}/{1}", UrlBegan, "wwwroot/Files/Pic/Profile/" + fileNewName)
                     };
                 }
                 catch (Exception ex)
@@ -100,7 +100,7 @@ namespace MadPay724.Services.Upload.Service
                             Transformation = new Transformation().Width(150).Height(150).Crop("fill").Gravity("face")
                         };
                         updaodResult = _cloudinary.Upload(uplaodParams);
-                        if (string.IsNullOrEmpty(updaodResult.Error.Message))
+                        if (updaodResult.Error == null)
                         {
                             return new FileUploadedDto()
                             {
@@ -110,11 +110,15 @@ namespace MadPay724.Services.Upload.Service
                                 Url = updaodResult.Uri.ToString()
                             };
                         }
-                        return new FileUploadedDto()
+                        else
                         {
-                            Status = false,
-                            Message = updaodResult.Error.Message
-                        };
+                            return new FileUploadedDto()
+                            {
+                                Status = false,
+                                Message = updaodResult.Error.Message
+                            };
+                        }
+
                     }
                 }
                 catch (Exception ex)
@@ -132,6 +136,28 @@ namespace MadPay724.Services.Upload.Service
                 {
                     Status = false,
                     Message = "فایلی برای اپلود یافت نشد"
+                };
+            }
+        }
+
+        public FileUploadedDto RemoveFileFromCloudinary(string publicId)
+        {
+            var deleteParams = new DeletionParams(publicId);
+            var deleteResult = _cloudinary.Destroy(deleteParams);
+            if (deleteResult.Result.ToLower() == "ok")
+            {
+                return new FileUploadedDto()
+                {
+                    Status = true,
+                    Message = "فایل با موفقیت حذف شد"
+                };
+            }
+            else
+            {
+                return new FileUploadedDto()
+                {
+                    Status = true,
+                    Message = deleteResult.Error.Message
                 };
             }
         }
