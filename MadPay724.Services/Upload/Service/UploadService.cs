@@ -40,7 +40,7 @@ namespace MadPay724.Services.Upload.Service
             }
             else
             {
-                return UploadProfilePicToCloudinary(file, userName);
+                return UploadProfilePicToCloudinary(file, userId);
             }
         }
 
@@ -65,7 +65,8 @@ namespace MadPay724.Services.Upload.Service
                     return new FileUploadedDto()
                     {
                         Status = true,
-                        Message = "با موفقیت در فضای ابری آپلود شد",
+                        LocalUploaded = true,
+                        Message = "با موفقیت در لوکال آپلود شد",
                         PublicId = "0",
                         Url = string.Format("{0}/{1}", UrlBegan, "wwwroot/Files/Pic/Profile/" + fileNewName)
                     };
@@ -111,6 +112,7 @@ namespace MadPay724.Services.Upload.Service
                             return new FileUploadedDto()
                             {
                                 Status = true,
+                                LocalUploaded = false,
                                 Message = "با موفقیت در فضای ابری آپلود شد",
                                 PublicId = updaodResult.PublicId,
                                 Url = updaodResult.Uri.ToString()
@@ -163,6 +165,29 @@ namespace MadPay724.Services.Upload.Service
                 return new FileUploadedDto()
                 {
                     Status = false
+                };
+            }
+        }
+
+        public FileUploadedDto RemoveFileFromLocal(string photoName, string WebRootPath, string filePath)
+        {
+
+            string path = Path.Combine(WebRootPath, filePath);
+            string fullPath = Path.Combine(path, photoName);
+            if (File.Exists(fullPath))
+            {
+                File.Delete(fullPath);
+                return new FileUploadedDto()
+                {
+                    Status = true,
+                    Message = "فایل با موفقیت حذف شد"
+                };
+            }
+            else{
+                return new FileUploadedDto()
+                {
+                    Status = true,
+                    Message = "فایل وجود نداشت"
                 };
             }
         }
