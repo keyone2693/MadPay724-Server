@@ -32,14 +32,19 @@ namespace MadPay724.Services.Upload.Service
 
             _cloudinary = new Cloudinary(acc);
         }
-        //public Task<FileUploadedDto> UploadFile(IFormFile file)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        public async Task<FileUploadedDto> UploadProfilePic(IFormFile file, string userId, string WebRootPath, string UrlBegan)
+        {
+            if(_setting.UploadLocal)
+            {
+               return  await UploadProfilePicToLocal(file, userId, WebRootPath, UrlBegan);
+            }
+            else
+            {
+                return UploadProfilePicToCloudinary(file, userName);
+            }
+        }
 
-
-
-        public async Task<FileUploadedDto> UploadToLocal(IFormFile file, string userId, string WebRootPath, string UrlBegan)
+        public async Task<FileUploadedDto> UploadProfilePicToLocal(IFormFile file, string userId, string WebRootPath, string UrlBegan)
         {
 
             if (file.Length > 0)
@@ -84,7 +89,7 @@ namespace MadPay724.Services.Upload.Service
             }
         }
 
-        public FileUploadedDto UploadToCloudinary(IFormFile file)
+        public FileUploadedDto UploadProfilePicToCloudinary(IFormFile file, string userId)
         {
             var updaodResult = new ImageUploadResult();
 
@@ -97,7 +102,8 @@ namespace MadPay724.Services.Upload.Service
                         var uplaodParams = new ImageUploadParams()
                         {
                             File = new FileDescription(file.Name, stream),
-                            Transformation = new Transformation().Width(150).Height(150).Crop("fill").Gravity("face")
+                            Transformation = new Transformation().Width(150).Height(150).Crop("fill").Gravity("face"),
+                            Folder = "ProfilePic/" + userId
                         };
                         updaodResult = _cloudinary.Upload(uplaodParams);
                         if (updaodResult.Error == null)
@@ -156,8 +162,7 @@ namespace MadPay724.Services.Upload.Service
             {
                 return new FileUploadedDto()
                 {
-                    Status = true,
-                    Message = deleteResult.Error.Message
+                    Status = false
                 };
             }
         }
