@@ -12,6 +12,7 @@ using MadPay724.Services.Site.Admin.Auth.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace MadPay724.Presentation.Controllers.Site.Admin
 {
@@ -24,7 +25,7 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
         private readonly IUnitOfWork<MadpayDbContext> _db;
         private readonly IMapper _mapper;
         private readonly IUserService _userService;
-        public UsersController(IUnitOfWork<MadpayDbContext> dbContext, IMapper mapper, IUserService userService)
+        public UsersController(IUnitOfWork<MadpayDbContext> dbContext, IMapper mapper, IUserService userService, ILogger<UsersController> logger)
         {
             _db = dbContext;
             _mapper = mapper;
