@@ -96,6 +96,8 @@ namespace MadPay724.Presentation
             //services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
 
             services.AddAutoMapper(typeof(Startup));
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             services.AddScoped<IUnitOfWork<MadpayDbContext> , UnitOfWork<MadpayDbContext>>();
             services.AddTransient<ISeedService, SeedService>();
             services.AddScoped<IAuthService , AuthService>();

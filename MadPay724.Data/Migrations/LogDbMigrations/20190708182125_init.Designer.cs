@@ -4,14 +4,16 @@ using MadPay724.Data.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace MadPay724.Data.Migrations.logMigrations
+namespace MadPay724.Data.Migrations.LogDbMigrations
 {
     [DbContext(typeof(LogDbContext))]
-    partial class LogDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190708182125_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -19,33 +21,34 @@ namespace MadPay724.Data.Migrations.logMigrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("MadPay724.Data.Models.Log", b =>
+            modelBuilder.Entity("MadPay724.Data.Models.ExtendedLog", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Application");
+                    b.Property<string>("Browser");
 
-                    b.Property<string>("Callsite");
+                    b.Property<int>("EventId");
 
-                    b.Property<DateTime>("DateCreated");
+                    b.Property<string>("Host");
 
-                    b.Property<DateTime>("DateModified");
-
-                    b.Property<string>("Exception");
-
-                    b.Property<string>("Level");
-
-                    b.Property<DateTime>("Logged");
-
-                    b.Property<string>("Logger");
+                    b.Property<int>("Level");
 
                     b.Property<string>("Message");
 
+                    b.Property<string>("Name")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Path");
+
+                    b.Property<DateTimeOffset>("TimeStamp");
+
+                    b.Property<string>("User");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Logs");
+                    b.ToTable("ExtendedLog");
                 });
 #pragma warning restore 612, 618
         }
