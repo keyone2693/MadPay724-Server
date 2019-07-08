@@ -10,7 +10,6 @@ using MadPay724.Data.Dtos.Site.Admin.Users;
 using MadPay724.Repo.Infrastructure;
 using MadPay724.Services.Site.Admin.Auth.Interface;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -25,11 +24,14 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
         private readonly IUnitOfWork<MadpayDbContext> _db;
         private readonly IMapper _mapper;
         private readonly IUserService _userService;
-        public UsersController(IUnitOfWork<MadpayDbContext> dbContext, IMapper mapper, IUserService userService, ILogger<UsersController> logger)
+        private readonly ILogger<UsersController> _logger;
+        public UsersController(IUnitOfWork<MadpayDbContext> dbContext, IMapper mapper, 
+            IUserService userService, ILogger<UsersController> logger)
         {
             _db = dbContext;
             _mapper = mapper;
             _userService = userService;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -55,6 +57,7 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
         {
             if(id != User.FindFirst(ClaimTypes.NameIdentifier).Value)
             {
+                _logger.LogError($"گاربر گرامی آقا/خانم {userForUpdateDto.Name} شما اجازه ویرایش این کاربر را ندارید ");
                 return Unauthorized("شما اجازه ویرایش این کاربر را ندارید");
             }
 
