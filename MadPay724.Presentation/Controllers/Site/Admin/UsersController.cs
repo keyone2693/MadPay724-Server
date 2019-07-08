@@ -58,6 +58,7 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
             if(id != User.FindFirst(ClaimTypes.NameIdentifier).Value)
             {
                 _logger.LogError($"گاربر گرامی آقا/خانم {userForUpdateDto.Name} شما اجازه ویرایش این کاربر را ندارید ");
+
                 return Unauthorized("شما اجازه ویرایش این کاربر را ندارید");
             }
 
