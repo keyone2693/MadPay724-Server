@@ -2,34 +2,38 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace MadPay724.Data.Migrations
+namespace MadPay724.Data.Migrations.logMigrations
 {
-    public partial class settingInit : Migration
+    public partial class initdb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Settings",
+                name: "Logs",
                 columns: table => new
                 {
-                    Id = table.Column<short>(nullable: false)
+                    Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: false),
-                    CloudinaryCloudName = table.Column<string>(nullable: false),
-                    CloudinaryAPIKey = table.Column<string>(nullable: false),
-                    CloudinaryAPISecret = table.Column<string>(nullable: false)
+                    Application = table.Column<string>(nullable: true),
+                    Logged = table.Column<DateTime>(nullable: false),
+                    Level = table.Column<string>(nullable: true),
+                    Message = table.Column<string>(nullable: true),
+                    Logger = table.Column<string>(nullable: true),
+                    Callsite = table.Column<string>(nullable: true),
+                    Exception = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Settings", x => x.Id);
+                    table.PrimaryKey("PK_Logs", x => x.Id);
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Settings");
+                name: "Logs");
         }
     }
 }

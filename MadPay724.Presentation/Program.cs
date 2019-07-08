@@ -21,10 +21,6 @@ namespace MadPay724.Presentation
             Host.CreateDefaultBuilder(args)
                 .ConfigureLogging((hostingContext, logging) =>
                 {
-                    logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
-                    logging.AddConsole();
-                    logging.AddDebug();
-                    logging.AddEventSourceLogger();
                     logging.AddNLog();
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
