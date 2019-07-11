@@ -18,6 +18,7 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authorization;
 using MadPay724.Data.Dtos.Site.Admin.Users;
 using AutoMapper;
+using Microsoft.Extensions.Logging;
 
 namespace MadPay724.Presentation.Controllers.Site.Admin
 {
@@ -31,13 +32,16 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
         private readonly IAuthService _authService;
         private readonly IConfiguration _config;
         private readonly IMapper _mapper;
+        private readonly ILogger<AuthController> _logger;
+
         public AuthController(IUnitOfWork<MadpayDbContext> dbContext, IAuthService authService,
-            IConfiguration config, IMapper mapper)
+            IConfiguration config, IMapper mapper, ILogger<AuthController> logger)
         {
             _db = dbContext;
             _authService = authService;
             _config = config;
             _mapper = mapper;
+            _logger = logger;
 
         }
 
@@ -47,12 +51,16 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
         {
             userForRegisterDto.UserName = userForRegisterDto.UserName.ToLower();
             if (await _db.UserRepository.UserExists(userForRegisterDto.UserName))
+            {
+                _logger.LogWarning($"{userForRegisterDto.Name} - {userForRegisterDto.UserName} میحواهد دوباره ثبت نام کند");
                 return BadRequest(new ReturnMessage()
                 {
                     status = false,
                     title = "خطا",
                     message = "نام کاربری وجود دارد"
                 });
+            }
+               
 
             var userToCreate = new User
             {
@@ -80,6 +88,8 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
 
             var createdUser = await _authService.Register(userToCreate, photoToCreate, userForRegisterDto.Password);
 
+            _logger.LogInformation($"{userForRegisterDto.Name} - {userForRegisterDto.UserName} ثبت نام کرده است");
+
             return StatusCode(201);
         }
         [AllowAnonymous]
@@ -92,7 +102,11 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
             var userFromRepo = await _authService.Login(useForLoginDto.UserName, useForLoginDto.Password);
 
             if (userFromRepo == null)
+            {
+                _logger.LogWarning($"{useForLoginDto.UserName} درخواست لاگین ناموفق داشته است");
                 return Unauthorized("کاربری با این یوزر و پس وجود ندارد");
+
+            }
                 //return Unauthorized(new ReturnMessage()
                 //{
                 //    status = false,
@@ -124,6 +138,7 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
 
             var user = _mapper.Map<UserForDetailedDto>(userFromRepo);
 
+            _logger.LogInformation($"{useForLoginDto.UserName} لاگین کرده است");
             return Ok(new
             {
                 token = tokenHandler.WriteToken(token),

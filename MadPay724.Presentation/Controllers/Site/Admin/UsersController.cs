@@ -17,7 +17,7 @@ using Microsoft.Extensions.Logging;
 namespace MadPay724.Presentation.Controllers.Site.Admin
 {
     [Authorize]
-    [ServiceFilter(typeof(LogFilter))]
+   // [ServiceFilter(typeof(LogFilter))]
     [ApiExplorerSettings(GroupName = "Site")]
     [Route("site/admin/[controller]")]
     [ApiController]
@@ -35,6 +35,7 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
             _userService = userService;
             _logger = logger;
         }
+
 
         [HttpGet]
         public async Task<IActionResult> GetUsers()
@@ -59,7 +60,7 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
         {
             if(id != User.FindFirst(ClaimTypes.NameIdentifier).Value)
             {
-                _logger.LogError($"گاربر گرامی آقا/خانم {userForUpdateDto.Name} شما اجازه ویرایش این کاربر را ندارید ");
+                _logger.LogError($"گاربر  آقا/خانم {userForUpdateDto.Name} درخواست غیرمحاز برای ویرایش یوزر دیگیری کرده است ");
 
                 return Unauthorized("شما اجازه ویرایش این کاربر را ندارید");
             }
@@ -74,6 +75,8 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
                 return NoContent();
             }
             else{
+                _logger.LogError($"گاربر   {userForUpdateDto.Name} اپدیت نشد");
+
                 return BadRequest(new ReturnMessage()
                 {
                     status = false,
@@ -96,7 +99,7 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
                 {
                     status = false,
                     title = "خطا",
-                    message = "پسورد قبلی استباه میباشد"
+                    message = "پسورد قبلی اشتباه میباشد"
                 });
 
             if(await _userService.UpdateUserPass(userFromRepo, passwordForChangeDto.NewPassword))
@@ -104,6 +107,7 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
                 return NoContent();
             }
             else{
+
                 return BadRequest(new ReturnMessage()
                 {
                     status = false,

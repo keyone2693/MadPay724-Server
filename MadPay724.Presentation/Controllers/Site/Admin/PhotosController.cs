@@ -13,6 +13,7 @@ using MadPay724.Services.Upload.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace MadPay724.Presentation.Controllers.Site.Admin
@@ -27,6 +28,7 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
         private readonly IMapper _mapper;
         private readonly IUploadService _uploadService;
         private readonly IWebHostEnvironment _env;
+
         public PhotosController(IUnitOfWork<MadpayDbContext> dbContext, IMapper mapper, IUploadService uploadService,
              IWebHostEnvironment env)
         {
