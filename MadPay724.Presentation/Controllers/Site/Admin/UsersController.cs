@@ -7,6 +7,7 @@ using AutoMapper;
 using MadPay724.Common.ReturnMessages;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Site.Admin.Users;
+using MadPay724.Presentation.Helpers.Filters;
 using MadPay724.Repo.Infrastructure;
 using MadPay724.Services.Site.Admin.Auth.Interface;
 using Microsoft.AspNetCore.Authorization;
@@ -16,6 +17,7 @@ using Microsoft.Extensions.Logging;
 namespace MadPay724.Presentation.Controllers.Site.Admin
 {
     [Authorize]
+    [ServiceFilter(typeof(LogFilter))]
     [ApiExplorerSettings(GroupName = "Site")]
     [Route("site/admin/[controller]")]
     [ApiController]

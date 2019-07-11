@@ -27,6 +27,7 @@ using System.IO;
 using Microsoft.Extensions.FileProviders;
 using MadPay724.Services.Upload.Interface;
 using MadPay724.Services.Upload.Service;
+using MadPay724.Presentation.Helpers.Filters;
 
 namespace MadPay724.Presentation
 {
@@ -103,6 +104,7 @@ namespace MadPay724.Presentation
             services.AddScoped<IAuthService , AuthService>();
             services.AddScoped<IUserService , UserService>();
             services.AddScoped<IUploadService, UploadService>();
+            services.AddScoped<LogFilter>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(opt =>
