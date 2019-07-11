@@ -46,6 +46,7 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
         }
 
         [HttpGet("{id}")]
+        [ServiceFilter(typeof(UserCheckIdFilter))]
         public async Task<IActionResult> GetUser(string id)
         {
             var user = await _db.UserRepository.GetManyAsync(p => p.Id == id, null, "Photos");
@@ -54,15 +55,9 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
         }
 
         [HttpPut("{id}")]
+        [ServiceFilter(typeof(UserCheckIdFilter))]
         public async Task<IActionResult> UpdateUser(string id, UserForUpdateDto userForUpdateDto)
         {
-            if(id != User.FindFirst(ClaimTypes.NameIdentifier).Value)
-            {
-                _logger.LogError($"گاربر  آقا/خانم {userForUpdateDto.Name} درخواست غیرمحاز برای ویرایش یوزر دیگیری کرده است ");
-
-                return Unauthorized("شما اجازه ویرایش این کاربر را ندارید");
-            }
-
             var userFromRepo = await _db.UserRepository.GetByIdAsync(id);
 
             _mapper.Map(userForUpdateDto, userFromRepo);
@@ -73,7 +68,7 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
                 return NoContent();
             }
             else{
-                _logger.LogError($"گاربر   {userForUpdateDto.Name} اپدیت نشد");
+                _logger.LogError($"کاربر   {userForUpdateDto.Name} اپدیت نشد");
 
                 return BadRequest(new ReturnMessage()
                 {
