@@ -35,7 +35,6 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
             _userService = userService;
             _logger = logger;
         }
-
         [HttpGet]
         public async Task<IActionResult> GetUsers()
         {
