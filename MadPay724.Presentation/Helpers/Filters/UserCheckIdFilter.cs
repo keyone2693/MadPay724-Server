@@ -18,15 +18,33 @@ namespace MadPay724.Presentation.Helpers.Filters
         }
         public override void OnActionExecuting(ActionExecutingContext context )
         {
-            if (context.RouteData.Values["id"].ToString() == _httpContextAcc.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value)
+            if(context.RouteData.Values["id"] != null && context.RouteData.Values["userId"] == null)
             {
-                base.OnActionExecuting(context);
-            }
-            else{
-                _logger.LogError($"کاربر  آقا/خانم {context.RouteData.Values["id"].ToString()} درخواست غیرمحاز برای ویرایش/مشاهده یوزر دیگیری کرده است ");
+                if (context.RouteData.Values["id"].ToString() == _httpContextAcc.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value)
+                {
+                    base.OnActionExecuting(context);
+                }
+                else
+                {
+                    _logger.LogError($"کاربر  آقا/خانم {context.RouteData.Values["id"].ToString()} درخواست غیرمحاز برای ویرایش/مشاهده یوزر دیگیری کرده است ");
 
-                context.Result = new UnauthorizedResult();
+                    context.Result = new UnauthorizedResult();
+                }
             }
+          else
+            {
+                if (context.RouteData.Values["userId"].ToString() == _httpContextAcc.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value)
+                {
+                    base.OnActionExecuting(context);
+                }
+                else
+                {
+                    _logger.LogError($"کاربر  آقا/خانم {context.RouteData.Values["userId"].ToString()} درخواست غیرمحاز برای ویرایش/مشاهده یوزر دیگیری کرده است ");
+
+                    context.Result = new UnauthorizedResult();
+                }
+            }
+        
         }
     }
 }

@@ -8,6 +8,7 @@ using CloudinaryDotNet.Actions;
 using MadPay724.Common.Helpers;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Site.Admin.Photos;
+using MadPay724.Presentation.Helpers.Filters;
 using MadPay724.Repo.Infrastructure;
 using MadPay724.Services.Upload.Interface;
 using Microsoft.AspNetCore.Authorization;
@@ -37,23 +38,21 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
             _mapper = mapper;
             _uploadService = uploadService;
         }
+        [ServiceFilter(typeof(UserCheckIdFilter))]
         [HttpGet("{id}", Name = "GetPhoto")]
         public async Task<IActionResult> GetPhoto(string id)
         {
             var photoFromRepo = await _db.PhotoRepository.GetByIdAsync(id);
 
             var photo = _mapper.Map<PhotoForReturnProfileDto>(photoFromRepo);
+
             return Ok(photo);
         }
 
+        [ServiceFilter(typeof(UserCheckIdFilter))]
         [HttpPost]
         public async Task<IActionResult> ChangeUserPhoto(string userId, [FromForm]PhotoForProfileDto photoForProfileDto)
         {
-            if (userId != User.FindFirst(ClaimTypes.NameIdentifier).Value)
-            {
-                return Unauthorized("شما اجازه تغییر تصویر این کاربر را ندارید");
-            }
-
             //var userFromRepo = await _db.UserRepository.GetByIdAsync(userId);
 
             // var uplaodRes = _uploadService.UploadToCloudinary(photoForProfileDto.File);

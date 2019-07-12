@@ -83,6 +83,7 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
         }
 
         [Route("ChangeUserPassword/{id}")]
+        [ServiceFilter(typeof(UserCheckIdFilter))]
         [HttpPut]
         public async Task<IActionResult> ChangeUserPassword(string id, PasswordForChangeDto passwordForChangeDto)
         {
