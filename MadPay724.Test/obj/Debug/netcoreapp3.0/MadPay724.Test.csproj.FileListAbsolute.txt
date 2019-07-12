@@ -228,10 +228,6 @@ D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\obj\Debug\netcoreapp
 D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\obj\Debug\netcoreapp3.0\MadPay724.Test.pdb
 D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\bin\Debug\netcoreapp3.0\xunit.runner.json
 D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\bin\Debug\netcoreapp3.0\Microsoft.AspNetCore.TestHost.dll
-D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\bin\Debug\netcoreapp3.0\FluentAssertions.dll
-D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\bin\Debug\netcoreapp3.0\System.Configuration.ConfigurationManager.dll
-D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\bin\Debug\netcoreapp3.0\System.Security.Cryptography.ProtectedData.dll
-D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\bin\Debug\netcoreapp3.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\bin\Debug\netcoreapp3.0\System.Web.Mvc.dll
 D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\bin\Debug\netcoreapp3.0\System.Web.Razor.dll
 D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\bin\Debug\netcoreapp3.0\System.Web.Helpers.dll
@@ -239,3 +235,5 @@ D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\bin\Debug\netcoreapp
 D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\bin\Debug\netcoreapp3.0\System.Web.WebPages.Razor.dll
 D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\bin\Debug\netcoreapp3.0\System.Web.WebPages.dll
 D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\bin\Debug\netcoreapp3.0\Microsoft.Web.Infrastructure.dll
+D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\bin\Debug\netcoreapp3.0\Castle.Core.dll
+D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\bin\Debug\netcoreapp3.0\Moq.dll

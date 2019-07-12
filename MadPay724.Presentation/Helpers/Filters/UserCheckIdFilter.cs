@@ -23,7 +23,7 @@ namespace MadPay724.Presentation.Helpers.Filters
                 base.OnActionExecuting(context);
             }
             else{
-                _logger.LogError($"کاربر  آقا/خانم {context.RouteData.Values["id"].ToString()} درخواست غیرمحاز برای ویرایش یوزر دیگیری کرده است ");
+                _logger.LogError($"کاربر  آقا/خانم {context.RouteData.Values["id"].ToString()} درخواست غیرمحاز برای ویرایش/مشاهده یوزر دیگیری کرده است ");
 
                 context.Result = new UnauthorizedResult();
             }

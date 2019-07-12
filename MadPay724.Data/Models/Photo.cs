@@ -14,11 +14,11 @@ namespace MadPay724.Data.Models
             DateModified = DateTime.Now;
         }
         [Required]
-        [StringLength(0, MinimumLength = 1000)]
+        [StringLength(1000, MinimumLength = 0)]
         public string Url { get; set; }
-        [StringLength(0, MinimumLength = 500)]
+        [StringLength(500, MinimumLength = 0)]
         public string Description { get; set; }
-        [StringLength(0, MinimumLength = 500)]
+        [StringLength(500, MinimumLength = 0)]
         public string Alt { get; set; }
         [Required]
         public bool IsMain { get; set; }

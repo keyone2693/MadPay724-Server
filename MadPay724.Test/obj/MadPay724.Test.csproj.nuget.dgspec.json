@@ -458,10 +458,6 @@
       "frameworks": {
         "netcoreapp3.0": {
           "dependencies": {
-            "FluentAssertions": {
-              "target": "Package",
-              "version": "[5.7.0, )"
-            },
             "Microsoft.AspNetCore.TestHost": {
               "target": "Package",
               "version": "[2.2.0, )"
@@ -476,6 +472,10 @@
               "target": "Package",
               "version": "[3.0.0-preview6-27804-01, )",
               "autoReferenced": true
+            },
+            "Moq": {
+              "target": "Package",
+              "version": "[4.12.0, )"
             },
             "xunit": {
               "target": "Package",

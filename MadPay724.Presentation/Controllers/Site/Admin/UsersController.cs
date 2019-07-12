@@ -23,6 +23,7 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
     [ApiController]
     public class UsersController : ControllerBase
     {
+
         private readonly IUnitOfWork<MadpayDbContext> _db;
         private readonly IMapper _mapper;
         private readonly IUserService _userService;
