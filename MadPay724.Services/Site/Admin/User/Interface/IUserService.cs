@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MadPay724.Services.Site.Admin.Auth.Interface
+namespace MadPay724.Services.Site.Admin.User.Interface
 {
     public interface IUserService
     {
-        Task<User> GetUserForPassChange(string id, string password);
-        Task<bool> UpdateUserPass(User user, string newPassword);
+        Task<Data.Models.User> GetUserForPassChange(string id, string password);
+        Task<bool> UpdateUserPass(Data.Models.User user, string newPassword);
     }
 }

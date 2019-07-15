@@ -4,8 +4,9 @@ using MadPay724.Data.Models;
 using MadPay724.Repo.Infrastructure;
 using MadPay724.Services.Site.Admin.Auth.Interface;
 using System.Threading.Tasks;
+using MadPay724.Services.Site.Admin.User.Interface;
 
-namespace MadPay724.Services.Site.Admin.Auth.Service
+namespace MadPay724.Services.Site.Admin.User.Service
 {
     public class UserService : IUserService
     {
@@ -17,7 +18,7 @@ namespace MadPay724.Services.Site.Admin.Auth.Service
 
         }
 
-        public async Task<User> GetUserForPassChange(string id, string password)
+        public async Task<Data.Models.User> GetUserForPassChange(string id, string password)
         {
 
             var user = await _db.UserRepository.GetByIdAsync(id);
@@ -34,7 +35,7 @@ namespace MadPay724.Services.Site.Admin.Auth.Service
             return user;
         }
 
-        public async Task<bool> UpdateUserPass(User user, string newPassword)
+        public async Task<bool> UpdateUserPass(Data.Models.User user, string newPassword)
         {
             byte[] passwordHash, passwordSalt;
             Utilities.CreatePasswordHash(newPassword, out passwordHash, out passwordSalt);

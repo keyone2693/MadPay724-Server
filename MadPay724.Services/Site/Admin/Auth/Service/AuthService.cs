@@ -17,7 +17,7 @@ namespace MadPay724.Services.Site.Admin.Auth.Service
             _db = dbContext;
         }
 
-        public async Task<User> Login(string username, string password)
+        public async Task<Data.Models.User> Login(string username, string password)
         {
             var users = await _db.UserRepository.GetManyAsync(p => p.UserName == username, null, "Photos");
             var user = users.SingleOrDefault();
@@ -34,7 +34,7 @@ namespace MadPay724.Services.Site.Admin.Auth.Service
             return user;
         }
 
-        public async Task<User> Register(User user, Photo photo, string password)
+        public async Task<Data.Models.User> Register(Data.Models.User user, Photo photo, string password)
         {
             byte[] passwordHash, passwordSalt;
             Utilities.CreatePasswordHash(password, out passwordHash, out passwordSalt);
