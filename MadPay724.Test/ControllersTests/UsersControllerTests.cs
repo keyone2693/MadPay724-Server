@@ -35,24 +35,7 @@ namespace MadPay724.Test.ControllersTests
 
         #region GetUserTests
         [Fact]
-        public async Task GetUser_CantGetAnOtherUser()
-        {
-            //Arrange------------------------------------------------------------------------------------------------------------------------------
-            string anOtherUserId = "c5ba73d4-d9d8-4e2d-9fe3-b328b8f7f84b";
-            var request = "/site/admin/Users/" + anOtherUserId;
-
-            _client.DefaultRequestHeaders.Authorization
-           = new AuthenticationHeaderValue("Bearer", _AToken);
-
-            //Act----------------------------------------------------------------------------------------------------------------------------------
-            var response = await _client.GetAsync(request);
-
-            //Assert-------------------------------------------------------------------------------------------------------------------------------
-            Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
-
-        }
-        [Fact]
-        public async Task GetUser_CanGetUserHimself()
+        public async Task GetUser_Success_GetUserHimself()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
             string userHimSelfId = "0d47394e-672f-4db7-898c-bfd8f32e2af7";
@@ -68,37 +51,29 @@ namespace MadPay724.Test.ControllersTests
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
         }
-        #endregion
-
-        #region UpdateUserTests
         [Fact]
-        public async Task UpdateUser_CantUpdateAnOtherUser()
+        public async Task GetUser_Fail_GetAnOtherUser()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
             string anOtherUserId = "c5ba73d4-d9d8-4e2d-9fe3-b328b8f7f84b";
-            var request = new
-            {
-                Url = "/site/admin/Users/" + anOtherUserId,
-                Body = new
-                {
-                    Name = "علی حسینی",
-                    PhoneNumber = "string",
-                    Address = "string",
-                    Gender = true,
-                    City = "string"
-                }
-            };
+            var request = "/site/admin/Users/" + anOtherUserId;
+
             _client.DefaultRequestHeaders.Authorization
            = new AuthenticationHeaderValue("Bearer", _AToken);
 
             //Act----------------------------------------------------------------------------------------------------------------------------------
-            var response = await _client.PutAsync(request.Url, ContentHelper.GetStringContent(request.Body));
+            var response = await _client.GetAsync(request);
 
             //Assert-------------------------------------------------------------------------------------------------------------------------------
             Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+
         }
+
+        #endregion
+
+        #region UpdateUserTests
         [Fact]
-        public async Task UpdateUser_CanUpdateUserHimself()
+        public async Task UpdateUser_Success_UpdateUserHimself()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
             string userHimselfId = "0d47394e-672f-4db7-898c-bfd8f32e2af7";
@@ -124,9 +99,34 @@ namespace MadPay724.Test.ControllersTests
             response.EnsureSuccessStatusCode();
             Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
         }
-
         [Fact]
-        public async Task UpdateUser_ModelStateError()
+        public async Task UpdateUser_Fail_UpdateAnOtherUser()
+        {
+            //Arrange------------------------------------------------------------------------------------------------------------------------------
+            string anOtherUserId = "c5ba73d4-d9d8-4e2d-9fe3-b328b8f7f84b";
+            var request = new
+            {
+                Url = "/site/admin/Users/" + anOtherUserId,
+                Body = new
+                {
+                    Name = "علی حسینی",
+                    PhoneNumber = "string",
+                    Address = "string",
+                    Gender = true,
+                    City = "string"
+                }
+            };
+            _client.DefaultRequestHeaders.Authorization
+           = new AuthenticationHeaderValue("Bearer", _AToken);
+
+            //Act----------------------------------------------------------------------------------------------------------------------------------
+            var response = await _client.PutAsync(request.Url, ContentHelper.GetStringContent(request.Body));
+
+            //Assert-------------------------------------------------------------------------------------------------------------------------------
+            Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+        }
+        [Fact]
+        public async Task UpdateUser_Fail_ModelStateError()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
             string userHimselfId = "c5ba73d4-d9d8-4e2d-9fe3-b328b8f7f84b";
@@ -166,7 +166,7 @@ namespace MadPay724.Test.ControllersTests
 
         #region ChangeUserPasswordTests
         [Fact]
-        public async Task ChangeUserPassword_Can_Himself()
+        public async Task ChangeUserPassword_Success_Himself()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
             string userHimselfId = "0d47394e-672f-4db7-898c-bfd8f32e2af7";
@@ -190,7 +190,7 @@ namespace MadPay724.Test.ControllersTests
             Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
         }
         [Fact]
-        public async Task ChangeUserPassword_Cant_AnOtherUser()
+        public async Task ChangeUserPassword_Fail_AnOtherUser()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
             string anOtherUserId = "c5ba73d4-d9d8-4e2d-9fe3-b328b8f7f84b";
@@ -212,9 +212,8 @@ namespace MadPay724.Test.ControllersTests
             //Assert-------------------------------------------------------------------------------------------------------------------------------
             Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
         }
-
         [Fact]
-        public async Task ChangeUserPassword_Cant_Himself_WrongOldPassword()
+        public async Task ChangeUserPassword_Fail_Himself_WrongOldPassword()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
             string userHimselfId = "0d47394e-672f-4db7-898c-bfd8f32e2af7";
@@ -243,7 +242,7 @@ namespace MadPay724.Test.ControllersTests
 
         }
         [Fact]
-        public async Task ChangeUserPassword_ModelStateError()
+        public async Task ChangeUserPassword_Fail_ModelStateError()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
             string userHimselfId = "c5ba73d4-d9d8-4e2d-9fe3-b328b8f7f84b";

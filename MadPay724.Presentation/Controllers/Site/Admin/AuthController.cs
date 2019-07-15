@@ -96,9 +96,6 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
         [HttpPost("login")]
         public async Task<IActionResult> Login(UseForLoginDto useForLoginDto)
         {
-
-            //throw new Exception("asdasd");
-
             var userFromRepo = await _authService.Login(useForLoginDto.UserName, useForLoginDto.Password);
 
             if (userFromRepo == null)
@@ -107,12 +104,6 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
                 return Unauthorized("کاربری با این یوزر و پس وجود ندارد");
 
             }
-                //return Unauthorized(new ReturnMessage()
-                //{
-                //    status = false,
-                //    title = "خطا",
-                //    message = "کاربری با این یوزر و پس وجود ندارد"
-                //});
 
             var claims = new[]
             {

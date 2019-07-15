@@ -9,6 +9,7 @@
       "MadPay724.Test/1.0.0": {
         "dependencies": {
           "MadPay724.Presentation": "1.0.0",
+          "Microsoft.AspNet.WebApi.Client": "5.2.7",
           "Microsoft.AspNetCore.TestHost": "2.2.0",
           "Microsoft.NET.Test.Sdk": "16.2.0",
           "Microsoft.NETCore.App": "3.0.0-preview6-27804-01",
@@ -93,6 +94,18 @@
           "lib/net45/System.Web.Razor.dll": {
             "assemblyVersion": "3.0.0.0",
             "fileVersion": "3.0.61128.0"
+          }
+        }
+      },
+      "Microsoft.AspNet.WebApi.Client/5.2.7": {
+        "dependencies": {
+          "Newtonsoft.Json": "12.0.2",
+          "Newtonsoft.Json.Bson": "1.0.2"
+        },
+        "runtime": {
+          "lib/netstandard2.0/System.Net.Http.Formatting.dll": {
+            "assemblyVersion": "5.2.7.0",
+            "fileVersion": "5.2.61128.0"
           }
         }
       },
@@ -2991,6 +3004,13 @@
       "sha512": "sha512-BpWEZ+Ys7g9VAkbAfpG5jr5A1fKcmadCCXv3fYfps5YfTVABJIGV4uc9yvmXKxsNsjL+BzDld2gs+xtgT2gg1g==",
       "path": "microsoft.aspnet.razor/3.2.7",
       "hashPath": "microsoft.aspnet.razor.3.2.7.nupkg.sha512"
+    },
+    "Microsoft.AspNet.WebApi.Client/5.2.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-/76fAHknzvFqbznS6Uj2sOyE9rJB3PltY+f53TH8dX9RiGhk02EhuFCWljSj5nnqKaTsmma8DFR50OGyQ4yJ1g==",
+      "path": "microsoft.aspnet.webapi.client/5.2.7",
+      "hashPath": "microsoft.aspnet.webapi.client.5.2.7.nupkg.sha512"
     },
     "Microsoft.AspNet.WebPages/3.2.7": {
       "type": "package",

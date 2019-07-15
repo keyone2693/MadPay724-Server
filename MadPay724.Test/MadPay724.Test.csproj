@@ -7,16 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Pic\profilepic.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Pic\profilepic.png">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="2.2.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
     <PackageReference Include="Moq" Version="4.12.0" />
