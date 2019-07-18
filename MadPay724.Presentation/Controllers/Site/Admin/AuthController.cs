@@ -34,10 +34,6 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
         private readonly IMapper _mapper;
         private readonly ILogger<AuthController> _logger;
 
-        public AuthController()
-        {
-               
-        }
         public AuthController(IUnitOfWork<MadpayDbContext> dbContext, IAuthService authService,
             IConfiguration config, IMapper mapper, ILogger<AuthController> logger)
         {
