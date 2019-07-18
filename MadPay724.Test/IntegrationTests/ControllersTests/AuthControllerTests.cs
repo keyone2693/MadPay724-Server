@@ -1,33 +1,28 @@
 ﻿using MadPay724.Data.Dtos.Site.Admin.Users;
 using MadPay724.Presentation;
-using MadPay724.Test.Providers;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 using MadPay724.Common.ReturnMessages;
-using Microsoft.AspNetCore.Mvc.Versioning;
+using MadPay724.Test.IntegrationTests.Providers;
 using Xunit;
 
-namespace MadPay724.Test.ControllersTests
+namespace MadPay724.Test.IntegrationTests.ControllersTests
 {
     public class AuthControllerTests : IClassFixture<TestClientProvider<Startup>>
     {
-        private HttpClient _client;
-        private readonly string _UnToken;
-        private readonly string _AToken;
+        private readonly HttpClient _client;
+        private readonly string _unToken;
+        private readonly string _aToken;
         public AuthControllerTests(TestClientProvider<Startup> testClientProvider)
         {
             _client = testClientProvider.Client;
-            _UnToken = "";
+            _unToken = "";
             //0d47394e-672f-4db7-898c-bfd8f32e2af7
             //haysmathis@barkarama.com
             //123789
-            _AToken = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwZDQ3Mzk0ZS02NzJmLTRkYjctODk4Yy1iZmQ4ZjMyZTJhZjciLCJ1bmlxdWVfbmFtZSI6ImhheXNtYXRoaXNAYmFya2FyYW1hLmNvbSIsIm5iZiI6MTU2MjkzNDI0NywiZXhwIjoxNTYzMDIwNjQ3LCJpYXQiOjE1NjI5MzQyNDd9.ZaWbyiXyJk3qIgEci_HMi1h3tiMeUzsP3h8H-7f8f31viUsD6PkN18lYa88g5_NVUxoX7PAXuZvH2exFy7boWA";
+            _aToken = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwZDQ3Mzk0ZS02NzJmLTRkYjctODk4Yy1iZmQ4ZjMyZTJhZjciLCJ1bmlxdWVfbmFtZSI6ImhheXNtYXRoaXNAYmFya2FyYW1hLmNvbSIsIm5iZiI6MTU2MjkzNDI0NywiZXhwIjoxNTYzMDIwNjQ3LCJpYXQiOjE1NjI5MzQyNDd9.ZaWbyiXyJk3qIgEci_HMi1h3tiMeUzsP3h8H-7f8f31viUsD6PkN18lYa88g5_NVUxoX7PAXuZvH2exFy7boWA";
         }
 
         #region loginTests
@@ -81,7 +76,7 @@ namespace MadPay724.Test.ControllersTests
                     Password = string.Empty
                 }
             };
-            var controller = new ModelStateControllerTests();
+            var controller = new ModelStateController();
             //Act----------------------------------------------------------------------------------------------------------------------------------
             var response = await _client.PostAsync(request.Url, ContentHelper.GetStringContent(request.Body));
 
@@ -170,7 +165,7 @@ namespace MadPay724.Test.ControllersTests
                     PhoneNumber = string.Empty
                 }
             };
-            var controller = new ModelStateControllerTests();
+            var controller = new ModelStateController();
             //Act----------------------------------------------------------------------------------------------------------------------------------
             var response = await _client.PostAsync(request.Url, ContentHelper.GetStringContent(request.Body));
 

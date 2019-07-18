@@ -1,7 +1,6 @@
 ﻿using MadPay724.Data.Dtos.Site.Admin.Photos;
 using MadPay724.Data.Dtos.Site.Admin.Users;
 using MadPay724.Presentation;
-using MadPay724.Test.Providers;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using System;
@@ -14,25 +13,26 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using MadPay724.Test.IntegrationTests.Providers;
 using Xunit;
 using Microsoft.AspNetCore.Http.Internal;
 
-namespace MadPay724.Test.ControllersTests
+namespace MadPay724.Test.IntegrationTests.ControllersTests
 {
 
     public class PhotosControllerTests : IClassFixture<TestClientProvider<Startup>>
     {
         private HttpClient _client;
-        private readonly string _UnToken;
-        private readonly string _AToken;
+        private readonly string _unToken;
+        private readonly string _aToken;
         public PhotosControllerTests(TestClientProvider<Startup> testClientProvider)
         {
             _client = testClientProvider.Client;
-            _UnToken = "";
+            _unToken = "";
             //0d47394e-672f-4db7-898c-bfd8f32e2af7
             //haysmathis@barkarama.com
             //123789
-            _AToken = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwZDQ3Mzk0ZS02NzJmLTRkYjctODk4Yy1iZmQ4ZjMyZTJhZjciLCJ1bmlxdWVfbmFtZSI6ImhheXNtYXRoaXNAYmFya2FyYW1hLmNvbSIsIm5iZiI6MTU2MjkzNDI0NywiZXhwIjoxNTYzMDIwNjQ3LCJpYXQiOjE1NjI5MzQyNDd9.ZaWbyiXyJk3qIgEci_HMi1h3tiMeUzsP3h8H-7f8f31viUsD6PkN18lYa88g5_NVUxoX7PAXuZvH2exFy7boWA";
+            _aToken = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwZDQ3Mzk0ZS02NzJmLTRkYjctODk4Yy1iZmQ4ZjMyZTJhZjciLCJ1bmlxdWVfbmFtZSI6ImhheXNtYXRoaXNAYmFya2FyYW1hLmNvbSIsIm5iZiI6MTU2MjkzNDI0NywiZXhwIjoxNTYzMDIwNjQ3LCJpYXQiOjE1NjI5MzQyNDd9.ZaWbyiXyJk3qIgEci_HMi1h3tiMeUzsP3h8H-7f8f31viUsD6PkN18lYa88g5_NVUxoX7PAXuZvH2exFy7boWA";
         }
 
         #region GetPhotoTests
@@ -45,7 +45,7 @@ namespace MadPay724.Test.ControllersTests
             var request = "/site/admin/users/" + userHimselfId + "/photos/" + userPhotoId;
 
             _client.DefaultRequestHeaders.Authorization
-           = new AuthenticationHeaderValue("Bearer", _AToken);
+           = new AuthenticationHeaderValue("Bearer", _aToken);
 
             //Act----------------------------------------------------------------------------------------------------------------------------------
             var response = await _client.GetAsync(request);
@@ -63,7 +63,7 @@ namespace MadPay724.Test.ControllersTests
             var request = "/site/admin/users/" + userHimselfId + "/photos/" + userPhotoId;
 
             _client.DefaultRequestHeaders.Authorization
-           = new AuthenticationHeaderValue("Bearer", _AToken);
+           = new AuthenticationHeaderValue("Bearer", _aToken);
 
             //Act----------------------------------------------------------------------------------------------------------------------------------
             var response = await _client.GetAsync(request);
@@ -128,7 +128,7 @@ namespace MadPay724.Test.ControllersTests
             multiContent.Add(ContentHelper.GetStringContent(request.Body));
 
             _client.DefaultRequestHeaders.Authorization
-           = new AuthenticationHeaderValue("Bearer", _AToken);
+           = new AuthenticationHeaderValue("Bearer", _aToken);
 
             //Act----------------------------------------------------------------------------------------------------------------------------------
             var response = await _client.PostAsync(request.Url, multiContent);
@@ -167,7 +167,7 @@ namespace MadPay724.Test.ControllersTests
             multiContent.Add(ContentHelper.GetStringContent(request.Body));
 
             _client.DefaultRequestHeaders.Authorization
-           = new AuthenticationHeaderValue("Bearer", _AToken);
+           = new AuthenticationHeaderValue("Bearer", _aToken);
 
             //Act----------------------------------------------------------------------------------------------------------------------------------
             var response = await _client.PostAsync(request.Url, multiContent);
@@ -192,7 +192,7 @@ namespace MadPay724.Test.ControllersTests
                 }
             };
             _client.DefaultRequestHeaders.Authorization
-           = new AuthenticationHeaderValue("Bearer", _AToken);
+           = new AuthenticationHeaderValue("Bearer", _aToken);
 
             //Act----------------------------------------------------------------------------------------------------------------------------------
             var response = await _client.PostAsync(request.Url, ContentHelper.GetStringContent(request.Body));

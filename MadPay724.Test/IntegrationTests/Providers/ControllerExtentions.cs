@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 
-namespace MadPay724.Test.Providers
+namespace MadPay724.Test.IntegrationTests.Providers
 {
     public static class ControllerExtentions
     {
