@@ -13,6 +13,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using MadPay724.Test.DataInput;
 using MadPay724.Test.IntegrationTests.Providers;
 using Xunit;
 
@@ -21,16 +22,9 @@ namespace MadPay724.Test.IntegrationTests.ControllersTests
     public class UsersControllerTests : IClassFixture<TestClientProvider<Startup>>
     {
         private HttpClient _client;
-        private readonly string _unToken;
-        private readonly string _aToken;
         public UsersControllerTests(TestClientProvider<Startup> testClientProvider)
         {
             _client = testClientProvider.Client;
-            _unToken = "";
-            //0d47394e-672f-4db7-898c-bfd8f32e2af7
-            //haysmathis@barkarama.com
-            //123789
-            _aToken = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwZDQ3Mzk0ZS02NzJmLTRkYjctODk4Yy1iZmQ4ZjMyZTJhZjciLCJ1bmlxdWVfbmFtZSI6ImhheXNtYXRoaXNAYmFya2FyYW1hLmNvbSIsIm5iZiI6MTU2MzQ1NjA3NywiZXhwIjoxNTYzNTQyNDc3LCJpYXQiOjE1NjM0NTYwNzd9.q4iLi5Zc6in0QWd6az-sgqHHn27Q7w9pP9znjGYKlID0mOBIC2kx-3njB5z3NDoecjwpw4mtywFfPMJC3QdSNQ";
         }
 
         #region GetUserTests
@@ -38,10 +32,10 @@ namespace MadPay724.Test.IntegrationTests.ControllersTests
         public async Task GetUser_Success_GetUserHimself()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
-            string userHimSelfId = "0d47394e-672f-4db7-898c-bfd8f32e2af7";
+            string userHimSelfId = UnitTestsDataInput.userLogedInId;
             var request = "/site/admin/Users/" + userHimSelfId;
             _client.DefaultRequestHeaders.Authorization
-           = new AuthenticationHeaderValue("Bearer", _aToken);
+           = new AuthenticationHeaderValue("Bearer", UnitTestsDataInput.aToken);
 
             //Act----------------------------------------------------------------------------------------------------------------------------------
             var response = await _client.GetAsync(request);
@@ -55,11 +49,11 @@ namespace MadPay724.Test.IntegrationTests.ControllersTests
         public async Task GetUser_Fail_GetAnOtherUser()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
-            string anOtherUserId = "c5ba73d4-d9d8-4e2d-9fe3-b328b8f7f84b";
+            string anOtherUserId = UnitTestsDataInput.userAnOtherId;
             var request = "/site/admin/Users/" + anOtherUserId;
 
             _client.DefaultRequestHeaders.Authorization
-           = new AuthenticationHeaderValue("Bearer", _aToken);
+           = new AuthenticationHeaderValue("Bearer", UnitTestsDataInput.aToken);
 
             //Act----------------------------------------------------------------------------------------------------------------------------------
             var response = await _client.GetAsync(request);
@@ -76,21 +70,14 @@ namespace MadPay724.Test.IntegrationTests.ControllersTests
         public async Task UpdateUser_Success_UpdateUserHimself()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
-            string userHimselfId = "0d47394e-672f-4db7-898c-bfd8f32e2af7";
+            string userHimselfId = UnitTestsDataInput.userLogedInId;
             var request = new
             {
                 Url = "/site/admin/Users/" + userHimselfId,
-                Body = new
-                {
-                    Name = "علی حسینی",
-                    PhoneNumber = "string",
-                    Address = "string",
-                    Gender = true,
-                    City = "string"
-                }
+                Body = UnitTestsDataInput.userForUpdateDto
             };
             _client.DefaultRequestHeaders.Authorization
-           = new AuthenticationHeaderValue("Bearer", _aToken);
+           = new AuthenticationHeaderValue("Bearer", UnitTestsDataInput.aToken);
 
             //Act----------------------------------------------------------------------------------------------------------------------------------
             var response = await _client.PutAsync(request.Url, ContentHelper.GetStringContent(request.Body));
@@ -103,21 +90,14 @@ namespace MadPay724.Test.IntegrationTests.ControllersTests
         public async Task UpdateUser_Fail_UpdateAnOtherUser()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
-            string anOtherUserId = "c5ba73d4-d9d8-4e2d-9fe3-b328b8f7f84b";
+            string anOtherUserId = UnitTestsDataInput.userAnOtherId;
             var request = new
             {
                 Url = "/site/admin/Users/" + anOtherUserId,
-                Body = new
-                {
-                    Name = "علی حسینی",
-                    PhoneNumber = "string",
-                    Address = "string",
-                    Gender = true,
-                    City = "string"
-                }
+                Body = UnitTestsDataInput.userForUpdateDto
             };
             _client.DefaultRequestHeaders.Authorization
-           = new AuthenticationHeaderValue("Bearer", _aToken);
+           = new AuthenticationHeaderValue("Bearer", UnitTestsDataInput.aToken);
 
             //Act----------------------------------------------------------------------------------------------------------------------------------
             var response = await _client.PutAsync(request.Url, ContentHelper.GetStringContent(request.Body));
@@ -129,20 +109,14 @@ namespace MadPay724.Test.IntegrationTests.ControllersTests
         public async Task UpdateUser_Fail_ModelStateError()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
-            string userHimselfId = "c5ba73d4-d9d8-4e2d-9fe3-b328b8f7f84b";
+            string userHimselfId = UnitTestsDataInput.userLogedInId;
             var request = new
             {
                 Url = "/site/admin/Users/" + userHimselfId,
-                Body = new UserForUpdateDto
-                {
-                    Name = string.Empty,
-                    PhoneNumber = string.Empty,
-                    Address = string.Empty,
-                    City = "لورم ایپسوم متن ساختگی با تولید سادگلورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه مجله در ستون و سطر آنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد کتابهای زیادی درلورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه مجله در ستون و سطر آنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد کتابهای زیادی درلورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه مجله در ستون و سطر آنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد کتابهای زیادی دری نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه مجله در ستون و سطر آنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد کتابهای زیادی در."
-                }
+                Body = UnitTestsDataInput.userForUpdateDto_Fail_ModelState
             };
             _client.DefaultRequestHeaders.Authorization
-           = new AuthenticationHeaderValue("Bearer", _aToken);
+           = new AuthenticationHeaderValue("Bearer", UnitTestsDataInput.aToken);
 
             var controller = new ModelStateController();
 
@@ -169,18 +143,14 @@ namespace MadPay724.Test.IntegrationTests.ControllersTests
         public async Task ChangeUserPassword_Success_Himself()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
-            string userHimselfId = "0d47394e-672f-4db7-898c-bfd8f32e2af7";
+            string userHimselfId = UnitTestsDataInput.userLogedInId;
             var request = new
             {
                 Url = "/site/admin/Users/ChangeUserPassword/" + userHimselfId,
-                Body = new PasswordForChangeDto
-                {
-                    OldPassword = "123789",
-                    NewPassword = "123789"
-                }
+                Body = UnitTestsDataInput.passwordForChangeDto
             };
             _client.DefaultRequestHeaders.Authorization
-           = new AuthenticationHeaderValue("Bearer", _aToken);
+           = new AuthenticationHeaderValue("Bearer", UnitTestsDataInput.aToken);
 
             //Act----------------------------------------------------------------------------------------------------------------------------------
             var response = await _client.PutAsync(request.Url, ContentHelper.GetStringContent(request.Body));
@@ -193,18 +163,14 @@ namespace MadPay724.Test.IntegrationTests.ControllersTests
         public async Task ChangeUserPassword_Fail_AnOtherUser()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
-            string anOtherUserId = "c5ba73d4-d9d8-4e2d-9fe3-b328b8f7f84b";
+            string anOtherUserId = UnitTestsDataInput.userAnOtherId;
             var request = new
             {
                 Url = "/site/admin/Users/ChangeUserPassword/" + anOtherUserId,
-                Body = new PasswordForChangeDto
-                {
-                    OldPassword = "123789",
-                    NewPassword = "123789"
-                }
+                Body = UnitTestsDataInput.passwordForChangeDto
             };
             _client.DefaultRequestHeaders.Authorization
-           = new AuthenticationHeaderValue("Bearer", _aToken);
+           = new AuthenticationHeaderValue("Bearer", UnitTestsDataInput.aToken);
 
             //Act----------------------------------------------------------------------------------------------------------------------------------
             var response = await _client.PutAsync(request.Url, ContentHelper.GetStringContent(request.Body));
@@ -216,18 +182,14 @@ namespace MadPay724.Test.IntegrationTests.ControllersTests
         public async Task ChangeUserPassword_Fail_Himself_WrongOldPassword()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
-            string userHimselfId = "0d47394e-672f-4db7-898c-bfd8f32e2af7";
+            string userHimselfId = UnitTestsDataInput.userLogedInId;
             var request = new
             {
                 Url = "/site/admin/Users/ChangeUserPassword/" + userHimselfId,
-                Body = new PasswordForChangeDto
-                {
-                    OldPassword = "123789654645",
-                    NewPassword = "123789"
-                }
+                Body = UnitTestsDataInput.passwordForChangeDto_Fail
             };
             _client.DefaultRequestHeaders.Authorization
-           = new AuthenticationHeaderValue("Bearer", _aToken);
+           = new AuthenticationHeaderValue("Bearer", UnitTestsDataInput.aToken);
 
             //Act----------------------------------------------------------------------------------------------------------------------------------
             var response = await _client.PutAsync(request.Url, ContentHelper.GetStringContent(request.Body));
@@ -245,18 +207,14 @@ namespace MadPay724.Test.IntegrationTests.ControllersTests
         public async Task ChangeUserPassword_Fail_ModelStateError()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
-            string userHimselfId = "c5ba73d4-d9d8-4e2d-9fe3-b328b8f7f84b";
+            string userHimselfId = UnitTestsDataInput.userLogedInId;
             var request = new
             {
                 Url = "/site/admin/Users/ChangeUserPassword/" + userHimselfId,
-                Body = new PasswordForChangeDto
-                {
-                    OldPassword = string.Empty,
-                    NewPassword = string.Empty
-                }
+                Body = UnitTestsDataInput.passwordForChangeDto_Fail_ModelState
             };
             _client.DefaultRequestHeaders.Authorization
-           = new AuthenticationHeaderValue("Bearer", _aToken);
+           = new AuthenticationHeaderValue("Bearer", UnitTestsDataInput.aToken);
 
             var controller = new ModelStateController();
 

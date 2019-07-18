@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using MadPay724.Common.ReturnMessages;
+using MadPay724.Test.DataInput;
 using MadPay724.Test.IntegrationTests.Providers;
 using Xunit;
 
@@ -13,16 +14,10 @@ namespace MadPay724.Test.IntegrationTests.ControllersTests
     public class AuthControllerTests : IClassFixture<TestClientProvider<Startup>>
     {
         private readonly HttpClient _client;
-        private readonly string _unToken;
-        private readonly string _aToken;
+
         public AuthControllerTests(TestClientProvider<Startup> testClientProvider)
         {
             _client = testClientProvider.Client;
-            _unToken = "";
-            //0d47394e-672f-4db7-898c-bfd8f32e2af7
-            //haysmathis@barkarama.com
-            //123789
-            _aToken = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwZDQ3Mzk0ZS02NzJmLTRkYjctODk4Yy1iZmQ4ZjMyZTJhZjciLCJ1bmlxdWVfbmFtZSI6ImhheXNtYXRoaXNAYmFya2FyYW1hLmNvbSIsIm5iZiI6MTU2MjkzNDI0NywiZXhwIjoxNTYzMDIwNjQ3LCJpYXQiOjE1NjI5MzQyNDd9.ZaWbyiXyJk3qIgEci_HMi1h3tiMeUzsP3h8H-7f8f31viUsD6PkN18lYa88g5_NVUxoX7PAXuZvH2exFy7boWA";
         }
 
         #region loginTests
@@ -31,12 +26,7 @@ namespace MadPay724.Test.IntegrationTests.ControllersTests
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
             var request = "/site/admin/auth/login";
-            var model = new UseForLoginDto()
-            {
-                UserName = "haysmathis@barkarama.com",
-                Password = "123789",
-                IsRemember = true
-            };
+            var model = UnitTestsDataInput.useForLoginDto_Success;
             //Act----------------------------------------------------------------------------------------------------------------------------------
             var response = await _client.PostAsync(request, ContentHelper.GetStringContent(model));
 
@@ -49,12 +39,7 @@ namespace MadPay724.Test.IntegrationTests.ControllersTests
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
             var request = "/site/admin/auth/login";
-            var model = new UseForLoginDto()
-            {
-                UserName = "00@000.com",
-                Password = "0000",
-                IsRemember = true
-            };
+            var model = UnitTestsDataInput.useForLoginDto_Fail;
             //Act----------------------------------------------------------------------------------------------------------------------------------
             var response = await _client.PostAsync(request, ContentHelper.GetStringContent(model));
             var actual = await response.Content.ReadAsAsync<string>();
@@ -70,11 +55,7 @@ namespace MadPay724.Test.IntegrationTests.ControllersTests
             var request = new
             {
                 Url = "/site/admin/auth/login",
-                Body = new UseForLoginDto
-                {
-                    UserName = string.Empty,
-                    Password = string.Empty
-                }
+                Body = UnitTestsDataInput.useForLoginDto_Fail_ModelState
             };
             var controller = new ModelStateController();
             //Act----------------------------------------------------------------------------------------------------------------------------------
@@ -103,13 +84,7 @@ namespace MadPay724.Test.IntegrationTests.ControllersTests
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
             var request = "/site/admin/auth/register";
-            var model = new UserForRegisterDto()
-            {
-                UserName = "asasasasas@barkarama.com",
-                Password = "123789",
-                Name  = "کیوان",
-                PhoneNumber =  "15486523"
-            };
+            var model = UnitTestsDataInput.userForRegisterDto;
             //Act----------------------------------------------------------------------------------------------------------------------------------
             var response = await _client.PostAsync(request, ContentHelper.GetStringContent(model));
 
@@ -122,13 +97,7 @@ namespace MadPay724.Test.IntegrationTests.ControllersTests
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
             var request = "/site/admin/auth/register";
-            var model = new UserForRegisterDto()
-            {
-                UserName = "haysmathis@barkarama.com",
-                Password = "123789",
-                Name = "کیوان",
-                PhoneNumber = "15486523"
-            };
+            var model = UnitTestsDataInput.userForRegisterDto_Fail_Exist;
             var expected = new ReturnMessage()
             {
                 status = false,
@@ -157,13 +126,7 @@ namespace MadPay724.Test.IntegrationTests.ControllersTests
             var request = new
             {
                 Url = "/site/admin/auth/register",
-                Body = new UserForRegisterDto
-                {
-                    UserName = string.Empty,
-                    Password = string.Empty,
-                    Name = string.Empty,
-                    PhoneNumber = string.Empty
-                }
+                Body = UnitTestsDataInput.userForRegisterDto_Fail_ModelState
             };
             var controller = new ModelStateController();
             //Act----------------------------------------------------------------------------------------------------------------------------------

@@ -11,7 +11,7 @@ using MadPay724.Data.Models;
 using MadPay724.Presentation.Controllers.Site.Admin;
 using MadPay724.Repo.Infrastructure;
 using MadPay724.Services.Site.Admin.User.Interface;
-using MadPay724.Test.UnitTests.Mock.Data;
+using MadPay724.Test.DataInput;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -44,8 +44,8 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         public async Task GetUser_Success_GetUserHimself()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
-            var users = UsersControllerData.GetUser();
-            var userForDetailedDto = UsersControllerData.GetUserForDetailedDto();
+            var users = UsersControllerMockData.GetUser();
+            var userForDetailedDto = UsersControllerMockData.GetUserForDetailedDto();
             _mockRepo.Setup(x => x.UserRepository
                 .GetManyAsync(
                     It.IsAny<Expression<Func<User, bool>>>(),

@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 using MadPay724.Data.Dtos.Site.Admin.Users;
 using MadPay724.Data.Models;
 
-namespace MadPay724.Test.UnitTests.Mock.Data
+namespace MadPay724.Test.DataInput
+    public static class UsersControllerMockData
 {
-    public static class UsersControllerData
-    {
         public static IEnumerable<User> GetUser()
         {
             var userList = new List<User>()
