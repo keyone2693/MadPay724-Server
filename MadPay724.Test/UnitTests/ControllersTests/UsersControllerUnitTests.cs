@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
+using MadPay724.Common.ReturnMessages;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Site.Admin.Users;
 using MadPay724.Data.Models;
@@ -32,16 +33,14 @@ namespace MadPay724.Test.UnitTests.ControllersTests
             _mockRepo = new Mock<IUnitOfWork<MadpayDbContext>>();
             _mockMapper = new Mock<IMapper>();
             _mockUserService = new Mock<IUserService>();
-            _mockLogger = new Mock<ILogger<UsersController>>();
+            _mockLogger =new Mock<ILogger<UsersController>>();
             _controller = new UsersController(_mockRepo.Object, _mockMapper.Object, _mockUserService.Object, _mockLogger.Object);
-            //0d47394e-672f-4db7-898c-bfd8f32e2af7
-            //haysmathis@barkarama.com
-            //123789
+
         }
 
         #region GetUserTests
         [Fact]
-        public async Task GetUser_Success_GetUserHimself()
+        public async Task GetUser_Success_GetUser()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
             var users = UsersControllerMockData.GetUser();
@@ -63,42 +62,64 @@ namespace MadPay724.Test.UnitTests.ControllersTests
             Assert.IsType<UserForDetailedDto>(okResult.Value);
             Assert.Equal(200, okResult.StatusCode);
         }
-        [Fact]
-        public async Task GetUser_Fail_GetAnOtherUser()
-        {
-            //Arrange------------------------------------------------------------------------------------------------------------------------------
-
-
-            //Act----------------------------------------------------------------------------------------------------------------------------------
-
-            //Assert-------------------------------------------------------------------------------------------------------------------------------
-
-        }
 
         #endregion
 
         #region UpdateUserTests
         [Fact]
-        public async Task UpdateUser_Success_UpdateUserHimself()
+        public async Task UpdateUser_Success()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
+            var users = UsersControllerMockData.GetUser();
+            //var userForDetailedDto = UsersControllerMockData.GetUserForDetailedDto();
+            _mockRepo.Setup(x => x.UserRepository
+                .GetByIdAsync(
+                    It.IsAny<string>())).ReturnsAsync(() => users.First());
 
+            _mockRepo.Setup(x => x.UserRepository
+                .Update(
+                    It.IsAny<User>()));
+
+            _mockRepo.Setup(x => x.SaveAsync()).ReturnsAsync(true);
+            //
+            _mockMapper.Setup(x => x.Map(It.IsAny<UserForUpdateDto>(), It.IsAny<User>()))
+                .Returns(users.First());
 
             //Act----------------------------------------------------------------------------------------------------------------------------------
 
+            var result = await _controller.UpdateUser(It.IsAny<string>(), It.IsAny<UserForUpdateDto>());
+            var okResult = result as NoContentResult;
             //Assert-------------------------------------------------------------------------------------------------------------------------------
-
+            Assert.NotNull(okResult);
+            Assert.Equal(204, okResult.StatusCode);
         }
         [Fact]
-        public async Task UpdateUser_Fail_UpdateAnOtherUser()
+        public async Task UpdateUser_Fail()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
+            var users = UsersControllerMockData.GetUser();
+            //var userForDetailedDto = UsersControllerMockData.GetUserForDetailedDto();
+            _mockRepo.Setup(x => x.UserRepository
+                .GetByIdAsync(
+                    It.IsAny<string>())).ReturnsAsync(() => users.First());
 
+            _mockRepo.Setup(x => x.UserRepository
+                .Update(
+                    It.IsAny<User>()));
+
+            _mockRepo.Setup(x => x.SaveAsync()).ReturnsAsync(false);
+            //
+            _mockMapper.Setup(x => x.Map(It.IsAny<UserForUpdateDto>(), It.IsAny<User>()))
+                .Returns(users.First());
+            //
 
             //Act----------------------------------------------------------------------------------------------------------------------------------
-
+            var result = await _controller.UpdateUser(It.IsAny<string>(), UnitTestsDataInput.userForUpdateDto_Fail);
+            var badResult = result as BadRequestObjectResult;
             //Assert-------------------------------------------------------------------------------------------------------------------------------
-
+            Assert.NotNull(badResult);
+            Assert.IsType<ReturnMessage>(badResult.Value);
+            Assert.Equal(400, badResult.StatusCode);
         }
         [Fact]
         public async Task UpdateUser_Fail_ModelStateError()
@@ -116,7 +137,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
 
         #region ChangeUserPasswordTests
         [Fact]
-        public async Task ChangeUserPassword_Success_Himself()
+        public async Task ChangeUserPassword_Success()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
 
@@ -127,18 +148,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
 
         }
         [Fact]
-        public async Task ChangeUserPassword_Fail_AnOtherUser()
-        {
-            //Arrange------------------------------------------------------------------------------------------------------------------------------
-
-
-            //Act----------------------------------------------------------------------------------------------------------------------------------
-
-            //Assert-------------------------------------------------------------------------------------------------------------------------------
-
-        }
-        [Fact]
-        public async Task ChangeUserPassword_Fail_Himself_WrongOldPassword()
+        public async Task ChangeUserPassword_Fail_WrongOldPassword()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
 

@@ -97,5 +97,9 @@ namespace MadPay724.Test.DataInput
             OldPassword = string.Empty,
             NewPassword = string.Empty
         };
+        public static readonly UserForUpdateDto userForUpdateDto_Fail = new UserForUpdateDto()
+        {
+            Name = "kldlsdnf"
+        };
     }
 }
