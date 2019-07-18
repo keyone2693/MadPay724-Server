@@ -29,9 +29,13 @@ namespace MadPay724.Repo.Infrastructure
 
         Task<TEntity> GetByIdAsync(object id);
         Task<IEnumerable<TEntity>> GetAllAsync();
-        Task<IEnumerable<TEntity>> GetManyAsync(Expression<Func<TEntity, bool>> filter,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy,
-            string includeEntity);
+        Task<IEnumerable<TEntity>> GetManyAsync(
+            Expression<Func<TEntity, bool>> filter,
+
+            Func<IQueryable<TEntity>,IOrderedQueryable<TEntity>> orderBy,
+
+            string includeEntity
+            );
         Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> where);
     }
 }

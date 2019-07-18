@@ -1,9 +1,18 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Net;
+using System.Threading.Tasks;
 using AutoMapper;
 using MadPay724.Data.DatabaseContext;
+using MadPay724.Data.Dtos.Site.Admin.Users;
+using MadPay724.Data.Models;
 using MadPay724.Presentation.Controllers.Site.Admin;
 using MadPay724.Repo.Infrastructure;
 using MadPay724.Services.Site.Admin.User.Interface;
+using MadPay724.Test.UnitTests.Mock.Data;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit;
@@ -35,13 +44,24 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         public async Task GetUser_Success_GetUserHimself()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
-            const string userId = "0d47394e-672f-4db7-898c-bfd8f32e2af7";
-
+            var users = UsersControllerData.GetUser();
+            var userForDetailedDto = UsersControllerData.GetUserForDetailedDto();
+            _mockRepo.Setup(x => x.UserRepository
+                .GetManyAsync(
+                    It.IsAny<Expression<Func<User, bool>>>(),
+                    It.IsAny<Func<IQueryable<User>, IOrderedQueryable<User>>>(),
+                    It.IsAny<string>())).ReturnsAsync(() => users);
+            //
+            _mockMapper.Setup(x => x.Map<UserForDetailedDto>(It.IsAny<User>()))
+                .Returns(userForDetailedDto);
 
             //Act----------------------------------------------------------------------------------------------------------------------------------
-            await _controller.GetUser(userId);
+            var result = await _controller.GetUser(It.IsAny<string>());
+            var okResult = result as OkObjectResult;
             //Assert-------------------------------------------------------------------------------------------------------------------------------
-
+            Assert.NotNull(okResult);
+            Assert.IsType<UserForDetailedDto>(okResult.Value);
+            Assert.Equal(200, okResult.StatusCode);
         }
         [Fact]
         public async Task GetUser_Fail_GetAnOtherUser()
