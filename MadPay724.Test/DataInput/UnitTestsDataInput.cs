@@ -62,7 +62,12 @@ namespace MadPay724.Test.DataInput
             }
         };
 
-
+        public static readonly Setting settingForUpload = new Setting()
+        {
+            CloudinaryCloudName="12",
+            CloudinaryAPIKey = "12",
+            CloudinaryAPISecret = "12"
+        };
 
         public static readonly UserForDetailedDto userForDetailedDto = new UserForDetailedDto()
         {
