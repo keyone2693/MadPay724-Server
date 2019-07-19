@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using MadPay724.Data.Dtos.Site.Admin.Photos;
 using MadPay724.Data.Dtos.Site.Admin.Users;
+using Moq;
 
 namespace MadPay724.Test.DataInput
 {
@@ -101,5 +102,12 @@ namespace MadPay724.Test.DataInput
         {
             Name = "kldlsdnf"
         };
+
+        public static readonly PasswordForChangeDto passwordForChangeDto_Success = new PasswordForChangeDto()
+        {
+            OldPassword = It.IsAny<string>(),
+            NewPassword = It.IsAny<string>()
+        };
+        
     }
 }

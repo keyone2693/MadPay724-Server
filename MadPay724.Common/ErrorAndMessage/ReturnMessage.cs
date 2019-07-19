@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MadPay724.Common.ReturnMessages
+namespace MadPay724.Common.ErrorAndMessage
 {
     public class ReturnMessage
     {

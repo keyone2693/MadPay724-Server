@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 
-namespace MadPay724.Common.Helpers
+namespace MadPay724.Common.Helpers.Helpers
 {
     public static class Extensions
     {

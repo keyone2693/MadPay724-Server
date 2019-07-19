@@ -24,6 +24,8 @@ using MadPay724.Services.Seed.Service;
 using MadPay724.Services.Seed.Interface;
 using AutoMapper;
 using System.IO;
+using MadPay724.Common.Helpers.Helpers;
+using MadPay724.Common.Helpers.Interface;
 using Microsoft.Extensions.FileProviders;
 using MadPay724.Services.Upload.Interface;
 using MadPay724.Services.Upload.Service;
@@ -106,6 +108,7 @@ namespace MadPay724.Presentation
             services.AddScoped<IAuthService , AuthService>();
             services.AddScoped<IUserService , UserService>();
             services.AddScoped<IUploadService, UploadService>();
+            services.AddScoped<IUtilities, Utilities>();
             services.AddScoped<UserCheckIdFilter>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

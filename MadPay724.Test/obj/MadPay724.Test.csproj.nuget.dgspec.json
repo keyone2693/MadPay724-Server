@@ -219,7 +219,7 @@
             },
             "Microsoft.AspNetCore.Mvc.Versioning": {
               "target": "Package",
-              "version": "[3.1.3, )"
+              "version": "[3.1.4, )"
             },
             "Microsoft.AspNetCore.SpaServices.Extensions": {
               "target": "Package",
@@ -463,10 +463,6 @@
               "version": "[5.2.7, )"
             },
             "Microsoft.AspNetCore.TestHost": {
-              "target": "Package",
-              "version": "[2.2.0, )"
-            },
-            "Microsoft.Extensions.Logging.Abstractions": {
               "target": "Package",
               "version": "[2.2.0, )"
             },

@@ -1,5 +1,4 @@
-﻿using MadPay724.Common.ReturnMessages;
-using MadPay724.Data.Dtos.Site.Admin.Users;
+﻿using MadPay724.Data.Dtos.Site.Admin.Users;
 using MadPay724.Presentation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
@@ -16,6 +15,7 @@ using System.Threading.Tasks;
 using MadPay724.Test.DataInput;
 using MadPay724.Test.IntegrationTests.Providers;
 using Xunit;
+using MadPay724.Common.ErrorAndMessage;
 
 namespace MadPay724.Test.IntegrationTests.ControllersTests
 {
@@ -118,23 +118,11 @@ namespace MadPay724.Test.IntegrationTests.ControllersTests
             _client.DefaultRequestHeaders.Authorization
            = new AuthenticationHeaderValue("Bearer", UnitTestsDataInput.aToken);
 
-            var controller = new ModelStateController();
-
-
             //Act----------------------------------------------------------------------------------------------------------------------------------
             var response = await _client.PutAsync(request.Url, ContentHelper.GetStringContent(request.Body));
 
-            controller.ValidateModelState(request.Body);
-            var modelState = controller.ModelState;
-
             //Assert-------------------------------------------------------------------------------------------------------------------------------
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
-
-            Assert.False(modelState.IsValid);
-            Assert.Equal(4, modelState.Keys.Count());
-            Assert.True(modelState.Keys.Contains("Name") && modelState.Keys.Contains("PhoneNumber")
-                && modelState.Keys.Contains("Address") && modelState.Keys.Contains("City"));
-
         }
         #endregion
 

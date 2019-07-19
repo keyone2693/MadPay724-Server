@@ -6,15 +6,20 @@ using MadPay724.Services.Seed.Interface;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using MadPay724.Common.Helpers.Helpers;
+using MadPay724.Common.Helpers.Interface;
 
 namespace MadPay724.Services.Seed.Service
 {
     public class SeedService : ISeedService
     {
         private readonly IUnitOfWork<MadpayDbContext> _db;
-        public SeedService(IUnitOfWork<MadpayDbContext> dbContext)
+        private readonly IUtilities _utilities;
+
+        public SeedService(IUnitOfWork<MadpayDbContext> dbContext, IUtilities utilities)
         {
-               _db = dbContext;
+            _db = dbContext;
+            _utilities = utilities;
         }
 
         public void SeedUsers()
@@ -24,7 +29,7 @@ namespace MadPay724.Services.Seed.Service
             foreach (var user in users)
             {
                 byte[] passwordHash, passwordSalt;
-                Utilities.CreatePasswordHash("123456", out passwordHash, out passwordSalt);
+                _utilities.CreatePasswordHash("123456", out passwordHash, out passwordSalt);
 
                 user.PasswordHash = passwordHash;
                 user.PasswordSalt = passwordSalt;
@@ -45,7 +50,7 @@ namespace MadPay724.Services.Seed.Service
             foreach (var user in users)
             {
                 byte[] passwordHash, passwordSalt;
-                Utilities.CreatePasswordHash("123456", out passwordHash, out passwordSalt);
+                _utilities.CreatePasswordHash("123456", out passwordHash, out passwordSalt);
 
                 user.PasswordHash = passwordHash;
                 user.PasswordSalt = passwordSalt;
