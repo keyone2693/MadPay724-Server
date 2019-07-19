@@ -60,7 +60,7 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
                     message = "نام کاربری وجود دارد"
                 });
             }
-               
+
 
             var userToCreate = new User
             {
@@ -87,19 +87,33 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
                 Description = "Profile Pic",
                 Alt = "Profile Pic",
                 IsMain = true,
-                PublicId="0"                
+                PublicId = "0"
             };
 
             var createdUser = await _authService.Register(userToCreate, photoToCreate, userForRegisterDto.Password);
-            var userForReturn = _mapper.Map<UserForDetailedDto>(createdUser);
-
-            _logger.LogInformation($"{userForRegisterDto.Name} - {userForRegisterDto.UserName} ثبت نام کرده است");
-
-            return CreatedAtRoute("GetUser", new
+            if (createdUser != null)
             {
-                controller = "Users",
-                id = createdUser.Id
-            }, userForReturn);
+                var userForReturn = _mapper.Map<UserForDetailedDto>(createdUser);
+
+                _logger.LogInformation($"{userForRegisterDto.Name} - {userForRegisterDto.UserName} ثبت نام کرده است");
+
+                return CreatedAtRoute("GetUser", new
+                {
+                    controller = "Users",
+                    id = createdUser.Id
+                }, userForReturn);
+            }
+            else
+            {
+                _logger.LogWarning($"{userForRegisterDto.Name} - {userForRegisterDto.UserName} میحواهد دوباره ثبت نام کند");
+                return BadRequest(new ReturnMessage()
+                {
+                    status = false,
+                    title = "خطا",
+                    message = "ثبت در دیتابیس"
+                });
+            }
+
         }
         [AllowAnonymous]
         [HttpPost("login")]

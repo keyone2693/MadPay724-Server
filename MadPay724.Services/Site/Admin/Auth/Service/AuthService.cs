@@ -49,9 +49,14 @@ namespace MadPay724.Services.Site.Admin.Auth.Service
 
             await _db.UserRepository.InsertAsync(user);
             await _db.PhotoRepository.InsertAsync(photo);
-            await _db.SaveAsync();
-
-            return user;
+            if (await _db.SaveAsync())
+            {
+                return user;
+            }
+            else
+            {
+                return null;
+            }
         }
 
 

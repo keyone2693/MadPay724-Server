@@ -37,7 +37,7 @@ namespace MadPay724.Test.Tests.ServicesUnitTests
 
         #region LoginTests
         [Fact]
-        public async Task GetUser_Success()
+        public async Task Login_Success()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
             _mockRepo.Setup(x => x.UserRepository
@@ -57,7 +57,7 @@ namespace MadPay724.Test.Tests.ServicesUnitTests
 
         }
         [Fact]
-        public async Task GetUser_Fail_WrongUserName()
+        public async Task Login_Fail_WrongUserName()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
             _mockRepo.Setup(x => x.UserRepository
@@ -73,7 +73,7 @@ namespace MadPay724.Test.Tests.ServicesUnitTests
             Assert.Null(result);
         }
         [Fact]
-        public async Task GetUser_Fail_WrongPassWord()
+        public async Task Login_Fail_WrongPassWord()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
             _mockRepo.Setup(x => x.UserRepository
@@ -86,6 +86,50 @@ namespace MadPay724.Test.Tests.ServicesUnitTests
                 .Returns(false);
             //Act----------------------------------------------------------------------------------------------------------------------------------
             var result = await _service.Login(It.IsAny<string>(), It.IsAny<string>());
+
+            //Assert-------------------------------------------------------------------------------------------------------------------------------
+            Assert.Null(result);
+
+        }
+        #endregion
+
+        #region RegisterTests
+        [Fact]
+        public async Task Register_Success()
+        {
+            //Arrange------------------------------------------------------------------------------------------------------------------------------
+            byte[] passwordHash, passwordSalt;
+            _mockUtilities.Setup(x => x.CreatePasswordHash(It.IsAny<string>(),
+                out passwordHash, out passwordSalt));
+
+            _mockRepo.Setup(x => x.UserRepository.InsertAsync(It.IsAny<User>()));
+            _mockRepo.Setup(x => x.PhotoRepository.InsertAsync(It.IsAny<Photo>()));
+
+            _mockRepo.Setup(x => x.SaveAsync()).ReturnsAsync(true);
+
+            //Act----------------------------------------------------------------------------------------------------------------------------------
+            var result = await _service.Register(new User(), It.IsAny<Photo>(), It.IsAny<string>());
+
+            //Assert-------------------------------------------------------------------------------------------------------------------------------
+            Assert.NotNull(result);
+            Assert.IsType<User>(result);
+
+        }
+        [Fact]
+        public async Task Register_Fail_dbError()
+        {
+            //Arrange------------------------------------------------------------------------------------------------------------------------------
+            byte[] passwordHash, passwordSalt;
+            _mockUtilities.Setup(x => x.CreatePasswordHash(It.IsAny<string>(),
+                out passwordHash, out passwordSalt));
+
+            _mockRepo.Setup(x => x.UserRepository.InsertAsync(It.IsAny<User>()));
+            _mockRepo.Setup(x => x.PhotoRepository.InsertAsync(It.IsAny<Photo>()));
+
+            _mockRepo.Setup(x => x.SaveAsync()).ReturnsAsync(false);
+
+            //Act----------------------------------------------------------------------------------------------------------------------------------
+            var result = await _service.Register(new User(), It.IsAny<Photo>(), It.IsAny<string>());
 
             //Assert-------------------------------------------------------------------------------------------------------------------------------
             Assert.Null(result);
