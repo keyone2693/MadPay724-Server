@@ -52,14 +52,14 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
             _mockAuthService.Setup(x => x.Login(It.IsAny<string>(), It.IsAny<string>()))
-                .ReturnsAsync(UsersControllerMockData.GetUser().First());
+                .ReturnsAsync(UnitTestsDataInput.Users.First());
 
 
             _mockConfigSection.Setup(x => x.Value).Returns("Token ekn wle nwe nwer hwoe rlwken rlwke ns");
             _mockConfig.Setup(x => x.GetSection(It.IsAny<string>())).Returns(_mockConfigSection.Object);
 
             _mockMapper.Setup(x => x.Map<UserForDetailedDto>(It.IsAny<User>()))
-                .Returns(UsersControllerMockData.GetUserForDetailedDto());
+                .Returns(UnitTestsDataInput.userForDetailedDto);
             //Act----------------------------------------------------------------------------------------------------------------------------------
             var result = await _controller.Login(UnitTestsDataInput.useForLoginDto_Success);
             var okResult = result as OkObjectResult;
@@ -108,10 +108,10 @@ namespace MadPay724.Test.UnitTests.ControllersTests
             _mockRepo.Setup(x => x.UserRepository.UserExists(It.IsAny<string>())).ReturnsAsync(false);
 
             _mockAuthService.Setup(x => x.Register(It.IsAny<User>(), It.IsAny<Photo>(), It.IsAny<string>()))
-                .ReturnsAsync(UsersControllerMockData.GetUser().First());
+                .ReturnsAsync(UnitTestsDataInput.Users.First());
 
             _mockMapper.Setup(x => x.Map<UserForDetailedDto>(It.IsAny<User>()))
-                .Returns(UsersControllerMockData.GetUserForDetailedDto);
+                .Returns(UnitTestsDataInput.userForDetailedDto);
             //Act----------------------------------------------------------------------------------------------------------------------------------
 
             var httpContext = new DefaultHttpContext();
@@ -132,21 +132,30 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         public async Task Register_Fail_UserExist()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
+            _mockRepo.Setup(x => x.UserRepository.UserExists(It.IsAny<string>())).ReturnsAsync(true);
 
             //Act----------------------------------------------------------------------------------------------------------------------------------
 
+            var result = await _controller.Register(UnitTestsDataInput.userForRegisterDto);
+            var okResult = result as BadRequestObjectResult;
             //Assert-------------------------------------------------------------------------------------------------------------------------------
-
+            Assert.NotNull(okResult);
+            Assert.IsType<ReturnMessage>(okResult.Value);
+            Assert.Equal(400, okResult.StatusCode);
         }
         [Fact]
         public async Task Register_Fail_ModelStateError()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
-
+            var controller = new ModelStateController();
             //Act----------------------------------------------------------------------------------------------------------------------------------
-
+            controller.ValidateModelState(UnitTestsDataInput.userForRegisterDto_Fail_ModelState);
+            var modelState = controller.ModelState;
             //Assert-------------------------------------------------------------------------------------------------------------------------------
-
+            Assert.False(modelState.IsValid);
+            Assert.Equal(4, modelState.Keys.Count());
+            Assert.True(modelState.Keys.Contains("UserName") && modelState.Keys.Contains("Password")
+                                                             && modelState.Keys.Contains("Name") && modelState.Keys.Contains("PhoneNumber"));
         }
         #endregion
     }

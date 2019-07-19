@@ -61,7 +61,7 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
                 photoForProfileDto.File,
                 userId,
                 _env.WebRootPath ,
-                string.Format("{0}://{1}{2}", Request.Scheme, Request.Host.Value, Request.PathBase.Value)
+                string.Format("{0}://{1}{2}", Request.Scheme?? "", Request.Host.Value ?? "", Request.PathBase.Value ?? "")
                 );
 
             if (uplaodRes.Status)

@@ -125,21 +125,17 @@ namespace MadPay724.Test.IntegrationTests.ControllersTests
                 Url = "/site/admin/auth/register",
                 Body = UnitTestsDataInput.userForRegisterDto_Fail_ModelState
             };
-            var controller = new ModelStateController();
+           
             //Act----------------------------------------------------------------------------------------------------------------------------------
             var response = await _client.PostAsync(request.Url, ContentHelper.GetStringContent(request.Body));
 
-            controller.ValidateModelState(request.Body);
-            var modelState = controller.ModelState;
+           
             //Assert-------------------------------------------------------------------------------------------------------------------------------
 
 
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
 
-            Assert.False(modelState.IsValid);
-            Assert.Equal(4, modelState.Keys.Count());
-            Assert.True(modelState.Keys.Contains("UserName") && modelState.Keys.Contains("Password")
-                        && modelState.Keys.Contains("Name") && modelState.Keys.Contains("PhoneNumber"));
+         
 
             //Assert
 

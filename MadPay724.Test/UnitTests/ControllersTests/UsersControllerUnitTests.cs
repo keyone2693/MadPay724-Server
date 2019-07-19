@@ -48,8 +48,8 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         public async Task GetUser_Success_GetUser()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
-            var users = UsersControllerMockData.GetUser();
-            var userForDetailedDto = UsersControllerMockData.GetUserForDetailedDto();
+            var users = UnitTestsDataInput.Users;
+            var userForDetailedDto = UnitTestsDataInput.userForDetailedDto;
             _mockRepo.Setup(x => x.UserRepository
                 .GetManyAsync(
                     It.IsAny<Expression<Func<User, bool>>>(),
@@ -75,7 +75,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         public async Task UpdateUser_Success()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
-            var users = UsersControllerMockData.GetUser();
+            var users = UnitTestsDataInput.Users;
             _mockRepo.Setup(x => x.UserRepository
                 .GetByIdAsync(
                     It.IsAny<string>())).ReturnsAsync(() => users.First());
@@ -101,8 +101,8 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         public async Task UpdateUser_Fail()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
-            var users = UsersControllerMockData.GetUser();
-            //var userForDetailedDto = UsersControllerMockData.GetUserForDetailedDto();
+            var users = UnitTestsDataInput.Users;
+            //var userForDetailedDto = UnitTestsDataInput.userForDetailedDto;
             _mockRepo.Setup(x => x.UserRepository
                 .GetByIdAsync(
                     It.IsAny<string>())).ReturnsAsync(() => users.First());
@@ -157,7 +157,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
             //Arrange------------------------------------------------------------------------------------------------------------------------------
 
             _mockUserService.Setup(x => x.GetUserForPassChange(It.IsAny<string>(), It.IsAny<string>()))
-                .ReturnsAsync(UsersControllerMockData.GetUser().First());
+                .ReturnsAsync(UnitTestsDataInput.Users.First());
 
             _mockUserService.Setup(x => x.UpdateUserPass(It.IsAny<User>(), It.IsAny<string>()))
                 .ReturnsAsync(true);
