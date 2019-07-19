@@ -15,6 +15,7 @@ using MadPay724.Services.Site.Admin.Auth.Interface;
 using MadPay724.Services.Site.Admin.User.Interface;
 using MadPay724.Test.DataInput;
 using MadPay724.Test.IntegrationTests.Providers;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -101,14 +102,31 @@ namespace MadPay724.Test.UnitTests.ControllersTests
 
         #region registerTests
         [Fact]
-        public async Task Register_Success_UserRegister()
+        public async Task Register_Success()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
+            _mockRepo.Setup(x => x.UserRepository.UserExists(It.IsAny<string>())).ReturnsAsync(false);
 
+            _mockAuthService.Setup(x => x.Register(It.IsAny<User>(), It.IsAny<Photo>(), It.IsAny<string>()))
+                .ReturnsAsync(UsersControllerMockData.GetUser().First());
+
+            _mockMapper.Setup(x => x.Map<UserForDetailedDto>(It.IsAny<User>()))
+                .Returns(UsersControllerMockData.GetUserForDetailedDto);
             //Act----------------------------------------------------------------------------------------------------------------------------------
 
-            //Assert-------------------------------------------------------------------------------------------------------------------------------
+            var httpContext = new DefaultHttpContext();
+            httpContext.Request.Scheme = "222";
+            _controller.ControllerContext = new ControllerContext()
+            {
+                HttpContext =   httpContext
+            };
 
+            var result = await _controller.Register(UnitTestsDataInput.userForRegisterDto);
+            var okResult = result as CreatedAtRouteResult;
+            //Assert-------------------------------------------------------------------------------------------------------------------------------
+            Assert.NotNull(okResult);
+            Assert.IsType<UserForDetailedDto>(okResult.Value);
+            Assert.Equal(201, okResult.StatusCode);
         }
         [Fact]
         public async Task Register_Fail_UserExist()
