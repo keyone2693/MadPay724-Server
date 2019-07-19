@@ -204,21 +204,18 @@ namespace MadPay724.Test.IntegrationTests.ControllersTests
             _client.DefaultRequestHeaders.Authorization
            = new AuthenticationHeaderValue("Bearer", UnitTestsDataInput.aToken);
 
-            var controller = new ModelStateController();
+            
 
 
             //Act----------------------------------------------------------------------------------------------------------------------------------
             var response = await _client.PutAsync(request.Url, ContentHelper.GetStringContent(request.Body));
 
-            controller.ValidateModelState(request.Body);
-            var modelState = controller.ModelState;
+           
 
             //Assert-------------------------------------------------------------------------------------------------------------------------------
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
 
-            Assert.False(modelState.IsValid);
-            Assert.Equal(2, modelState.Keys.Count());
-            Assert.True(modelState.Keys.Contains("OldPassword") && modelState.Keys.Contains("NewPassword"));
+          
 
         }
         #endregion

@@ -28,7 +28,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         private readonly Mock<IUnitOfWork<MadpayDbContext>> _mockRepo;
         private readonly Mock<IMapper> _mockMapper;
         private readonly Mock<IUserService> _mockUserService;
-        private readonly Mock<IUtilities> _mockUtilities;
+        //private readonly Mock<IUtilities> _mockUtilities;
         private readonly Mock<ILogger<UsersController>> _mockLogger;
         private readonly UsersController _controller;
 
@@ -36,7 +36,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         {
             _mockRepo = new Mock<IUnitOfWork<MadpayDbContext>>();
             _mockMapper = new Mock<IMapper>();
-            _mockUtilities = new Mock<IUtilities>();
+            //_mockUtilities = new Mock<IUtilities>();
             _mockUserService = new Mock<IUserService>();
             _mockLogger =new Mock<ILogger<UsersController>>();
             _controller = new UsersController(_mockRepo.Object, _mockMapper.Object, _mockUserService.Object, _mockLogger.Object);
@@ -179,22 +179,30 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
 
+            _mockUserService.Setup(x => x.GetUserForPassChange(It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync(It.IsAny<User>());
 
-            //Act----------------------------------------------------------------------------------------------------------------------------------
 
+            var result = await _controller.ChangeUserPassword(It.IsAny<string>(), UnitTestsDataInput.passwordForChangeDto_Success);
+            var badResult = result as BadRequestObjectResult;
             //Assert-------------------------------------------------------------------------------------------------------------------------------
-
+            Assert.NotNull(badResult);
+            Assert.IsType<ReturnMessage>(badResult.Value);
+            Assert.Equal(400, badResult.StatusCode);
         }
         [Fact]
         public async Task ChangeUserPassword_Fail_ModelStateError()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
-
+            var controller = new ModelStateController();
 
             //Act----------------------------------------------------------------------------------------------------------------------------------
-
+            controller.ValidateModelState(UnitTestsDataInput.passwordForChangeDto_Fail_ModelState);
+            var modelState = controller.ModelState;
             //Assert-------------------------------------------------------------------------------------------------------------------------------
-
+            Assert.False(modelState.IsValid);
+            Assert.Equal(2, modelState.Keys.Count());
+            Assert.True(modelState.Keys.Contains("OldPassword") && modelState.Keys.Contains("NewPassword"));
 
         }
         #endregion

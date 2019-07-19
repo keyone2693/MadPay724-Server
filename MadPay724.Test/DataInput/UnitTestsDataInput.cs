@@ -108,6 +108,6 @@ namespace MadPay724.Test.DataInput
             OldPassword = It.IsAny<string>(),
             NewPassword = It.IsAny<string>()
         };
-        
+
     }
 }
