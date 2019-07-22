@@ -1,7 +1,4 @@
-
-using System.Collections.Generic;
 using System.Linq;
-using MadPay724.Common.Helpers;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Repo.Infrastructure;
 using MadPay724.Services.Site.Admin.Auth.Interface;
@@ -19,19 +16,18 @@ using System.Net;
 using System.Text;
 using NSwag;
 using NSwag.Generation.Processors.Security;
-using Microsoft.AspNetCore.Mvc.Versioning;
 using MadPay724.Services.Seed.Service;
 using MadPay724.Services.Seed.Interface;
 using AutoMapper;
-using System.IO;
 using MadPay724.Common.Helpers.Helpers;
 using MadPay724.Common.Helpers.Interface;
-using Microsoft.Extensions.FileProviders;
 using MadPay724.Services.Upload.Interface;
 using MadPay724.Services.Upload.Service;
 using MadPay724.Presentation.Helpers.Filters;
 using MadPay724.Services.Site.Admin.User.Interface;
 using MadPay724.Services.Site.Admin.User.Service;
+using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.Net.Http.Headers;
 
 namespace MadPay724.Presentation
 {
@@ -47,7 +43,13 @@ namespace MadPay724.Presentation
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(opt=>opt.EnableEndpointRouting = false)
+            services.AddMvc(config=>
+                {
+                    config.EnableEndpointRouting = false;
+                    config.ReturnHttpNotAcceptable = true;
+                    //config.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());
+                    //config.InputFormatters.Add(new XmlSerializerInputFormatter(config));
+                })
                 .AddNewtonsoftJson(opt =>
                 {
                     opt.SerializerSettings.ReferenceLoopHandling =
