@@ -36,12 +36,14 @@ namespace MadPay724.Presentation.Controllers.V1.Site.Admin
             _logger = logger;
         }
         [AllowAnonymous]
-        [HttpGet()]
+        [HttpGet(Name = nameof(GetUsers))]
         public async Task<IActionResult> GetUsers()
         {
             var users = await _db.UserRepository.GetManyAsync(null, null, "Photos,BankCards");
 
-            var usersToReturn = _mapper.Map<IEnumerable<UserFroListDto>>(users);
+          var usersToReturn = _mapper.Map<IEnumerable<UserFroListDto>>(users);
+
+           
 
             return Ok(usersToReturn);
         }
