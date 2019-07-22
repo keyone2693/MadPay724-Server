@@ -30,6 +30,7 @@ using MadPay724.Services.Site.Admin.User.Interface;
 using MadPay724.Services.Site.Admin.User.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.CodeAnalysis.FlowAnalysis;
 
 namespace MadPay724.Presentation
@@ -69,18 +70,22 @@ namespace MadPay724.Presentation
                     //config.OutputFormatters.Add(new IonOutputFormatter(jsonFormatter));
                     //config.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());
                     //config.InputFormatters.Add(new XmlSerializerInputFormatter(config));
+
                 })
                 .AddNewtonsoftJson(opt =>
                 {
                     opt.SerializerSettings.ReferenceLoopHandling =
                     Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 });
+
+            services.AddResponseCaching();
             services.AddHsts(opt =>
             {
                 opt.MaxAge = TimeSpan.FromDays(180);
                 opt.IncludeSubDomains = true;
                 opt.Preload = true;
             });
+            //services.AddResponseCompression(opt => opt.Providers.Add<GzipCompressionProvider>());
             //services.AddRouting( opt => opt.LowercaseUrls = true);
             //services.AddApiVersioning(opt =>
             //{
@@ -133,7 +138,7 @@ namespace MadPay724.Presentation
 
 
             services.AddCors();
-
+            
             //services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
 
             services.AddAutoMapper(typeof(Startup));
@@ -192,6 +197,8 @@ namespace MadPay724.Presentation
             }
 
             app.UseHttpsRedirection();
+            //app.UseResponseCompression();
+            app.UseResponseCaching();
             //seeder.SeedUsers();
             app.UseCors(p => p.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader());
             ///

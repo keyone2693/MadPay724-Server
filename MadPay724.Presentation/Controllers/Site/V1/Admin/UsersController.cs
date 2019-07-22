@@ -38,9 +38,10 @@ namespace MadPay724.Presentation.Controllers.V1.Site.Admin
         }
         [AllowAnonymous]
         [HttpGet(Name = nameof(GetUsers))]
+        [ResponseCache(Duration = 60)]
         public async Task<IActionResult> GetUsers()
         {
-            var users = await _db.UserRepository.GetManyAsync(null, null, "Photos,BankCards");
+          var users = await _db.UserRepository.GetManyAsync(null, null, "Photos,BankCards");
 
           var usersToReturn = _mapper.Map<IEnumerable<UserFroListDto>>(users);
 
