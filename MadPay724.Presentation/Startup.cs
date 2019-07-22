@@ -27,15 +27,28 @@ using MadPay724.Services.Upload.Service;
 using MadPay724.Presentation.Helpers.Filters;
 using MadPay724.Services.Site.Admin.User.Interface;
 using MadPay724.Services.Site.Admin.User.Service;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.CodeAnalysis.FlowAnalysis;
 
 namespace MadPay724.Presentation
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly int? _httpsPort;
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+
+            if (env.IsDevelopment())
+            {
+                var lunchJsonConf = new ConfigurationBuilder()
+                    .SetBasePath(env.ContentRootPath)
+                    .AddJsonFile("Properties\\launchSettings.json")
+                    .Build();
+
+                _httpsPort = lunchJsonConf.GetValue<int>("iisSettings:iisExpress:sslPort");
+            }
         }
 
         public IConfiguration Configuration { get; }
@@ -47,6 +60,8 @@ namespace MadPay724.Presentation
                 {
                     config.EnableEndpointRouting = false;
                     config.ReturnHttpNotAcceptable = true;
+                    config.SslPort = _httpsPort;
+                    config.Filters.Add(typeof(RequireHttpsAttribute));
 
                     //var jsonFormatter = config.OutputFormatters.OfType<JsonOutputFormatter>().Single();
                     //config.OutputFormatters.Remove(jsonFormatter);
@@ -169,7 +184,7 @@ namespace MadPay724.Presentation
                 //app.UseHsts();
             }
 
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
             //seeder.SeedUsers();
             app.UseCors(p => p.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader());
             ///
