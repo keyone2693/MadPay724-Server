@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
-namespace MadPay724.Data.Dtos.Common
+namespace MadPay724.Data.Dtos.Common.ION
 {
-   public class Link
+   public class Link 
    {
        public const string GetMethod = "GET";
 

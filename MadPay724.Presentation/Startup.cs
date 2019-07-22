@@ -63,7 +63,7 @@ namespace MadPay724.Presentation
                     config.ReturnHttpNotAcceptable = true;
                     config.SslPort = _httpsPort;
                     config.Filters.Add(typeof(RequireHttpsAttribute));
-
+                    config.Filters.Add(typeof(LinkRewritingFilter));
                     //var jsonFormatter = config.OutputFormatters.OfType<JsonOutputFormatter>().Single();
                     //config.OutputFormatters.Remove(jsonFormatter);
                     //config.OutputFormatters.Add(new IonOutputFormatter(jsonFormatter));

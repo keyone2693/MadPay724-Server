@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MadPay724.Data.Dtos.Common
+namespace MadPay724.Data.Dtos.Common.ION
 {
    public abstract class BaseDto
     {
-        public string Href { get; set; }
+        public Link Href { get; set; }
     }
 }

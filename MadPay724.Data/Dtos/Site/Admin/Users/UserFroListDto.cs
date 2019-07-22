@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using MadPay724.Data.Dtos.Common;
+using MadPay724.Data.Dtos.Common.ION;
 
 namespace MadPay724.Data.Dtos.Site.Admin.Users
 {

@@ -43,9 +43,8 @@ namespace MadPay724.Presentation.Controllers.V1.Site.Admin
 
           var usersToReturn = _mapper.Map<IEnumerable<UserFroListDto>>(users);
 
-           
 
-            return Ok(usersToReturn);
+            return Ok(usersToReturn.Take(2));
         }
 
         [HttpGet("{id}",Name = "GetUser")]

@@ -9,7 +9,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MadPay724.Common.Helpers.Helpers;
+using MadPay724.Common.Helpers.MediaTypes;
 using MadPay724.Data.Dtos.Common;
+using MadPay724.Data.Dtos.Common.ION;
 
 namespace MadPay724.Presentation.Helpers
 {
@@ -21,20 +23,7 @@ namespace MadPay724.Presentation.Helpers
                .ForMember(dest => dest.Href, opt =>
                    opt.MapFrom(src => 
                    Link.To(nameof(Controllers.V1.Site.Admin.UsersController.GetUser),new {id = src.Id})))
-               .ForMember(dest => dest.UpdateUser, opt =>
-                   opt.MapFrom(src =>
-                       Link.To(nameof(Controllers.V1.Site.Admin.UsersController.UpdateUser), new
-                       {
-                           id = src.Id,
-                           userForUpdateDto = new UserForUpdateDto()
-                       })))
-               .ForMember(dest => dest.UpdateUser, opt =>
-                   opt.MapFrom(src =>
-                       Link.To(nameof(Controllers.V1.Site.Admin.UsersController.ChangeUserPassword), new
-                       {
-                           id = src.Id,
-                           passwordForChangeDto = new PasswordForChangeDto()
-                       })));
+               ;
 
 
             CreateMap<User, UserForDetailedDto>()
