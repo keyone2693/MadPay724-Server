@@ -4247,6 +4247,7 @@
         "dependencies": {
           "MadPay724.Data": "1.0.0",
           "Microsoft.AspNetCore.Http": "2.2.2",
+          "Microsoft.AspNetCore.Mvc.Formatters.Json": "2.2.0",
           "NLog.Web.AspNetCore": "4.8.4"
         },
         "compile": {
@@ -4286,6 +4287,7 @@
           "MadPay724.Services": "1.0.0",
           "Microsoft.AspNet.Mvc": "5.2.7",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "2.2.0",
+          "Microsoft.AspNetCore.Mvc.Formatters.Json": "2.2.0",
           "Microsoft.AspNetCore.Mvc.NewtonsoftJson": "3.0.0-preview4-19216-03",
           "Microsoft.AspNetCore.SpaServices.Extensions": "2.2.0",
           "Microsoft.EntityFrameworkCore.SqlServer": "3.0.0-preview3.19153.1",

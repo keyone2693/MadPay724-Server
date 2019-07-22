@@ -21,11 +21,13 @@ using MadPay724.Services.Seed.Interface;
 using AutoMapper;
 using MadPay724.Common.Helpers.Helpers;
 using MadPay724.Common.Helpers.Interface;
+using MadPay724.Common.Helpers.MediaTypes;
 using MadPay724.Services.Upload.Interface;
 using MadPay724.Services.Upload.Service;
 using MadPay724.Presentation.Helpers.Filters;
 using MadPay724.Services.Site.Admin.User.Interface;
 using MadPay724.Services.Site.Admin.User.Service;
+using Microsoft.AspNetCore.Mvc.Formatters;
 
 namespace MadPay724.Presentation
 {
@@ -45,6 +47,10 @@ namespace MadPay724.Presentation
                 {
                     config.EnableEndpointRouting = false;
                     config.ReturnHttpNotAcceptable = true;
+
+                    //var jsonFormatter = config.OutputFormatters.OfType<JsonOutputFormatter>().Single();
+                    //config.OutputFormatters.Remove(jsonFormatter);
+                    //config.OutputFormatters.Add(new IonOutputFormatter(jsonFormatter));
                     //config.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());
                     //config.InputFormatters.Add(new XmlSerializerInputFormatter(config));
                 })
