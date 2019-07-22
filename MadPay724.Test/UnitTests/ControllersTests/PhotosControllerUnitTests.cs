@@ -10,7 +10,7 @@ using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Site.Admin.Photos;
 using MadPay724.Data.Dtos.Site.Admin.Users;
 using MadPay724.Data.Models;
-using MadPay724.Presentation.Controllers.Site.Admin;
+using MadPay724.Presentation.Controllers.V1.Site.Admin;
 using MadPay724.Repo.Infrastructure;
 using MadPay724.Services.Site.Admin.User.Interface;
 using MadPay724.Services.Upload.Interface;

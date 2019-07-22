@@ -1,11 +1,7 @@
 ﻿
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
-using CloudinaryDotNet;
-using CloudinaryDotNet.Actions;
-using MadPay724.Common.Helpers;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Site.Admin.Photos;
 using MadPay724.Presentation.Helpers.Filters;
@@ -14,14 +10,12 @@ using MadPay724.Services.Upload.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
-namespace MadPay724.Presentation.Controllers.Site.Admin
+namespace MadPay724.Presentation.Controllers.V1.Site.Admin
 {
     [Authorize]
-    [ApiExplorerSettings(GroupName = "Site")]
-    [Route("site/admin/users/{userId}/photos")]
+    [ApiExplorerSettings(GroupName = "v1_Site_Admin")]
+    [Route("api/v1/site/admin/users/{userId}/photos")]
     [ApiController]
     public class PhotosController : ControllerBase
     {

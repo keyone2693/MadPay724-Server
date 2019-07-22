@@ -26,7 +26,6 @@ D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\bin\Debug\netcoreapp
 D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\bin\Debug\netcoreapp3.0\Microsoft.AspNetCore.JsonPatch.dll
 D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\bin\Debug\netcoreapp3.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\bin\Debug\netcoreapp3.0\Microsoft.AspNetCore.Mvc.Razor.Extensions.dll
-D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\bin\Debug\netcoreapp3.0\Microsoft.AspNetCore.Mvc.Versioning.dll
 D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\bin\Debug\netcoreapp3.0\Microsoft.AspNetCore.NodeServices.dll
 D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\bin\Debug\netcoreapp3.0\Microsoft.AspNetCore.Razor.Language.dll
 D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\bin\Debug\netcoreapp3.0\Microsoft.AspNetCore.SpaServices.dll

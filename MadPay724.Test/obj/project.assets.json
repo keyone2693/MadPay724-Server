@@ -538,18 +538,6 @@
           "lib/netstandard2.0/Microsoft.AspNetCore.Mvc.TagHelpers.dll": {}
         }
       },
-      "Microsoft.AspNetCore.Mvc.Versioning/3.1.4": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.AspNetCore.Mvc.Core": "[2.2.0, 3.0.0)"
-        },
-        "compile": {
-          "lib/netstandard2.0/Microsoft.AspNetCore.Mvc.Versioning.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.0/Microsoft.AspNetCore.Mvc.Versioning.dll": {}
-        }
-      },
       "Microsoft.AspNetCore.Mvc.ViewFeatures/2.2.0": {
         "type": "package",
         "dependencies": {
@@ -4299,7 +4287,6 @@
           "Microsoft.AspNet.Mvc": "5.2.7",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "2.2.0",
           "Microsoft.AspNetCore.Mvc.NewtonsoftJson": "3.0.0-preview4-19216-03",
-          "Microsoft.AspNetCore.Mvc.Versioning": "3.1.4",
           "Microsoft.AspNetCore.SpaServices.Extensions": "2.2.0",
           "Microsoft.EntityFrameworkCore.SqlServer": "3.0.0-preview3.19153.1",
           "Microsoft.Extensions.Logging.Debug": "3.0.0-preview3.19153.1",
@@ -4877,21 +4864,6 @@
         "lib/netstandard2.0/Microsoft.AspNetCore.Mvc.TagHelpers.xml",
         "microsoft.aspnetcore.mvc.taghelpers.2.2.0.nupkg.sha512",
         "microsoft.aspnetcore.mvc.taghelpers.nuspec"
-      ]
-    },
-    "Microsoft.AspNetCore.Mvc.Versioning/3.1.4": {
-      "sha512": "l5+3e0piqbM7S8D78BkcHc/PfZh+dddaldyo3yPjLfRmfKu4sgaBFp/moKWefei23T/tfHu7IGGC7KtvrEqkOA==",
-      "type": "package",
-      "path": "microsoft.aspnetcore.mvc.versioning/3.1.4",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "LICENSE",
-        "lib/netstandard2.0/Microsoft.AspNetCore.Mvc.Versioning.dll",
-        "lib/netstandard2.0/Microsoft.AspNetCore.Mvc.Versioning.pdb",
-        "lib/netstandard2.0/Microsoft.AspNetCore.Mvc.Versioning.xml",
-        "microsoft.aspnetcore.mvc.versioning.3.1.4.nupkg.sha512",
-        "microsoft.aspnetcore.mvc.versioning.nuspec"
       ]
     },
     "Microsoft.AspNetCore.Mvc.ViewFeatures/2.2.0": {

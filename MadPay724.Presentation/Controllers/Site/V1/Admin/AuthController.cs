@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using MadPay724.Data.DatabaseContext;
-using MadPay724.Data.Dtos.Site.Admin;
 using MadPay724.Data.Models;
 using MadPay724.Repo.Infrastructure;
 using MadPay724.Services.Site.Admin.Auth.Interface;
@@ -20,11 +17,11 @@ using AutoMapper;
 using MadPay724.Common.ErrorAndMessage;
 using Microsoft.Extensions.Logging;
 
-namespace MadPay724.Presentation.Controllers.Site.Admin
+namespace MadPay724.Presentation.Controllers.V1.Site.Admin
 {
     [Authorize]
-    [ApiExplorerSettings(GroupName = "Site")]
-    [Route("site/admin/[controller]")]
+    [ApiExplorerSettings(GroupName = "v1_Site_Admin")]
+    [Route("api/v1/site/admin/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
     {

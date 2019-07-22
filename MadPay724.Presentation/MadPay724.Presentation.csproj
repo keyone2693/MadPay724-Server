@@ -13,7 +13,6 @@
     <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.0.0-preview4-19216-03" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="3.1.4" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0-preview3.19153.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.0-preview3.19153.1">
@@ -34,7 +33,7 @@
   
   <ItemGroup>
     <Folder Include="Controllers\Api\" />
-    <Folder Include="Controllers\Site\App\" />
+    <Folder Include="Controllers\Site\V1\App\" />
     <Folder Include="wwwroot\Files\Pic\Profile\" />
   </ItemGroup>
   

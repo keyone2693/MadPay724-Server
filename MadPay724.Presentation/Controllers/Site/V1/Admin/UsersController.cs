@@ -15,15 +15,14 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace MadPay724.Presentation.Controllers.Site.Admin
+namespace MadPay724.Presentation.Controllers.V1.Site.Admin
 {
     [Authorize]
-    [ApiExplorerSettings(GroupName = "Site")]
-    [Route("site/admin/[controller]")]
+    [ApiExplorerSettings(GroupName = "v1_Site_Admin")]
+    [Route("api/v1/site/admin/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
     {
-
         private readonly IUnitOfWork<MadpayDbContext> _db;
         private readonly IMapper _mapper;
         private readonly IUserService _userService;
@@ -36,8 +35,7 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
             _userService = userService;
             _logger = logger;
         }
-        [AllowAnonymous]
-        [HttpGet]
+        [HttpGet()]
         public async Task<IActionResult> GetUsers()
         {
             var users = await _db.UserRepository.GetManyAsync(null, null, "Photos,BankCards");
@@ -47,7 +45,7 @@ namespace MadPay724.Presentation.Controllers.Site.Admin
             return Ok(usersToReturn);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}",Name = "GetUser")]
         [ServiceFilter(typeof(UserCheckIdFilter))]
         public async Task<IActionResult> GetUser(string id)
         {

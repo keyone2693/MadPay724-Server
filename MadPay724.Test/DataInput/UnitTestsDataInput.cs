@@ -11,18 +11,21 @@ namespace MadPay724.Test.DataInput
 {
     public static class UnitTestsDataInput
     {
-        public static readonly string unToken = "";
 
-        public static readonly string aToken =
-            "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwZDQ3Mzk0ZS02NzJmLTRkYjctODk4Yy1iZmQ4ZjMyZTJhZjciLCJ1bmlxdWVfbmFtZSI6ImhheXNtYXRoaXNAYmFya2FyYW1hLmNvbSIsIm5iZiI6MTU2MzQ1NjA3NywiZXhwIjoxNTYzNTQyNDc3LCJpYXQiOjE1NjM0NTYwNzd9.q4iLi5Zc6in0QWd6az-sgqHHn27Q7w9pP9znjGYKlID0mOBIC2kx-3njB5z3NDoecjwpw4mtywFfPMJC3QdSNQ";
+        public const string baseRouteV1 = "api/v1/";
+
+        public const string unToken = "";
+
+        public const string aToken =
+            "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwZDQ3Mzk0ZS02NzJmLTRkYjctODk4Yy1iZmQ4ZjMyZTJhZjciLCJ1bmlxdWVfbmFtZSI6ImhheXNtYXRoaXNAYmFya2FyYW1hLmNvbSIsIm5iZiI6MTU2Mzc4ODE2MywiZXhwIjoxNTYzODc0NTYzLCJpYXQiOjE1NjM3ODgxNjN9.c4Lh4hJ_3qiJRQ4mpKkEr34oloVRjU4Ex7V3gI3EA7_rg387JhODZCUCoLO81qkOXiFyn3b1tlqBnD5m89OK4Q";
 
 
 
-        public static readonly string userLogedInUsername = "haysmathis@barkarama.com";
-        public static readonly string userLogedInPassword = "123789";
-        public static readonly string userLogedInId = "0d47394e-672f-4db7-898c-bfd8f32e2af7";
-        public static readonly string userAnOtherId = "0d47394e-672f-4db7-898c-bfd8f32e2af7";
-        public static readonly string userLogedInPhotoId = "e97fd389-fb3d-4ea2-929d-435f5ecdc159";
+        public const string userLogedInUsername = "haysmathis@barkarama.com";
+        public const string userLogedInPassword = "123789";
+        public const string userLogedInId = "0d47394e-672f-4db7-898c-bfd8f32e2af7";
+        public const string userAnOtherId = "0d47394e-672f-4db7-898c-bfd8f32e2";
+        public const string userLogedInPhotoId = "e97fd389-fb3d-4ea2-929d-435f5ecdc159";
 
 
         public static readonly IEnumerable<User> Users = new List<User>()
@@ -86,7 +89,7 @@ namespace MadPay724.Test.DataInput
 
         public static readonly UserForRegisterDto userForRegisterDto = new UserForRegisterDto()
         {
-            UserName = "asasa78sasas@barkarama.com",
+            UserName = "asasas@b545ma.com",
             Password = "123789",
             Name = "کیوان",
             PhoneNumber = "15486523"
