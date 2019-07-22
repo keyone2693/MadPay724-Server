@@ -20,9 +20,16 @@ namespace MadPay724.Presentation.Helpers
        public AutoMapperProfiles()
        {
            CreateMap<User, UserFroListDto>()
-               .ForMember(dest => dest.Href, opt =>
+               .ForMember(dest => dest.Self, opt =>
                    opt.MapFrom(src => 
-                   Link.To(nameof(Controllers.V1.Site.Admin.UsersController.GetUser),new {id = src.Id})))
+                   Link.To(nameof(Controllers.V1.Site.Admin.UsersController.GetUser),new { id= src.Id})))
+
+               .ForMember(dest => dest.ChangeUserPassword, opt =>
+                   opt.MapFrom(src =>
+                       Link.To(nameof(Controllers.V1.Site.Admin.UsersController.ChangeUserPassword), new
+                       {
+                           id = src.Id
+                       })))
                ;
 
 

@@ -44,10 +44,10 @@ namespace MadPay724.Presentation.Controllers.V1.Site.Admin
           var usersToReturn = _mapper.Map<IEnumerable<UserFroListDto>>(users);
 
 
-            return Ok(usersToReturn.Take(2));
+            return Ok(usersToReturn.First());
         }
 
-        [HttpGet("{id}",Name = "GetUser")]
+        [HttpGet("{id}", Name = nameof(GetUser))]
         [ServiceFilter(typeof(UserCheckIdFilter))]
         public async Task<IActionResult> GetUser(string id)
         {
@@ -85,7 +85,7 @@ namespace MadPay724.Presentation.Controllers.V1.Site.Admin
 
         [Route("ChangeUserPassword/{id}")]
         [ServiceFilter(typeof(UserCheckIdFilter))]
-        [HttpPut]
+        [HttpPut(Name = nameof(ChangeUserPassword))]
         public async Task<IActionResult> ChangeUserPassword(string id, PasswordForChangeDto passwordForChangeDto)
         {
             var userFromRepo = await _userService.GetUserForPassChange(id, passwordForChangeDto.OldPassword);

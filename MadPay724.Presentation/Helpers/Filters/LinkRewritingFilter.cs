@@ -59,6 +59,19 @@ namespace MadPay724.Presentation.Helpers.Filters
                 if(rewritten == null) continue;
 
                 linkPeoperty.SetValue(model, rewritten);
+
+                if (linkPeoperty.Name == nameof(BaseDto.Self))
+                {
+                    allProperties.SingleOrDefault(p=>p.Name == nameof(BaseDto.Href))
+                        ?.SetValue(model,rewritten.Href);
+
+                    allProperties.SingleOrDefault(p => p.Name == nameof(BaseDto.Method))
+                        ?.SetValue(model, rewritten.Method);
+
+                    allProperties.SingleOrDefault(p => p.Name == nameof(BaseDto.Relations))
+                        ?.SetValue(model, rewritten.Relations);
+                }
+
             }
 
             var arrayProperties = allProperties.Where(P => P.PropertyType.IsArray);
