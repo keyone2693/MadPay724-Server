@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MadPay724.Common.ErrorAndMessage;
 using MadPay724.Data.DatabaseContext;
+using MadPay724.Data.Dtos.Common.ION;
 using MadPay724.Data.Dtos.Site.Admin.Users;
 using MadPay724.Presentation.Helpers.Filters;
 using MadPay724.Repo.Infrastructure;
@@ -43,8 +44,13 @@ namespace MadPay724.Presentation.Controllers.V1.Site.Admin
 
           var usersToReturn = _mapper.Map<IEnumerable<UserFroListDto>>(users);
 
-
-            return Ok(usersToReturn.First());
+          var collectionLink = Link.ToCollection(nameof(GetUsers));
+          var collection = new Collection<UserFroListDto>()
+          {
+              Self = collectionLink,
+              Value = usersToReturn.ToArray()
+          };
+            return Ok(collection);
         }
 
         [HttpGet("{id}", Name = nameof(GetUser))]
@@ -85,7 +91,6 @@ namespace MadPay724.Presentation.Controllers.V1.Site.Admin
 
         [Route("ChangeUserPassword/{id}")]
         [ServiceFilter(typeof(UserCheckIdFilter))]
-        [HttpPut(Name = nameof(ChangeUserPassword))]
         public async Task<IActionResult> ChangeUserPassword(string id, PasswordForChangeDto passwordForChangeDto)
         {
             var userFromRepo = await _userService.GetUserForPassChange(id, passwordForChangeDto.OldPassword);

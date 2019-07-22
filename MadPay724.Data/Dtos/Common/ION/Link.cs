@@ -19,6 +19,15 @@ namespace MadPay724.Data.Dtos.Common.ION
                Relations = null
            };
 
+       public static Link ToCollection(string routeName, object RoutValues = null)
+           => new Link
+           {
+               RouteName = routeName,
+               RouteValues = RoutValues,
+               Method = GetMethod,
+               Relations =new string[] {"collection"}
+           };
+
         [JsonProperty(Order = -4)]
         public string Href { get; set; }
 
