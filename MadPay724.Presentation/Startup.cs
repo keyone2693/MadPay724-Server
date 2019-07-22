@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Repo.Infrastructure;
@@ -56,7 +57,7 @@ namespace MadPay724.Presentation
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(config=>
+            services.AddMvc(config =>
                 {
                     config.EnableEndpointRouting = false;
                     config.ReturnHttpNotAcceptable = true;
@@ -74,7 +75,12 @@ namespace MadPay724.Presentation
                     opt.SerializerSettings.ReferenceLoopHandling =
                     Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 });
-
+            services.AddHsts(opt =>
+            {
+                opt.MaxAge = TimeSpan.FromDays(180);
+                opt.IncludeSubDomains = true;
+                opt.Preload = true;
+            });
             //services.AddRouting( opt => opt.LowercaseUrls = true);
             //services.AddApiVersioning(opt =>
             //{
@@ -133,10 +139,10 @@ namespace MadPay724.Presentation
             services.AddAutoMapper(typeof(Startup));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            services.AddScoped<IUnitOfWork<MadpayDbContext> , UnitOfWork<MadpayDbContext>>();
+            services.AddScoped<IUnitOfWork<MadpayDbContext>, UnitOfWork<MadpayDbContext>>();
             services.AddTransient<ISeedService, SeedService>();
-            services.AddScoped<IAuthService , AuthService>();
-            services.AddScoped<IUserService , UserService>();
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUploadService, UploadService>();
             services.AddScoped<IUtilities, Utilities>();
             services.AddScoped<UserCheckIdFilter>();
@@ -153,7 +159,7 @@ namespace MadPay724.Presentation
                     };
                 });
 
-      
+
 
 
         }
@@ -169,7 +175,8 @@ namespace MadPay724.Presentation
             {
                 app.UseExceptionHandler(builder =>
                 {
-                    builder.Run(async context => {
+                    builder.Run(async context =>
+                    {
                         context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
                         var error = context.Features.Get<IExceptionHandlerFeature>();
@@ -181,7 +188,7 @@ namespace MadPay724.Presentation
                     });
                 });
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                //app.UseHsts();
+                app.UseHsts();
             }
 
             app.UseHttpsRedirection();
