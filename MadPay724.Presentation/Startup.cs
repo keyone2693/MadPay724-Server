@@ -26,8 +26,11 @@ using MadPay724.Services.Upload.Service;
 using MadPay724.Presentation.Helpers.Filters;
 using MadPay724.Services.Site.Admin.User.Interface;
 using MadPay724.Services.Site.Admin.User.Service;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Net.Http.Headers;
+using Newtonsoft.Json.Serialization;
 
 namespace MadPay724.Presentation
 {
@@ -56,13 +59,22 @@ namespace MadPay724.Presentation
                     Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 });
 
+            //services.AddRouting( opt => opt.LowercaseUrls = true);
+            //services.AddApiVersioning(opt =>
+            //{
+            //    opt.ApiVersionReader = new MediaTypeApiVersionReader();
+            //    opt.AssumeDefaultVersionWhenUnspecified = true;
+            //    opt.ReportApiVersions = true;
+            //    opt.DefaultApiVersion = new ApiVersion(1,0);
+            //    opt.ApiVersionSelector = new CurrentImplementationApiVersionSelector(opt);
+            //});
             services.AddOpenApiDocument(document =>
             {
                 document.DocumentName = "Site";
                 document.ApiGroupNames = new[] { "Site", "Users" };
                 document.PostProcess = d =>
                 {
-                    d.Info.Title = "Hello world!";
+                    d.Info.Title = "MadPay724 Api Docs";
                     //d.Info.Contact = new OpenApiContact
                     //{
                     //    Name = "keyone",

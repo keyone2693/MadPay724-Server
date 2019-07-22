@@ -18,7 +18,6 @@ using Microsoft.Extensions.Logging;
 namespace MadPay724.Presentation.Controllers.Site.Admin
 {
     [Authorize]
-   // [ServiceFilter(typeof(LogFilter))]
     [ApiExplorerSettings(GroupName = "Site")]
     [Route("site/admin/[controller]")]
     [ApiController]
