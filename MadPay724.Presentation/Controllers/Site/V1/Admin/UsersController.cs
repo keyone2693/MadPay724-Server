@@ -9,6 +9,7 @@ using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Common.ION;
 using MadPay724.Data.Dtos.Site.Admin.Users;
 using MadPay724.Presentation.Helpers.Filters;
+using MadPay724.Presentation.Routes.V1;
 using MadPay724.Repo.Infrastructure;
 using MadPay724.Services.Site.Admin.Auth.Interface;
 using MadPay724.Services.Site.Admin.User.Interface;
@@ -20,7 +21,7 @@ namespace MadPay724.Presentation.Controllers.V1.Site.Admin
 {
     [Authorize]
     [ApiExplorerSettings(GroupName = "v1_Site_Admin")]
-    [Route("api/v1/site/admin/[controller]")]
+    //[Route("api/v1/site/admin/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
     {
@@ -37,7 +38,7 @@ namespace MadPay724.Presentation.Controllers.V1.Site.Admin
             _logger = logger;
         }
         [AllowAnonymous]
-        [HttpGet(Name = nameof(GetUsers))]
+        [HttpGet(ApiV1Routes.Users.GetUsers)]
         [ResponseCache(Duration = 60)]
         public async Task<IActionResult> GetUsers()
         {
@@ -54,7 +55,7 @@ namespace MadPay724.Presentation.Controllers.V1.Site.Admin
             return Ok(collection);
         }
 
-        [HttpGet("{id}", Name = nameof(GetUser))]
+        [HttpGet(ApiV1Routes.Users.GetUser, Name ="GetUser")]
         [ServiceFilter(typeof(UserCheckIdFilter))]
         public async Task<IActionResult> GetUser(string id)
         {
@@ -63,7 +64,7 @@ namespace MadPay724.Presentation.Controllers.V1.Site.Admin
             return Ok(userToReturn);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut(ApiV1Routes.Users.UpdateUser)]
         [ServiceFilter(typeof(UserCheckIdFilter))]
         public async Task<IActionResult> UpdateUser(string id, UserForUpdateDto userForUpdateDto)
         {
@@ -90,7 +91,7 @@ namespace MadPay724.Presentation.Controllers.V1.Site.Admin
 
         }
 
-        [Route("ChangeUserPassword/{id}")]
+        [HttpPut(ApiV1Routes.Users.ChangeUserPassword)]
         [ServiceFilter(typeof(UserCheckIdFilter))]
         public async Task<IActionResult> ChangeUserPassword(string id, PasswordForChangeDto passwordForChangeDto)
         {

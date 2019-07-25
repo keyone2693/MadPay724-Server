@@ -130,11 +130,6 @@ namespace MadPay724.Presentation
 
 
             });
-            //services.AddOpenApiDocument(document =>
-            //{
-            //    document.DocumentName = "Api";
-            //    document.ApiGroupNames = new[] { "Api" };
-            //});
 
 
             services.AddCors();

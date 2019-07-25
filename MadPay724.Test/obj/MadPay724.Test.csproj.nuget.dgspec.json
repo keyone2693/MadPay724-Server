@@ -57,7 +57,7 @@
               "include": "None",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[3.0.0-preview6-27804-01, )",
+              "version": "[3.0.0-preview7-27912-14, )",
               "autoReferenced": true
             },
             "NLog.Web.AspNetCore": {
@@ -140,7 +140,7 @@
               "include": "None",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[3.0.0-preview6-27804-01, )",
+              "version": "[3.0.0-preview7-27912-14, )",
               "autoReferenced": true
             },
             "ZNetCS.AspNetCore.Logging.EntityFrameworkCore": {
@@ -251,7 +251,7 @@
               "include": "None",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[3.0.0-preview6-27804-01, )",
+              "version": "[3.0.0-preview7-27912-14, )",
               "autoReferenced": true
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
@@ -397,7 +397,7 @@
               "include": "None",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[3.0.0-preview6-27804-01, )",
+              "version": "[3.0.0-preview7-27912-14, )",
               "autoReferenced": true
             },
             "Newtonsoft.Json": {
@@ -478,7 +478,7 @@
               "include": "None",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[3.0.0-preview6-27804-01, )",
+              "version": "[3.0.0-preview7-27912-14, )",
               "autoReferenced": true
             },
             "Moq": {

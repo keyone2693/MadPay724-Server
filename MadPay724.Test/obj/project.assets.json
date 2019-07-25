@@ -1522,13 +1522,13 @@
           "buildMultiTargeting/Microsoft.NET.Test.Sdk.props": {}
         }
       },
-      "Microsoft.NETCore.App/3.0.0-preview6-27804-01": {
+      "Microsoft.NETCore.App/3.0.0-preview7-27912-14": {
         "type": "package",
         "dependencies": {
-          "Microsoft.NETCore.Platforms": "3.0.0-preview6.19303.8"
+          "Microsoft.NETCore.Platforms": "3.0.0-preview7.19362.9"
         }
       },
-      "Microsoft.NETCore.Platforms/3.0.0-preview6.19303.8": {
+      "Microsoft.NETCore.Platforms/3.0.0-preview7.19362.9": {
         "type": "package",
         "compile": {
           "lib/netstandard1.0/_._": {}
@@ -5947,30 +5947,30 @@
         "microsoft.net.test.sdk.nuspec"
       ]
     },
-    "Microsoft.NETCore.App/3.0.0-preview6-27804-01": {
-      "sha512": "ZusFeFw4lm4f3W1GyaTDbEdqln8N0fWFijKpykPLLvrEEsppfZwx8n/UeMm/e56QspzGHKpJfmKi4YF2Z6+G6A==",
+    "Microsoft.NETCore.App/3.0.0-preview7-27912-14": {
+      "sha512": "TNDdHAcfUqEaWXXJoCMUGZnsIP53jlShQV4Ccw8Nqbl8SWkkz1llq4ckfoRl7QrHoq328JhEyCSnPaaYHAB5Xg==",
       "type": "package",
-      "path": "microsoft.netcore.app/3.0.0-preview6-27804-01",
+      "path": "microsoft.netcore.app/3.0.0-preview7-27912-14",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
-        "microsoft.netcore.app.3.0.0-preview6-27804-01.nupkg.sha512",
+        "microsoft.netcore.app.3.0.0-preview7-27912-14.nupkg.sha512",
         "microsoft.netcore.app.nuspec"
       ]
     },
-    "Microsoft.NETCore.Platforms/3.0.0-preview6.19303.8": {
-      "sha512": "9nE9InmtkWL1ZIAvzZPoe8zzr8JNrmyofR5++0NCLomrLSbR70b60hLXFE/7vXIVgbKdTo3CTsCcFTOSZoOIEw==",
+    "Microsoft.NETCore.Platforms/3.0.0-preview7.19362.9": {
+      "sha512": "gc5/X1m73JO8ETxOHC3IbgM7JRa7LPsSY+/lVs88YGwKn0QYuU568EmpC8yPk9UKaAOq+82PWG61vFcXdNfsvQ==",
       "type": "package",
-      "path": "microsoft.netcore.platforms/3.0.0-preview6.19303.8",
+      "path": "microsoft.netcore.platforms/3.0.0-preview7.19362.9",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
         "lib/netstandard1.0/_._",
-        "microsoft.netcore.platforms.3.0.0-preview6.19303.8.nupkg.sha512",
+        "microsoft.netcore.platforms.3.0.0-preview7.19362.9.nupkg.sha512",
         "microsoft.netcore.platforms.nuspec",
         "runtime.json",
         "useSharedDesignerContext.txt",
@@ -12274,7 +12274,7 @@
       "Microsoft.AspNet.WebApi.Client >= 5.2.7",
       "Microsoft.AspNetCore.TestHost >= 2.2.0",
       "Microsoft.NET.Test.Sdk >= 16.2.0",
-      "Microsoft.NETCore.App >= 3.0.0-preview6-27804-01",
+      "Microsoft.NETCore.App >= 3.0.0-preview7-27912-14",
       "Moq >= 4.12.0",
       "System.Drawing.Common >= 4.5.1",
       "xunit >= 2.4.1",
@@ -12342,7 +12342,7 @@
             "include": "None",
             "suppressParent": "All",
             "target": "Package",
-            "version": "[3.0.0-preview6-27804-01, )",
+            "version": "[3.0.0-preview7-27912-14, )",
             "autoReferenced": true
           },
           "Moq": {

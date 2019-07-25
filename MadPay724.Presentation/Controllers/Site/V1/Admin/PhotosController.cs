@@ -5,6 +5,7 @@ using AutoMapper;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Site.Admin.Photos;
 using MadPay724.Presentation.Helpers.Filters;
+using MadPay724.Presentation.Routes.V1;
 using MadPay724.Repo.Infrastructure;
 using MadPay724.Services.Upload.Interface;
 using Microsoft.AspNetCore.Authorization;
@@ -15,7 +16,7 @@ namespace MadPay724.Presentation.Controllers.V1.Site.Admin
 {
     [Authorize]
     [ApiExplorerSettings(GroupName = "v1_Site_Admin")]
-    [Route("api/v1/site/admin/users/{userId}/photos")]
+   // [Route("api/v1/site/admin/users/{userId}/photos")]
     [ApiController]
     public class PhotosController : ControllerBase
     {
@@ -33,7 +34,7 @@ namespace MadPay724.Presentation.Controllers.V1.Site.Admin
             _uploadService = uploadService;
         }
         [ServiceFilter(typeof(UserCheckIdFilter))]
-        [HttpGet("{id}", Name = "GetPhoto")]
+        [HttpGet(ApiV1Routes.Photos.GetPhoto, Name = "GetPhoto")]
         public async Task<IActionResult> GetPhoto(string id)
         {
             var photoFromRepo = await _db.PhotoRepository.GetByIdAsync(id);
@@ -44,7 +45,7 @@ namespace MadPay724.Presentation.Controllers.V1.Site.Admin
         }
 
         [ServiceFilter(typeof(UserCheckIdFilter))]
-        [HttpPost]
+        [HttpPost(ApiV1Routes.Photos.ChangeUserPhoto)]
         public async Task<IActionResult> ChangeUserPhoto(string userId, [FromForm]PhotoForProfileDto photoForProfileDto)
         {
             //var userFromRepo = await _db.UserRepository.GetByIdAsync(userId);

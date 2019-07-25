@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Authorization;
 using MadPay724.Data.Dtos.Site.Admin.Users;
 using AutoMapper;
 using MadPay724.Common.ErrorAndMessage;
+using MadPay724.Presentation.Routes.V1;
 using Microsoft.Extensions.Logging;
 
 namespace MadPay724.Presentation.Controllers.V1.Site.Admin
@@ -43,7 +44,7 @@ namespace MadPay724.Presentation.Controllers.V1.Site.Admin
         }
 
         [AllowAnonymous]
-        [HttpPost("register")]
+        [HttpPost(ApiV1Routes.Auth.Register)]
         public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
         {
             userForRegisterDto.UserName = userForRegisterDto.UserName.ToLower();
@@ -113,7 +114,7 @@ namespace MadPay724.Presentation.Controllers.V1.Site.Admin
 
         }
         [AllowAnonymous]
-        [HttpPost("login")]
+        [HttpPost(ApiV1Routes.Auth.Login)]
         public async Task<IActionResult> Login(UseForLoginDto useForLoginDto)
         {
             var userFromRepo = await _authService.Login(useForLoginDto.UserName, useForLoginDto.Password);
