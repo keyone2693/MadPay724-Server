@@ -16,7 +16,6 @@ using System.Threading.Tasks;
 using MadPay724.Test.DataInput;
 using MadPay724.Test.IntegrationTests.Providers;
 using Xunit;
-using Microsoft.AspNetCore.Http.Internal;
 
 namespace MadPay724.Test.IntegrationTests.ControllersTests
 {
