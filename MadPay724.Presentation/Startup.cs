@@ -146,25 +146,25 @@ namespace MadPay724.Presentation
             services.AddScoped<IUtilities, Utilities>();
             services.AddScoped<UserCheckIdFilter>();
 
-            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            //    .AddJwtBearer(opt =>
-            //    {
-            //        opt.TokenValidationParameters = new TokenValidationParameters
-            //        {
-            //            ValidateIssuerSigningKey = true,
-            //            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
-            //            ValidateIssuer = false,
-            //            ValidateAudience = false
-            //        };
-            //    });
-
-            services.AddAuthentication("Bearer")
-                .AddIdentityServerAuthentication(opt =>
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(opt =>
                 {
-                    opt.Authority = "http://localhost:5000";
-                    opt.RequireHttpsMetadata = false;
-                    opt.ApiName = "MadPay724Api";
+                    opt.TokenValidationParameters = new TokenValidationParameters
+                    {
+                       ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
                 });
+
+            //services.AddAuthentication("Bearer")
+            //    .AddIdentityServerAuthentication(opt =>
+            //    {
+            //        opt.Authority = "http://localhost:5000";
+            //        opt.RequireHttpsMetadata = false;
+            //        opt.ApiName = "MadPay724Api";
+            //    });
 
 
         }
@@ -201,7 +201,7 @@ namespace MadPay724.Presentation
             app.UseResponseCaching();
             //seeder.SeedUsers();
             app.UseCors(p => p.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader());
-            ///
+            //
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
