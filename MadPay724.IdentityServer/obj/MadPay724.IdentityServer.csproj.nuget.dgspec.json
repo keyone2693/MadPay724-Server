@@ -1,0 +1,74 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.IdentityServer\\MadPay724.IdentityServer.csproj": {}
+  },
+  "projects": {
+    "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.IdentityServer\\MadPay724.IdentityServer.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.IdentityServer\\MadPay724.IdentityServer.csproj",
+        "projectName": "MadPay724.IdentityServer",
+        "projectPath": "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.IdentityServer\\MadPay724.IdentityServer.csproj",
+        "packagesPath": "C:\\Users\\Key1-lab\\.nuget\\packages\\",
+        "outputPath": "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.IdentityServer\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Key1-lab\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.0": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.0": {
+          "dependencies": {
+            "IdentityServer4": {
+              "target": "Package",
+              "version": "[2.5.0, )"
+            },
+            "Microsoft.NETCore.App": {
+              "include": "None",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.0.0-preview7-27912-14, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": [
+            "Microsoft.AspNetCore.App",
+            "Microsoft.NETCore.App"
+          ]
+        }
+      }
+    }
+  }
+}
