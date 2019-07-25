@@ -131,7 +131,6 @@ namespace MadPay724.Presentation
 
             });
 
-
             services.AddCors();
             
             //services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
@@ -147,19 +146,25 @@ namespace MadPay724.Presentation
             services.AddScoped<IUtilities, Utilities>();
             services.AddScoped<UserCheckIdFilter>();
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(opt =>
+            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            //    .AddJwtBearer(opt =>
+            //    {
+            //        opt.TokenValidationParameters = new TokenValidationParameters
+            //        {
+            //            ValidateIssuerSigningKey = true,
+            //            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
+            //            ValidateIssuer = false,
+            //            ValidateAudience = false
+            //        };
+            //    });
+
+            services.AddAuthentication("Bearer")
+                .AddIdentityServerAuthentication(opt =>
                 {
-                    opt.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
-                        ValidateIssuer = false,
-                        ValidateAudience = false
-                    };
+                    opt.Authority = "http://localhost:5000";
+                    opt.RequireHttpsMetadata = false;
+                    opt.ApiName = "MadPay724Api";
                 });
-
-
 
 
         }

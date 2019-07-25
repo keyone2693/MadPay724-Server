@@ -37,7 +37,6 @@ namespace MadPay724.Presentation.Controllers.V1.Site.Admin
             _userService = userService;
             _logger = logger;
         }
-        [AllowAnonymous]
         [HttpGet(ApiV1Routes.Users.GetUsers)]
         [ResponseCache(Duration = 60)]
         public async Task<IActionResult> GetUsers()
