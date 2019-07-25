@@ -20,9 +20,9 @@ using Microsoft.Extensions.Logging;
 
 namespace MadPay724.Presentation.Controllers.V1.Site.Admin
 {
-    [Authorize]
+    [AllowAnonymous]
     [ApiExplorerSettings(GroupName = "v1_Site_Admin")]
-    [Route("api/v1/site/admin/[controller]")]
+    //[Route("api/v1/site/admin/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -43,7 +43,7 @@ namespace MadPay724.Presentation.Controllers.V1.Site.Admin
 
         }
 
-        [AllowAnonymous]
+        
         [HttpPost(ApiV1Routes.Auth.Register)]
         public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
         {
@@ -113,7 +113,6 @@ namespace MadPay724.Presentation.Controllers.V1.Site.Admin
             }
 
         }
-        [AllowAnonymous]
         [HttpPost(ApiV1Routes.Auth.Login)]
         public async Task<IActionResult> Login(UseForLoginDto useForLoginDto)
         {

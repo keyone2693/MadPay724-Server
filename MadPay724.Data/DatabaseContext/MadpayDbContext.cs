@@ -3,10 +3,14 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace MadPay724.Data.DatabaseContext
 {
-    public class MadpayDbContext : DbContext
+    public class MadpayDbContext : IdentityDbContext<User,Role, string,
+       IdentityUserClaim<string>, UserRole ,IdentityUserLogin<string>, 
+       IdentityRoleClaim<string>, IdentityUserToken<string>>
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionBuilder)
         {
