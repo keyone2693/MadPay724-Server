@@ -22,7 +22,7 @@ namespace MadPay724.IdentityServer.Providers
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
                     ClientSecrets =
                     {
-                        new Secret("sevret".Sha256())
+                        new Secret("secret".Sha256())
                     },
                     AllowedScopes = { "MadPay724Api" }
                 }
