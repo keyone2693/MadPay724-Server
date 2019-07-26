@@ -1,11 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using MadPay724.Common.ErrorAndMessage;
+using MadPay724.Common.Helpers.Interface;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Site.Admin.Users;
 using MadPay724.Data.Models;
@@ -15,12 +17,17 @@ using MadPay724.Services.Site.Admin.Auth.Interface;
 using MadPay724.Services.Site.Admin.User.Interface;
 using MadPay724.Test.DataInput;
 using MadPay724.Test.IntegrationTests.Providers;
+using MadPay724.Test.UnitTests.Providers;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit;
+
+using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace MadPay724.Test.UnitTests.ControllersTests
 {
@@ -32,10 +39,15 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         private readonly Mock<IConfiguration> _mockConfig;
         private readonly Mock<IConfigurationSection> _mockConfigSection;
         private readonly Mock<ILogger<AuthController>> _mockLogger;
-        private readonly AuthController _controller;
+        private readonly Mock<IUtilities> _mockUtilities;
 
+        private readonly Mock<FakeUserManager> _mockUserManager;
+        private readonly Mock<FakeSignInManager> _mockSignInManager;
+
+        private readonly AuthController _controller;
         public AuthControllerUnitTests()
         {
+
             _mockRepo = new Mock<IUnitOfWork<MadpayDbContext>>();
             _mockMapper = new Mock<IMapper>();
             //_mockUtilities = new Mock<IUtilities>();
@@ -43,7 +55,15 @@ namespace MadPay724.Test.UnitTests.ControllersTests
             _mockLogger = new Mock<ILogger<AuthController>>();
             _mockConfig = new Mock<IConfiguration>();
             _mockConfigSection = new Mock<IConfigurationSection>();
-            _controller = new AuthController(_mockRepo.Object, _mockAuthService.Object, _mockConfig.Object, _mockMapper.Object, _mockLogger.Object);
+
+            _mockUserManager =new Mock<FakeUserManager>();
+            _mockSignInManager = new Mock<FakeSignInManager>();
+
+
+            _mockUtilities = new Mock<IUtilities>();
+
+            _controller = new AuthController(_mockRepo.Object, _mockAuthService.Object, _mockConfig.Object, _mockMapper.Object,
+                _mockLogger.Object, _mockUtilities.Object, _mockUserManager.Object, _mockSignInManager.Object);
 
         }
         #region loginTests
@@ -51,15 +71,23 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         public async Task Login_Success()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
-            _mockAuthService.Setup(x => x.Login(It.IsAny<string>(), It.IsAny<string>()))
+
+
+            _mockUserManager.Setup(x => x.FindByNameAsync(It.IsAny<string>()))
                 .ReturnsAsync(UnitTestsDataInput.Users.First());
 
+            _mockSignInManager.Setup(x => x.CheckPasswordSignInAsync(
+                    It.IsAny<User>(), It.IsAny<string>(), It.IsAny<bool>()))
+                .ReturnsAsync(SignInResult.Success);
 
-            _mockConfigSection.Setup(x => x.Value).Returns("Token ekn wle nwe nwer hwoe rlwken rlwke ns");
-            _mockConfig.Setup(x => x.GetSection(It.IsAny<string>())).Returns(_mockConfigSection.Object);
+            _mockUtilities.Setup(x => x.GenerateJwtToken(It.IsAny<User>(), It.IsAny<bool>()))
+                .Returns(It.IsAny<string>());
+
 
             _mockMapper.Setup(x => x.Map<UserForDetailedDto>(It.IsAny<User>()))
                 .Returns(UnitTestsDataInput.userForDetailedDto);
+
+
             //Act----------------------------------------------------------------------------------------------------------------------------------
             var result = await _controller.Login(UnitTestsDataInput.useForLoginDto_Success);
             var okResult = result as OkObjectResult;
@@ -72,11 +100,18 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         public async Task Login_Fail()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
-            _mockAuthService.Setup(x => x.Login(It.IsAny<string>(), It.IsAny<string>()))
-                .ReturnsAsync(It.IsAny<User>());
+
+            _mockUserManager.Setup(x => x.FindByNameAsync(It.IsAny<string>()))
+                .ReturnsAsync(UnitTestsDataInput.Users.First());
+
+            _mockSignInManager.Setup(x => x.CheckPasswordSignInAsync(
+                    It.IsAny<User>(), It.IsAny<string>(),It.IsAny<bool>()))
+                .ReturnsAsync(SignInResult.NotAllowed);
+
             string expected = "کاربری با این یوزر و پس وجود ندارد";
 
             //Act----------------------------------------------------------------------------------------------------------------------------------
+
             var result = await _controller.Login(UnitTestsDataInput.useForLoginDto_Success);
             var okResult = result as UnauthorizedObjectResult;
             //Assert-------------------------------------------------------------------------------------------------------------------------------

@@ -225,11 +225,13 @@ namespace MadPay724.Presentation
                 });
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
+                app.UseHttpsRedirection();
+                app.UseResponseCaching();
             }
 
-            app.UseHttpsRedirection();
+           
             //app.UseResponseCompression();
-            app.UseResponseCaching();
+            
             seeder.SeedUsers();
             app.UseCors(p => p.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader());
             //

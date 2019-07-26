@@ -2808,7 +2808,9 @@
           "MadPay724.Data": "1.0.0",
           "Microsoft.AspNetCore.Http": "2.2.2",
           "Microsoft.AspNetCore.Mvc.Formatters.Json": "2.2.0",
-          "NLog.Web.AspNetCore": "4.8.4"
+          "Microsoft.IdentityModel.Tokens": "5.5.0",
+          "NLog.Web.AspNetCore": "4.8.4",
+          "System.IdentityModel.Tokens.Jwt": "5.5.0"
         },
         "runtime": {
           "MadPay724.Common.dll": {}
@@ -2861,6 +2863,7 @@
         "dependencies": {
           "CloudinaryDotNet": "1.8.0",
           "MadPay724.Repo": "1.0.0",
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "3.0.0-preview7.19365.7",
           "Microsoft.Extensions.Hosting.Abstractions": "3.0.0-preview7.19362.4",
           "Newtonsoft.Json": "12.0.2"
         },

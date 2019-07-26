@@ -4125,7 +4125,9 @@
           "MadPay724.Data": "1.0.0",
           "Microsoft.AspNetCore.Http": "2.2.2",
           "Microsoft.AspNetCore.Mvc.Formatters.Json": "2.2.0",
-          "NLog.Web.AspNetCore": "4.8.4"
+          "Microsoft.IdentityModel.Tokens": "5.5.0",
+          "NLog.Web.AspNetCore": "4.8.4",
+          "System.IdentityModel.Tokens.Jwt": "5.5.0"
         },
         "compile": {
           "bin/placeholder/MadPay724.Common.dll": {}

@@ -5,6 +5,7 @@ using MadPay724.Data.Dtos.Services;
 using MadPay724.Data.Dtos.Site.Admin.Photos;
 using MadPay724.Data.Dtos.Site.Admin.Users;
 using MadPay724.Data.Models;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 
 namespace MadPay724.Test.DataInput
@@ -17,14 +18,14 @@ namespace MadPay724.Test.DataInput
         public const string unToken = "";
 
         public const string aToken =
-            "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwZDQ3Mzk0ZS02NzJmLTRkYjctODk4Yy1iZmQ4ZjMyZTJhZjciLCJ1bmlxdWVfbmFtZSI6ImhheXNtYXRoaXNAYmFya2FyYW1hLmNvbSIsIm5iZiI6MTU2Mzc4ODE2MywiZXhwIjoxNTYzODc0NTYzLCJpYXQiOjE1NjM3ODgxNjN9.c4Lh4hJ_3qiJRQ4mpKkEr34oloVRjU4Ex7V3gI3EA7_rg387JhODZCUCoLO81qkOXiFyn3b1tlqBnD5m89OK4Q";
+            "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIzODhkZTJiYy04NTFkLTRjOTUtOGJmOS0xOTM5ZTUyZTQ0YzgiLCJ1bmlxdWVfbmFtZSI6ImhheXNtYXRoaXNAYmFya2FyYW1hLmNvbSIsIm5iZiI6MTU2NDE0NjA2OSwiZXhwIjoxNTY0MjMyNDY5LCJpYXQiOjE1NjQxNDYwNjl9.oy4WZfWUOJYNshy6YUk681ZHMlnbf30l0x_Jm98LHIbwDccei_R2WpPz92k2pR7r9m6MUaiI9AXDVYk5REWBaQ";
 
 
 
-        public const string userLogedInUsername = "haysmathis@barkarama.com";
-        public const string userLogedInPassword = "123789";
-        public const string userLogedInId = "0d47394e-672f-4db7-898c-bfd8f32e2af7";
-        public const string userAnOtherId = "0d47394e-672f-4db7-898c-bfd8f32e2";
+        public const string userLogedInUsername = "kathybrown@barkarama.com";
+        public const string userLogedInPassword = "password";
+        public const string userLogedInId = "1e15701a-8291-420d-923a-eebf5f2b6fc5";
+        public const string userAnOtherId = "388de2bc-851d-4c95-8bf9-1939e52e44c8";
         public const string userLogedInPhotoId = "e97fd389-fb3d-4ea2-929d-435f5ecdc159";
 
 
@@ -36,7 +37,7 @@ namespace MadPay724.Test.DataInput
                 DateOfBirth = DateTime.Now,
                 LastActive = DateTime.Now,
                 PasswordHash ="",
-                UserName = "haysmathis@barkarama.com",
+                UserName = "kathybrown@barkarama.com",
                 Name = "Holloway Vasquez",
                 PhoneNumber = "55",
                 Address = "55",
@@ -94,7 +95,7 @@ namespace MadPay724.Test.DataInput
 
         public static readonly UserForRegisterDto userForRegisterDto_Fail_Exist = new UserForRegisterDto()
         {
-            UserName = "haysmathis@barkarama.com",
+            UserName = "kathybrown@barkarama.com",
             Password = "123789",
             Name = "کیوان",
             PhoneNumber = "15486523"
@@ -110,8 +111,8 @@ namespace MadPay724.Test.DataInput
 
         public static readonly UseForLoginDto useForLoginDto_Success = new UseForLoginDto()
         {
-            UserName = "haysmathis@barkarama.com",
-            Password = "123789",
+            UserName = "kathybrown@barkarama.com",
+            Password = "password",
             IsRemember = true
         };
 
