@@ -54,21 +54,23 @@ namespace MadPay724.Presentation.Controllers.V1.Site.Admin
             _signInManager = signInManager;
         }
 
-        
+
         [HttpPost(ApiV1Routes.Auth.Register)]
         public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
         {
-            userForRegisterDto.UserName = userForRegisterDto.UserName.ToLower();
-            if (await _db.UserRepository.UserExists(userForRegisterDto.UserName))
-            {
-                _logger.LogWarning($"{userForRegisterDto.Name} - {userForRegisterDto.UserName} میحواهد دوباره ثبت نام کند");
-                return BadRequest(new ReturnMessage()
-                {
-                    status = false,
-                    title = "خطا",
-                    message = "نام کاربری وجود دارد"
-                });
-            }
+
+
+
+            //if (await _db.UserRepository.UserExists(userForRegisterDto.UserName))
+            //{
+            //    _logger.LogWarning($"{userForRegisterDto.Name} - {userForRegisterDto.UserName} میحواهد دوباره ثبت نام کند");
+            //    return BadRequest(new ReturnMessage()
+            //    {
+            //        status = false,
+            //        title = "خطا",
+            //        message = "نام کاربری وجود دارد"
+            //    });
+            //}
 
 
             var userToCreate = new User
@@ -81,9 +83,8 @@ namespace MadPay724.Presentation.Controllers.V1.Site.Admin
                 Gender = true,
                 DateOfBirth = DateTime.Now,
                 IsAcive = true,
-                Status = true
+                Status = true,
             };
-            // var uri = Server.MapPath("~/Files/Pic/profilepic.png");
 
             var photoToCreate = new Photo
             {
@@ -99,36 +100,49 @@ namespace MadPay724.Presentation.Controllers.V1.Site.Admin
                 PublicId = "0"
             };
 
-            var createdUser = await _authService.Register(userToCreate, photoToCreate, userForRegisterDto.Password);
-            if (createdUser != null)
+            var result = await _userManager.CreateAsync(userToCreate, userForRegisterDto.Password);
+
+            if (result.Succeeded)
             {
-                var userForReturn = _mapper.Map<UserForDetailedDto>(createdUser);
+                await _authService.AddUserPhotos(photoToCreate);
+
+                var userForReturn = _mapper.Map<UserForDetailedDto>(userToCreate);
 
                 _logger.LogInformation($"{userForRegisterDto.Name} - {userForRegisterDto.UserName} ثبت نام کرده است");
 
                 return CreatedAtRoute("GetUser", new
                 {
                     controller = "Users",
-                    id = createdUser.Id
+                    id = userToCreate.Id
                 }, userForReturn);
             }
-            else
+            else if(result.Errors.Any())
             {
-                _logger.LogWarning($"{userForRegisterDto.Name} - {userForRegisterDto.UserName} میحواهد دوباره ثبت نام کند");
+                _logger.LogWarning(result.Errors.First().Description);
                 return BadRequest(new ReturnMessage()
                 {
                     status = false,
                     title = "خطا",
-                    message = "ثبت در دیتابیس"
+                    message = result.Errors.First().Description
                 });
             }
+            else
+            {
+                return BadRequest(new ReturnMessage()
+                {
+                    status = false,
+                    title = "خطا",
+                    message ="خطای نامشخص"
+                });
+            }
+
 
         }
         [HttpPost(ApiV1Routes.Auth.Login)]
         public async Task<IActionResult> Login(UseForLoginDto useForLoginDto)
         {
             var user = await _userManager.FindByNameAsync(useForLoginDto.UserName);
-            if (user== null)
+            if (user == null)
             {
                 _logger.LogWarning($"{useForLoginDto.UserName} درخواست لاگین ناموفق داشته است");
                 return Unauthorized("کاربری با این یوزر و پس وجود ندارد");

@@ -20,6 +20,8 @@ namespace MadPay724.Services.Site.Admin.User.Service
             _utilities = utilities;
         }
 
+ 
+
         public async Task<Data.Models.User> GetUserForPassChange(string id, string password)
         {
 

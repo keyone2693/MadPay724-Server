@@ -21,7 +21,18 @@ namespace MadPay724.Services.Site.Admin.Auth.Service
             _db = dbContext;
             _utilities = utilities;
         }
-
+        public async Task<bool> AddUserPhotos(Photo photo)
+        {
+            await _db.PhotoRepository.InsertAsync(photo);
+            if (await _db.SaveAsync())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         public async Task<Data.Models.User> Login(string username, string password)
         {
             var users = await _db.UserRepository.GetManyAsync(p => p.UserName == username, null, "Photos");
