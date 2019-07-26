@@ -33,12 +33,9 @@ namespace MadPay724.Test.DataInput
             new User
             {
                 Id = "0d47394e-672f-4db7-898c-bfd8f32e2af7",
-                DateCreated = DateTime.Now,
-                DateModified = DateTime.Now,
                 DateOfBirth = DateTime.Now,
                 LastActive = DateTime.Now,
-                PasswordHash =new byte[255],
-                PasswordSalt = new byte[255],
+                PasswordHash ="",
                 UserName = "haysmathis@barkarama.com",
                 Name = "Holloway Vasquez",
                 PhoneNumber = "55",

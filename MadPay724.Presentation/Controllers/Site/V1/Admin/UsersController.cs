@@ -8,14 +8,17 @@ using MadPay724.Common.ErrorAndMessage;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Common.ION;
 using MadPay724.Data.Dtos.Site.Admin.Users;
+using MadPay724.Data.Models;
 using MadPay724.Presentation.Helpers.Filters;
 using MadPay724.Presentation.Routes.V1;
 using MadPay724.Repo.Infrastructure;
 using MadPay724.Services.Site.Admin.Auth.Interface;
 using MadPay724.Services.Site.Admin.User.Interface;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace MadPay724.Presentation.Controllers.V1.Site.Admin
 {
@@ -28,6 +31,8 @@ namespace MadPay724.Presentation.Controllers.V1.Site.Admin
         private readonly IMapper _mapper;
         private readonly IUserService _userService;
         private readonly ILogger<UsersController> _logger;
+  
+
         public UsersController(IUnitOfWork<MadpayDbContext> dbContext, IMapper mapper, 
             IUserService userService, ILogger<UsersController> logger)
         {
@@ -35,12 +40,21 @@ namespace MadPay724.Presentation.Controllers.V1.Site.Admin
             _mapper = mapper;
             _userService = userService;
             _logger = logger;
+            
+
+
+
         }
+        [AllowAnonymous]
         [HttpGet(ApiV1Routes.Users.GetUsers)]
         [ResponseCache(Duration = 60)]
         public async Task<IActionResult> GetUsers()
         {
-          var users = await _db.UserRepository.GetManyAsync(null, null, "Photos,BankCards");
+
+          
+
+
+            var users = await _db.UserRepository.GetManyAsync(null, null, "Photos,BankCards");
 
           var usersToReturn = _mapper.Map<IEnumerable<UserFroListDto>>(users);
 

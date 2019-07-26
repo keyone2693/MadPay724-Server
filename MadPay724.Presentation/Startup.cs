@@ -17,8 +17,6 @@ using System.Net;
 using System.Text;
 using NSwag;
 using NSwag.Generation.Processors.Security;
-using MadPay724.Services.Seed.Service;
-using MadPay724.Services.Seed.Interface;
 using AutoMapper;
 using MadPay724.Common.Helpers.Helpers;
 using MadPay724.Common.Helpers.Interface;
@@ -27,6 +25,8 @@ using MadPay724.Data.Models;
 using MadPay724.Services.Upload.Interface;
 using MadPay724.Services.Upload.Service;
 using MadPay724.Presentation.Helpers.Filters;
+using MadPay724.Services.Seed.Interface;
+using MadPay724.Services.Seed.Service;
 using MadPay724.Services.Site.Admin.User.Interface;
 using MadPay724.Services.Site.Admin.User.Service;
 using Microsoft.AspNetCore.Authorization;
@@ -36,6 +36,7 @@ using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.CodeAnalysis.FlowAnalysis;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 namespace MadPay724.Presentation
 {
@@ -62,6 +63,10 @@ namespace MadPay724.Presentation
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddDbContext<MadpayDbContext>(p => p.UseSqlServer(
+                @"Data Source=KEY1-LAB\MSSQLSERVER2016;Initial Catalog=MadPay724db;Integrated Security=True;MultipleActiveResultSets=True;"));
+
             services.AddMvc(config =>
                 {
                     config.EnableEndpointRouting = false;
@@ -86,30 +91,7 @@ namespace MadPay724.Presentation
                     Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 });
 
-            IdentityBuilder builder = services.AddIdentityCore<User>(opt =>
-            {
-                opt.Password.RequireDigit = false;
-                opt.Password.RequiredLength = 4;
-                opt.Password.RequireNonAlphanumeric = false;
-                opt.Password.RequireUppercase = false;
-            });
-            builder = new IdentityBuilder(builder.UserType,typeof(Role),builder.Services);
-            builder.AddEntityFrameworkStores<MadpayDbContext>();
-            builder.AddRoleValidator<RoleValidator<Role>>();
-            builder.AddRoleManager<RoleManager<Role>>();
-            builder.AddSignInManager<SignInManager<User>>();
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(opt =>
-                {
-                    opt.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
-                        ValidateIssuer = false,
-                        ValidateAudience = false
-                    };
-                });
 
             //services.AddAuthentication("Bearer")
             //    .AddIdentityServerAuthentication(opt =>
@@ -180,20 +162,46 @@ namespace MadPay724.Presentation
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddScoped<IUnitOfWork<MadpayDbContext>, UnitOfWork<MadpayDbContext>>();
-            services.AddTransient<ISeedService, SeedService>();
+            services.AddTransient<SeedService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUploadService, UploadService>();
             services.AddScoped<IUtilities, Utilities>();
             services.AddScoped<UserCheckIdFilter>();
 
+            
+            IdentityBuilder builder = services.AddIdentityCore<User>(opt =>
+            {
+                opt.Password.RequireDigit = false;
+                opt.Password.RequiredLength = 4;
+                opt.Password.RequireNonAlphanumeric = false;
+                opt.Password.RequireUppercase = false;
+            });
+            builder = new IdentityBuilder(builder.UserType,typeof(Role),builder.Services);
+            builder.AddEntityFrameworkStores<MadpayDbContext>();
+            builder.AddRoleValidator<RoleValidator<Role>>();
+            builder.AddRoleManager<RoleManager<Role>>();
+            builder.AddSignInManager<SignInManager<User>>();
+            builder.AddDefaultTokenProviders();
 
 
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(opt =>
+                {
+                    opt.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
 
+        
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ISeedService seeder)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, SeedService seeder)
         {
             if (env.IsDevelopment())
             {
@@ -222,7 +230,7 @@ namespace MadPay724.Presentation
             app.UseHttpsRedirection();
             //app.UseResponseCompression();
             app.UseResponseCaching();
-            //seeder.SeedUsers();
+            seeder.SeedUsers();
             app.UseCors(p => p.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader());
             //
             app.UseRouting();

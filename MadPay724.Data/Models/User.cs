@@ -5,8 +5,9 @@ using Microsoft.AspNetCore.Identity;
 
 namespace MadPay724.Data.Models
 {
-    public class User : IdentityUser<string>
+    public class User : IdentityUser
     {
+
         [Required]
         [StringLength(100, MinimumLength = 0)]
         public string Name { get; set; }
