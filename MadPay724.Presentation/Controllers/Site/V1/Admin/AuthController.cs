@@ -58,21 +58,6 @@ namespace MadPay724.Presentation.Controllers.V1.Site.Admin
         [HttpPost(ApiV1Routes.Auth.Register)]
         public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
         {
-
-
-
-            //if (await _db.UserRepository.UserExists(userForRegisterDto.UserName))
-            //{
-            //    _logger.LogWarning($"{userForRegisterDto.Name} - {userForRegisterDto.UserName} میحواهد دوباره ثبت نام کند");
-            //    return BadRequest(new ReturnMessage()
-            //    {
-            //        status = false,
-            //        title = "خطا",
-            //        message = "نام کاربری وجود دارد"
-            //    });
-            //}
-
-
             var userToCreate = new User
             {
                 UserName = userForRegisterDto.UserName,

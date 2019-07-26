@@ -88,7 +88,7 @@ namespace MadPay724.Test.DataInput
         public static readonly UserForRegisterDto userForRegisterDto = new UserForRegisterDto()
         {
             UserName = "asasas@b545ma.com",
-            Password = "123789",
+            Password = "password",
             Name = "کیوان",
             PhoneNumber = "15486523"
         };
@@ -96,7 +96,7 @@ namespace MadPay724.Test.DataInput
         public static readonly UserForRegisterDto userForRegisterDto_Fail_Exist = new UserForRegisterDto()
         {
             UserName = "kathybrown@barkarama.com",
-            Password = "123789",
+            Password = "password",
             Name = "کیوان",
             PhoneNumber = "15486523"
         };
@@ -119,7 +119,7 @@ namespace MadPay724.Test.DataInput
         public static readonly UseForLoginDto useForLoginDto_Fail = new UseForLoginDto()
         {
             UserName = "00@000.com",
-            Password = "0000",
+            Password = "password",
             IsRemember = true
         };
 

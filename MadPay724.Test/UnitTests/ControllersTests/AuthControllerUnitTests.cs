@@ -140,10 +140,14 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         public async Task Register_Success()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
-            _mockRepo.Setup(x => x.UserRepository.UserExists(It.IsAny<string>())).ReturnsAsync(false);
 
-            _mockAuthService.Setup(x => x.Register(It.IsAny<User>(), It.IsAny<Photo>(), It.IsAny<string>()))
-                .ReturnsAsync(UnitTestsDataInput.Users.First());
+            _mockUserManager.Setup(x => x.CreateAsync(It.IsAny<User>(),It.IsAny<string>()))
+                .ReturnsAsync(IdentityResult.Success);
+
+            _mockAuthService.Setup(x => x.AddUserPhotos(It.IsAny<Photo>()))
+                .ReturnsAsync(true);
+
+
 
             _mockMapper.Setup(x => x.Map<UserForDetailedDto>(It.IsAny<User>()))
                 .Returns(UnitTestsDataInput.userForDetailedDto);
@@ -167,10 +171,16 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         public async Task Register_Fail_UserExist()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
-            _mockRepo.Setup(x => x.UserRepository.UserExists(It.IsAny<string>())).ReturnsAsync(true);
-
+            _mockUserManager.Setup(x => x.CreateAsync(It.IsAny<User>(), It.IsAny<string>()))
+                .ReturnsAsync(IdentityResult.Failed());
             //Act----------------------------------------------------------------------------------------------------------------------------------
-
+            var httpContext = new DefaultHttpContext();
+            httpContext.Request.Scheme = "222";
+            _controller.ControllerContext = new ControllerContext()
+            {
+                HttpContext = httpContext
+            };
+            
             var result = await _controller.Register(UnitTestsDataInput.userForRegisterDto);
             var okResult = result as BadRequestObjectResult;
             //Assert-------------------------------------------------------------------------------------------------------------------------------
