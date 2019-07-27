@@ -18,13 +18,13 @@ namespace MadPay724.Test.DataInput
         public const string unToken = "";
 
         public const string aToken =
-            "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIzODhkZTJiYy04NTFkLTRjOTUtOGJmOS0xOTM5ZTUyZTQ0YzgiLCJ1bmlxdWVfbmFtZSI6ImhheXNtYXRoaXNAYmFya2FyYW1hLmNvbSIsIm5iZiI6MTU2NDE0NjA2OSwiZXhwIjoxNTY0MjMyNDY5LCJpYXQiOjE1NjQxNDYwNjl9.oy4WZfWUOJYNshy6YUk681ZHMlnbf30l0x_Jm98LHIbwDccei_R2WpPz92k2pR7r9m6MUaiI9AXDVYk5REWBaQ";
+            "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxZTE1NzAxYS04MjkxLTQyMGQtOTIzYS1lZWJmNWYyYjZmYzUiLCJ1bmlxdWVfbmFtZSI6ImthdGh5YnJvd25AYmFya2FyYW1hLmNvbSIsIm5iZiI6MTU2NDIzNjk2NSwiZXhwIjoxNTY0MzIzMzY1LCJpYXQiOjE1NjQyMzY5NjV9.5a2wsk9DkqbVg4WGM86FdlEdCU69vmpXev-Rw97naLM24CoS1YkrB045kZEKu4tDeXqYU4SSe8i4WRMFS7oADA";
 
 
 
-        public const string userLogedInUsername = "kathybrown@barkarama.com";
+        public const string userLogedInUsername = "keyvan@madpay.com";
         public const string userLogedInPassword = "password";
-        public const string userLogedInId = "1e15701a-8291-420d-923a-eebf5f2b6fc5";
+        public const string userLogedInId = "0b83c5e3-404e-44ea-8013-122b691453fa";
         public const string userAnOtherId = "388de2bc-851d-4c95-8bf9-1939e52e44c8";
         public const string userLogedInPhotoId = "e97fd389-fb3d-4ea2-929d-435f5ecdc159";
 

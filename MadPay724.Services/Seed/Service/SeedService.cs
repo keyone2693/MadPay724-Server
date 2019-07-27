@@ -12,17 +12,20 @@ using MadPay724.Common.Helpers.Interface;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
+using System.Linq;
 
 namespace MadPay724.Services.Seed.Service
 {
     public class SeedService : ISeedService
     {
         private readonly UserManager<User> _userManager;
+        private readonly RoleManager<Role> _roleManager;
         private readonly IUtilities _utilities;
 
-        public SeedService(UserManager<User> userManager, IUtilities utilities)
+        public SeedService(UserManager<User> userManager, RoleManager<Role> roleManager, IUtilities utilities)
         {
             _userManager = userManager;
+            _roleManager = roleManager;
             _utilities = utilities;
         }
 
@@ -33,29 +36,79 @@ namespace MadPay724.Services.Seed.Service
             {
                 var userData = System.IO.File.ReadAllText("wwwroot/Files/Json/Seed/UserSeedData.json");
                 var users = JsonConvert.DeserializeObject<IList<User>>(userData);
+
+                var roles = new List<Role>
+                {
+                    new Role{Name="Admin"},
+                    new Role{Name="User"},
+                    new Role{Name="Blog"},
+                    new Role{Name="Accountant"}
+                };
+
+                foreach (var role in roles)
+                {
+                    _roleManager.CreateAsync(role).Wait();
+                }
+
                 foreach (var user in users)
                 {
                     user.UserName = user.UserName.ToLower();
                     _userManager.CreateAsync(user, "password").Wait();
+                    _userManager.AddToRoleAsync(user, "User").Wait();
                 }
-            }
-        }
 
-        public async Task SeedUsersAsync()
-        {
-            if (!_userManager.Users.Any())
-            {
-                var userData = await System.IO.File.ReadAllTextAsync("wwwroot/Files/Json/Seed/UserSeedData.json");
-                var users = JsonConvert.DeserializeObject<IList<User>>(userData);
-                foreach (var user in users)
+
+                //Create AdminUser
+                var adminUser = new User
                 {
-                    user.UserName = user.UserName.ToLower();
-                    await _userManager.CreateAsync(user, "password");
+                    
+                    UserName = "admin@madpay724.com",
+                    Name = "Admin",
+                    Address ="No",
+                    DateOfBirth = DateTime.Now,
+                    LastActive = DateTime.Now,
+                };
+                IdentityResult result = _userManager.CreateAsync(adminUser, "password").Result;
+
+                if (result.Succeeded)
+                {
+                    var admin = _userManager.FindByNameAsync("admin@madpay724.com").Result;
+                    _userManager.AddToRolesAsync(admin, new[] { "Admin", "Blog", "Accountant" }).Wait();
+                }
+                //Create BlogUser
+                var blogUser = new User
+                {
+                    UserName = "blog@madpay724.com",
+                    Name = "Blog",
+                    Address = "No",
+                    DateOfBirth = DateTime.Now,
+                    LastActive = DateTime.Now,
+                };
+                IdentityResult resultBlog = _userManager.CreateAsync(blogUser, "password").Result;
+
+                if (resultBlog.Succeeded)
+                {
+                    var blog = _userManager.FindByNameAsync("blog@madpay724.com").Result;
+                    _userManager.AddToRoleAsync(blog, "Blog").Wait();
+                }
+                //Create AccountantUser
+                var accountantUser = new User
+                {
+                    UserName = "accountant@madpay724.com",
+                    Name = "Accountant",
+                    Address = "No",
+                    DateOfBirth = DateTime.Now,
+                    LastActive = DateTime.Now,
+                };
+                IdentityResult resultAccountant = _userManager.CreateAsync(accountantUser, "password").Result;
+
+                if (resultAccountant.Succeeded)
+                {
+                    var accountant = _userManager.FindByNameAsync("accountant@madpay724.com").Result;
+                    _userManager.AddToRoleAsync(accountant, "Accountant").Wait();
                 }
             }
-
         }
     }
-
 
 }

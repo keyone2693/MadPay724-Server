@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MadPay724.Data.Migrations.MadpayMigrations
 {
     [DbContext(typeof(MadpayDbContext))]
-    [Migration("20190725160958_init")]
+    [Migration("20190727154941_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
