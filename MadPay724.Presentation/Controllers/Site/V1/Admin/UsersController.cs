@@ -46,7 +46,8 @@ namespace MadPay724.Presentation.Controllers.V1.Site.Admin
 
 
         }
-        [AllowAnonymous]
+        //[AllowAnonymous]
+        [Authorize(Roles = "User")]
         [HttpGet(ApiV1Routes.Users.GetUsers)]
         [ResponseCache(Duration = 60)]
         public async Task<IActionResult> GetUsers()
