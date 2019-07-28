@@ -1,7 +1,9 @@
 ﻿
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
+using MadPay724.Common.ErrorAndMessage;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Site.Admin.Photos;
 using MadPay724.Presentation.Helpers.Filters;
@@ -11,10 +13,11 @@ using MadPay724.Services.Upload.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
-namespace MadPay724.Presentation.Controllers.V1.Site.Admin
+namespace MadPay724.Presentation.Controllers.Site.V1.User
 {
-    [ApiExplorerSettings(GroupName = "v1_Site_Admin")]
+    [ApiExplorerSettings(GroupName = "v1_Site_Panel")]
    // [Route("api/v1/site/admin/users/{userId}/photos")]
     [ApiController]
     public class PhotosController : ControllerBase
@@ -23,26 +26,46 @@ namespace MadPay724.Presentation.Controllers.V1.Site.Admin
         private readonly IMapper _mapper;
         private readonly IUploadService _uploadService;
         private readonly IWebHostEnvironment _env;
+        private readonly ILogger<PhotosController> _logger;
 
         public PhotosController(IUnitOfWork<MadpayDbContext> dbContext, IMapper mapper, IUploadService uploadService,
-             IWebHostEnvironment env)
+             IWebHostEnvironment env, ILogger<PhotosController> logger)
         {
             _env = env;
             _db = dbContext;
             _mapper = mapper;
             _uploadService = uploadService;
+            _logger = logger;
         }
+
+
         [ServiceFilter(typeof(UserCheckIdFilter))]
         [HttpGet(ApiV1Routes.Photos.GetPhoto, Name = "GetPhoto")]
         public async Task<IActionResult> GetPhoto(string id)
         {
             var photoFromRepo = await _db.PhotoRepository.GetByIdAsync(id);
 
-            var photo = _mapper.Map<PhotoForReturnProfileDto>(photoFromRepo);
+            if (photoFromRepo.UserId == User.FindFirst(ClaimTypes.NameIdentifier).Value)
+            {
+                var photo = _mapper.Map<PhotoForReturnProfileDto>(photoFromRepo);
 
-            return Ok(photo);
+                return Ok(photo);
+            }
+            else
+            {
+                _logger.LogError($"کاربر   {RouteData.Values["userId"]} قصد دسترسی به عکس شخص دیگری را دارد");
+
+                return BadRequest(new ReturnMessage()
+                {
+                    status = false,
+                    title = "خطا",
+                    message = $"شما اجازه دسترسی به عکس کاربر دیگری را ندارید"
+                });
+
+            }
         }
 
+        [Authorize(Policy = "AccessProfile")]
         [ServiceFilter(typeof(UserCheckIdFilter))]
         [HttpPost(ApiV1Routes.Photos.ChangeUserPhoto)]
         public async Task<IActionResult> ChangeUserPhoto(string userId, [FromForm]PhotoForProfileDto photoForProfileDto)

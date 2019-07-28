@@ -25,7 +25,7 @@ namespace MadPay724.Test.IntegrationTests.ControllersTests
         public async Task Login_Success_UserLogin()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
-            var request = UnitTestsDataInput.baseRouteV1 + "site/admin/auth/login";
+            var request = UnitTestsDataInput.baseRouteV1 + "site/panel/auth/login";
             var model = UnitTestsDataInput.useForLoginDto_Success;
             //Act----------------------------------------------------------------------------------------------------------------------------------
             var response = await _client.PostAsync(request, ContentHelper.GetStringContent(model));
@@ -38,7 +38,7 @@ namespace MadPay724.Test.IntegrationTests.ControllersTests
         public async Task Login_Fail_UserLogin()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
-            var request = UnitTestsDataInput.baseRouteV1 + "site/admin/auth/login";
+            var request = UnitTestsDataInput.baseRouteV1 + "site/panel/auth/login";
             var model = UnitTestsDataInput.useForLoginDto_Fail;
             //Act----------------------------------------------------------------------------------------------------------------------------------
             var response = await _client.PostAsync(request, ContentHelper.GetStringContent(model));
@@ -54,7 +54,7 @@ namespace MadPay724.Test.IntegrationTests.ControllersTests
             //Arrange------------------------------------------------------------------------------------------------------------------------------
             var request = new
             {
-                Url = UnitTestsDataInput.baseRouteV1 + "site/admin/auth/login",
+                Url = UnitTestsDataInput.baseRouteV1 + "site/panel/auth/login",
                 Body = UnitTestsDataInput.useForLoginDto_Fail_ModelState
             };
             
@@ -80,7 +80,7 @@ namespace MadPay724.Test.IntegrationTests.ControllersTests
         public async Task Register_Success_UserRegister()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
-            var request = UnitTestsDataInput.baseRouteV1 + "site/admin/auth/register";
+            var request = UnitTestsDataInput.baseRouteV1 + "site/panel/auth/register";
             var model = UnitTestsDataInput.userForRegisterDto;
             //Act----------------------------------------------------------------------------------------------------------------------------------
             var response = await _client.PostAsync(request, ContentHelper.GetStringContent(model));
@@ -93,7 +93,7 @@ namespace MadPay724.Test.IntegrationTests.ControllersTests
         public async Task Register_Fail_UserExist()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
-            var request = UnitTestsDataInput.baseRouteV1 + "site/admin/auth/register";
+            var request = UnitTestsDataInput.baseRouteV1 + "site/panel/auth/register";
             var model = UnitTestsDataInput.userForRegisterDto_Fail_Exist;
             var expected = new ReturnMessage()
             {
@@ -122,7 +122,7 @@ namespace MadPay724.Test.IntegrationTests.ControllersTests
             //Arrange------------------------------------------------------------------------------------------------------------------------------
             var request = new
             {
-                Url = UnitTestsDataInput.baseRouteV1 + "site/admin/auth/register",
+                Url = UnitTestsDataInput.baseRouteV1 + "site/panel/auth/register",
                 Body = UnitTestsDataInput.userForRegisterDto_Fail_ModelState
             };
            

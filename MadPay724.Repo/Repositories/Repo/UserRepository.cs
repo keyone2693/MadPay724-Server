@@ -16,7 +16,7 @@ namespace MadPay724.Repo.Repositories.Repo
         private readonly DbContext _db;
         public UserRepository(DbContext dbContext) : base(dbContext)
         {
-            _db = _db ?? (MadpayDbContext)_db;
+            _db ??= (MadpayDbContext)_db;
         }
 
         public async Task<bool> UserExists(string username)

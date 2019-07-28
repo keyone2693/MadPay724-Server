@@ -57,7 +57,7 @@ namespace MadPay724.Repo.Infrastructure
         }
         public IEnumerable<TEntity> GetAll()
         {
-            return _dbSet.AsEnumerable();
+            return _dbSet.AsQueryable();
         }
         public IEnumerable<TEntity> GetMany(
             Expression<Func<TEntity, bool>> filter = null,

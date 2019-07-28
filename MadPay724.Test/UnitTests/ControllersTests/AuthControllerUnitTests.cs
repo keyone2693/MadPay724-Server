@@ -11,7 +11,7 @@ using MadPay724.Common.Helpers.Interface;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Site.Admin.Users;
 using MadPay724.Data.Models;
-using MadPay724.Presentation.Controllers.V1.Site.Admin;
+using MadPay724.Presentation.Controllers.Site.V1.User;
 using MadPay724.Repo.Infrastructure;
 using MadPay724.Services.Site.Admin.Auth.Interface;
 using MadPay724.Services.Site.Admin.User.Interface;
@@ -80,8 +80,8 @@ namespace MadPay724.Test.UnitTests.ControllersTests
                     It.IsAny<User>(), It.IsAny<string>(), It.IsAny<bool>()))
                 .ReturnsAsync(SignInResult.Success);
 
-            _mockUtilities.Setup(x => x.GenerateJwtToken(It.IsAny<User>(), It.IsAny<bool>()))
-                .Returns(It.IsAny<string>());
+            _mockUtilities.Setup(x => x.GenerateJwtTokenAsync(It.IsAny<User>(), It.IsAny<bool>()))
+                .ReturnsAsync(It.IsAny<string>());
 
 
             _mockMapper.Setup(x => x.Map<UserForDetailedDto>(It.IsAny<User>()))

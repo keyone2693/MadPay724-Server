@@ -73,7 +73,7 @@ namespace MadPay724.Presentation
                     config.ReturnHttpNotAcceptable = true;
                     config.SslPort = _httpsPort;
                     config.Filters.Add(typeof(RequireHttpsAttribute));
-                    config.Filters.Add(typeof(LinkRewritingFilter));
+                    //config.Filters.Add(typeof(LinkRewritingFilter));
                     var policy = new AuthorizationPolicyBuilder()
                         .RequireAuthenticatedUser()
                         .Build();
@@ -120,8 +120,8 @@ namespace MadPay724.Presentation
             //});
             services.AddOpenApiDocument(document =>
             {
-                document.DocumentName = "v1_Site_Admin";
-                document.ApiGroupNames = new[] { "v1_Site_Admin" };
+                document.DocumentName = "v1_Site_Panel";
+                document.ApiGroupNames = new[] { "v1_Site_Panel" };
                 document.PostProcess = d =>
                 {
                     d.Info.Title = "MadPay724 Api Docs";
@@ -202,6 +202,9 @@ namespace MadPay724.Presentation
 
                 opt.AddPolicy("AccessBlog", policy => policy.RequireRole("Admin", "Blog"));
                 opt.AddPolicy("AccessAccounting", policy => policy.RequireRole("Admin", "Accountant"));
+
+
+                opt.AddPolicy("AccessProfile", policy => policy.RequireRole("Admin", "User", "Blog", "Accountant"));
 
                 opt.AddPolicy("RequireUserRole", policy => policy.RequireRole("User"));
                 opt.AddPolicy("RequireBlogsRole", policy => policy.RequireRole("Blog"));

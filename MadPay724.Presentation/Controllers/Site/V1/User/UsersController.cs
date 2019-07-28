@@ -20,10 +20,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
-namespace MadPay724.Presentation.Controllers.V1.Site.Admin
+namespace MadPay724.Presentation.Controllers.Site.V1.User
 {
 
-    [ApiExplorerSettings(GroupName = "v1_Site_Admin")]
+    [ApiExplorerSettings(GroupName = "v1_Site_Panel")]
     //[Route("api/v1/site/admin/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -42,29 +42,8 @@ namespace MadPay724.Presentation.Controllers.V1.Site.Admin
             _userService = userService;
             _logger = logger;
         }
-        //[AllowAnonymous]
-        [Authorize(Policy = "AccessBlog")]
-        [HttpGet(ApiV1Routes.Users.GetUsers)]
-        [ResponseCache(Duration = 60)]
-        public async Task<IActionResult> GetUsers()
-        {
 
-          
-
-
-            var users = await _db.UserRepository.GetManyAsync(null, null, "Photos,BankCards");
-
-          var usersToReturn = _mapper.Map<IEnumerable<UserFroListDto>>(users);
-
-          var collectionLink = Link.ToCollection(nameof(GetUsers));
-          var collection = new Collection<UserFroListDto>()
-          {
-              Self = collectionLink,
-              Value = usersToReturn.ToArray()
-          };
-            return Ok(collection);
-        }
-
+        [Authorize(Policy = "AccessProfile")]
         [HttpGet(ApiV1Routes.Users.GetUser, Name ="GetUser")]
         [ServiceFilter(typeof(UserCheckIdFilter))]
         public async Task<IActionResult> GetUser(string id)
@@ -74,6 +53,7 @@ namespace MadPay724.Presentation.Controllers.V1.Site.Admin
             return Ok(userToReturn);
         }
 
+        [Authorize(Policy = "AccessProfile")]
         [HttpPut(ApiV1Routes.Users.UpdateUser)]
         [ServiceFilter(typeof(UserCheckIdFilter))]
         public async Task<IActionResult> UpdateUser(string id, UserForUpdateDto userForUpdateDto)
@@ -101,6 +81,7 @@ namespace MadPay724.Presentation.Controllers.V1.Site.Admin
 
         }
 
+        [Authorize(Policy = "AccessProfile")]
         [HttpPut(ApiV1Routes.Users.ChangeUserPassword)]
         [ServiceFilter(typeof(UserCheckIdFilter))]
         public async Task<IActionResult> ChangeUserPassword(string id, PasswordForChangeDto passwordForChangeDto)

@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Claims;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using IdentityModel;
 using MadPay724.Common.ErrorAndMessage;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Site.Admin.Photos;
 using MadPay724.Data.Dtos.Site.Admin.Users;
 using MadPay724.Data.Models;
-using MadPay724.Presentation.Controllers.V1.Site.Admin;
+using MadPay724.Presentation.Controllers.Site.V1.User;
 using MadPay724.Repo.Infrastructure;
 using MadPay724.Services.Site.Admin.User.Interface;
 using MadPay724.Services.Upload.Interface;
@@ -19,6 +22,7 @@ using MadPay724.Test.IntegrationTests.Providers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit;
@@ -31,6 +35,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         private readonly Mock<IMapper> _mockMapper;
         private readonly Mock<IUploadService> _mockUploadService;
         private readonly Mock<IWebHostEnvironment> _mockWebHostEnvironment;
+        private readonly Mock<ILogger<PhotosController>> _mockLogger;
         private readonly PhotosController _controller;
 
         public PhotosControllerUnitTests()
@@ -39,7 +44,9 @@ namespace MadPay724.Test.UnitTests.ControllersTests
             _mockMapper = new Mock<IMapper>();
             _mockWebHostEnvironment = new Mock<IWebHostEnvironment>();
             _mockUploadService = new Mock<IUploadService>();
-            _controller = new PhotosController(_mockRepo.Object, _mockMapper.Object, _mockUploadService.Object, _mockWebHostEnvironment.Object);
+            _mockLogger = new Mock<ILogger<PhotosController>>();
+            _controller = new PhotosController(_mockRepo.Object, _mockMapper.Object, _mockUploadService.Object,
+                _mockWebHostEnvironment.Object, _mockLogger.Object);
 
         }
 
@@ -54,6 +61,27 @@ namespace MadPay724.Test.UnitTests.ControllersTests
             _mockMapper.Setup(x => x.Map<PhotoForReturnProfileDto>(It.IsAny<Photo>()))
                 .Returns(UnitTestsDataInput.PhotoForReturnProfileDto);
 
+
+            var rout = new RouteData();
+            rout.Values.Add("userId", UnitTestsDataInput.Users.First().Id);
+
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.NameIdentifier,UnitTestsDataInput.userLogedInId),
+            };
+            var identity = new ClaimsIdentity(claims);
+            var claimsPrincipal = new ClaimsPrincipal(identity);
+            var mockContext = new Mock<HttpContext>();
+
+            mockContext.SetupGet(x => x.User).Returns(claimsPrincipal);
+
+            _controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = mockContext.Object,
+                RouteData = rout
+            };
+
+
             //Act----------------------------------------------------------------------------------------------------------------------------------
             var result = await _controller.GetPhoto(It.IsAny<string>());
             var okResult = result as OkObjectResult;
@@ -61,6 +89,43 @@ namespace MadPay724.Test.UnitTests.ControllersTests
             Assert.NotNull(okResult);
             Assert.IsType<PhotoForReturnProfileDto>(okResult.Value);
             Assert.Equal(200, okResult.StatusCode);
+        }
+        [Fact]
+        public async Task GetPhoto_Fail_SeeAnOtherOnePhoto()
+        {
+            //Arrange------------------------------------------------------------------------------------------------------------------------------
+            _mockRepo.Setup(x => x.PhotoRepository.GetByIdAsync(It.IsAny<string>()))
+                .ReturnsAsync(UnitTestsDataInput.Users.First().Photos.First());
+
+
+            var rout = new RouteData();
+            rout.Values.Add("userId", UnitTestsDataInput.Users.First().Id);
+
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.NameIdentifier,UnitTestsDataInput.userAnOtherId),
+            };
+            var identity = new ClaimsIdentity(claims);
+            var claimsPrincipal = new ClaimsPrincipal(identity);
+            var mockContext = new Mock<HttpContext>();
+
+            mockContext.SetupGet(x => x.User).Returns(claimsPrincipal);
+
+            _controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = mockContext.Object,
+                RouteData = rout
+            };
+                
+                
+                
+            //Act----------------------------------------------------------------------------------------------------------------------------------
+            var result = await _controller.GetPhoto(It.IsAny<string>());
+            var okResult = result as BadRequestObjectResult;
+            //Assert-------------------------------------------------------------------------------------------------------------------------------
+            Assert.NotNull(okResult);
+            Assert.IsType<ReturnMessage>(okResult.Value);
+            Assert.Equal(400, okResult.StatusCode);
         }
         #endregion
 

@@ -56,6 +56,20 @@ namespace MadPay724.Repo.Infrastructure
                 return settingRepository;
             }
         }
+
+
+        private IRoleRepository roleRepository;
+        public IRoleRepository RoleRepository
+        {
+            get
+            {
+                if (roleRepository == null)
+                {
+                    roleRepository = new RoleRepository(_db);
+                }
+                return roleRepository;
+            }
+        }
         #endregion
 
 

@@ -18,7 +18,7 @@ namespace MadPay724.Test.DataInput
         public const string unToken = "";
 
         public const string aToken =
-            "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxZTE1NzAxYS04MjkxLTQyMGQtOTIzYS1lZWJmNWYyYjZmYzUiLCJ1bmlxdWVfbmFtZSI6ImthdGh5YnJvd25AYmFya2FyYW1hLmNvbSIsIm5iZiI6MTU2NDIzNjk2NSwiZXhwIjoxNTY0MzIzMzY1LCJpYXQiOjE1NjQyMzY5NjV9.5a2wsk9DkqbVg4WGM86FdlEdCU69vmpXev-Rw97naLM24CoS1YkrB045kZEKu4tDeXqYU4SSe8i4WRMFS7oADA";
+            "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI0MjFhMWFhYi1jNzQ0LTRhMjYtYWIxNC05OTQwMDVlY2U0NmYiLCJ1bmlxdWVfbmFtZSI6ImFkbWluQG1hZHBheTcyNC5jb20iLCJyb2xlIjpbIkJsb2ciLCJBY2NvdW50YW50IiwiQWRtaW4iXSwibmJmIjoxNTY0MzIyMDQxLCJleHAiOjE1NjQ0MDg0NDEsImlhdCI6MTU2NDMyMjA0MX0.G6PINoJ4QO93ihrLw9JQjE1jIQmfiC0VEbnzpCFrEul4xyjDeoILftGHb6dP-aErFLOchEonx0PX5qNqQqT4YQ";
 
 
 
@@ -27,13 +27,14 @@ namespace MadPay724.Test.DataInput
         public const string userLogedInId = "0b83c5e3-404e-44ea-8013-122b691453fa";
         public const string userAnOtherId = "388de2bc-851d-4c95-8bf9-1939e52e44c8";
         public const string userLogedInPhotoId = "e97fd389-fb3d-4ea2-929d-435f5ecdc159";
+        public const string userAnOtherPhotoId = "e97fd389-fb3d-4ea2-929d-435f5e";
 
 
         public static readonly IEnumerable<User> Users = new List<User>()
         {
             new User
             {
-                Id = "0d47394e-672f-4db7-898c-bfd8f32e2af7",
+                Id = "0b83c5e3-404e-44ea-8013-122b691453fa",
                 DateOfBirth = DateTime.Now,
                 LastActive = DateTime.Now,
                 PasswordHash ="",
@@ -50,7 +51,7 @@ namespace MadPay724.Test.DataInput
                     new Photo()
                     {
                         Id = "0d47394e-672f-4db7-898c-bfd8f32e2af",
-                        UserId = "0d47394e-672f-4db7-898c-bfd8f32e2af7",
+                        UserId = "0b83c5e3-404e-44ea-8013-122b691453fa",
                         DateCreated = DateTime.Now,
                         DateModified = DateTime.Now,
                         PublicId = "1",

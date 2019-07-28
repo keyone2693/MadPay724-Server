@@ -22,10 +22,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace MadPay724.Presentation.Controllers.V1.Site.Admin
+namespace MadPay724.Presentation.Controllers.Site.V1.User
 {
     [AllowAnonymous]
-    [ApiExplorerSettings(GroupName = "v1_Site_Admin")]
+    [ApiExplorerSettings(GroupName = "v1_Site_Panel")]
     //[Route("api/v1/site/admin/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
@@ -36,13 +36,13 @@ namespace MadPay724.Presentation.Controllers.V1.Site.Admin
         private readonly IMapper _mapper;
         private readonly ILogger<AuthController> _logger;
         private readonly IUtilities _utilities;
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<Data.Models.User> _userManager;
+        private readonly SignInManager<Data.Models.User> _signInManager;
 
 
         public AuthController(IUnitOfWork<MadpayDbContext> dbContext, IAuthService authService,
             IConfiguration config, IMapper mapper, ILogger<AuthController> logger, IUtilities utilities,
-            UserManager<User> userManager, SignInManager<User> signInManager)
+            UserManager<Data.Models.User> userManager, SignInManager<Data.Models.User> signInManager)
         {
             _db = dbContext;
             _authService = authService;
@@ -58,7 +58,7 @@ namespace MadPay724.Presentation.Controllers.V1.Site.Admin
         [HttpPost(ApiV1Routes.Auth.Register)]
         public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
         {
-            var userToCreate = new User
+            var userToCreate = new Data.Models.User
             {
                 UserName = userForRegisterDto.UserName,
                 Name = userForRegisterDto.Name,

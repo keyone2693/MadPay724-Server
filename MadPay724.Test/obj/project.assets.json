@@ -61,6 +61,19 @@
           "lib/netstandard1.3/CloudinaryDotNet.dll": {}
         }
       },
+      "IdentityModel/3.9.0": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "11.0.1",
+          "System.Text.Encodings.Web": "4.5.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/IdentityModel.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/IdentityModel.dll": {}
+        }
+      },
       "Microsoft.AspNet.Mvc/5.2.7": {
         "type": "package",
         "dependencies": {
@@ -4300,6 +4313,26 @@
         "lib/netcore/CloudinaryDotNet.dll",
         "lib/netstandard1.3/CloudinaryDotNet.deps.json",
         "lib/netstandard1.3/CloudinaryDotNet.dll"
+      ]
+    },
+    "IdentityModel/3.9.0": {
+      "sha512": "a0geQ3AeCBiOSv6iIfTAmfQAG4uw2pQnS4fwJVzAowKeu8ZjcQRlbLHwf+h7fIFwdcwNZH3CashfUP0YhNLUxg==",
+      "type": "package",
+      "path": "identitymodel/3.9.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "identitymodel.3.9.0.nupkg.sha512",
+        "identitymodel.nuspec",
+        "lib/net452/IdentityModel.dll",
+        "lib/net452/IdentityModel.pdb",
+        "lib/net452/IdentityModel.xml",
+        "lib/netstandard1.4/IdentityModel.dll",
+        "lib/netstandard1.4/IdentityModel.pdb",
+        "lib/netstandard1.4/IdentityModel.xml",
+        "lib/netstandard2.0/IdentityModel.dll",
+        "lib/netstandard2.0/IdentityModel.pdb",
+        "lib/netstandard2.0/IdentityModel.xml"
       ]
     },
     "Microsoft.AspNet.Mvc/5.2.7": {
@@ -11954,6 +11987,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.0": [
+      "IdentityModel >= 3.9.0",
       "MadPay724.Presentation >= 1.0.0",
       "Microsoft.AspNet.WebApi.Client >= 5.2.7",
       "Microsoft.AspNetCore.TestHost >= 3.0.0-preview7.19365.7",
@@ -12010,6 +12044,10 @@
     "frameworks": {
       "netcoreapp3.0": {
         "dependencies": {
+          "IdentityModel": {
+            "target": "Package",
+            "version": "[3.9.0, )"
+          },
           "Microsoft.AspNet.WebApi.Client": {
             "target": "Package",
             "version": "[5.2.7, )"

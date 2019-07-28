@@ -486,6 +486,10 @@
       "frameworks": {
         "netcoreapp3.0": {
           "dependencies": {
+            "IdentityModel": {
+              "target": "Package",
+              "version": "[3.9.0, )"
+            },
             "Microsoft.AspNet.WebApi.Client": {
               "target": "Package",
               "version": "[5.2.7, )"

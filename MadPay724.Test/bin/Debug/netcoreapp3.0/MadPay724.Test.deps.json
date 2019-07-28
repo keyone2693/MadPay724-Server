@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v3.0": {
       "MadPay724.Test/1.0.0": {
         "dependencies": {
+          "IdentityModel": "3.9.0",
           "MadPay724.Presentation": "1.0.0",
           "Microsoft.AspNet.WebApi.Client": "5.2.7",
           "Microsoft.AspNetCore.TestHost": "3.0.0-preview7.19365.7",
@@ -74,6 +75,18 @@
           "lib/netstandard1.3/CloudinaryDotNet.dll": {
             "assemblyVersion": "1.8.0.0",
             "fileVersion": "1.8.0.0"
+          }
+        }
+      },
+      "IdentityModel/3.9.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "12.0.2",
+          "System.Text.Encodings.Web": "4.5.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/IdentityModel.dll": {
+            "assemblyVersion": "3.9.0.0",
+            "fileVersion": "3.9.0.0"
           }
         }
       },
@@ -2906,6 +2919,13 @@
       "sha512": "sha512-jrxUPvVmdGL+8wDGQn4rBrRh7jKPDTqUW1kBj+fwmGdiMW5aBArQ3P2ErnYA84AQgvJnb2JwP3WTlwD2Yc/kdA==",
       "path": "cloudinarydotnet/1.8.0",
       "hashPath": "cloudinarydotnet.1.8.0.nupkg.sha512"
+    },
+    "IdentityModel/3.9.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-a0geQ3AeCBiOSv6iIfTAmfQAG4uw2pQnS4fwJVzAowKeu8ZjcQRlbLHwf+h7fIFwdcwNZH3CashfUP0YhNLUxg==",
+      "path": "identitymodel/3.9.0",
+      "hashPath": "identitymodel.3.9.0.nupkg.sha512"
     },
     "Microsoft.AspNet.Mvc/5.2.7": {
       "type": "package",

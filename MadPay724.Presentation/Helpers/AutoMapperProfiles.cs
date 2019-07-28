@@ -19,11 +19,11 @@ namespace MadPay724.Presentation.Helpers
     {
        public AutoMapperProfiles()
        {
-           CreateMap<User, UserFroListDto>()
-               .ForMember(dest => dest.Self, opt =>
-                   opt.MapFrom(src => 
-                   Link.To(nameof(Controllers.V1.Site.Admin.UsersController.GetUser),new { id= src.Id})))
-               ;
+           CreateMap<User, UserFroListDto>();
+           //    .ForMember(dest => dest.Self, opt =>
+           //        opt.MapFrom(src => 
+           //        Link.To(nameof(Controllers.Site.V1.User.UsersController.GetUser),new { id= src.Id})))
+           //    
 
 
             CreateMap<User, UserForDetailedDto>()
