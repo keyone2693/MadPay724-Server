@@ -41,13 +41,9 @@ namespace MadPay724.Presentation.Controllers.V1.Site.Admin
             _mapper = mapper;
             _userService = userService;
             _logger = logger;
-            
-
-
-
         }
         //[AllowAnonymous]
-        [Authorize(Roles = "User")]
+        [Authorize(Policy = "AccessBlog")]
         [HttpGet(ApiV1Routes.Users.GetUsers)]
         [ResponseCache(Duration = 60)]
         public async Task<IActionResult> GetUsers()

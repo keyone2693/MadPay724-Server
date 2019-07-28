@@ -196,8 +196,22 @@ namespace MadPay724.Presentation
                         ValidateAudience = false
                     };
                 });
+            services.AddAuthorization(opt =>
+            {
+                opt.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
 
-        
+                opt.AddPolicy("AccessBlog", policy => policy.RequireRole("Admin", "Blog"));
+                opt.AddPolicy("AccessAccounting", policy => policy.RequireRole("Admin", "Accountant"));
+
+                opt.AddPolicy("RequireUserRole", policy => policy.RequireRole("User"));
+                opt.AddPolicy("RequireBlogsRole", policy => policy.RequireRole("Blog"));
+                opt.AddPolicy("RequireAccountantRole", policy => policy.RequireRole("Accountant"));
+
+
+
+
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
