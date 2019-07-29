@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using MadPay724.Common.Helpers.Helpers;
 using MadPay724.Common.Helpers.MediaTypes;
 using MadPay724.Data.Dtos.Common.ION;
-using MadPay724.Data.Dtos.Site.Admin.Users;
+using MadPay724.Data.Dtos.Site.Panel.Users;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;

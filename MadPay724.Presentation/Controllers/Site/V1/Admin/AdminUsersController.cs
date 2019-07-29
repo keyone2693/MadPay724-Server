@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using MadPay724.Data.DatabaseContext;
-using MadPay724.Data.Dtos.Common.ION;
-using MadPay724.Data.Dtos.Site.Admin.Users;
+using MadPay724.Data.Dtos.Site.Panel.Roles;
 using MadPay724.Presentation.Routes.V1;
 using MadPay724.Repo.Infrastructure;
 using MadPay724.Services.Site.Admin.User.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -24,19 +22,20 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Admin
         private readonly IUnitOfWork<MadpayDbContext> _db;
         private readonly MadpayDbContext _dbMad;
         private readonly IMapper _mapper;
-        private readonly IUserService _userService;
         private readonly ILogger<AdminUsersController> _logger;
+        private readonly UserManager<Data.Models.User> _userManager;
+
 
 
         public AdminUsersController(IUnitOfWork<MadpayDbContext> dbContext, MadpayDbContext dbMad,
             IMapper mapper,
-            IUserService userService, ILogger<AdminUsersController> logger)
+            ILogger<AdminUsersController> logger, UserManager<Data.Models.User> userManager)
         {
             _db = dbContext;
             _mapper = mapper;
-            _userService = userService;
             _logger = logger;
             _dbMad = dbMad;
+            _userManager = userManager;
         }
         //[AllowAnonymous]
         [Authorize(Policy = "RequireAdminRole")]
@@ -60,6 +59,34 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Admin
             // var usersToReturn = _mapper.Map<IEnumerable<UserFroListDto>>(users);
 
             return Ok(users);
+        }
+
+        [Authorize(Policy = "RequireAdminRole")]
+        [HttpPost(ApiV1Routes.AdminUsers.EditRoles)]
+        public async Task<IActionResult> EditRoles(string userName,RoleEditDto roleEditDto)
+        {
+            var user = await _userManager.FindByNameAsync(userName);
+
+            var userRoles = await _userManager.GetRolesAsync(user);
+
+            var selectedRoles = roleEditDto.RoleNames;
+
+            selectedRoles ??= new string[] { };
+
+            var result = await _userManager.AddToRolesAsync(user, selectedRoles.Except(userRoles));
+            if (!result.Succeeded)
+            {
+                return BadRequest("خطا در اضافه کردن نقش ها");
+            }
+
+            result = await _userManager.RemoveFromRolesAsync(user, userRoles.Except(selectedRoles));
+            if (!result.Succeeded)
+            {
+                return BadRequest("خطا در پاک کردن نقش ها");
+            }
+
+            return Ok(await _userManager.GetRolesAsync(user));
+
         }
 
     }

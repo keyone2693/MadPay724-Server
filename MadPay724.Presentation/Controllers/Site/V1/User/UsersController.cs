@@ -7,7 +7,7 @@ using AutoMapper;
 using MadPay724.Common.ErrorAndMessage;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Common.ION;
-using MadPay724.Data.Dtos.Site.Admin.Users;
+using MadPay724.Data.Dtos.Site.Panel.Users;
 using MadPay724.Data.Models;
 using MadPay724.Presentation.Helpers.Filters;
 using MadPay724.Presentation.Routes.V1;

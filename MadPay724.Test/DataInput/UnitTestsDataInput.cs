@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using MadPay724.Data.Dtos.Services;
-using MadPay724.Data.Dtos.Site.Admin.Photos;
-using MadPay724.Data.Dtos.Site.Admin.Users;
+using MadPay724.Data.Dtos.Site.Panel.Photos;
+using MadPay724.Data.Dtos.Site.Panel.Roles;
+using MadPay724.Data.Dtos.Site.Panel.Users;
 using MadPay724.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -64,9 +65,33 @@ namespace MadPay724.Test.DataInput
             }
         };
 
+        public static readonly IEnumerable<Role> Roles = new List<Role>()
+        {
+            new Role()
+            {
+                Id = "0b83c5e3-404e-44ea-8013-122b6914a",
+                Name = "Admin"
+            },
+            new Role()
+            {
+                Id = "0b83c5e3-404e-44ea-8013-12253fa",
+                Name = "User"
+            }
+        };
+
+        public static readonly IList<string> RolesString = new List<string>()
+        {
+           "Admin","Blog"
+        };
+
+        public static readonly RoleEditDto roleEditDto = new RoleEditDto
+        {
+            RoleNames =new [] {"User"} 
+        };
+
         public static readonly Setting settingForUpload = new Setting()
         {
-            CloudinaryCloudName="12",
+            CloudinaryCloudName = "12",
             CloudinaryAPIKey = "12",
             CloudinaryAPISecret = "12"
         };
@@ -187,7 +212,7 @@ namespace MadPay724.Test.DataInput
 
 
         public static readonly PhotoForReturnProfileDto PhotoForReturnProfileDto = new PhotoForReturnProfileDto()
-        {};
+        { };
 
         public static readonly FileUploadedDto fileUploadedDto_Success = new FileUploadedDto()
         {
@@ -195,7 +220,7 @@ namespace MadPay724.Test.DataInput
             LocalUploaded = true,
             Message = "با موفقیت در لوکال آپلود شد",
             PublicId = "0",
-            Url =  "wwwroot/Files/Pic/Profile/"
+            Url = "wwwroot/Files/Pic/Profile/"
         };
 
         public static readonly FileUploadedDto fileUploadedDto_Fail_WrongFile = new FileUploadedDto()

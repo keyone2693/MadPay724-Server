@@ -1,5 +1,5 @@
-﻿using MadPay724.Data.Dtos.Site.Admin.Photos;
-using MadPay724.Data.Dtos.Site.Admin.Users;
+﻿using MadPay724.Data.Dtos.Site.Panel.Photos;
+using MadPay724.Data.Dtos.Site.Panel.Users;
 using MadPay724.Presentation;
 using Microsoft.AspNetCore.Http;
 using Moq;

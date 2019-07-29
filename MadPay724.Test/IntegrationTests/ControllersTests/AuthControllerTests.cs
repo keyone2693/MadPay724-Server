@@ -1,4 +1,4 @@
-﻿using MadPay724.Data.Dtos.Site.Admin.Users;
+﻿using MadPay724.Data.Dtos.Site.Panel.Users;
 using MadPay724.Presentation;
 using System.Linq;
 using System.Net;

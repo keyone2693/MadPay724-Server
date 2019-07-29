@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MadPay724.Common.ErrorAndMessage;
 using MadPay724.Data.DatabaseContext;
-using MadPay724.Data.Dtos.Site.Admin.Photos;
+using MadPay724.Data.Dtos.Site.Panel.Photos;
 using MadPay724.Presentation.Helpers.Filters;
 using MadPay724.Presentation.Routes.V1;
 using MadPay724.Repo.Infrastructure;
@@ -38,7 +38,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
             _logger = logger;
         }
 
-
+        [Authorize(Policy = "AccessProfile")]
         [ServiceFilter(typeof(UserCheckIdFilter))]
         [HttpGet(ApiV1Routes.Photos.GetPhoto, Name = "GetPhoto")]
         public async Task<IActionResult> GetPhoto(string id)

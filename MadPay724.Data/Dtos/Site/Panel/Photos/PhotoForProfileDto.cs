@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MadPay724.Data.Dtos.Site.Admin.Photos
+namespace MadPay724.Data.Dtos.Site.Panel.Photos
 {
     public class PhotoForProfileDto
     {

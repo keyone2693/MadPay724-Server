@@ -13,7 +13,7 @@ using Microsoft.Extensions.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
-using MadPay724.Data.Dtos.Site.Admin.Users;
+using MadPay724.Data.Dtos.Site.Panel.Users;
 using AutoMapper;
 using MadPay724.Common.ErrorAndMessage;
 using MadPay724.Common.Helpers.Interface;
