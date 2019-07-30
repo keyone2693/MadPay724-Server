@@ -10,6 +10,7 @@ using MadPay724.Common.Helpers.Interface;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Common.Token;
 using MadPay724.Data.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -24,12 +25,15 @@ namespace MadPay724.Common.Helpers.Helpers
         private readonly UserManager<User> _userManager;
         private readonly TokenSetting _tokenSetting;
         private readonly MadpayDbContext _db;
-        public Utilities(MadpayDbContext dbContext, IConfiguration config, UserManager<User> userManager, TokenSetting tokenSetting)
+        private readonly IHttpContextAccessor _http;
+        public Utilities(MadpayDbContext dbContext, IConfiguration config, UserManager<User> userManager,
+            TokenSetting tokenSetting, IHttpContextAccessor http)
         {
             _db = dbContext;
             _config = config;
             _userManager = userManager;
             _tokenSetting = tokenSetting;
+            _http = http;
         }
 
         #region tokenCreateNew
@@ -82,7 +86,7 @@ namespace MadPay724.Common.Helpers.Helpers
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
+                new Claim(ClaimTypes.NameIdentifier,user.Id),
                 new Claim(ClaimTypes.Name,user.UserName)
             };
 
@@ -123,7 +127,8 @@ namespace MadPay724.Common.Helpers.Helpers
                 ClientId = clientId,
                 UserId = userId,
                 Value = Guid.NewGuid().ToString("N"),
-                ExpireTime = isRemember ? DateTime.Now.AddDays(7) : DateTime.Now.AddDays(1)
+                ExpireTime = isRemember ? DateTime.Now.AddDays(7) : DateTime.Now.AddDays(1),
+                Ip = _http.HttpContext.Connection?.RemoteIpAddress.ToString()
             };
         }
 
@@ -135,8 +140,10 @@ namespace MadPay724.Common.Helpers.Helpers
         {
             try
             {
+                string ip = _http.HttpContext.Connection?.RemoteIpAddress.ToString();
                 var refreshToken =await _db.Tokens.FirstOrDefaultAsync(p =>
-                    p.ClientId == _tokenSetting.ClientId && p.Value == tokenRequestDto.RefreshToken);
+                    p.ClientId == _tokenSetting.ClientId && p.Value == tokenRequestDto.RefreshToken
+                    && p.Ip == ip);
 
                 if (refreshToken == null)
                 {
@@ -192,7 +199,7 @@ namespace MadPay724.Common.Helpers.Helpers
             using (var hamc = new System.Security.Cryptography.HMACSHA512())
             {
                 passwordSalt = hamc.Key;
-                passwordHash = hamc.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                passwordHash = hamc.ComputeHash(Encoding.UTF8.GetBytes(password));
             }
         }
 
@@ -200,7 +207,7 @@ namespace MadPay724.Common.Helpers.Helpers
         {
             using (var hamc = new System.Security.Cryptography.HMACSHA512(passwordSalt))
             {
-                var cumputedHash = hamc.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                var cumputedHash = hamc.ComputeHash(Encoding.UTF8.GetBytes(password));
 
                 for (int i = 0; i < cumputedHash.Length; i++)
                 {

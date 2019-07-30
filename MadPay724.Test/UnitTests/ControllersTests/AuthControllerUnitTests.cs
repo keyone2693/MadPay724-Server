@@ -81,8 +81,8 @@ namespace MadPay724.Test.UnitTests.ControllersTests
                     It.IsAny<User>(), It.IsAny<string>(), It.IsAny<bool>()))
                 .ReturnsAsync(SignInResult.Success);
 
-            _mockUtilities.Setup(x => x.GenerateJwtTokenAsync(It.IsAny<User>(), It.IsAny<bool>()))
-                .ReturnsAsync(It.IsAny<string>());
+            //_mockUtilities.Setup(x => x.GenerateJwtTokenAsync(It.IsAny<User>(), It.IsAny<bool>()))
+            //    .ReturnsAsync(It.IsAny<string>());
 
 
             _mockMapper.Setup(x => x.Map<UserForDetailedDto>(It.IsAny<User>()))

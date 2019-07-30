@@ -19,6 +19,8 @@ namespace MadPay724.Data.Models
         [Required]
         public string ClientId { get; set; }
         [Required]
+        public string Ip { get; set; }
+        [Required]
         public string Value { get; set; }
         [Required]
         public DateTime ExpireTime { get; set; }

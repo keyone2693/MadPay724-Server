@@ -144,7 +144,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
                 _logger.LogInformation($"{useForLoginDto.UserName} لاگین کرده است");
                 return Ok(new
                 {
-                    token = await _utilities.GenerateJwtTokenAsync(appUser, useForLoginDto.IsRemember),
+                   // token = await _utilities.GenerateJwtTokenAsync(appUser, useForLoginDto.IsRemember),
                     user = userForReturn
                 });
             }
