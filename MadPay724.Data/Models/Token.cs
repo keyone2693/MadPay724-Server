@@ -1,0 +1,26 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+
+namespace MadPay724.Data.Models
+{
+    public class Token : BaseEntity<string>
+    {
+
+        [Required]
+        public string ClientId { get; set; }
+        [Required]
+        public string Value { get; set; }
+        [Required]
+        public string ExpireDate { get; set; }
+
+        [Required]
+        public string UserId { get; set; }
+        [ForeignKey("UserId")]
+        public  User User { get; set; }
+
+    }
+}

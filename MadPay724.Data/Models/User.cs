@@ -28,6 +28,6 @@ namespace MadPay724.Data.Models
         public ICollection<Photo> Photos { get; set; }
         public ICollection<BankCard> BankCards { get; set; }
         public ICollection<UserRole> UserRoles { get; set; }
-
+        public ICollection<Token> Token { get; set; }
     }
 }
