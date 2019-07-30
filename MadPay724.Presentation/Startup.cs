@@ -18,6 +18,7 @@ using System.Text;
 using NSwag;
 using NSwag.Generation.Processors.Security;
 using AutoMapper;
+using MadPay724.Common.Helpers.AppSetting;
 using MadPay724.Common.Helpers.Helpers;
 using MadPay724.Common.Helpers.Interface;
 using MadPay724.Common.Helpers.MediaTypes;
@@ -155,8 +156,8 @@ namespace MadPay724.Presentation
             });
 
             services.AddCors();
-            
-            //services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
+
+            services.Configure<TokenSetting>(Configuration.GetSection("TokenSetting"));
 
             services.AddAutoMapper(typeof(Startup));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
