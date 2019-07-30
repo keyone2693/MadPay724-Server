@@ -51,7 +51,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
             switch (tokenRequestDto.GrantType)
             {
                 case "password":
-                    return await GenerateNewToken(tokenRequestDto);
+                    return await _utilities.GenerateNewTokenAsync(tokenRequestDto);
                 case "refresh_token":
                     return await RefreshToken(tokenRequestDto);
                 default:

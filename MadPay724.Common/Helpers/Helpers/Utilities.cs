@@ -33,46 +33,15 @@ namespace MadPay724.Common.Helpers.Helpers
         }
 
         #region token
-        public async Task<string> GenerateJwtTokenAsync(User user, bool isRemember)
-        {
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
-                new Claim(ClaimTypes.Name,user.UserName)
-            };
 
-            var roles = await _userManager.GetRolesAsync(user);
-            foreach (var role in roles)
-            {
-                claims.Add(new Claim(ClaimTypes.Role, role));
-            }
-
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("AppSettings:Token").Value));
-
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
-
-            var tokenDes = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(claims),
-                Expires = isRemember ? DateTime.Now.AddDays(1) : DateTime.Now.AddHours(2),
-                SigningCredentials = creds
-            };
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-
-            var token = tokenHandler.CreateToken(tokenDes);
-
-            return tokenHandler.WriteToken(token);
-        }
-
-        public async Task<GenerateTokenDto> GenerateNewToken(TokenRequestDto tokenRequestDto)
+        public async Task<TokenResponseDto> GenerateNewTokenAsync(TokenRequestDto tokenRequestDto)
         {
             var user = await _userManager.FindByNameAsync(tokenRequestDto.UserName);
 
             if (user != null && await _userManager.CheckPasswordAsync(user, tokenRequestDto.Password))
             {
                 //create new token
-                var newRefreshToken = CreateRefreshToken(_tokenSetting.ClientId, user.Id);
+                var newRefreshToken = CreateRefreshToken(_tokenSetting.ClientId, user.Id, tokenRequestDto.IsRemember);
                 //remove older tokens
                 var oldRefreshToken =await _db.Tokens.Where(p => p.UserId == user.Id).ToListAsync();
 
@@ -88,30 +57,73 @@ namespace MadPay724.Common.Helpers.Helpers
 
                 await _db.SaveChangesAsync();
 
-                var accessToken =await GenerateJwtTokenAsync();
+                var accessToken =await CreateAccessTokenAsync(user, newRefreshToken.Value);
 
-                return new GenerateTokenDto()
+                return new TokenResponseDto()
                 {
-                    AccessToken = accessToken,
-                    Status = true
+                    token = accessToken.token,
+                    refresh_token = accessToken.refresh_token,
+                    status = true
                 };
             }
             else
             {
-                return new GenerateTokenDto()
+                return new TokenResponseDto()
                 {
-                    Status = false
+                    status = false,
+                    message = "یوزرنیم و یا پسورد اشتباه میباشد"
                 };
             }
         }
-        public Token CreateRefreshToken(string clientId,string userId)
+
+        public async Task<TokenResponseDto> CreateAccessTokenAsync(User user, string refreshToken)
+        {
+            double tokenExpireTime = Convert.ToDouble(_tokenSetting.ExpireTime);
+
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
+                new Claim(ClaimTypes.Name,user.UserName)
+            };
+
+            var roles = await _userManager.GetRolesAsync(user);
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
+
+            var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_tokenSetting.Secret));
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+
+            var tokenDes = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims),
+                Issuer = _tokenSetting.Site,
+                Audience = _tokenSetting.Audience,
+                Expires =  DateTime.Now.AddMinutes(tokenExpireTime),
+                SigningCredentials = creds
+            };
+
+            var newAccessToken = tokenHandler.CreateToken(tokenDes);
+
+            var encodedAccessToken = tokenHandler.WriteToken(newAccessToken);
+
+            return new TokenResponseDto()
+            {
+                token = encodedAccessToken,
+                refresh_token = refreshToken
+            };
+        }
+
+        public Token CreateRefreshToken(string clientId,string userId,bool isRemember)
         {
             return new Token()
             {
                 ClientId = clientId,
                 UserId = userId,
                 Value = Guid.NewGuid().ToString("N"),
-                ExpireTime = DateTime.Now.AddDays(7)
+                ExpireTime = isRemember ? DateTime.Now.AddDays(7) : DateTime.Now.AddDays(1)
             };
         }
         #endregion

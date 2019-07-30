@@ -8,5 +8,8 @@ namespace MadPay724.Data.Dtos.Common.Token
     {
         public string token { get; set; }
         public string refresh_token { get; set; }
+        public bool status { get; set; }
+        public string message { get; set; }
+
     }
 }
