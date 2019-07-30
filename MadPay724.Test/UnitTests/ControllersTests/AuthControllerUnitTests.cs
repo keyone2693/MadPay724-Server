@@ -11,6 +11,7 @@ using MadPay724.Common.Helpers.Interface;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Site.Panel.Users;
 using MadPay724.Data.Models;
+using MadPay724.Presentation.Controllers.Site.V1.Auth;
 using MadPay724.Presentation.Controllers.Site.V1.User;
 using MadPay724.Repo.Infrastructure;
 using MadPay724.Services.Site.Admin.Auth.Interface;

@@ -22,7 +22,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace MadPay724.Presentation.Controllers.Site.V1.User
+namespace MadPay724.Presentation.Controllers.Site.V1.Auth
 {
     [AllowAnonymous]
     [ApiExplorerSettings(GroupName = "v1_Site_Panel")]
