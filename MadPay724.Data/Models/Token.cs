@@ -9,13 +9,19 @@ namespace MadPay724.Data.Models
 {
     public class Token : BaseEntity<string>
     {
+        public Token()
+        {
+            Id = Guid.NewGuid().ToString();
+            DateCreated = DateTime.Now;
+            DateModified = DateTime.Now;
+        }
 
         [Required]
         public string ClientId { get; set; }
         [Required]
         public string Value { get; set; }
         [Required]
-        public string ExpireDate { get; set; }
+        public DateTime ExpireTime { get; set; }
 
         [Required]
         public string UserId { get; set; }
