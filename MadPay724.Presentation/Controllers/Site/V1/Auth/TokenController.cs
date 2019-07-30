@@ -31,7 +31,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
         private readonly TokenSetting _tokenSetting;
 
 
-        public TokenController(IUnitOfWork<MadpayDbContext> dbContext, IAuthService authService, 
+        public TokenController(IUnitOfWork<MadpayDbContext> dbContext, IAuthService authService,
             IMapper mapper, ILogger<AuthController> logger, IUtilities utilities,
             UserManager<Data.Models.User> userManager, SignInManager<Data.Models.User> signInManager, TokenSetting tokenSetting)
         {
@@ -51,9 +51,27 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
             switch (tokenRequestDto.GrantType)
             {
                 case "password":
-                    return await _utilities.GenerateNewTokenAsync(tokenRequestDto);
+                    var result = await _utilities.GenerateNewTokenAsync(tokenRequestDto);
+                    if (result.status)
+                    {
+                        return Ok(tokenRequestDto);
+                    }
+                    else
+                    {
+                        _logger.LogWarning($"{tokenRequestDto.UserName} درخواست لاگین ناموفق داشته است" + "---" + result.message);
+                        return Unauthorized(result.message);
+                    }
                 case "refresh_token":
-                    return await RefreshToken(tokenRequestDto);
+                    var res= await _utilities.RefreshAccessTokenAsync(tokenRequestDto);
+                    if (res.status)
+                    {
+                        return Ok(tokenRequestDto);
+                    }
+                    else
+                    {
+                        _logger.LogWarning($"{tokenRequestDto.UserName} درخواست لاگین ناموفق داشته است"+ "---"+ res.message);
+                        return Unauthorized(res.message);
+                    }
                 default:
                     return Unauthorized("خطا در اعتبار سنجی دوباره");
             }

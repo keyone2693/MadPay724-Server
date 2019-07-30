@@ -157,7 +157,6 @@ namespace MadPay724.Presentation
 
             services.AddCors();
 
-            services.Configure<TokenSetting>(Configuration.GetSection("TokenSetting"));
 
             services.AddAutoMapper(typeof(Startup));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -185,16 +184,23 @@ namespace MadPay724.Presentation
             builder.AddSignInManager<SignInManager<User>>();
             builder.AddDefaultTokenProviders();
 
+            services.Configure<TokenSetting>(Configuration.GetSection("TokenSetting"));
 
+            var tokenSettingSection = Configuration.GetSection("TokenSetting");
+            var tokenSetting= tokenSettingSection.Get<TokenSetting>();
+            var key = Encoding.ASCII.GetBytes(tokenSetting.Secret);
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(opt =>
                 {
                     opt.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
-                        ValidateIssuer = false,
-                        ValidateAudience = false
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateIssuer = true,
+                        ValidIssuer = tokenSetting.Site,
+                        ValidateAudience = true,
+                        ValidAudience = tokenSetting.Audience,
+                        ClockSkew = TimeSpan.Zero
                     };
                 });
             services.AddAuthorization(opt =>

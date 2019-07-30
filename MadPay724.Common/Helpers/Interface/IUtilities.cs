@@ -15,5 +15,7 @@ namespace MadPay724.Common.Helpers.Interface
          Task<TokenResponseDto> GenerateNewTokenAsync(TokenRequestDto tokenRequestDto);
          Task<TokenResponseDto> CreateAccessTokenAsync(User user, string refreshToken);
          Token CreateRefreshToken(string clientId, string userId, bool isRemember);
+
+         Task<TokenResponseDto> RefreshAccessTokenAsync(TokenRequestDto tokenRequestDto);
     }
 }

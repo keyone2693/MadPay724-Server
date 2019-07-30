@@ -32,7 +32,7 @@ namespace MadPay724.Common.Helpers.Helpers
             _tokenSetting = tokenSetting;
         }
 
-        #region token
+        #region tokenCreateNew
 
         public async Task<TokenResponseDto> GenerateNewTokenAsync(TokenRequestDto tokenRequestDto)
         {
@@ -126,8 +126,65 @@ namespace MadPay724.Common.Helpers.Helpers
                 ExpireTime = isRemember ? DateTime.Now.AddDays(7) : DateTime.Now.AddDays(1)
             };
         }
+
         #endregion
 
+        #region tokenRefresh
+
+        public async Task<TokenResponseDto> RefreshAccessTokenAsync(TokenRequestDto tokenRequestDto)
+        {
+            try
+            {
+                var refreshToken =await _db.Tokens.FirstOrDefaultAsync(p =>
+                    p.ClientId == _tokenSetting.ClientId && p.Value == tokenRequestDto.RefreshToken);
+
+                if (refreshToken == null)
+                {
+                    return new TokenResponseDto()
+                    {
+                        status = false,
+                        message = "خطا در اعتبار سنجی خودکار"
+                    };
+                }
+                if(refreshToken.ExpireTime < DateTime.Now)
+                {
+                    return new TokenResponseDto()
+                    {
+                        status = false,
+                        message = "خطا در اعتبار سنجی خودکار"
+                    };
+                }
+
+                var user = await _userManager.FindByIdAsync(refreshToken.UserId);
+
+                if (user == null)
+                {
+                    return new TokenResponseDto()
+                    {
+                        status = false,
+                        message = "خطا در اعتبار سنجی خودکار"
+                    };
+                }
+
+                var response = await CreateAccessTokenAsync(user, refreshToken.Value);
+
+                return new TokenResponseDto()
+                {
+                    status = true,
+                    token = response.token
+                };
+            }
+            catch (Exception e)
+            {
+                return new TokenResponseDto()
+                {
+                    status = false,
+                    message = e.Message
+                };
+            }
+        }
+
+        #endregion
         #region password
 
         public void CreatePasswordHash(string password,out byte[] passwordHash,out byte[] passwordSalt)
