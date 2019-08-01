@@ -9,6 +9,7 @@ using AutoMapper;
 using MadPay724.Common.ErrorAndMessage;
 using MadPay724.Common.Helpers.Interface;
 using MadPay724.Data.DatabaseContext;
+using MadPay724.Data.Dtos.Common.Token;
 using MadPay724.Data.Dtos.Site.Panel.Users;
 using MadPay724.Data.Models;
 using MadPay724.Presentation.Controllers.Site.V1.Auth;
@@ -69,24 +70,25 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         }
         #region loginTests
         [Fact]
-        public async Task Login_Success()
+        public async Task Login_Success_Passsword()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
 
+            _mockUtilities.Setup(x => x.GenerateNewTokenAsync(It.IsAny<TokenRequestDto>()))
+                .ReturnsAsync(new TokenResponseDto() {status = true});
+            //_mockUserManager.Setup(x => x.FindByNameAsync(It.IsAny<string>()))
+            //    .ReturnsAsync(UnitTestsDataInput.Users.First());
 
-            _mockUserManager.Setup(x => x.FindByNameAsync(It.IsAny<string>()))
-                .ReturnsAsync(UnitTestsDataInput.Users.First());
-
-            _mockSignInManager.Setup(x => x.CheckPasswordSignInAsync(
-                    It.IsAny<User>(), It.IsAny<string>(), It.IsAny<bool>()))
-                .ReturnsAsync(SignInResult.Success);
+            //_mockSignInManager.Setup(x => x.CheckPasswordSignInAsync(
+            //        It.IsAny<User>(), It.IsAny<string>(), It.IsAny<bool>()))
+            //    .ReturnsAsync(SignInResult.Success);
 
             //_mockUtilities.Setup(x => x.GenerateJwtTokenAsync(It.IsAny<User>(), It.IsAny<bool>()))
             //    .ReturnsAsync(It.IsAny<string>());
 
 
-            _mockMapper.Setup(x => x.Map<UserForDetailedDto>(It.IsAny<User>()))
-                .Returns(UnitTestsDataInput.userForDetailedDto);
+            //_mockMapper.Setup(x => x.Map<UserForDetailedDto>(It.IsAny<User>()))
+            //    .Returns(UnitTestsDataInput.userForDetailedDto);
 
 
             //Act----------------------------------------------------------------------------------------------------------------------------------
@@ -94,31 +96,64 @@ namespace MadPay724.Test.UnitTests.ControllersTests
             var okResult = result as OkObjectResult;
             //Assert-------------------------------------------------------------------------------------------------------------------------------
             Assert.NotNull(okResult);
-           // Assert.IsType<UserForDetailedDto>(okResult.Value);
+            Assert.IsType<TokenResponseDto>(okResult.Value);
             Assert.Equal(200, okResult.StatusCode);
         }
         [Fact]
-        public async Task Login_Fail()
+        public async Task Login_Success_RefreshToken()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
 
-            _mockUserManager.Setup(x => x.FindByNameAsync(It.IsAny<string>()))
-                .ReturnsAsync(UnitTestsDataInput.Users.First());
-
-            _mockSignInManager.Setup(x => x.CheckPasswordSignInAsync(
-                    It.IsAny<User>(), It.IsAny<string>(),It.IsAny<bool>()))
-                .ReturnsAsync(SignInResult.NotAllowed);
-
-            string expected = "کاربری با این یوزر و پس وجود ندارد";
+            _mockUtilities.Setup(x => x.RefreshAccessTokenAsync(It.IsAny<TokenRequestDto>()))
+                .ReturnsAsync(new TokenResponseDto() { status = true });
 
             //Act----------------------------------------------------------------------------------------------------------------------------------
+            var result = await _controller.Login(UnitTestsDataInput.useForLoginDto_Success_refreshToken);
+            var okResult = result as OkObjectResult;
+            //Assert-------------------------------------------------------------------------------------------------------------------------------
+            Assert.NotNull(okResult);
+            Assert.IsType<TokenResponseDto>(okResult.Value);
+            Assert.Equal(200, okResult.StatusCode);
+        }
 
-            var result = await _controller.Login(UnitTestsDataInput.useForLoginDto_Success_password);
+        [Fact]
+        public async Task Login_Fail_Passsword()
+        {
+            //Arrange------------------------------------------------------------------------------------------------------------------------------
+
+            _mockUtilities.Setup(x => x.GenerateNewTokenAsync(It.IsAny<TokenRequestDto>()))
+                .ReturnsAsync(new TokenResponseDto() { status = false, message = "کاربری با این یوزر و پس وجود ندارد" });
+            string expected = "کاربری با این یوزر و پس وجود ندارد";
+
+
+
+            //Act----------------------------------------------------------------------------------------------------------------------------------
+            var result = await _controller.Login(UnitTestsDataInput.useForLoginDto_Fail_password);
             var okResult = result as UnauthorizedObjectResult;
             //Assert-------------------------------------------------------------------------------------------------------------------------------
             Assert.NotNull(okResult);
-             Assert.IsType<string>(okResult.Value);
-             Assert.Equal(expected, okResult.Value);
+            Assert.IsType<string>(okResult.Value);
+            Assert.Equal(expected, okResult.Value);
+            Assert.Equal(401, okResult.StatusCode);
+        }
+        [Fact]
+        public async Task Login_Fail_RefreshToken()
+        {
+            //Arrange------------------------------------------------------------------------------------------------------------------------------
+
+            _mockUtilities.Setup(x => x.RefreshAccessTokenAsync(It.IsAny<TokenRequestDto>()))
+                .ReturnsAsync(new TokenResponseDto() { status = false,message = "خطا در اعتبار سنجی خودکار" });
+            string expected = "خطا در اعتبار سنجی خودکار";
+
+
+
+            //Act----------------------------------------------------------------------------------------------------------------------------------
+            var result = await _controller.Login(UnitTestsDataInput.useForLoginDto_Fail_refreshToken);
+            var okResult = result as UnauthorizedObjectResult;
+            //Assert-------------------------------------------------------------------------------------------------------------------------------
+            Assert.NotNull(okResult);
+            Assert.IsType<string>(okResult.Value);
+            Assert.Equal(expected, okResult.Value);
             Assert.Equal(401, okResult.StatusCode);
         }
         [Fact]
@@ -132,7 +167,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
             //Assert-------------------------------------------------------------------------------------------------------------------------------
             Assert.False(modelState.IsValid);
             Assert.Equal(2, modelState.Keys.Count());
-            Assert.True(modelState.Keys.Contains("UserName") && modelState.Keys.Contains("Password"));
+            Assert.True(modelState.Keys.Contains("UserName") && modelState.Keys.Contains("GrantType"));
         }
         #endregion
 
