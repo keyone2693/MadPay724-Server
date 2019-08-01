@@ -46,11 +46,32 @@ namespace MadPay724.Test.IntegrationTests.ControllersTests
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
         [Fact]
-        public async Task Login_Fail_UserLogin()
+        public async Task Login_Success_RefreshToken()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
             var request = UnitTestsDataInput.baseRouteV1 + "site/panel/auth/login";
-            var model = UnitTestsDataInput.useForLoginDto_Fail;
+            var model = UnitTestsDataInput.useForLoginDto_Success_refreshToken;
+            //Act----------------------------------------------------------------------------------------------------------------------------------
+            var response = await _client.PostAsync(request, ContentHelper.GetStringContent(model));
+
+            //Assert-------------------------------------------------------------------------------------------------------------------------------
+            response.EnsureSuccessStatusCode();
+
+            var res = JsonConvert.DeserializeObject<TokenResponseDto>(await response.Content.ReadAsStringAsync());
+
+            Assert.IsType<TokenResponseDto>(res);
+
+            Assert.NotNull(res.token);
+            Assert.Null(res.refresh_token);
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        }
+        [Fact]
+        public async Task Login_Fail_Password()
+        {
+            //Arrange------------------------------------------------------------------------------------------------------------------------------
+            var request = UnitTestsDataInput.baseRouteV1 + "site/panel/auth/login";
+            var model = UnitTestsDataInput.useForLoginDto_Fail_password;
             //Act----------------------------------------------------------------------------------------------------------------------------------
             var response = await _client.PostAsync(request, ContentHelper.GetStringContent(model));
             var actual = await response.Content.ReadAsAsync<string>();
@@ -58,6 +79,20 @@ namespace MadPay724.Test.IntegrationTests.ControllersTests
 
             Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
             Assert.Equal("کاربری با این یوزر و پس وجود ندارد", actual);
+        }
+        [Fact]
+        public async Task Login_Fail_RefreshToken()
+        {
+            //Arrange------------------------------------------------------------------------------------------------------------------------------
+            var request = UnitTestsDataInput.baseRouteV1 + "site/panel/auth/login";
+            var model = UnitTestsDataInput.useForLoginDto_Fail_refreshToken;
+            //Act----------------------------------------------------------------------------------------------------------------------------------
+            var response = await _client.PostAsync(request, ContentHelper.GetStringContent(model));
+            var actual = await response.Content.ReadAsAsync<string>();
+            //Assert-------------------------------------------------------------------------------------------------------------------------------
+
+            Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+            Assert.Equal("خطا در اعتبار سنجی خودکار", actual);
         }
         [Fact]
         public async Task Login_Fail_ModelStateError()

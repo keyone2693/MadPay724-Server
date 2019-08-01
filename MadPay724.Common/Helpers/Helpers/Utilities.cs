@@ -76,7 +76,7 @@ namespace MadPay724.Common.Helpers.Helpers
                 return new TokenResponseDto()
                 {
                     status = false,
-                    message = "یوزرنیم و یا پسورد اشتباه میباشد"
+                    message = "کاربری با این یوزر و پس وجود ندارد"
                 };
             }
         }
@@ -134,8 +134,8 @@ namespace MadPay724.Common.Helpers.Helpers
                     _http.HttpContext.Connection.RemoteIpAddress.ToString() :
                     "noIp" :
                     "noIp"
-        };
-             
+            };
+
         }
 
         #endregion
@@ -144,57 +144,54 @@ namespace MadPay724.Common.Helpers.Helpers
 
         public async Task<TokenResponseDto> RefreshAccessTokenAsync(TokenRequestDto tokenRequestDto)
         {
-            try
-            {
-                string ip = _http.HttpContext.Connection?.RemoteIpAddress.ToString();
-                var refreshToken = await _db.Tokens.FirstOrDefaultAsync(p =>
-                     p.ClientId == _tokenSetting.ClientId && p.Value == tokenRequestDto.RefreshToken
-                     && p.Ip == ip);
+            string ip = _http.HttpContext.Connection != null
+                    ? _http.HttpContext.Connection.RemoteIpAddress != null
+                        ?
+                        _http.HttpContext.Connection.RemoteIpAddress.ToString()
+                        :
+                        "noIp"
+                    : "noIp";
 
-                if (refreshToken == null)
-                {
-                    return new TokenResponseDto()
-                    {
-                        status = false,
-                        message = "خطا در اعتبار سنجی خودکار"
-                    };
-                }
-                if (refreshToken.ExpireTime < DateTime.Now)
-                {
-                    return new TokenResponseDto()
-                    {
-                        status = false,
-                        message = "خطا در اعتبار سنجی خودکار"
-                    };
-                }
 
-                var user = await _userManager.FindByIdAsync(refreshToken.UserId);
+            var refreshToken = await _db.Tokens.FirstOrDefaultAsync(p =>
+                 p.ClientId == _tokenSetting.ClientId && p.Value == tokenRequestDto.RefreshToken
+                 && p.Ip == ip);
 
-                if (user == null)
-                {
-                    return new TokenResponseDto()
-                    {
-                        status = false,
-                        message = "خطا در اعتبار سنجی خودکار"
-                    };
-                }
-
-                var response = await CreateAccessTokenAsync(user, refreshToken.Value);
-
-                return new TokenResponseDto()
-                {
-                    status = true,
-                    token = response.token
-                };
-            }
-            catch (Exception e)
+            if (refreshToken == null)
             {
                 return new TokenResponseDto()
                 {
                     status = false,
-                    message = e.Message
+                    message = "خطا در اعتبار سنجی خودکار"
                 };
             }
+            if (refreshToken.ExpireTime < DateTime.Now)
+            {
+                return new TokenResponseDto()
+                {
+                    status = false,
+                    message = "خطا در اعتبار سنجی خودکار"
+                };
+            }
+
+            var user = await _userManager.FindByIdAsync(refreshToken.UserId);
+
+            if (user == null)
+            {
+                return new TokenResponseDto()
+                {
+                    status = false,
+                    message = "خطا در اعتبار سنجی خودکار"
+                };
+            }
+
+            var response = await CreateAccessTokenAsync(user, refreshToken.Value);
+
+            return new TokenResponseDto()
+            {
+                status = true,
+                token = response.token
+            };
         }
 
         #endregion

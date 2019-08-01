@@ -147,17 +147,24 @@ namespace MadPay724.Test.DataInput
         {
             GrantType = "refresh_token",
             UserName = "keyvan@madpay.com",
-            RefreshToken = "",
+            RefreshToken = "2fd729b1021c47858a9302cdd64d3e37",
             IsRemember = true
         };
-
-        public static readonly TokenRequestDto useForLoginDto_Fail = new TokenRequestDto()
+        public static readonly TokenRequestDto useForLoginDto_Fail_refreshToken = new TokenRequestDto()
+        {
+            GrantType = "refresh_token",
+            UserName = "keyvan@madpay.com",
+            RefreshToken = "noRefreshToken",
+            IsRemember = true
+        };
+        public static readonly TokenRequestDto useForLoginDto_Fail_password = new TokenRequestDto()
         {
             GrantType = "password",
             UserName = "00@000.com",
             Password = "password",
             IsRemember = true
         };
+       
 
         public static readonly TokenRequestDto useForLoginDto_Fail_ModelState = new TokenRequestDto()
         {
