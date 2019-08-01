@@ -9,6 +9,7 @@ using MadPay724.Common.Helpers.AppSetting;
 using MadPay724.Common.Helpers.Interface;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Common.Token;
+using MadPay724.Data.Dtos.Site.Panel.Users;
 using MadPay724.Data.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -68,7 +69,8 @@ namespace MadPay724.Common.Helpers.Helpers
                 {
                     token = accessToken.token,
                     refresh_token = accessToken.refresh_token,
-                    status = true
+                    status = true,
+                    user = user
                 };
             }
             else

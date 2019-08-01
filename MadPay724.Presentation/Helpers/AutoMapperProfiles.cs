@@ -12,6 +12,8 @@ using MadPay724.Common.Helpers.Helpers;
 using MadPay724.Common.Helpers.MediaTypes;
 using MadPay724.Data.Dtos.Common;
 using MadPay724.Data.Dtos.Common.ION;
+using MadPay724.Data.Dtos.Common.Token;
+using MadPay724.Data.Dtos.Site.Panel.Auth;
 
 namespace MadPay724.Presentation.Helpers
 {
@@ -40,6 +42,8 @@ namespace MadPay724.Presentation.Helpers
             CreateMap<Photo, PhotoForReturnProfileDto>();
             CreateMap<BankCard, BankCardForUserDetailedDto>();
             CreateMap<UserForUpdateDto, User>();
+
+            //CreateMap<TokenResponseDto, LoginResponseDto>();
         }
     }
 }

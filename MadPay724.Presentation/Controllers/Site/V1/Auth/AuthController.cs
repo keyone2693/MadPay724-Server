@@ -18,6 +18,7 @@ using AutoMapper;
 using MadPay724.Common.ErrorAndMessage;
 using MadPay724.Common.Helpers.Interface;
 using MadPay724.Data.Dtos.Common.Token;
+using MadPay724.Data.Dtos.Site.Panel.Auth;
 using MadPay724.Presentation.Routes.V1;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -133,7 +134,14 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
                     var result = await _utilities.GenerateNewTokenAsync(tokenRequestDto);
                     if (result.status)
                     {
-                        return Ok(result);
+                        var userForReturn = _mapper.Map<UserForDetailedDto>(result.user);
+                        
+                        return Ok(new LoginResponseDto
+                        {
+                            token = result.token,
+                            refresh_token = result.refresh_token,
+                            user = userForReturn
+                        });
                     }
                     else
                     {

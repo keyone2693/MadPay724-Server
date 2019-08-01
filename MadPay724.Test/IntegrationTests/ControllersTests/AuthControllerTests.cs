@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using MadPay724.Common.ErrorAndMessage;
 using MadPay724.Data.Dtos.Common.Token;
+using MadPay724.Data.Dtos.Site.Panel.Auth;
 using MadPay724.Test.DataInput;
 using MadPay724.Test.IntegrationTests.Providers;
 using Microsoft.AspNetCore.Mvc;
@@ -36,12 +37,13 @@ namespace MadPay724.Test.IntegrationTests.ControllersTests
             //Assert-------------------------------------------------------------------------------------------------------------------------------
             response.EnsureSuccessStatusCode();
 
-            var res = JsonConvert.DeserializeObject<TokenResponseDto>(await response.Content.ReadAsStringAsync());
+            var res = JsonConvert.DeserializeObject<LoginResponseDto>(await response.Content.ReadAsStringAsync());
 
-            Assert.IsType<TokenResponseDto>(res);
+            Assert.IsType<LoginResponseDto>(res);
 
             Assert.NotNull(res.token);
             Assert.NotNull(res.refresh_token);
+            Assert.NotNull(res.user);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }

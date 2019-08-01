@@ -10,6 +10,7 @@ using MadPay724.Common.ErrorAndMessage;
 using MadPay724.Common.Helpers.Interface;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Common.Token;
+using MadPay724.Data.Dtos.Site.Panel.Auth;
 using MadPay724.Data.Dtos.Site.Panel.Users;
 using MadPay724.Data.Models;
 using MadPay724.Presentation.Controllers.Site.V1.Auth;
@@ -96,7 +97,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
             var okResult = result as OkObjectResult;
             //Assert-------------------------------------------------------------------------------------------------------------------------------
             Assert.NotNull(okResult);
-            Assert.IsType<TokenResponseDto>(okResult.Value);
+            Assert.IsType<LoginResponseDto>(okResult.Value);
             Assert.Equal(200, okResult.StatusCode);
         }
         [Fact]
