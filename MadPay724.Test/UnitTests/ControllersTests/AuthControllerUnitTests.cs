@@ -45,7 +45,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         private readonly Mock<IUtilities> _mockUtilities;
 
         private readonly Mock<FakeUserManager> _mockUserManager;
-        private readonly Mock<FakeSignInManager> _mockSignInManager;
+
 
         private readonly AuthController _controller;
         public AuthControllerUnitTests()
@@ -59,14 +59,13 @@ namespace MadPay724.Test.UnitTests.ControllersTests
             _mockConfig = new Mock<IConfiguration>();
             _mockConfigSection = new Mock<IConfigurationSection>();
 
-            _mockUserManager =new Mock<FakeUserManager>();
-            _mockSignInManager = new Mock<FakeSignInManager>();
+            _mockUserManager = new Mock<FakeUserManager>();
 
 
             _mockUtilities = new Mock<IUtilities>();
 
             _controller = new AuthController(_mockRepo.Object, _mockAuthService.Object, _mockConfig.Object, _mockMapper.Object,
-                _mockLogger.Object, _mockUtilities.Object, _mockUserManager.Object, _mockSignInManager.Object);
+                _mockLogger.Object, _mockUtilities.Object, _mockUserManager.Object);
 
         }
         #region loginTests

@@ -30,8 +30,7 @@ namespace MadPay724.Presentation.Helpers.Filters
 
                     context.Result = new UnauthorizedResult();
                 }
-            }
-          else
+            } else
             {
                 if (context.RouteData.Values["userId"].ToString() == _httpContextAcc.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value)
                 {

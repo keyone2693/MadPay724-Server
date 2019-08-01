@@ -39,12 +39,12 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
         private readonly ILogger<AuthController> _logger;
         private readonly IUtilities _utilities;
         private readonly UserManager<Data.Models.User> _userManager;
-        private readonly SignInManager<Data.Models.User> _signInManager;
+        //private readonly SignInManager<Data.Models.User> _signInManager;
 
 
         public AuthController(IUnitOfWork<MadpayDbContext> dbContext, IAuthService authService,
             IConfiguration config, IMapper mapper, ILogger<AuthController> logger, IUtilities utilities,
-            UserManager<Data.Models.User> userManager, SignInManager<Data.Models.User> signInManager)
+            UserManager<Data.Models.User> userManager)
         {
             _db = dbContext;
             _authService = authService;
@@ -53,7 +53,6 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
             _logger = logger;
             _utilities = utilities;
             _userManager = userManager;
-            _signInManager = signInManager;
         }
 
 
@@ -146,7 +145,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
                     else
                     {
                         _logger.LogWarning($"{tokenRequestDto.UserName} درخواست لاگین ناموفق داشته است" + "---" + result.message);
-                        return Unauthorized(result.message);
+                        return Unauthorized("1x111keyvanx11");
                     }
                 case "refresh_token":
                     var res = await _utilities.RefreshAccessTokenAsync(tokenRequestDto);
@@ -157,7 +156,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
                     else
                     {
                         _logger.LogWarning($"{tokenRequestDto.UserName} درخواست لاگین ناموفق داشته است" + "---" + res.message);
-                        return Unauthorized(res.message);
+                        return Unauthorized("0x000keyvanx00");
                     }
                 default:
                     return Unauthorized("خطا در اعتبار سنجی دوباره");
