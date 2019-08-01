@@ -160,7 +160,6 @@ namespace MadPay724.Presentation
 
             services.AddAutoMapper(typeof(Startup));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
             services.AddScoped<IUnitOfWork<MadpayDbContext>, UnitOfWork<MadpayDbContext>>();
             services.AddTransient<SeedService>();
             services.AddScoped<IAuthService, AuthService>();
@@ -168,8 +167,8 @@ namespace MadPay724.Presentation
             services.AddScoped<IUploadService, UploadService>();
             services.AddScoped<IUtilities, Utilities>();
             services.AddScoped<UserCheckIdFilter>();
+            //services.AddScoped<TokenSetting>();
 
-            
             IdentityBuilder builder = services.AddIdentityCore<User>(opt =>
             {
                 opt.Password.RequireDigit = false;
@@ -183,8 +182,8 @@ namespace MadPay724.Presentation
             builder.AddRoleManager<RoleManager<Role>>();
             builder.AddSignInManager<SignInManager<User>>();
             builder.AddDefaultTokenProviders();
-
-            services.Configure<TokenSetting>(Configuration.GetSection("TokenSetting"));
+           
+            //services.Configure<TokenSetting>(Configuration.GetSection("TokenSetting"));
 
             var tokenSettingSection = Configuration.GetSection("TokenSetting");
             var tokenSetting= tokenSettingSection.Get<TokenSetting>();

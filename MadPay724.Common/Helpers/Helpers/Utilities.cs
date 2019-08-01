@@ -27,12 +27,13 @@ namespace MadPay724.Common.Helpers.Helpers
         private readonly MadpayDbContext _db;
         private readonly IHttpContextAccessor _http;
         public Utilities(MadpayDbContext dbContext, IConfiguration config, UserManager<User> userManager,
-            TokenSetting tokenSetting, IHttpContextAccessor http)
+            IHttpContextAccessor http)
         {
             _db = dbContext;
             _config = config;
             _userManager = userManager;
-            _tokenSetting = tokenSetting;
+            var tokenSettingSection = _config.GetSection("TokenSetting");
+            _tokenSetting = tokenSettingSection.Get<TokenSetting>();
             _http = http;
         }
 
@@ -47,7 +48,7 @@ namespace MadPay724.Common.Helpers.Helpers
                 //create new token
                 var newRefreshToken = CreateRefreshToken(_tokenSetting.ClientId, user.Id, tokenRequestDto.IsRemember);
                 //remove older tokens
-                var oldRefreshToken =await _db.Tokens.Where(p => p.UserId == user.Id).ToListAsync();
+                var oldRefreshToken = await _db.Tokens.Where(p => p.UserId == user.Id).ToListAsync();
 
                 if (oldRefreshToken.Any())
                 {
@@ -61,7 +62,7 @@ namespace MadPay724.Common.Helpers.Helpers
 
                 await _db.SaveChangesAsync();
 
-                var accessToken =await CreateAccessTokenAsync(user, newRefreshToken.Value);
+                var accessToken = await CreateAccessTokenAsync(user, newRefreshToken.Value);
 
                 return new TokenResponseDto()
                 {
@@ -105,7 +106,7 @@ namespace MadPay724.Common.Helpers.Helpers
                 Subject = new ClaimsIdentity(claims),
                 Issuer = _tokenSetting.Site,
                 Audience = _tokenSetting.Audience,
-                Expires =  DateTime.Now.AddMinutes(tokenExpireTime),
+                Expires = DateTime.Now.AddMinutes(tokenExpireTime),
                 SigningCredentials = creds
             };
 
@@ -120,7 +121,7 @@ namespace MadPay724.Common.Helpers.Helpers
             };
         }
 
-        public Token CreateRefreshToken(string clientId,string userId,bool isRemember)
+        public Token CreateRefreshToken(string clientId, string userId, bool isRemember)
         {
             return new Token()
             {
@@ -128,8 +129,13 @@ namespace MadPay724.Common.Helpers.Helpers
                 UserId = userId,
                 Value = Guid.NewGuid().ToString("N"),
                 ExpireTime = isRemember ? DateTime.Now.AddDays(7) : DateTime.Now.AddDays(1),
-                Ip = _http.HttpContext.Connection?.RemoteIpAddress.ToString()
-            };
+                Ip = _http.HttpContext.Connection != null ?
+                    _http.HttpContext.Connection.RemoteIpAddress != null ?
+                    _http.HttpContext.Connection.RemoteIpAddress.ToString() :
+                    "noIp" :
+                    "noIp"
+        };
+             
         }
 
         #endregion
@@ -141,9 +147,9 @@ namespace MadPay724.Common.Helpers.Helpers
             try
             {
                 string ip = _http.HttpContext.Connection?.RemoteIpAddress.ToString();
-                var refreshToken =await _db.Tokens.FirstOrDefaultAsync(p =>
-                    p.ClientId == _tokenSetting.ClientId && p.Value == tokenRequestDto.RefreshToken
-                    && p.Ip == ip);
+                var refreshToken = await _db.Tokens.FirstOrDefaultAsync(p =>
+                     p.ClientId == _tokenSetting.ClientId && p.Value == tokenRequestDto.RefreshToken
+                     && p.Ip == ip);
 
                 if (refreshToken == null)
                 {
@@ -153,7 +159,7 @@ namespace MadPay724.Common.Helpers.Helpers
                         message = "خطا در اعتبار سنجی خودکار"
                     };
                 }
-                if(refreshToken.ExpireTime < DateTime.Now)
+                if (refreshToken.ExpireTime < DateTime.Now)
                 {
                     return new TokenResponseDto()
                     {
@@ -194,7 +200,7 @@ namespace MadPay724.Common.Helpers.Helpers
         #endregion
         #region password
 
-        public void CreatePasswordHash(string password,out byte[] passwordHash,out byte[] passwordSalt)
+        public void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
             using (var hamc = new System.Security.Cryptography.HMACSHA512())
             {
@@ -215,10 +221,11 @@ namespace MadPay724.Common.Helpers.Helpers
                         return false;
                 }
             }
-             return true;
+            return true;
         }
 
         #endregion
+
 
     }
 }

@@ -17,6 +17,7 @@ using MadPay724.Data.Dtos.Site.Panel.Users;
 using AutoMapper;
 using MadPay724.Common.ErrorAndMessage;
 using MadPay724.Common.Helpers.Interface;
+using MadPay724.Data.Dtos.Common.Token;
 using MadPay724.Presentation.Routes.V1;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -124,35 +125,34 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
 
         }
         [HttpPost(ApiV1Routes.Auth.Login)]
-        public async Task<IActionResult> Login(UseForLoginDto useForLoginDto)
+        public async Task<IActionResult> Login(TokenRequestDto tokenRequestDto)
         {
-            var user = await _userManager.FindByNameAsync(useForLoginDto.UserName);
-            if (user == null)
+            switch (tokenRequestDto.GrantType)
             {
-                _logger.LogWarning($"{useForLoginDto.UserName} درخواست لاگین ناموفق داشته است");
-                return Unauthorized("کاربری با این یوزر و پس وجود ندارد");
-            }
-            var result = await _signInManager.CheckPasswordSignInAsync(user, useForLoginDto.Password, false);
-
-            if (result.Succeeded)
-            {
-                var appUser = _userManager.Users.Include(p => p.Photos)
-                    .FirstOrDefault(u => u.NormalizedUserName == useForLoginDto.UserName.ToUpper());
-
-                var userForReturn = _mapper.Map<UserForDetailedDto>(appUser);
-
-                _logger.LogInformation($"{useForLoginDto.UserName} لاگین کرده است");
-                return Ok(new
-                {
-                   // token = await _utilities.GenerateJwtTokenAsync(appUser, useForLoginDto.IsRemember),
-                    user = userForReturn
-                });
-            }
-            else
-            {
-                _logger.LogWarning($"{useForLoginDto.UserName} درخواست لاگین ناموفق داشته است");
-                return Unauthorized("کاربری با این یوزر و پس وجود ندارد");
-
+                case "password":
+                    var result = await _utilities.GenerateNewTokenAsync(tokenRequestDto);
+                    if (result.status)
+                    {
+                        return Ok(result);
+                    }
+                    else
+                    {
+                        _logger.LogWarning($"{tokenRequestDto.UserName} درخواست لاگین ناموفق داشته است" + "---" + result.message);
+                        return Unauthorized(result.message);
+                    }
+                case "refresh_token":
+                    var res = await _utilities.RefreshAccessTokenAsync(tokenRequestDto);
+                    if (res.status)
+                    {
+                        return Ok(res);
+                    }
+                    else
+                    {
+                        _logger.LogWarning($"{tokenRequestDto.UserName} درخواست لاگین ناموفق داشته است" + "---" + res.message);
+                        return Unauthorized(res.message);
+                    }
+                default:
+                    return Unauthorized("خطا در اعتبار سنجی دوباره");
             }
         }
     }

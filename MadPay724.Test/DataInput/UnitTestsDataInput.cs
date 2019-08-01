@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using MadPay724.Data.Dtos.Common.Token;
 using MadPay724.Data.Dtos.Services;
 using MadPay724.Data.Dtos.Site.Panel.Photos;
 using MadPay724.Data.Dtos.Site.Panel.Roles;
@@ -135,24 +136,34 @@ namespace MadPay724.Test.DataInput
             PhoneNumber = string.Empty
         };
 
-        public static readonly UseForLoginDto useForLoginDto_Success = new UseForLoginDto()
+        public static readonly TokenRequestDto useForLoginDto_Success_password = new TokenRequestDto()
         {
-            UserName = "kathybrown@barkarama.com",
+            GrantType = "password",
+            UserName = "keyvan@madpay.com",
             Password = "password",
             IsRemember = true
         };
-
-        public static readonly UseForLoginDto useForLoginDto_Fail = new UseForLoginDto()
+        public static readonly TokenRequestDto useForLoginDto_Success_refreshToken = new TokenRequestDto()
         {
+            GrantType = "refresh_token",
+            UserName = "keyvan@madpay.com",
+            RefreshToken = "",
+            IsRemember = true
+        };
+
+        public static readonly TokenRequestDto useForLoginDto_Fail = new TokenRequestDto()
+        {
+            GrantType = "password",
             UserName = "00@000.com",
             Password = "password",
             IsRemember = true
         };
 
-        public static readonly UseForLoginDto useForLoginDto_Fail_ModelState = new UseForLoginDto()
+        public static readonly TokenRequestDto useForLoginDto_Fail_ModelState = new TokenRequestDto()
         {
+            
             UserName = string.Empty,
-            Password = string.Empty
+            GrantType = string.Empty
         };
 
         public static readonly PhotoForProfileDto photoForProfileDto = new PhotoForProfileDto()

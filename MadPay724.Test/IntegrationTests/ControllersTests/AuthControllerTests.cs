@@ -5,8 +5,11 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using MadPay724.Common.ErrorAndMessage;
+using MadPay724.Data.Dtos.Common.Token;
 using MadPay724.Test.DataInput;
 using MadPay724.Test.IntegrationTests.Providers;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Xunit;
 
 namespace MadPay724.Test.IntegrationTests.ControllersTests
@@ -22,16 +25,24 @@ namespace MadPay724.Test.IntegrationTests.ControllersTests
 
         #region loginTests
         [Fact]
-        public async Task Login_Success_UserLogin()
+        public async Task Login_Success_Password()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
             var request = UnitTestsDataInput.baseRouteV1 + "site/panel/auth/login";
-            var model = UnitTestsDataInput.useForLoginDto_Success;
+            var model = UnitTestsDataInput.useForLoginDto_Success_password;
             //Act----------------------------------------------------------------------------------------------------------------------------------
             var response = await _client.PostAsync(request, ContentHelper.GetStringContent(model));
 
             //Assert-------------------------------------------------------------------------------------------------------------------------------
             response.EnsureSuccessStatusCode();
+
+            var res = JsonConvert.DeserializeObject<TokenResponseDto>(await response.Content.ReadAsStringAsync());
+
+            Assert.IsType<TokenResponseDto>(res);
+
+            Assert.NotNull(res.token);
+            Assert.NotNull(res.refresh_token);
+
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
         [Fact]

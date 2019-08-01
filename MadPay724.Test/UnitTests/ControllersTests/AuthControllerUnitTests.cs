@@ -90,7 +90,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
 
 
             //Act----------------------------------------------------------------------------------------------------------------------------------
-            var result = await _controller.Login(UnitTestsDataInput.useForLoginDto_Success);
+            var result = await _controller.Login(UnitTestsDataInput.useForLoginDto_Success_password);
             var okResult = result as OkObjectResult;
             //Assert-------------------------------------------------------------------------------------------------------------------------------
             Assert.NotNull(okResult);
@@ -113,7 +113,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
 
             //Act----------------------------------------------------------------------------------------------------------------------------------
 
-            var result = await _controller.Login(UnitTestsDataInput.useForLoginDto_Success);
+            var result = await _controller.Login(UnitTestsDataInput.useForLoginDto_Success_password);
             var okResult = result as UnauthorizedObjectResult;
             //Assert-------------------------------------------------------------------------------------------------------------------------------
             Assert.NotNull(okResult);

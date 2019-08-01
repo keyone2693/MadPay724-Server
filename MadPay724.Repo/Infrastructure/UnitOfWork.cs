@@ -70,6 +70,19 @@ namespace MadPay724.Repo.Infrastructure
                 return roleRepository;
             }
         }
+
+        private ITokenRepository tokenRepository;
+        public ITokenRepository TokenRepository
+        {
+            get
+            {
+                if (tokenRepository == null)
+                {
+                    tokenRepository = new TokenRepository(_db);
+                }
+                return tokenRepository;
+            }
+        }
         #endregion
 
 

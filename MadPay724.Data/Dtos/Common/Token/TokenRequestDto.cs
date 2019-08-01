@@ -9,7 +9,6 @@ namespace MadPay724.Data.Dtos.Common.Token
     {
         [Required]
         public string GrantType { get; set; } //password || refresh_token
-        [Required]
         public string ClientId { get; set; }
         [Required]
         [EmailAddress(ErrorMessage = "ایمیل وارد شده صحیح نمیباشد")]

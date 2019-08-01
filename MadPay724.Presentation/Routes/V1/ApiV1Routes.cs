@@ -74,5 +74,14 @@ namespace MadPay724.Presentation.Routes.V1
             public const string Login = BaseSitePanel + "/auth/login";
         }
         #endregion
+
+        #region TokenRoutes
+        public static class Token
+        {
+            //api/v1/site/panel/token/auth
+            //GET
+            public const string Auth = BaseSitePanel + "/tokn/auth";
+        }
+        #endregion
     }
 }

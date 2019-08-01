@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using MadPay724.Common.Helpers.AppSetting;
 using MadPay724.Common.Helpers.Interface;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Common.Token;
+using MadPay724.Data.Models;
+using MadPay724.Presentation.Routes.V1;
 using MadPay724.Repo.Infrastructure;
 using MadPay724.Services.Site.Admin.Auth.Interface;
 using Microsoft.AspNetCore.Authorization;
@@ -14,6 +19,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 
 namespace MadPay724.Presentation.Controllers.Site.V1.Auth
 {
@@ -45,7 +51,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
         }
 
 
-        [HttpPost]
+        [HttpPost(ApiV1Routes.Token.Auth)]
         public async Task<IActionResult> Auth(TokenRequestDto tokenRequestDto)
         {
             switch (tokenRequestDto.GrantType)
