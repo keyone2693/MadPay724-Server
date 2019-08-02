@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using MadPay724.Data.Dtos.Common.Token;
 using MadPay724.Data.Dtos.Services;
+using MadPay724.Data.Dtos.Site.Panel.Notification;
 using MadPay724.Data.Dtos.Site.Panel.Photos;
 using MadPay724.Data.Dtos.Site.Panel.Roles;
 using MadPay724.Data.Dtos.Site.Panel.Users;
@@ -85,9 +86,49 @@ namespace MadPay724.Test.DataInput
            "Admin","Blog"
         };
 
+
+        public static readonly IEnumerable<Notification> notify_Success = new List<Notification>()
+        {
+            new Notification()
+            {
+                UserId = "0b83c5e3-404e-44ea-8013-122b691453fa",
+            EnterEmail = true,
+            EnterSms = false,
+            EnterTelegram = true,
+            ExitEmail = true,
+            ExitSms = false,
+            ExitTelegram = true,
+            LoginEmail = true,
+            LoginSms = false,
+            LoginTelegram = true,
+            TicketEmail = true,
+            TicketSms = false,
+            TicketTelegram = true
+            }
+
+        };
+
+        public static readonly NotificationForUpdateDto notifyForUpdate_Success = new NotificationForUpdateDto()
+        {
+            EnterEmail = true,
+            EnterSms = false,
+            EnterTelegram = true,
+            ExitEmail = true,
+            ExitSms = false,
+            ExitTelegram = true,
+            LoginEmail = true,
+            LoginSms = false,
+            LoginTelegram = true,
+            TicketEmail = true,
+            TicketSms = false,
+            TicketTelegram = true
+
+        };
+
+
         public static readonly RoleEditDto roleEditDto = new RoleEditDto
         {
-            RoleNames =new [] {"User"} 
+            RoleNames = new[] { "User" }
         };
 
         public static readonly Setting settingForUpload = new Setting()
@@ -164,11 +205,11 @@ namespace MadPay724.Test.DataInput
             Password = "password",
             IsRemember = true
         };
-       
+
 
         public static readonly TokenRequestDto useForLoginDto_Fail_ModelState = new TokenRequestDto()
         {
-            
+
             UserName = string.Empty,
             GrantType = string.Empty
         };

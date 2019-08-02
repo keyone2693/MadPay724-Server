@@ -80,10 +80,10 @@ namespace MadPay724.Presentation.Routes.V1
         {
             //api/v1/site/panel/{userId}/notifications
             //Put
-            public const string UpdateUserNotify = BaseSitePanel + "users/{userId}/notifications";
-            //api/v1/site/panel/{userId}/notifications/{id}
+            public const string UpdateUserNotify = BaseSitePanel + "/users/{userId}/notifications";
+            //api/v1/site/panel/notifications/{userId}
             //Get
-            public const string GetUserNotify = BaseSitePanel + "users/{userId}/notifications/{id}";
+            public const string GetUserNotify = BaseSitePanel + "/notifications/{userId}";
         }
         #endregion
     }

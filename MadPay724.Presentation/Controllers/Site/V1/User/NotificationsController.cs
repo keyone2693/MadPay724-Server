@@ -12,6 +12,7 @@ using MadPay724.Data.Models;
 using MadPay724.Presentation.Helpers.Filters;
 using MadPay724.Presentation.Routes.V1;
 using MadPay724.Repo.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -23,16 +24,17 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
     public class NotificationsController : ControllerBase
     {
         private readonly IUnitOfWork<MadpayDbContext> _db;
-        private readonly ILogger<PhotosController> _logger;
+        private readonly ILogger<NotificationsController> _logger;
         private readonly IMapper _mapper;
 
-        public NotificationsController(IUnitOfWork<MadpayDbContext> dbContext, ILogger<PhotosController> logger,
+        public NotificationsController(IUnitOfWork<MadpayDbContext> dbContext, ILogger<NotificationsController> logger,
             IMapper mapper)
         {
             _db = dbContext;
             _logger = logger;
             _mapper = mapper;
         }
+        [Authorize(Policy = "RequireUserRole")]
         [HttpPut(ApiV1Routes.Notification.UpdateUserNotify)]
         [ServiceFilter(typeof(UserCheckIdFilter))]
         public async Task<IActionResult> UpdateUserNotify(string userId, NotificationForUpdateDto notificationForUpdateDto)
@@ -75,11 +77,13 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
 
         }
 
-        [HttpPut(ApiV1Routes.Notification.GetUserNotify)]
+        [Authorize(Policy = "RequireUserRole")]
+        [HttpGet(ApiV1Routes.Notification.GetUserNotify)]
         [ServiceFilter(typeof(UserCheckIdFilter))]
-        public async Task<IActionResult> GetUserNotify(string id,string userId)
+        public async Task<IActionResult> GetUserNotify(string userId)
         {
-            var notifyFromRepo = await _db.NotificationRepository.GetByIdAsync(id);
+            var notifyFromRepo = (await _db.NotificationRepository
+                .GetManyAsync(p => p.UserId == userId, null, null)).SingleOrDefault();
 
             if (notifyFromRepo != null)
             {
@@ -89,10 +93,8 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
                 }
                 else
                 {
-                    _logger.LogError($"کاربر   {userId} قصد دسترسی به عکس شخص دیگری را دارد");
-
+                    _logger.LogError($"کاربر   {userId} قصد دسترسی به اطلاعات notify دیگری را دارد");
                     return BadRequest($"شما اجازه دسترسی به این اطلاعات را ندارید");
-
                 }
             }
             else
