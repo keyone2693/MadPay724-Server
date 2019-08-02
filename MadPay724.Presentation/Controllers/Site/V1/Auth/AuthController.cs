@@ -86,11 +86,28 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
                 PublicId = "0"
             };
 
+            var notifyToCreate = new Notification
+            {
+                UserId = userToCreate.Id,
+                EnterEmail = true,
+                EnterSms = false,
+                EnterTelegram = true,
+                ExitEmail = true,
+                ExitSms = false,
+                ExitTelegram = true,
+                LoginEmail = true,
+                LoginSms = false,
+                LoginTelegram = true,
+                TicketEmail = true,
+                TicketSms = false,
+                TicketTelegram = true
+            };
+
             var result = await _userManager.CreateAsync(userToCreate, userForRegisterDto.Password);
 
             if (result.Succeeded)
             {
-                await _authService.AddUserPhotos(photoToCreate);
+                await _authService.AddUserPreNeededAsync(photoToCreate, notifyToCreate);
 
                 var userForReturn = _mapper.Map<UserForDetailedDto>(userToCreate);
 

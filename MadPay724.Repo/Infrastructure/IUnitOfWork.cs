@@ -12,6 +12,7 @@ namespace MadPay724.Repo.Infrastructure
         ISettingRepository SettingRepository { get; }
         IRoleRepository RoleRepository { get; }
         ITokenRepository TokenRepository { get; }
+        INotificationRepository NotificationRepository { get; }
         bool Save();
         Task<bool> SaveAsync();
 

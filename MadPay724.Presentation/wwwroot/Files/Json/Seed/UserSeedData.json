@@ -26,6 +26,22 @@
         "ExpireDateMonth": 98,
         "ExpireDateYear": 4
       }
+    ],
+    "Notification": [
+      {
+        "EnterEmail": true,
+        "EnterSms": false,
+        "EnterTelegram": true,
+        "ExitEmail": true,
+        "ExitSms": false,
+        "ExitTelegram": true,
+        "TicketEmail": true,
+        "TicketSms": false,
+        "TicketTelegram": true,
+        "LoginEmail": true,
+        "LoginSms": false,
+        "LoginTelegram": true
+      }
     ]
   },
   {
@@ -54,6 +70,22 @@
         "CardNumber": 5986320015498532,
         "ExpireDateMonth": 98,
         "ExpireDateYear": 4
+      }
+    ],
+    "Notification": [
+      {
+        "EnterEmail": true,
+        "EnterSms": false,
+        "EnterTelegram": true,
+        "ExitEmail": true,
+        "ExitSms": false,
+        "ExitTelegram": true,
+        "TicketEmail": true,
+        "TicketSms": false,
+        "TicketTelegram": true,
+        "LoginEmail": true,
+        "LoginSms": false,
+        "LoginTelegram": true
       }
     ]
   },
@@ -113,6 +145,22 @@
         "ExpireDateMonth": 98,
         "ExpireDateYear": 4
       }
+    ],
+    "Notification": [
+      {
+        "EnterEmail": true,
+        "EnterSms": false,
+        "EnterTelegram": true,
+        "ExitEmail": true,
+        "ExitSms": false,
+        "ExitTelegram": true,
+        "TicketEmail": true,
+        "TicketSms": false,
+        "TicketTelegram": true,
+        "LoginEmail": true,
+        "LoginSms": false,
+        "LoginTelegram": true
+      }
     ]
   },
   {
@@ -141,6 +189,22 @@
         "CardNumber": 5986320015498532,
         "ExpireDateMonth": 98,
         "ExpireDateYear": 4
+      }
+    ],
+    "Notification": [
+      {
+        "EnterEmail": true,
+        "EnterSms": false,
+        "EnterTelegram": true,
+        "ExitEmail": true,
+        "ExitSms": false,
+        "ExitTelegram": true,
+        "TicketEmail": true,
+        "TicketSms": false,
+        "TicketTelegram": true,
+        "LoginEmail": true,
+        "LoginSms": false,
+        "LoginTelegram": true
       }
     ]
   },
@@ -171,6 +235,22 @@
         "ExpireDateMonth": 98,
         "ExpireDateYear": 4
       }
+    ],
+    "Notification": [
+      {
+        "EnterEmail": true,
+        "EnterSms": false,
+        "EnterTelegram": true,
+        "ExitEmail": true,
+        "ExitSms": false,
+        "ExitTelegram": true,
+        "TicketEmail": true,
+        "TicketSms": false,
+        "TicketTelegram": true,
+        "LoginEmail": true,
+        "LoginSms": false,
+        "LoginTelegram": true
+      }
     ]
   },
   {
@@ -199,6 +279,22 @@
         "CardNumber": 5986320015498532,
         "ExpireDateMonth": 98,
         "ExpireDateYear": 4
+      }
+    ],
+    "Notification": [
+      {
+        "EnterEmail": true,
+        "EnterSms": false,
+        "EnterTelegram": true,
+        "ExitEmail": true,
+        "ExitSms": false,
+        "ExitTelegram": true,
+        "TicketEmail": true,
+        "TicketSms": false,
+        "TicketTelegram": true,
+        "LoginEmail": true,
+        "LoginSms": false,
+        "LoginTelegram": true
       }
     ]
   },
@@ -229,6 +325,22 @@
         "ExpireDateMonth": 98,
         "ExpireDateYear": 4
       }
+    ],
+    "Notification": [
+      {
+        "EnterEmail": true,
+        "EnterSms": false,
+        "EnterTelegram": true,
+        "ExitEmail": true,
+        "ExitSms": false,
+        "ExitTelegram": true,
+        "TicketEmail": true,
+        "TicketSms": false,
+        "TicketTelegram": true,
+        "LoginEmail": true,
+        "LoginSms": false,
+        "LoginTelegram": true
+      }
     ]
   },
   {
@@ -258,6 +370,22 @@
         "ExpireDateMonth": 98,
         "ExpireDateYear": 4
       }
+    ],
+    "Notification": [
+      {
+        "EnterEmail": true,
+        "EnterSms": false,
+        "EnterTelegram": true,
+        "ExitEmail": true,
+        "ExitSms": false,
+        "ExitTelegram": true,
+        "TicketEmail": true,
+        "TicketSms": false,
+        "TicketTelegram": true,
+        "LoginEmail": true,
+        "LoginSms": false,
+        "LoginTelegram": true
+      }
     ]
   },
   {
@@ -286,6 +414,22 @@
         "CardNumber": 5986320015498532,
         "ExpireDateMonth": 98,
         "ExpireDateYear": 4
+      }
+    ],
+    "Notification": [
+      {
+        "EnterEmail": true,
+        "EnterSms": false,
+        "EnterTelegram": true,
+        "ExitEmail": true,
+        "ExitSms": false,
+        "ExitTelegram": true,
+        "TicketEmail": true,
+        "TicketSms": false,
+        "TicketTelegram": true,
+        "LoginEmail": true,
+        "LoginSms": false,
+        "LoginTelegram": true
       }
     ]
   }

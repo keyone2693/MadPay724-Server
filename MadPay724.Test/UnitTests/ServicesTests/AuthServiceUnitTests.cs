@@ -49,7 +49,7 @@ namespace MadPay724.Test.Tests.ServicesUnitTests
             _mockUtilities.Setup(x => x.VerifyPasswordHash(It.IsAny<string>(), It.IsAny<byte[]>(), It.IsAny<byte[]>()))
                 .Returns(true);
             //Act----------------------------------------------------------------------------------------------------------------------------------
-            var result = await _service.Login(It.IsAny<string>(), It.IsAny<string>());
+            var result = await _service.LoginAsync(It.IsAny<string>(), It.IsAny<string>());
 
             //Assert-------------------------------------------------------------------------------------------------------------------------------
             Assert.NotNull(result);
@@ -67,7 +67,7 @@ namespace MadPay724.Test.Tests.ServicesUnitTests
                     It.IsAny<string>())).ReturnsAsync(Enumerable.Empty<User>());
 
             //Act----------------------------------------------------------------------------------------------------------------------------------
-            var result = await _service.Login(It.IsAny<string>(), It.IsAny<string>());
+            var result = await _service.LoginAsync(It.IsAny<string>(), It.IsAny<string>());
 
             //Assert-------------------------------------------------------------------------------------------------------------------------------
             Assert.Null(result);
@@ -85,7 +85,7 @@ namespace MadPay724.Test.Tests.ServicesUnitTests
             _mockUtilities.Setup(x => x.VerifyPasswordHash(It.IsAny<string>(), It.IsAny<byte[]>(), It.IsAny<byte[]>()))
                 .Returns(false);
             //Act----------------------------------------------------------------------------------------------------------------------------------
-            var result = await _service.Login(It.IsAny<string>(), It.IsAny<string>());
+            var result = await _service.LoginAsync(It.IsAny<string>(), It.IsAny<string>());
 
             //Assert-------------------------------------------------------------------------------------------------------------------------------
             Assert.Null(result);
@@ -108,7 +108,7 @@ namespace MadPay724.Test.Tests.ServicesUnitTests
             _mockRepo.Setup(x => x.SaveAsync()).ReturnsAsync(true);
 
             //Act----------------------------------------------------------------------------------------------------------------------------------
-            var result = await _service.Register(new User(), It.IsAny<Photo>(), It.IsAny<string>());
+            var result = await _service.RegisterAsync(new User(), It.IsAny<Photo>(), It.IsAny<string>());
 
             //Assert-------------------------------------------------------------------------------------------------------------------------------
             Assert.NotNull(result);
@@ -129,7 +129,7 @@ namespace MadPay724.Test.Tests.ServicesUnitTests
             _mockRepo.Setup(x => x.SaveAsync()).ReturnsAsync(false);
 
             //Act----------------------------------------------------------------------------------------------------------------------------------
-            var result = await _service.Register(new User(), It.IsAny<Photo>(), It.IsAny<string>());
+            var result = await _service.RegisterAsync(new User(), It.IsAny<Photo>(), It.IsAny<string>());
 
             //Assert-------------------------------------------------------------------------------------------------------------------------------
             Assert.Null(result);

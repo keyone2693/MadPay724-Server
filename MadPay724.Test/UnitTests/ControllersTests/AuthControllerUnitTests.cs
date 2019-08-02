@@ -180,7 +180,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
             _mockUserManager.Setup(x => x.CreateAsync(It.IsAny<User>(),It.IsAny<string>()))
                 .ReturnsAsync(IdentityResult.Success);
 
-            _mockAuthService.Setup(x => x.AddUserPhotos(It.IsAny<Photo>()))
+            _mockAuthService.Setup(x => x.AddUserPreNeededAsync(It.IsAny<Photo>(),It.IsAny<Notification>()))
                 .ReturnsAsync(true);
 
 

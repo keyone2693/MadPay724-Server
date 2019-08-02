@@ -83,6 +83,19 @@ namespace MadPay724.Repo.Infrastructure
                 return tokenRepository;
             }
         }
+
+        private INotificationRepository notificationRepository;
+        public INotificationRepository NotificationRepository
+        {
+            get
+            {
+                if (notificationRepository == null)
+                {
+                    notificationRepository = new NotificationRepository(_db);
+                }
+                return notificationRepository;
+            }
+        }
         #endregion
 
 

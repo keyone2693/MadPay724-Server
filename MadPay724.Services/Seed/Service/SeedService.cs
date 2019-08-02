@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using System.Linq;
+using MadPay724.Services.Site.Admin.Auth.Interface;
 
 namespace MadPay724.Services.Seed.Service
 {
@@ -21,12 +22,15 @@ namespace MadPay724.Services.Seed.Service
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<Role> _roleManager;
         private readonly IUtilities _utilities;
+        private readonly IAuthService _authService;
 
-        public SeedService(UserManager<User> userManager, RoleManager<Role> roleManager, IUtilities utilities)
+        public SeedService(UserManager<User> userManager, RoleManager<Role> roleManager, IUtilities utilities,
+            IAuthService authService)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _utilities = utilities;
+            _authService = authService;
         }
 
 
@@ -72,6 +76,35 @@ namespace MadPay724.Services.Seed.Service
 
                 if (result.Succeeded)
                 {
+                    var photoToCreate = new Photo
+                    {
+                        UserId = adminUser.Id,
+                        Url = "https://res.cloudinary.com/keyone2693/image/upload/v1561717720/768px-Circle-icons-profile.svg.png",
+                        Description = "Profile Pic",
+                        Alt = "Profile Pic",
+                        IsMain = true,
+                        PublicId = "0"
+                    };
+
+                    var notifyToCreate = new Notification
+                    {
+                        UserId = adminUser.Id,
+                        EnterEmail = true,
+                        EnterSms = false,
+                        EnterTelegram = true,
+                        ExitEmail = true,
+                        ExitSms = false,
+                        ExitTelegram = true,
+                        LoginEmail = true,
+                        LoginSms = false,
+                        LoginTelegram = true,
+                        TicketEmail = true,
+                        TicketSms = false,
+                        TicketTelegram = true
+                    };
+
+                    _authService.AddUserPreNeededAsync(photoToCreate, notifyToCreate).Wait();
+
                     var admin = _userManager.FindByNameAsync("admin@madpay724.com").Result;
                     _userManager.AddToRolesAsync(admin, new[] { "Admin", "Blog", "Accountant" }).Wait();
                 }
@@ -88,6 +121,35 @@ namespace MadPay724.Services.Seed.Service
 
                 if (resultBlog.Succeeded)
                 {
+                    var photoToCreate = new Photo
+                    {
+                        UserId = blogUser.Id,
+                        Url = "https://res.cloudinary.com/keyone2693/image/upload/v1561717720/768px-Circle-icons-profile.svg.png",
+                        Description = "Profile Pic",
+                        Alt = "Profile Pic",
+                        IsMain = true,
+                        PublicId = "0"
+                    };
+
+                    var notifyToCreate = new Notification
+                    {
+                        UserId = blogUser.Id,
+                        EnterEmail = true,
+                        EnterSms = false,
+                        EnterTelegram = true,
+                        ExitEmail = true,
+                        ExitSms = false,
+                        ExitTelegram = true,
+                        LoginEmail = true,
+                        LoginSms = false,
+                        LoginTelegram = true,
+                        TicketEmail = true,
+                        TicketSms = false,
+                        TicketTelegram = true
+                    };
+
+                    _authService.AddUserPreNeededAsync(photoToCreate, notifyToCreate).Wait();
+
                     var blog = _userManager.FindByNameAsync("blog@madpay724.com").Result;
                     _userManager.AddToRoleAsync(blog, "Blog").Wait();
                 }
@@ -104,6 +166,34 @@ namespace MadPay724.Services.Seed.Service
 
                 if (resultAccountant.Succeeded)
                 {
+                    var photoToCreate = new Photo
+                    {
+                        UserId = accountantUser.Id,
+                        Url = "https://res.cloudinary.com/keyone2693/image/upload/v1561717720/768px-Circle-icons-profile.svg.png",
+                        Description = "Profile Pic",
+                        Alt = "Profile Pic",
+                        IsMain = true,
+                        PublicId = "0"
+                    };
+
+                    var notifyToCreate = new Notification
+                    {
+                        UserId = accountantUser.Id,
+                        EnterEmail = true,
+                        EnterSms = false,
+                        EnterTelegram = true,
+                        ExitEmail = true,
+                        ExitSms = false,
+                        ExitTelegram = true,
+                        LoginEmail = true,
+                        LoginSms = false,
+                        LoginTelegram = true,
+                        TicketEmail = true,
+                        TicketSms = false,
+                        TicketTelegram = true
+                    };
+
+                    _authService.AddUserPreNeededAsync(photoToCreate, notifyToCreate).Wait();
                     var accountant = _userManager.FindByNameAsync("accountant@madpay724.com").Result;
                     _userManager.AddToRoleAsync(accountant, "Accountant").Wait();
                 }

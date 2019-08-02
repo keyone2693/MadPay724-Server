@@ -21,9 +21,10 @@ namespace MadPay724.Services.Site.Admin.Auth.Service
             _db = dbContext;
             _utilities = utilities;
         }
-        public async Task<bool> AddUserPhotos(Photo photo)
+        public async Task<bool> AddUserPreNeededAsync(Photo photo,Notification notify)
         {
             await _db.PhotoRepository.InsertAsync(photo);
+            await _db.NotificationRepository.InsertAsync(notify);
             if (await _db.SaveAsync())
             {
                 return true;
@@ -33,7 +34,7 @@ namespace MadPay724.Services.Site.Admin.Auth.Service
                 return false;
             }
         }
-        public async Task<Data.Models.User> Login(string username, string password)
+        public async Task<Data.Models.User> LoginAsync(string username, string password)
         {
             var users = await _db.UserRepository.GetManyAsync(p => p.UserName == username, null, "Photos");
             var user = users.SingleOrDefault();
@@ -50,7 +51,7 @@ namespace MadPay724.Services.Site.Admin.Auth.Service
             return user;
         }
 
-        public async Task<Data.Models.User> Register(Data.Models.User user, Photo photo, string password)
+        public async Task<Data.Models.User> RegisterAsync(Data.Models.User user, Photo photo, string password)
         {
             byte[] passwordHash, passwordSalt;
             _utilities.CreatePasswordHash(password, out passwordHash, out passwordSalt);
