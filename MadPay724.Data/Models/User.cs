@@ -29,5 +29,6 @@ namespace MadPay724.Data.Models
         public ICollection<BankCard> BankCards { get; set; }
         public ICollection<UserRole> UserRoles { get; set; }
         public ICollection<Token> Token { get; set; }
+        public ICollection<Notification> Notification { get; set; }
     }
 }

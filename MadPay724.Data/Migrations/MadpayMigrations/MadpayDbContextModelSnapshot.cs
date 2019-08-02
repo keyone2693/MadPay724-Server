@@ -60,6 +60,48 @@ namespace MadPay724.Data.Migrations.MadpayMigrations
                     b.ToTable("BankCards");
                 });
 
+            modelBuilder.Entity("MadPay724.Data.Models.Notification", b =>
+                {
+                    b.Property<string>("Id");
+
+                    b.Property<DateTime>("DateCreated");
+
+                    b.Property<DateTime>("DateModified");
+
+                    b.Property<bool>("EnterEmail");
+
+                    b.Property<bool>("EnterSms");
+
+                    b.Property<bool>("EnterTelegram");
+
+                    b.Property<bool>("ExitEmail");
+
+                    b.Property<bool>("ExitSms");
+
+                    b.Property<bool>("ExitTelegram");
+
+                    b.Property<bool>("LoginEmail");
+
+                    b.Property<bool>("LoginSms");
+
+                    b.Property<bool>("LoginTelegram");
+
+                    b.Property<bool>("TicketEmail");
+
+                    b.Property<bool>("TicketSms");
+
+                    b.Property<bool>("TicketTelegram");
+
+                    b.Property<string>("UserId")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Notifications");
+                });
+
             modelBuilder.Entity("MadPay724.Data.Models.Photo", b =>
                 {
                     b.Property<string>("Id");
@@ -331,6 +373,15 @@ namespace MadPay724.Data.Migrations.MadpayMigrations
                 {
                     b.HasOne("MadPay724.Data.Models.User", "User")
                         .WithMany("BankCards")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("MadPay724.Data.Models.Notification", b =>
+                {
+                    b.HasOne("MadPay724.Data.Models.User", "User")
+                        .WithMany("Notification")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

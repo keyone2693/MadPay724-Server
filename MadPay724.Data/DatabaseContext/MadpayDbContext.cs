@@ -29,6 +29,7 @@ namespace MadPay724.Data.DatabaseContext
         public DbSet<BankCard> BankCards { get; set; }
         public DbSet<Setting> Settings { get; set; }
         public DbSet<Token> Tokens { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
