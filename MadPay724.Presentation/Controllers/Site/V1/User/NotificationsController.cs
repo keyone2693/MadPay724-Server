@@ -40,7 +40,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
         public async Task<IActionResult> UpdateUserNotify(string userId, NotificationForUpdateDto notificationForUpdateDto)
         {
             var notifyFromRepo = (await _db.NotificationRepository
-                .GetManyAsync(p => p.UserId == userId, null, null)).SingleOrDefault();
+                .GetManyAsync(p => p.UserId == userId, null, "")).SingleOrDefault();
 
             if (notifyFromRepo != null)
             {
@@ -83,8 +83,8 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
         public async Task<IActionResult> GetUserNotify(string userId)
         {
             var notifyFromRepo = (await _db.NotificationRepository
-                .GetManyAsync(p => p.UserId == userId, null, null)).SingleOrDefault();
-
+                .GetManyAsync(p => p.UserId == userId, null, "")).SingleOrDefault();
+            
             if (notifyFromRepo != null)
             {
                 if (notifyFromRepo.UserId == User.FindFirst(ClaimTypes.NameIdentifier).Value)
