@@ -44,25 +44,32 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
         public async Task<IActionResult> GetPhoto(string id)
         {
             var photoFromRepo = await _db.PhotoRepository.GetByIdAsync(id);
-
-            if (photoFromRepo.UserId == User.FindFirst(ClaimTypes.NameIdentifier).Value)
+            if (photoFromRepo != null)
             {
-                var photo = _mapper.Map<PhotoForReturnProfileDto>(photoFromRepo);
+                if (photoFromRepo.UserId == User.FindFirst(ClaimTypes.NameIdentifier).Value)
+                {
+                    var photo = _mapper.Map<PhotoForReturnProfileDto>(photoFromRepo);
 
-                return Ok(photo);
+                    return Ok(photo);
+                }
+                else
+                {
+                    _logger.LogError($"کاربر   {RouteData.Values["userId"]} قصد دسترسی به عکس شخص دیگری را دارد");
+
+                    return BadRequest(new ReturnMessage()
+                    {
+                        status = false,
+                        title = "خطا",
+                        message = $"شما اجازه دسترسی به عکس کاربر دیگری را ندارید"
+                    });
+
+                }
             }
             else
             {
-                _logger.LogError($"کاربر   {RouteData.Values["userId"]} قصد دسترسی به عکس شخص دیگری را دارد");
-
-                return BadRequest(new ReturnMessage()
-                {
-                    status = false,
-                    title = "خطا",
-                    message = $"شما اجازه دسترسی به عکس کاربر دیگری را ندارید"
-                });
-
+                return BadRequest("عکسی وجود ندارد");
             }
+
         }
 
         [Authorize(Policy = "AccessProfile")]

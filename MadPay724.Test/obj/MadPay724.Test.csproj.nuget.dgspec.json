@@ -276,7 +276,7 @@
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
-              "version": "[3.0.0-preview6-19319-03, )"
+              "version": "[3.0.0-preview7-19378-04, )"
             },
             "NSwag.AspNetCore": {
               "target": "Package",

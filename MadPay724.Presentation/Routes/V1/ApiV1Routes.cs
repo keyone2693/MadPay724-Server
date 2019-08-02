@@ -75,12 +75,15 @@ namespace MadPay724.Presentation.Routes.V1
         }
         #endregion
 
-        #region TokenRoutes
-        public static class Token
+        #region NotificationRoutes
+        public static class Notification
         {
-            //api/v1/site/panel/token/auth
-            //GET
-            public const string Auth = BaseSitePanel + "/tokn/auth";
+            //api/v1/site/panel/{userId}/notifications
+            //Put
+            public const string UpdateUserNotify = BaseSitePanel + "users/{userId}/notifications";
+            //api/v1/site/panel/{userId}/notifications/{id}
+            //Get
+            public const string GetUserNotify = BaseSitePanel + "users/{userId}/notifications/{id}";
         }
         #endregion
     }
