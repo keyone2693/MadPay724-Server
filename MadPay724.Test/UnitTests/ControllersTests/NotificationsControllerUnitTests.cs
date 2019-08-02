@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -13,11 +14,14 @@ using MadPay724.Presentation.Controllers.Site.V1.User;
 using MadPay724.Repo.Infrastructure;
 using MadPay724.Services.Site.Admin.User.Interface;
 using MadPay724.Test.DataInput;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Namotion.Reflection;
 using Xunit;
+using BadRequestObjectResult = Microsoft.AspNetCore.Mvc.BadRequestObjectResult;
 
 namespace MadPay724.Test.UnitTests.ControllersTests
 {
@@ -37,7 +41,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
             _controller = new NotificationsController(_mockRepo.Object, _mockLogger.Object, _mockMapper.Object);
         }
 
-        #region GetUserTests
+        #region UpdateUserNotifyTests
         [Fact]
         public async Task UpdateUserNotify_Success()
         {
@@ -149,6 +153,105 @@ namespace MadPay724.Test.UnitTests.ControllersTests
             Assert.Equal(expected, okResult.Value);
             Assert.Equal(400, okResult.StatusCode);
         }
+
+        #endregion
+
+        #region UpdateUserNotifyTests
+        [Fact]
+        public async Task GetUserNotify_Success_Himself()
+        {
+            //Arrange------------------------------------------------------------------------------------------------------------------------------
+            _mockRepo.Setup(x => x.NotificationRepository.GetManyAsync(
+                It.IsAny<Expression<Func<Notification, bool>>>(),
+                It.IsAny<Func<IQueryable<Notification>, IOrderedQueryable<Notification>>>(),
+                It.IsAny<string>()))
+                .ReturnsAsync(UnitTestsDataInput.notify_Success);
+
+
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.NameIdentifier,UnitTestsDataInput.userLogedInId),
+            };
+            var identity = new ClaimsIdentity(claims);
+            var claimsPrincipal = new ClaimsPrincipal(identity);
+            var mockContext = new Mock<HttpContext>();
+
+            mockContext.SetupGet(x => x.User).Returns(claimsPrincipal);
+
+            _controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = mockContext.Object
+            };
+
+
+            //Act----------------------------------------------------------------------------------------------------------------------------------
+            var result = await _controller.GetUserNotify(UnitTestsDataInput.userLogedInId);
+            var okResult = result as OkObjectResult;
+            //Assert-------------------------------------------------------------------------------------------------------------------------------
+            Assert.NotNull(okResult);
+            Assert.IsType<Notification>(okResult.Value);
+            Assert.Equal(200, okResult.StatusCode);
+        }
+
+        [Fact]
+        public async Task UetUserNotify_Fail_AnOtherOne()
+        {
+            //Arrange------------------------------------------------------------------------------------------------------------------------------
+            _mockRepo.Setup(x => x.NotificationRepository.GetManyAsync(
+                    It.IsAny<Expression<Func<Notification, bool>>>(),
+                    It.IsAny<Func<IQueryable<Notification>, IOrderedQueryable<Notification>>>(),
+                    It.IsAny<string>()))
+                .ReturnsAsync(UnitTestsDataInput.notify_Success);
+
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.NameIdentifier,UnitTestsDataInput.userAnOtherId),
+            };
+            var identity = new ClaimsIdentity(claims);
+            var claimsPrincipal = new ClaimsPrincipal(identity);
+            var mockContext = new Mock<HttpContext>();
+
+            mockContext.SetupGet(x => x.User).Returns(claimsPrincipal);
+
+            _controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = mockContext.Object
+            };
+
+            string expected = $"شما اجازه دسترسی به این اطلاعات را ندارید";
+
+            //Act----------------------------------------------------------------------------------------------------------------------------------
+            var result = await _controller.GetUserNotify(UnitTestsDataInput.userLogedInId);
+            var okResult = result as UnauthorizedObjectResult;
+            //Assert-------------------------------------------------------------------------------------------------------------------------------
+            Assert.NotNull(okResult);
+            Assert.IsType<string>(okResult.Value);
+            Assert.Equal(expected, okResult.Value);
+            Assert.Equal(401, okResult.StatusCode);
+        }
+
+        [Fact]
+        public async Task GetUserNotify_Fail_NoNotify()
+        {
+            //Arrange------------------------------------------------------------------------------------------------------------------------------
+            _mockRepo.Setup(x => x.NotificationRepository.GetManyAsync(
+                    It.IsAny<Expression<Func<Notification, bool>>>(),
+                    It.IsAny<Func<IQueryable<Notification>, IOrderedQueryable<Notification>>>(),
+                    It.IsAny<string>()))
+                .ReturnsAsync(new List<Notification>());
+
+            string expected = "اطلاعات اطلاع رسانی وجود ندارد";
+
+            //Act----------------------------------------------------------------------------------------------------------------------------------
+            var result = await _controller.GetUserNotify(UnitTestsDataInput.userLogedInId);
+            var okResult = result as BadRequestObjectResult;
+            //Assert-------------------------------------------------------------------------------------------------------------------------------
+            Assert.NotNull(okResult);
+            Assert.IsType<string>(okResult.Value);
+            Assert.Equal(expected, okResult.Value);
+            Assert.Equal(400, okResult.StatusCode);
+        }
+
 
         #endregion
     }

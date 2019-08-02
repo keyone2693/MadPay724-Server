@@ -94,7 +94,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
                 else
                 {
                     _logger.LogError($"کاربر   {userId} قصد دسترسی به اطلاعات notify دیگری را دارد");
-                    return BadRequest($"شما اجازه دسترسی به این اطلاعات را ندارید");
+                    return Unauthorized($"شما اجازه دسترسی به این اطلاعات را ندارید");
                 }
             }
             else
