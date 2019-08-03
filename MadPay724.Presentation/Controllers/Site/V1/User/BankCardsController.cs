@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MadPay724.Common.ErrorAndMessage;
 using MadPay724.Data.DatabaseContext;
+using MadPay724.Data.Dtos.Site.Panel.BankCards;
 using MadPay724.Data.Dtos.Site.Panel.Users;
 using MadPay724.Data.Models;
 using MadPay724.Presentation.Helpers.Filters;
@@ -36,29 +37,19 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
             _logger = logger;
         }
 
+
         [Authorize(Policy = "RequireUserRole")]
-        [HttpPost(ApiV1Routes.BankCard.AddBankCard)]
-        public async Task<IActionResult> AddBankCard(string id, BankCardForUpdateDto bankCardForUpdateDto)
+        [ServiceFilter(typeof(UserCheckIdFilter))]
+        [HttpGet(ApiV1Routes.BankCard.GetBankCards)]
+        public async Task<IActionResult> GetBankCards(string userId)
         {
-            var bankCardFromRepo = await _db.BankCardRepository.GetAsync(p => p.CardNumber == bankCardForUpdateDto.CardNumber);
-            if (bankCardFromRepo == null)
-            {
-                var cardForCreate = new BankCard()
-                {
-                    UserId = id
-                };
-                var bankCard = _mapper.Map(bankCardForUpdateDto, cardForCreate);
+            var bankCardsFromRepo = await _db.BankCardRepository
+                .GetManyAsync(p => p.UserId == userId, null, "");
 
-              await  _db.BankCardRepository.InsertAsync(bankCard);
 
-                if (await _db.SaveAsync())
-                    return CreatedAtRoute("GetBankCard",new { id = bankCard.Id, userId=id }, bankCard);
-                else
-                    return BadRequest("خطا در ثبت اطلاعات");
-            }
-            {
-                return BadRequest("این کارت قبلا ثبت شده است");
-            }
+            var bankcards = _mapper.Map<List<BankCardForUserDetailedDto>>(bankCardsFromRepo);
+
+            return Ok(bankcards);
         }
 
         [Authorize(Policy = "RequireUserRole")]
@@ -89,6 +80,30 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
 
         }
 
+        [Authorize(Policy = "RequireUserRole")]
+        [HttpPost(ApiV1Routes.BankCard.AddBankCard)]
+        public async Task<IActionResult> AddBankCard(string userId, BankCardForUpdateDto bankCardForUpdateDto)
+        {
+            var bankCardFromRepo = await _db.BankCardRepository.GetAsync(p => p.CardNumber == bankCardForUpdateDto.CardNumber);
+            if (bankCardFromRepo == null)
+            {
+                var cardForCreate = new BankCard()
+                {
+                    UserId = userId
+                };
+                var bankCard = _mapper.Map(bankCardForUpdateDto, cardForCreate);
+
+                await _db.BankCardRepository.InsertAsync(bankCard);
+
+                if (await _db.SaveAsync())
+                    return CreatedAtRoute("GetBankCard", new { id = bankCard.Id, userId = userId }, bankCard);
+                else
+                    return BadRequest("خطا در ثبت اطلاعات");
+            }
+            {
+                return BadRequest("این کارت قبلا ثبت شده است");
+            }
+        }
         [Authorize(Policy = "RequireUserRole")]
         [HttpPut(ApiV1Routes.BankCard.UpdateBankCard)]
         public async Task<IActionResult> UpdateBankCard(string id, BankCardForUpdateDto bankCardForUpdateDto)

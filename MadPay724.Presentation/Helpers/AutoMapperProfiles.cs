@@ -49,7 +49,9 @@ namespace MadPay724.Presentation.Helpers
 
             CreateMap<BankCardForUpdateDto, BankCard>();
 
+            CreateMap<List<BankCardForUserDetailedDto>, List<BankCard>>();
+
             //CreateMap<TokenResponseDto, LoginResponseDto>();
-        }
+       }
     }
 }

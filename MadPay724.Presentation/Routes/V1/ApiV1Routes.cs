@@ -95,6 +95,9 @@ namespace MadPay724.Presentation.Routes.V1
             public const string AddBankCard = BaseSitePanel + "/users/{userId}/bankcards";
             //api/v1/site/panel/users/{userId}/bankcards/{id}
             //GET
+            public const string GetBankCards = BaseSitePanel + "/users/{userId}/bankcards";
+            //api/v1/site/panel/users/{userId}/bankcards/{id}
+            //GET
             public const string GetBankCard = BaseSitePanel + "/users/{userId}/bankcards/{id}";
             //api/v1/site/panel/users/{userId}/bankcard/{id}
             //PUT

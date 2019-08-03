@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MadPay724.Common.ErrorAndMessage;
 using MadPay724.Data.DatabaseContext;
+using MadPay724.Data.Dtos.Site.Panel.BankCards;
 using MadPay724.Data.Dtos.Site.Panel.Notification;
 using MadPay724.Data.Dtos.Site.Panel.Photos;
 using MadPay724.Data.Dtos.Site.Panel.Users;
@@ -419,7 +420,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         #endregion
 
 
-        #region ChangeUserPhotoTests
+        #region AddBankCardTests
         [Fact]
         public async Task AddBankCard_Success()
         {
@@ -466,5 +467,30 @@ namespace MadPay724.Test.UnitTests.ControllersTests
 
         #endregion
 
+
+        #region GetBankCardsTests
+        [Fact]
+        public async Task GetBankCards_Success()
+        {
+            //Arrange------------------------------------------------------------------------------------------------------------------------------
+            _mockRepo.Setup(x => x.BankCardRepository.GetManyAsync(
+                 It.IsAny<Expression<Func<BankCard, bool>>>(),
+                 It.IsAny<Func<IQueryable<BankCard>, IOrderedQueryable<BankCard>>>(),
+                 It.IsAny<string>()))
+                .ReturnsAsync(new List<BankCard>());
+
+            _mockMapper.Setup(x => x.Map<List<BankCardForUserDetailedDto>>(It.IsAny<List<BankCard>>()))
+                .Returns(new List<BankCardForUserDetailedDto>());
+
+            //Act----------------------------------------------------------------------------------------------------------------------------------
+            var result = await _controller.GetBankCards(It.IsAny<string>());
+            var okResult = result as OkObjectResult;
+            //Assert-------------------------------------------------------------------------------------------------------------------------------
+            Assert.NotNull(okResult);
+            Assert.Equal(200, okResult.StatusCode);
+        }
+
+
+        #endregion
     }
 }
