@@ -52,7 +52,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
 
 
             var rout = new RouteData();
-            rout.Values.Add("userId", UnitTestsDataInput.Users.First().Id);
+            rout.Values.Add("userId", UnitTestsDataInput.userLogedInId);
 
             var claims = new[]
             {
@@ -80,7 +80,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
             Assert.Equal(200, okResult.StatusCode);
         }
         [Fact]
-        public async Task GetBankCard_Fail_SeeAnOtherOnePhoto()
+        public async Task GetBankCard_Fail_SeeAnOtherOneCard()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
             _mockRepo.Setup(x => x.BankCardRepository.GetByIdAsync(It.IsAny<string>()))
@@ -127,6 +127,287 @@ namespace MadPay724.Test.UnitTests.ControllersTests
 
             //Act----------------------------------------------------------------------------------------------------------------------------------
             var result = await _controller.GetBankCard(It.IsAny<string>(), It.IsAny<string>());
+            var okResult = result as BadRequestObjectResult;
+            //Assert-------------------------------------------------------------------------------------------------------------------------------
+            Assert.NotNull(okResult);
+            Assert.IsType<string>(okResult.Value);
+            Assert.Equal("کارتی وجود ندارد", okResult.Value);
+            Assert.Equal(400, okResult.StatusCode);
+        }
+
+        #endregion
+
+        #region UpdateBankCardTests
+        [Fact]
+        public async Task UpdateBankCard_Success()
+        {
+            //Arrange------------------------------------------------------------------------------------------------------------------------------
+            _mockRepo.Setup(x => x.BankCardRepository.GetByIdAsync(It.IsAny<string>()))
+                .ReturnsAsync(UnitTestsDataInput.Users.First().BankCards.First());
+
+            _mockRepo.Setup(x => x.BankCardRepository.Update(It.IsAny<BankCard>()));
+
+            _mockRepo.Setup(x => x.SaveAsync()).ReturnsAsync(true);
+
+            _mockMapper.Setup(x => x.Map(It.IsAny<BankCardForUpdateDto>(), It.IsAny<BankCard>()))
+                .Returns(new BankCard());
+
+            var rout = new RouteData();
+            rout.Values.Add("userId", UnitTestsDataInput.userLogedInId);
+
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.NameIdentifier,UnitTestsDataInput.userLogedInId),
+            };
+            var identity = new ClaimsIdentity(claims);
+            var claimsPrincipal = new ClaimsPrincipal(identity);
+            var mockContext = new Mock<HttpContext>();
+
+            mockContext.SetupGet(x => x.User).Returns(claimsPrincipal);
+
+            _controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = mockContext.Object,
+                RouteData = rout
+            };
+
+
+            //Act----------------------------------------------------------------------------------------------------------------------------------
+            var result = await _controller.UpdateBankCard(It.IsAny<string>(), It.IsAny<BankCardForUpdateDto>());
+            var okResult = result as NoContentResult;
+            //Assert-------------------------------------------------------------------------------------------------------------------------------
+            Assert.Equal(204, okResult.StatusCode);
+        }
+        [Fact]
+        public async Task UpdateBankCard_Fail_DataBaseError()
+        {
+            //Arrange------------------------------------------------------------------------------------------------------------------------------
+            _mockRepo.Setup(x => x.BankCardRepository.GetByIdAsync(It.IsAny<string>()))
+                .ReturnsAsync(UnitTestsDataInput.Users.First().BankCards.First());
+
+            _mockRepo.Setup(x => x.BankCardRepository.Update(It.IsAny<BankCard>()));
+
+            _mockRepo.Setup(x => x.SaveAsync()).ReturnsAsync(false);
+
+            _mockMapper.Setup(x => x.Map(It.IsAny<BankCardForUpdateDto>(), It.IsAny<BankCard>()))
+                .Returns(new BankCard());
+
+            var rout = new RouteData();
+            rout.Values.Add("userId", UnitTestsDataInput.userLogedInId);
+
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.NameIdentifier,UnitTestsDataInput.userLogedInId),
+            };
+            var identity = new ClaimsIdentity(claims);
+            var claimsPrincipal = new ClaimsPrincipal(identity);
+            var mockContext = new Mock<HttpContext>();
+
+            mockContext.SetupGet(x => x.User).Returns(claimsPrincipal);
+
+            _controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = mockContext.Object,
+                RouteData = rout
+            };
+
+
+            //Act----------------------------------------------------------------------------------------------------------------------------------
+            var result = await _controller.UpdateBankCard(It.IsAny<string>(), It.IsAny<BankCardForUpdateDto>());
+            var okResult = result as BadRequestObjectResult;
+            //Assert-------------------------------------------------------------------------------------------------------------------------------
+            Assert.NotNull(okResult);
+            Assert.IsType<string>(okResult.Value);
+
+            Assert.Equal("خطا در ثبت اطلاعات", okResult.Value);
+            Assert.Equal(400, okResult.StatusCode);
+        }
+        [Fact]
+        public async Task UpdateBankCard_Fail_SeeAnOtherOneCard()
+        {
+            //Arrange------------------------------------------------------------------------------------------------------------------------------
+            _mockRepo.Setup(x => x.BankCardRepository.GetByIdAsync(It.IsAny<string>()))
+                .ReturnsAsync(UnitTestsDataInput.Users.First().BankCards.First());
+
+
+            var rout = new RouteData();
+            rout.Values.Add("userId", UnitTestsDataInput.userLogedInId);
+
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.NameIdentifier,UnitTestsDataInput.userAnOtherId),
+            };
+            var identity = new ClaimsIdentity(claims);
+            var claimsPrincipal = new ClaimsPrincipal(identity);
+            var mockContext = new Mock<HttpContext>();
+
+            mockContext.SetupGet(x => x.User).Returns(claimsPrincipal);
+
+            _controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = mockContext.Object,
+                RouteData = rout
+            };
+
+            //Act----------------------------------------------------------------------------------------------------------------------------------
+            var result = await _controller.UpdateBankCard(It.IsAny<string>(), It.IsAny<BankCardForUpdateDto>());
+            var okResult = result as BadRequestObjectResult;
+            //Assert-------------------------------------------------------------------------------------------------------------------------------
+            Assert.NotNull(okResult);
+            Assert.IsType<string>(okResult.Value);
+
+            Assert.Equal("شما اجازه اپدیت کارت کاربر دیگری را ندارید", okResult.Value);
+            Assert.Equal(400, okResult.StatusCode);
+        }
+
+        [Fact]
+        public async Task UpdateBankCard_Fail_NullBankCard()
+        {
+            //Arrange------------------------------------------------------------------------------------------------------------------------------
+            _mockRepo.Setup(x => x.BankCardRepository.GetByIdAsync(It.IsAny<string>()))
+                .ReturnsAsync(It.IsAny<BankCard>());
+
+
+            //Act----------------------------------------------------------------------------------------------------------------------------------
+            var result = await _controller.UpdateBankCard(It.IsAny<string>(), It.IsAny<BankCardForUpdateDto>());
+            var okResult = result as BadRequestObjectResult;
+            //Assert-------------------------------------------------------------------------------------------------------------------------------
+            Assert.NotNull(okResult);
+            Assert.IsType<string>(okResult.Value);
+            Assert.Equal("کارتی وجود ندارد", okResult.Value);
+            Assert.Equal(400, okResult.StatusCode);
+        }
+
+        #endregion
+
+        #region UpdateBankCardTests
+        [Fact]
+        public async Task DeleteBankCard_Success()
+        {
+            //Arrange------------------------------------------------------------------------------------------------------------------------------
+            _mockRepo.Setup(x => x.BankCardRepository.GetByIdAsync(It.IsAny<string>()))
+                .ReturnsAsync(UnitTestsDataInput.Users.First().BankCards.First());
+
+            _mockRepo.Setup(x => x.BankCardRepository.Delete(It.IsAny<BankCard>()));
+
+            _mockRepo.Setup(x => x.SaveAsync()).ReturnsAsync(true);
+
+            var rout = new RouteData();
+            rout.Values.Add("userId", UnitTestsDataInput.userLogedInId);
+
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.NameIdentifier,UnitTestsDataInput.userLogedInId),
+            };
+            var identity = new ClaimsIdentity(claims);
+            var claimsPrincipal = new ClaimsPrincipal(identity);
+            var mockContext = new Mock<HttpContext>();
+
+            mockContext.SetupGet(x => x.User).Returns(claimsPrincipal);
+
+            _controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = mockContext.Object,
+                RouteData = rout
+            };
+
+
+            //Act----------------------------------------------------------------------------------------------------------------------------------
+            var result = await _controller.DeleteBankCard(It.IsAny<string>());
+            var okResult = result as NoContentResult;
+            //Assert-------------------------------------------------------------------------------------------------------------------------------
+            Assert.Equal(204, okResult.StatusCode);
+        }
+        [Fact]
+        public async Task DeleteBankCard_Fail_DataBaseError()
+        {
+            //Arrange------------------------------------------------------------------------------------------------------------------------------
+            _mockRepo.Setup(x => x.BankCardRepository.GetByIdAsync(It.IsAny<string>()))
+                .ReturnsAsync(UnitTestsDataInput.Users.First().BankCards.First());
+
+            _mockRepo.Setup(x => x.BankCardRepository.Update(It.IsAny<BankCard>()));
+
+            _mockRepo.Setup(x => x.SaveAsync()).ReturnsAsync(false);
+
+
+            var rout = new RouteData();
+            rout.Values.Add("userId", UnitTestsDataInput.userLogedInId);
+
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.NameIdentifier,UnitTestsDataInput.userLogedInId),
+            };
+            var identity = new ClaimsIdentity(claims);
+            var claimsPrincipal = new ClaimsPrincipal(identity);
+            var mockContext = new Mock<HttpContext>();
+
+            mockContext.SetupGet(x => x.User).Returns(claimsPrincipal);
+
+            _controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = mockContext.Object,
+                RouteData = rout
+            };
+
+
+            //Act----------------------------------------------------------------------------------------------------------------------------------
+            var result = await _controller.DeleteBankCard(It.IsAny<string>());
+            var okResult = result as BadRequestObjectResult;
+            //Assert-------------------------------------------------------------------------------------------------------------------------------
+            Assert.NotNull(okResult);
+            Assert.IsType<string>(okResult.Value);
+
+            Assert.Equal("خطا در حذف اطلاعات", okResult.Value);
+            Assert.Equal(400, okResult.StatusCode);
+        }
+        [Fact]
+        public async Task DeleteBankCard_Fail_SeeAnOtherOneCard()
+        {
+            //Arrange------------------------------------------------------------------------------------------------------------------------------
+            _mockRepo.Setup(x => x.BankCardRepository.GetByIdAsync(It.IsAny<string>()))
+                .ReturnsAsync(UnitTestsDataInput.Users.First().BankCards.First());
+
+
+            var rout = new RouteData();
+            rout.Values.Add("userId", UnitTestsDataInput.userLogedInId);
+
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.NameIdentifier,UnitTestsDataInput.userAnOtherId),
+            };
+            var identity = new ClaimsIdentity(claims);
+            var claimsPrincipal = new ClaimsPrincipal(identity);
+            var mockContext = new Mock<HttpContext>();
+
+            mockContext.SetupGet(x => x.User).Returns(claimsPrincipal);
+
+            _controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = mockContext.Object,
+                RouteData = rout
+            };
+
+            //Act----------------------------------------------------------------------------------------------------------------------------------
+            var result = await _controller.DeleteBankCard(It.IsAny<string>());
+            var okResult = result as BadRequestObjectResult;
+            //Assert-------------------------------------------------------------------------------------------------------------------------------
+            Assert.NotNull(okResult);
+            Assert.IsType<string>(okResult.Value);
+
+            Assert.Equal("شما اجازه حذف کارت کاربر دیگری را ندارید", okResult.Value);
+            Assert.Equal(400, okResult.StatusCode);
+        }
+
+        [Fact]
+        public async Task DeleteBankCard_Fail_NullBankCard()
+        {
+            //Arrange------------------------------------------------------------------------------------------------------------------------------
+            _mockRepo.Setup(x => x.BankCardRepository.GetByIdAsync(It.IsAny<string>()))
+                .ReturnsAsync(It.IsAny<BankCard>());
+
+
+            //Act----------------------------------------------------------------------------------------------------------------------------------
+            var result = await _controller.DeleteBankCard(It.IsAny<string>());
             var okResult = result as BadRequestObjectResult;
             //Assert-------------------------------------------------------------------------------------------------------------------------------
             Assert.NotNull(okResult);
