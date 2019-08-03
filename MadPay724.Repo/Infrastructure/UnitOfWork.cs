@@ -96,6 +96,19 @@ namespace MadPay724.Repo.Infrastructure
                 return notificationRepository;
             }
         }
+
+        private IBankCardRepository bankCardRepository;
+        public IBankCardRepository BankCardRepository
+        {
+            get
+            {
+                if (bankCardRepository == null)
+                {
+                    bankCardRepository = new BankCardRepository(_db);
+                }
+                return bankCardRepository;
+            }
+        }
         #endregion
 
 

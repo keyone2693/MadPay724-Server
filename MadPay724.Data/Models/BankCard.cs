@@ -14,6 +14,8 @@ namespace MadPay724.Data.Models
             DateCreated = DateTime.Now;
             DateModified = DateTime.Now;
         }
+        [Required]
+        public bool Approve { get; set; }
 
         [Required]
         [StringLength(50, MinimumLength = 0)]
@@ -23,8 +25,9 @@ namespace MadPay724.Data.Models
         [StringLength(100, MinimumLength = 0)]
         public string OwnerName { get; set; }
 
-        [StringLength(50, MinimumLength = 0)]
         public string Shaba { get; set; }
+
+        public string HesabNumber { get; set; }
 
         [Required]
         [StringLength(20, MinimumLength = 0)]

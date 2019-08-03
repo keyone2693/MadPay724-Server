@@ -19,6 +19,7 @@
     ],
     "BankCards": [
       {
+        "Approve": false,
         "BankName": "Anastasia}",
         "OwnerName": "Matthews Landry",
         "Shaba": "IR 0236598000215632014598002",
@@ -64,6 +65,7 @@
     ],
     "BankCards": [
       {
+        "Approve": false,
         "BankName": "Newman}",
         "OwnerName": "Hays Mathis",
         "Shaba": "IR 0236598000215632014598002",
@@ -109,6 +111,7 @@
     ],
     "BankCards": [
       {
+        "Approve": false,
         "BankName": "Madelyn}",
         "OwnerName": "Edwards Ayers",
         "Shaba": "IR 0236598000215632014598002",
@@ -138,6 +141,7 @@
     ],
     "BankCards": [
       {
+        "Approve": false,
         "BankName": "Boyer}",
         "OwnerName": "Wiley Thomas",
         "Shaba": "IR 0236598000215632014598002",
@@ -183,6 +187,7 @@
     ],
     "BankCards": [
       {
+        "Approve": false,
         "BankName": "Jane}",
         "OwnerName": "Love Ochoa",
         "Shaba": "IR 0236598000215632014598002",
@@ -228,6 +233,7 @@
     ],
     "BankCards": [
       {
+        "Approve": false,
         "BankName": "Cox}",
         "OwnerName": "Ofelia Valenzuela",
         "Shaba": "IR 0236598000215632014598002",
@@ -273,6 +279,7 @@
     ],
     "BankCards": [
       {
+        "Approve": false,
         "BankName": "Phillips}",
         "OwnerName": "Lina Cummings",
         "Shaba": "IR 0236598000215632014598002",
@@ -318,6 +325,7 @@
     ],
     "BankCards": [
       {
+        "Approve": false,
         "BankName": "Mcintyre}",
         "OwnerName": "Olive Porter",
         "Shaba": "IR 0236598000215632014598002",
@@ -363,6 +371,7 @@
     ],
     "BankCards": [
       {
+        "Approve": false,
         "BankName": "Latasha}",
         "OwnerName": "Kathy Brown",
         "Shaba": "IR 0236598000215632014598002",
@@ -408,6 +417,7 @@
     ],
     "BankCards": [
       {
+        "Approve": false,
         "BankName": "Wilma}",
         "OwnerName": "Meagan Burris",
         "Shaba": "IR 0236598000215632014598002",

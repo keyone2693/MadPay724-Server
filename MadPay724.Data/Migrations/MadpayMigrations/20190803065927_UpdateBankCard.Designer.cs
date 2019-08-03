@@ -4,14 +4,16 @@ using MadPay724.Data.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MadPay724.Data.Migrations.MadpayMigrations
 {
     [DbContext(typeof(MadpayDbContext))]
-    partial class MadpayDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190803065927_UpdateBankCard")]
+    partial class UpdateBankCard
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,13 +47,12 @@ namespace MadPay724.Data.Migrations.MadpayMigrations
                         .IsRequired()
                         .HasMaxLength(2);
 
-                    b.Property<string>("HesabNumber");
-
                     b.Property<string>("OwnerName")
                         .IsRequired()
                         .HasMaxLength(100);
 
-                    b.Property<string>("Shaba");
+                    b.Property<string>("Shaba")
+                        .HasMaxLength(50);
 
                     b.Property<string>("UserId")
                         .IsRequired();

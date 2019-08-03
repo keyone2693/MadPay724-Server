@@ -86,5 +86,21 @@ namespace MadPay724.Presentation.Routes.V1
             public const string GetUserNotify = BaseSitePanel + "/notifications/{userId}";
         }
         #endregion
+
+        #region BankCardRoutes
+        public static class BankCard
+        {
+            //api/v1/site/panel/users/{userId}/bankcards/{id}
+            //GET
+            public const string GetBankCard = BaseSitePanel + "/users/{userId}/bankcards/{id}";
+            //api/v1/site/panel/users/{userId}/bankcard/{id}
+            //PUT
+            public const string UpdateBankCard = BaseSitePanel + "/bankcards/{id}";
+            //api/v1/site/panel/users/{userId}/bankcard/{id}
+            //DELETE
+            public const string DeleteBankCard = BaseSitePanel + "/bankcards/{id}";
+
+        }
+        #endregion
     }
 }
