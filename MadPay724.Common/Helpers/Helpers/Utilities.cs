@@ -42,8 +42,9 @@ namespace MadPay724.Common.Helpers.Helpers
 
         public async Task<TokenResponseDto> GenerateNewTokenAsync(TokenRequestDto tokenRequestDto)
         {
-            var user = await _userManager.FindByNameAsync(tokenRequestDto.UserName);
-
+            var user = await _db.Users.Include(p => p.Photos)
+                .SingleOrDefaultAsync(p => p.UserName == tokenRequestDto.UserName);
+                
             if (user != null && await _userManager.CheckPasswordAsync(user, tokenRequestDto.Password))
             {
                 //create new token
