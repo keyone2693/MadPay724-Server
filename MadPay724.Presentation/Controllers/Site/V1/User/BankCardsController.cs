@@ -26,17 +26,13 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
     {
         private readonly IUnitOfWork<MadpayDbContext> _db;
         private readonly IMapper _mapper;
-        private readonly IUploadService _uploadService;
-        private readonly IWebHostEnvironment _env;
         private readonly ILogger<BankCardsController> _logger;
 
-        public BankCardsController(IUnitOfWork<MadpayDbContext> dbContext, IMapper mapper, IUploadService uploadService,
-            IWebHostEnvironment env, ILogger<BankCardsController> logger)
+        public BankCardsController(IUnitOfWork<MadpayDbContext> dbContext, IMapper mapper,
+            ILogger<BankCardsController> logger)
         {
-            _env = env;
             _db = dbContext;
             _mapper = mapper;
-            _uploadService = uploadService;
             _logger = logger;
         }
 
@@ -45,12 +41,12 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
         [HttpGet(ApiV1Routes.BankCard.GetBankCard, Name = "GetBankCard")]
         public async Task<IActionResult> GetBankCard(string id, string userId)
         {
-            var BankCardFromRepo = await _db.BankCardRepository.GetByIdAsync(id);
-            if (BankCardFromRepo != null)
+            var bankCardFromRepo = await _db.BankCardRepository.GetByIdAsync(id);
+            if (bankCardFromRepo != null)
             {
-                if (BankCardFromRepo.UserId == User.FindFirst(ClaimTypes.NameIdentifier).Value)
+                if (bankCardFromRepo.UserId == User.FindFirst(ClaimTypes.NameIdentifier).Value)
                 {
-                    var bankCard = _mapper.Map<BankCardForReturnDto>(BankCardFromRepo);
+                    var bankCard = _mapper.Map<BankCardForReturnDto>(bankCardFromRepo);
 
                     return Ok(bankCard);
                 }
@@ -70,15 +66,60 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
 
         [Authorize(Policy = "RequireUserRole")]
         [HttpPut(ApiV1Routes.BankCard.UpdateBankCard)]
-        public async Task<IActionResult> UpdateBankCard(string id)
+        public async Task<IActionResult> UpdateBankCard(string id, BankCardForUpdateDto bankCardForUpdateDto)
         {
-          
+            var bankCardFromRepo = await _db.BankCardRepository.GetByIdAsync(id);
+            if (bankCardFromRepo != null)
+            {
+                if (bankCardFromRepo.UserId == User.FindFirst(ClaimTypes.NameIdentifier).Value)
+                {
+                    var bankCard = _mapper.Map(bankCardForUpdateDto, bankCardFromRepo);
+
+                    _db.BankCardRepository.Update(bankCard);
+
+                    if (await _db.SaveAsync())
+                        return NoContent();
+                    else
+                        return BadRequest("خطا در ثبت اطلاعات");
+                }
+                else
+                {
+                    _logger.LogError($"کاربر   {RouteData.Values["userId"]} قصد اپدیت به کارت دیگری را دارد");
+
+                    return BadRequest("شما اجازه اپدیت کارت کاربر دیگری را ندارید");
+                }
+            }
+            {
+                return BadRequest("کارتی وجود ندارد");
+            }
         }
         [Authorize(Policy = "RequireUserRole")]
         [HttpDelete(ApiV1Routes.BankCard.DeleteBankCard)]
         public async Task<IActionResult> DeleteBankCard(string id)
         {
+            var bankCardFromRepo = await _db.BankCardRepository.GetByIdAsync(id);
+            if (bankCardFromRepo != null)
+            {
+                if (bankCardFromRepo.UserId == User.FindFirst(ClaimTypes.NameIdentifier).Value)
+                {
+                    _db.BankCardRepository.Delete(bankCardFromRepo);
 
+                    if (await _db.SaveAsync())
+                        return NoContent();
+                    else
+                        return BadRequest("خطا در حذف اطلاعات");
+                }
+                else
+                {
+                    _logger.LogError($"کاربر   {RouteData.Values["userId"]} قصد حذف به کارت دیگری را دارد");
+
+                    return BadRequest("شما اجازه حذف کارت کاربر دیگری را ندارید");
+                }
+            }
+            else
+            {
+                return BadRequest("کارتی وجود ندارد");
+            }
         }
     }
 }

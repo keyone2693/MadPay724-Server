@@ -47,6 +47,8 @@ namespace MadPay724.Presentation.Helpers
 
             CreateMap<NotificationForUpdateDto, Notification>();
 
+            CreateMap<BankCardForUpdateDto, BankCard>();
+
             //CreateMap<TokenResponseDto, LoginResponseDto>();
         }
     }

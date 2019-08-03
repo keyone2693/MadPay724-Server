@@ -63,6 +63,25 @@ namespace MadPay724.Test.DataInput
                         IsMain = true,
                         Description = "qq",
                     }
+                },
+                BankCards = new List<BankCard>()
+                {
+                    new BankCard()
+                    {
+                        Id = "0d47394e-672f-4d477-898c-bf32e2af",
+                        UserId = "0b83c5e3-404e-44ea-8013-122b691453fa",
+                        Approve = false,
+                        BankName= "",
+                        CardNumber= "",
+                        DateCreated = DateTime.Now,
+                        DateModified = DateTime.Now,
+                       ExpireDateMonth = "",
+                       ExpireDateYear= "",
+                        HesabNumber= "",
+                       OwnerName = "",
+                        Shaba = "",
+
+                    }
                 }
             }
         };
