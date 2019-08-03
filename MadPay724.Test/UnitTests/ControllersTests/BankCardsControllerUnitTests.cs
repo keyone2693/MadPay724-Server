@@ -418,5 +418,53 @@ namespace MadPay724.Test.UnitTests.ControllersTests
 
         #endregion
 
+
+        #region ChangeUserPhotoTests
+        [Fact]
+        public async Task AddBankCard_Success()
+        {
+            //Arrange------------------------------------------------------------------------------------------------------------------------------
+            _mockRepo.Setup(x => x.BankCardRepository.GetAsync(It.IsAny<Expression<Func<BankCard, bool>>>()))
+                .ReturnsAsync(It.IsAny<BankCard>());
+
+            _mockRepo.Setup(x => x.BankCardRepository.InsertAsync(It.IsAny<BankCard>()));
+
+            _mockRepo.Setup(x => x.SaveAsync()).ReturnsAsync(true);
+
+
+            _mockMapper.Setup(x => x.Map(It.IsAny<BankCardForUpdateDto>(), It.IsAny<BankCard>()))
+                .Returns(new BankCard());
+
+
+
+            //Act----------------------------------------------------------------------------------------------------------------------------------
+            var result = await _controller.AddBankCard(It.IsAny<string>(),
+                UnitTestsDataInput.bankCardForUpdateDto);
+            var okResult = result as CreatedAtRouteResult;
+            //Assert-------------------------------------------------------------------------------------------------------------------------------
+            Assert.NotNull(okResult);
+            Assert.IsType<BankCard>(okResult.Value);
+            Assert.Equal(201, okResult.StatusCode);
+        }
+        [Fact]
+        public async Task AddBankCard_Fail()
+        {
+            //Arrange------------------------------------------------------------------------------------------------------------------------------
+            //Arrange------------------------------------------------------------------------------------------------------------------------------
+            _mockRepo.Setup(x => x.BankCardRepository.GetAsync(It.IsAny<Expression<Func<BankCard, bool>>>()))
+                .ReturnsAsync(new BankCard());
+            //Act----------------------------------------------------------------------------------------------------------------------------------
+            var result = await _controller.AddBankCard(It.IsAny<string>(),
+                UnitTestsDataInput.bankCardForUpdateDto);
+            var okResult = result as BadRequestObjectResult;
+            //Assert-------------------------------------------------------------------------------------------------------------------------------
+            Assert.NotNull(okResult);
+            Assert.IsType<string>(okResult.Value);
+            Assert.Equal("این کارت قبلا ثبت شده است", okResult.Value.ToString());
+            Assert.Equal(400, okResult.StatusCode);
+        }
+
+        #endregion
+
     }
 }

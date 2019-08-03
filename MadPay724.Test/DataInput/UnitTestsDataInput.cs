@@ -85,7 +85,17 @@ namespace MadPay724.Test.DataInput
                 }
             }
         };
-
+        public static readonly BankCardForUpdateDto bankCardForUpdateDto = new BankCardForUpdateDto()
+        {
+            Approve = false,
+            BankName = "",
+            CardNumber = "",
+            ExpireDateMonth = "",
+            ExpireDateYear = "",
+            HesabNumber = "",
+            OwnerName = "",
+            Shaba = "",
+        };
         public static readonly IEnumerable<Role> Roles = new List<Role>()
         {
             new Role()

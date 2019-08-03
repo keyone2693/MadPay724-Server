@@ -37,6 +37,31 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
         }
 
         [Authorize(Policy = "RequireUserRole")]
+        [HttpPost(ApiV1Routes.BankCard.AddBankCard)]
+        public async Task<IActionResult> AddBankCard(string id, BankCardForUpdateDto bankCardForUpdateDto)
+        {
+            var bankCardFromRepo = await _db.BankCardRepository.GetAsync(p => p.CardNumber == bankCardForUpdateDto.CardNumber);
+            if (bankCardFromRepo == null)
+            {
+                var cardForCreate = new BankCard()
+                {
+                    UserId = id
+                };
+                var bankCard = _mapper.Map(bankCardForUpdateDto, cardForCreate);
+
+              await  _db.BankCardRepository.InsertAsync(bankCard);
+
+                if (await _db.SaveAsync())
+                    return CreatedAtRoute("GetBankCard",new { id = bankCard.Id, userId=id }, bankCard);
+                else
+                    return BadRequest("خطا در ثبت اطلاعات");
+            }
+            {
+                return BadRequest("این کارت قبلا ثبت شده است");
+            }
+        }
+
+        [Authorize(Policy = "RequireUserRole")]
         [ServiceFilter(typeof(UserCheckIdFilter))]
         [HttpGet(ApiV1Routes.BankCard.GetBankCard, Name = "GetBankCard")]
         public async Task<IActionResult> GetBankCard(string id, string userId)

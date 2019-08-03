@@ -90,6 +90,9 @@ namespace MadPay724.Presentation.Routes.V1
         #region BankCardRoutes
         public static class BankCard
         {
+            //api/v1/site/panel/users/{userId}/bankcards
+            //POST
+            public const string AddBankCard = BaseSitePanel + "/users/{userId}/bankcards";
             //api/v1/site/panel/users/{userId}/bankcards/{id}
             //GET
             public const string GetBankCard = BaseSitePanel + "/users/{userId}/bankcards/{id}";
