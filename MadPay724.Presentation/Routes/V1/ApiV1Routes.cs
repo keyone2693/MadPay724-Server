@@ -99,7 +99,7 @@ namespace MadPay724.Presentation.Routes.V1
             //api/v1/site/panel/users/{userId}/bankcards/{id}
             //GET
             public const string GetBankCard = BaseSitePanel + "/users/{userId}/bankcards/{id}";
-            //api/v1/site/panel/users/{userId}/bankcard/{id}
+            //api/v1/site/panel/bankcards/{id}
             //PUT
             public const string UpdateBankCard = BaseSitePanel + "/bankcards/{id}";
             //api/v1/site/panel/users/{userId}/bankcard/{id}

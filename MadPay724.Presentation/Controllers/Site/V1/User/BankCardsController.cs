@@ -44,7 +44,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
         public async Task<IActionResult> GetBankCards(string userId)
         {
             var bankCardsFromRepo = await _db.BankCardRepository
-                .GetManyAsync(p => p.UserId == userId, null, "");
+                .GetManyAsync(p => p.UserId == userId, s=>s.OrderByDescending(x=>x.Approve) , "");
 
 
             var bankcards = _mapper.Map<List<BankCardForUserDetailedDto>>(bankCardsFromRepo);
@@ -119,7 +119,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
                 if (bankCardFromRepo.UserId == User.FindFirst(ClaimTypes.NameIdentifier).Value)
                 {
                     var bankCard = _mapper.Map(bankCardForUpdateDto, bankCardFromRepo);
-
+                    bankCard.Approve = false;
                     _db.BankCardRepository.Update(bankCard);
 
                     if (await _db.SaveAsync())
