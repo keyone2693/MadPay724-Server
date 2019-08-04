@@ -37,7 +37,7 @@ namespace MadPay724.Data.Models
         [StringLength(2, MinimumLength = 2)]
         public string ExpireDateMonth { get; set; }
         [Required]
-        [StringLength(2,MinimumLength = 2)]
+        [StringLength(4,MinimumLength = 4)]
         public string ExpireDateYear { get; set; }
 
         [Required]

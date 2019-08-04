@@ -89,14 +89,19 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
             {
                 var cardForCreate = new BankCard()
                 {
-                    UserId = userId
+                    UserId = userId,
+                    Approve = false
                 };
                 var bankCard = _mapper.Map(bankCardForUpdateDto, cardForCreate);
 
                 await _db.BankCardRepository.InsertAsync(bankCard);
 
                 if (await _db.SaveAsync())
-                    return CreatedAtRoute("GetBankCard", new { id = bankCard.Id, userId = userId }, bankCard);
+                {
+                    var bankCardForReturn = _mapper.Map<BankCardForReturnDto>(bankCard);
+
+                    return CreatedAtRoute("GetBankCard", new { id = bankCard.Id, userId = userId }, bankCardForReturn);
+                }
                 else
                     return BadRequest("خطا در ثبت اطلاعات");
             }

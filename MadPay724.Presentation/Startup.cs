@@ -31,6 +31,7 @@ using MadPay724.Services.Seed.Service;
 using MadPay724.Services.Site.Admin.User.Interface;
 using MadPay724.Services.Site.Admin.User.Service;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
@@ -256,7 +257,10 @@ namespace MadPay724.Presentation
             //app.UseResponseCompression();
             
             seeder.SeedUsers();
-            app.UseCors(p => p.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader());
+            app.UseCors(p => 
+                p.WithOrigins("http://localhost:4200")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
             //
             app.UseRouting();
             app.UseAuthentication();

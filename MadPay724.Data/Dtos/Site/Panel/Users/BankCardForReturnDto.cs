@@ -6,6 +6,7 @@ namespace MadPay724.Data.Dtos.Site.Panel.Users
 {
    public class BankCardForReturnDto
     {
+        public string Id { get; set; }
         public bool Approve { get; set; }
 
         public string BankName { get; set; }

@@ -52,6 +52,8 @@ namespace MadPay724.Test.UnitTests.ControllersTests
                 .Returns(new BankCardForReturnDto());
 
 
+
+
             var rout = new RouteData();
             rout.Values.Add("userId", UnitTestsDataInput.userLogedInId);
 
@@ -436,7 +438,8 @@ namespace MadPay724.Test.UnitTests.ControllersTests
             _mockMapper.Setup(x => x.Map(It.IsAny<BankCardForUpdateDto>(), It.IsAny<BankCard>()))
                 .Returns(new BankCard());
 
-
+            _mockMapper.Setup(x => x.Map<BankCardForReturnDto>(It.IsAny<BankCard>()))
+                .Returns(new BankCardForReturnDto());
 
             //Act----------------------------------------------------------------------------------------------------------------------------------
             var result = await _controller.AddBankCard(It.IsAny<string>(),
