@@ -283,7 +283,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
 
         #endregion
 
-        #region UpdateBankCardTests
+        #region DeleteBankCardTests
         [Fact]
         public async Task DeleteBankCard_Success()
         {
@@ -421,7 +421,6 @@ namespace MadPay724.Test.UnitTests.ControllersTests
 
         #endregion
 
-
         #region AddBankCardTests
         [Fact]
         public async Task AddBankCard_Success()
@@ -429,6 +428,10 @@ namespace MadPay724.Test.UnitTests.ControllersTests
             //Arrange------------------------------------------------------------------------------------------------------------------------------
             _mockRepo.Setup(x => x.BankCardRepository.GetAsync(It.IsAny<Expression<Func<BankCard, bool>>>()))
                 .ReturnsAsync(It.IsAny<BankCard>());
+
+            _mockRepo.Setup(x => x.BankCardRepository.BankCardCountAsynce(It.IsAny<string>()))
+                .ReturnsAsync(5);
+
 
             _mockRepo.Setup(x => x.BankCardRepository.InsertAsync(It.IsAny<BankCard>()));
 
@@ -447,11 +450,11 @@ namespace MadPay724.Test.UnitTests.ControllersTests
             var okResult = result as CreatedAtRouteResult;
             //Assert-------------------------------------------------------------------------------------------------------------------------------
             Assert.NotNull(okResult);
-            Assert.IsType<BankCard>(okResult.Value);
+            Assert.IsType<BankCardForReturnDto>(okResult.Value);
             Assert.Equal(201, okResult.StatusCode);
         }
         [Fact]
-        public async Task AddBankCard_Fail()
+        public async Task AddBankCard_Fail_KarNumberRepeat()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
             //Arrange------------------------------------------------------------------------------------------------------------------------------
@@ -467,7 +470,27 @@ namespace MadPay724.Test.UnitTests.ControllersTests
             Assert.Equal("این کارت قبلا ثبت شده است", okResult.Value.ToString());
             Assert.Equal(400, okResult.StatusCode);
         }
+        [Fact]
+        public async Task AddBankCard_Fail_MoreThan10Card()
+        {
+            //Arrange------------------------------------------------------------------------------------------------------------------------------
+            _mockRepo.Setup(x => x.BankCardRepository.GetAsync(It.IsAny<Expression<Func<BankCard, bool>>>()))
+                .ReturnsAsync(It.IsAny<BankCard>());
 
+            _mockRepo.Setup(x => x.BankCardRepository.BankCardCountAsynce(It.IsAny<string>()))
+                .ReturnsAsync(11);
+
+
+            //Act----------------------------------------------------------------------------------------------------------------------------------
+            var result = await _controller.AddBankCard(It.IsAny<string>(),
+            UnitTestsDataInput.bankCardForUpdateDto);
+            var okResult = result as BadRequestObjectResult;
+            //Assert-------------------------------------------------------------------------------------------------------------------------------
+            Assert.NotNull(okResult);
+            Assert.IsType<string>(okResult.Value);
+            Assert.Equal("شما اجازه وارد کردن بیش از 10 کارت را ندارید", okResult.Value.ToString());
+            Assert.Equal(400, okResult.StatusCode);
+        }
         #endregion
 
 

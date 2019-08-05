@@ -44,7 +44,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
         public async Task<IActionResult> GetBankCards(string userId)
         {
             var bankCardsFromRepo = await _db.BankCardRepository
-                .GetManyAsync(p => p.UserId == userId, s=>s.OrderByDescending(x=>x.Approve) , "");
+                .GetManyAsync(p => p.UserId == userId, s => s.OrderByDescending(x => x.Approve), "");
 
 
             var bankcards = _mapper.Map<List<BankCardForUserDetailedDto>>(bankCardsFromRepo);
@@ -85,29 +85,39 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
         public async Task<IActionResult> AddBankCard(string userId, BankCardForUpdateDto bankCardForUpdateDto)
         {
             var bankCardFromRepo = await _db.BankCardRepository.GetAsync(p => p.CardNumber == bankCardForUpdateDto.CardNumber);
+            var bankCardCount = await _db.BankCardRepository.BankCardCountAsynce(userId);
+
             if (bankCardFromRepo == null)
             {
-                var cardForCreate = new BankCard()
+                if (bankCardCount <= 10)
                 {
-                    UserId = userId,
-                    Approve = false
-                };
-                var bankCard = _mapper.Map(bankCardForUpdateDto, cardForCreate);
+                    var cardForCreate = new BankCard()
+                    {
+                        UserId = userId,
+                        Approve = false
+                    };
+                    var bankCard = _mapper.Map(bankCardForUpdateDto, cardForCreate);
 
-                await _db.BankCardRepository.InsertAsync(bankCard);
+                    await _db.BankCardRepository.InsertAsync(bankCard);
 
-                if (await _db.SaveAsync())
-                {
-                    var bankCardForReturn = _mapper.Map<BankCardForReturnDto>(bankCard);
+                    if (await _db.SaveAsync())
+                    {
+                        var bankCardForReturn = _mapper.Map<BankCardForReturnDto>(bankCard);
 
-                    return CreatedAtRoute("GetBankCard", new { id = bankCard.Id, userId = userId }, bankCardForReturn);
+                        return CreatedAtRoute("GetBankCard", new { id = bankCard.Id, userId = userId }, bankCardForReturn);
+                    }
+                    else
+                        return BadRequest("خطا در ثبت اطلاعات");
                 }
-                else
-                    return BadRequest("خطا در ثبت اطلاعات");
+                {
+                    return BadRequest("شما اجازه وارد کردن بیش از 10 کارت را ندارید");
+                }
             }
             {
                 return BadRequest("این کارت قبلا ثبت شده است");
             }
+
+
         }
         [Authorize(Policy = "RequireUserRole")]
         [HttpPut(ApiV1Routes.BankCard.UpdateBankCard)]
@@ -142,6 +152,8 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
         [HttpDelete(ApiV1Routes.BankCard.DeleteBankCard)]
         public async Task<IActionResult> DeleteBankCard(string id)
         {
+            //return BadRequest("شما اجازه حذف کارت هارا ندارید");
+
             var bankCardFromRepo = await _db.BankCardRepository.GetByIdAsync(id);
             if (bankCardFromRepo != null)
             {
