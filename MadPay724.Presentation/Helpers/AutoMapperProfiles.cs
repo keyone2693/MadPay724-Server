@@ -56,6 +56,8 @@ namespace MadPay724.Presentation.Helpers
 
             CreateMap<List<BankCardForUserDetailedDto>, List<BankCard>>();
 
+            CreateMap<List<DocumentForReturnDto>, List<Document>>();
+
             CreateMap<DocumentForCreateDto, Document>();
 
             CreateMap<Document, DocumentForReturnDto>();

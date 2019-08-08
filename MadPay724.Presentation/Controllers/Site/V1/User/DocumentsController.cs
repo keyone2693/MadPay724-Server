@@ -99,13 +99,12 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
         [HttpGet(ApiV1Routes.Document.GetDocuments)]
         public async Task<IActionResult> GetDocuments(string userId)
         {
-            var DocumentsFromRepo = await _db.DocumentRepository
+            var documentsFromRepo = await _db.DocumentRepository
                 .GetManyAsync(p => p.UserId == userId, s => s.OrderByDescending(x => x.Approve), "");
 
+            var documents = _mapper.Map<List<DocumentForReturnDto>>(documentsFromRepo);
 
-            var Documents = _mapper.Map<List<DocumentForUserDetailedDto>>(DocumentsFromRepo);
-
-            return Ok(Documents);
+            return Ok(documents);
         }
 
         [Authorize(Policy = "RequireUserRole")]
@@ -113,25 +112,25 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
         [HttpGet(ApiV1Routes.Document.GetDocument, Name = "GetDocument")]
         public async Task<IActionResult> GetDocument(string id, string userId)
         {
-            var DocumentFromRepo = await _db.DocumentRepository.GetByIdAsync(id);
-            if (DocumentFromRepo != null)
+            var documentFromRepo = await _db.DocumentRepository.GetByIdAsync(id);
+            if (documentFromRepo != null)
             {
-                if (DocumentFromRepo.UserId == User.FindFirst(ClaimTypes.NameIdentifier).Value)
+                if (documentFromRepo.UserId == User.FindFirst(ClaimTypes.NameIdentifier).Value)
                 {
-                    var Document = _mapper.Map<DocumentForReturnDto>(DocumentFromRepo);
+                    var document = _mapper.Map<DocumentForReturnDto>(documentFromRepo);
 
-                    return Ok(Document);
+                    return Ok(document);
                 }
                 else
                 {
-                    _logger.LogError($"کاربر   {RouteData.Values["userId"]} قصد دسترسی به کارت دیگری را دارد");
+                    _logger.LogError($"کاربر   {userId} قصد دسترسی به مدرک دیگری را دارد");
 
-                    return BadRequest("شما اجازه دسترسی به کارت کاربر دیگری را ندارید");
+                    return BadRequest("شما اجازه دسترسی به مدرک کاربر دیگری را ندارید");
                 }
             }
             else
             {
-                return BadRequest("کارتی وجود ندارد");
+                return BadRequest("مدرکی وجود ندارد");
             }
 
         }
