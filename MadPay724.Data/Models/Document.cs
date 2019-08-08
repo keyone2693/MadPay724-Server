@@ -16,6 +16,8 @@ namespace MadPay724.Data.Models
         }
         [Required]
         public short Approve { get; set; }
+        [StringLength(100, MinimumLength = 0)]
+        public string Message { get; set; }
         [Required]
         public bool IsTrue { get; set; }
         [Required]
