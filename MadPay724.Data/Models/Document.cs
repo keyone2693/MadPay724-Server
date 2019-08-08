@@ -27,7 +27,7 @@ namespace MadPay724.Data.Models
         [StringLength(10, MinimumLength = 10)]
         public string NationalCode { get; set; }
         [Required]
-        [StringLength(30, MinimumLength = 0)]
+        [StringLength(100, MinimumLength = 0)]
         public string FatherNameRegisterCode { get; set; }
         [Required]
         public DateTime BirthDay { get; set; }

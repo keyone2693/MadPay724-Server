@@ -20,7 +20,7 @@ namespace MadPay724.Data.Dtos.Site.Panel.Document
         [StringLength(30, MinimumLength = 0)]
         public string FatherNameRegisterCode { get; set; }
         [Required]
-        public string BirthDay { get; set; }
+        public DateTime BirthDay { get; set; }
         [Required]
         [StringLength(100, MinimumLength = 0)]
         public string Address { get; set; }

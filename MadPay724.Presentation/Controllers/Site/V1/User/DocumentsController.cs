@@ -28,10 +28,11 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
         private readonly ILogger<DocumentsController> _logger;
         private readonly IUploadService _uploadService;
         private readonly IWebHostEnvironment _env;
-
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public DocumentsController(IUnitOfWork<MadpayDbContext> dbContext, IMapper mapper,
-            ILogger<DocumentsController> logger, IUploadService uploadService, IWebHostEnvironment env)
+            ILogger<DocumentsController> logger, IUploadService uploadService,
+            IWebHostEnvironment env)
         {
             _db = dbContext;
             _mapper = mapper;
@@ -48,8 +49,11 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
             var documentFromRepoApprove = await _db.DocumentRepository.GetAsync(p => p.Approve == 1 || p.Approve == 0);
             if (documentFromRepoApprove == null)
             {
+
+               // var file = Request.Form.Files["file"];
+
                 var uploadRes = await _uploadService.UploadFileToLocal(
-                        documentForCreateDto.File,
+                    documentForCreateDto.File,
                         userId,
                         _env.WebRootPath,
                         $"{Request.Scheme ?? ""}://{Request.Host.Value ?? ""}{Request.PathBase.Value ?? ""}"
