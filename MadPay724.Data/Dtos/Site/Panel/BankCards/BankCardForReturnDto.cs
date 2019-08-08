@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MadPay724.Data.Dtos.Site.Panel.Users
+namespace MadPay724.Data.Dtos.Site.Panel.BankCards
 {
    public class BankCardForReturnDto
     {

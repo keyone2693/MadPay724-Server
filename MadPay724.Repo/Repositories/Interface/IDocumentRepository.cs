@@ -7,8 +7,8 @@ using MadPay724.Repo.Infrastructure;
 
 namespace MadPay724.Repo.Repositories.Interface
 {
-    public interface IBankCardRepository : IRepository<BankCard>
+   public  interface IDocumentRepository : IRepository<Document>
     {
-        Task<int> BankCardCountAsync(string userId);
+        Task<int> DocumentCountAsync(string userId);
     }
 }

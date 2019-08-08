@@ -93,7 +93,7 @@ namespace MadPay724.Presentation.Routes.V1
             //api/v1/site/panel/users/{userId}/bankcards
             //POST
             public const string AddBankCard = BaseSitePanel + "/users/{userId}/bankcards";
-            //api/v1/site/panel/users/{userId}/bankcards/{id}
+            //api/v1/site/panel/users/{userId}/bankcards
             //GET
             public const string GetBankCards = BaseSitePanel + "/users/{userId}/bankcards";
             //api/v1/site/panel/users/{userId}/bankcards/{id}
@@ -105,6 +105,19 @@ namespace MadPay724.Presentation.Routes.V1
             //api/v1/site/panel/users/{userId}/bankcard/{id}
             //DELETE
             public const string DeleteBankCard = BaseSitePanel + "/bankcards/{id}";
+
+        }
+        #endregion
+
+        #region BankCardRoutes
+        public static class Document
+        {
+            //api/v1/site/panel/users/{userId}/documents
+            //POST
+            public const string AddDocument = BaseSitePanel + "/users/{userId}/documents";
+            //api/v1/site/panel/users/{userId}/documents
+            //GET
+            public const string GetDocuments = BaseSitePanel + "/users/{userId}/documents";
 
         }
         #endregion

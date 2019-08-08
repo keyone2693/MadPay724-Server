@@ -1,21 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using Microsoft.AspNetCore.Http;
 
-namespace MadPay724.Data.Models
+namespace MadPay724.Data.Dtos.Site.Panel.Document
 {
-    public class Document : BaseEntity<string>
+   public class DocumentForCreateDto
     {
-        public Document()
-        {
-            Id = Guid.NewGuid().ToString();
-            DateCreated = DateTime.Now;
-            DateModified = DateTime.Now;
-        }
-        [Required]
-        public short Approve { get; set; }
         [Required]
         public bool IsTrue { get; set; }
         [Required]
@@ -28,16 +20,10 @@ namespace MadPay724.Data.Models
         [StringLength(30, MinimumLength = 0)]
         public string FatherNameRegisterCode { get; set; }
         [Required]
-        public DateTime BirthDay { get; set; }
+        public string BirthDay { get; set; }
         [Required]
         [StringLength(100, MinimumLength = 0)]
         public string Address { get; set; }
-        [Required]
-        [StringLength(500, MinimumLength = 0)]
-        public string PicUrl { get; set; }
-        [Required]
-        public string UserId { get; set; }
-        [ForeignKey("UserId")]
-        public User User { get; set; }
+        public IFormFile File { get; set; }
     }
 }

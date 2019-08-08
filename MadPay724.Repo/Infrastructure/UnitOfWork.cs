@@ -109,6 +109,19 @@ namespace MadPay724.Repo.Infrastructure
                 return bankCardRepository;
             }
         }
+
+        private IDocumentRepository documentRepository;
+        public IDocumentRepository DocumentRepository
+        {
+            get
+            {
+                if (documentRepository == null)
+                {
+                    documentRepository = new DocumentRepository(_db);
+                }
+                return documentRepository;
+            }
+        }
         #endregion
 
 
