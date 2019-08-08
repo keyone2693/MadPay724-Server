@@ -30,6 +30,7 @@ namespace MadPay724.Data.DatabaseContext
         public DbSet<Setting> Settings { get; set; }
         public DbSet<Token> Tokens { get; set; }
         public DbSet<Notification> Notifications { get; set; }
+        public DbSet<Document> Documents { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)

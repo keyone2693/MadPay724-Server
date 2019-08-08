@@ -68,7 +68,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
                 City = "",
                 Gender = true,
                 DateOfBirth = DateTime.Now,
-                IsAcive = true,
+                IsActive = true,
                 Status = true,
             };
 

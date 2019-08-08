@@ -47,7 +47,7 @@ namespace MadPay724.Test.DataInput
                 Address = "55",
                 Gender = true,
                 City = "55",
-                IsAcive = true,
+                IsActive = true,
                 Status = true,
                 Photos = new List<Photo>()
                 {

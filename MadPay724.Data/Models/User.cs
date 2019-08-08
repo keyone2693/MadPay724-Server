@@ -21,7 +21,7 @@ namespace MadPay724.Data.Models
         [StringLength(100, MinimumLength = 0)]
         public string City { get; set; }
         [Required]
-        public bool IsAcive { get; set; }
+        public bool IsActive { get; set; }
         [Required]
         public bool Status { get; set; }
 
@@ -30,5 +30,6 @@ namespace MadPay724.Data.Models
         public ICollection<UserRole> UserRoles { get; set; }
         public ICollection<Token> Token { get; set; }
         public ICollection<Notification> Notification { get; set; }
+        public ICollection<Document> Document { get; set; }
     }
 }

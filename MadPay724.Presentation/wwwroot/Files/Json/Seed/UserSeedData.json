@@ -6,7 +6,7 @@
     "Address": "733 Lombardy Street, Emison, Federated States Of Micronesia, 6618",
     "Gender": true,
     "City": "Cowiche",
-    "IsAcive": true,
+    "IsActive": true,
     "Status": false,
     "DateOfBirth": "2001-03-03",
     "Photos": [
@@ -52,7 +52,7 @@
     "Address": "338 Tampa Court, Cumberland, Utah, 4341",
     "Gender": true,
     "City": "Glendale",
-    "IsAcive": false,
+    "IsActive": false,
     "Status": false,
     "DateOfBirth": "1995-09-17",
     "Photos": [
@@ -98,7 +98,7 @@
     "Address": "962 Sutton Street, Grimsley, Maryland, 8508",
     "Gender": true,
     "City": "Evergreen",
-    "IsAcive": true,
+    "IsActive": true,
     "Status": false,
     "DateOfBirth": "1951-11-23",
     "Photos": [
@@ -128,7 +128,7 @@
     "Address": "693 Pierrepont Street, Bayview, Northern Mariana Islands, 4905",
     "Gender": true,
     "City": "Highland",
-    "IsAcive": true,
+    "IsActive": true,
     "Status": true,
     "DateOfBirth": "1966-09-17",
     "Photos": [
@@ -174,7 +174,7 @@
     "Address": "376 Monitor Street, Westmoreland, Nevada, 5732",
     "Gender": true,
     "City": "Fairfield",
-    "IsAcive": true,
+    "IsActive": true,
     "Status": false,
     "DateOfBirth": "1999-01-12",
     "Photos": [
@@ -220,7 +220,7 @@
     "Address": "452 Fairview Place, Leland, Georgia, 4226",
     "Gender": false,
     "City": "Eastmont",
-    "IsAcive": false,
+    "IsActive": false,
     "Status": false,
     "DateOfBirth": "1978-04-26",
     "Photos": [
@@ -266,7 +266,7 @@
     "Address": "688 Nassau Avenue, Jackpot, Puerto Rico, 4376",
     "Gender": false,
     "City": "Fidelis",
-    "IsAcive": false,
+    "IsActive": false,
     "Status": true,
     "DateOfBirth": "2011-05-21",
     "Photos": [
@@ -312,7 +312,7 @@
     "Address": "677 Ovington Avenue, Hannasville, Wisconsin, 8346",
     "Gender": false,
     "City": "Harleigh",
-    "IsAcive": true,
+    "IsActive": true,
     "Status": false,
     "DateOfBirth": "1999-04-06",
     "Photos": [
@@ -358,7 +358,7 @@
     "Address": "101 Stryker Court, Coral, Michigan, 2694",
     "Gender": false,
     "City": "Blandburg",
-    "IsAcive": true,
+    "IsActive": true,
     "Status": false,
     "DateOfBirth": "2007-09-11",
     "Photos": [
@@ -404,7 +404,7 @@
     "Address": "369 Hope Street, Lydia, Tennessee, 7070",
     "Gender": false,
     "City": "Hiwasse",
-    "IsAcive": false,
+    "IsActive": false,
     "Status": false,
     "DateOfBirth": "1955-11-30",
     "Photos": [
