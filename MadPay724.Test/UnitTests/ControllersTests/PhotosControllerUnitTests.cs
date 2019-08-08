@@ -143,7 +143,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
 
             _mockRepo.Setup(x => x.SaveAsync()).ReturnsAsync(true);
 
-            _mockUploadService.Setup(x => x.UploadProfilePic(It.IsAny<IFormFile>(),
+            _mockUploadService.Setup(x => x.UploadFile(It.IsAny<IFormFile>(),
                     It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(UnitTestsDataInput.fileUploadedDto_Success);
 
@@ -181,7 +181,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         public async Task ChangeUserPhoto_Fail_WorngFile()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
-            _mockUploadService.Setup(x => x.UploadProfilePic(It.IsAny<IFormFile>(),
+            _mockUploadService.Setup(x => x.UploadFile(It.IsAny<IFormFile>(),
                     It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(UnitTestsDataInput.fileUploadedDto_Fail_WrongFile);
             string expectedErrorMessage = "فایلی برای اپلود یافت نشد";

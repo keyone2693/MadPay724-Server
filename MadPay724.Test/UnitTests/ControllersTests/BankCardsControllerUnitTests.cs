@@ -139,7 +139,30 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         }
 
         #endregion
+        #region GetBankCardsTests
+        [Fact]
+        public async Task GetBankCards_Success()
+        {
+            //Arrange------------------------------------------------------------------------------------------------------------------------------
+            _mockRepo.Setup(x => x.BankCardRepository.GetManyAsync(
+                    It.IsAny<Expression<Func<BankCard, bool>>>(),
+                    It.IsAny<Func<IQueryable<BankCard>, IOrderedQueryable<BankCard>>>(),
+                    It.IsAny<string>()))
+                .ReturnsAsync(new List<BankCard>());
 
+            _mockMapper.Setup(x => x.Map<List<BankCardForUserDetailedDto>>(It.IsAny<List<BankCard>>()))
+                .Returns(new List<BankCardForUserDetailedDto>());
+
+            //Act----------------------------------------------------------------------------------------------------------------------------------
+            var result = await _controller.GetBankCards(It.IsAny<string>());
+            var okResult = result as OkObjectResult;
+            //Assert-------------------------------------------------------------------------------------------------------------------------------
+            Assert.NotNull(okResult);
+            Assert.Equal(200, okResult.StatusCode);
+        }
+
+
+        #endregion
         #region UpdateBankCardTests
         [Fact]
         public async Task UpdateBankCard_Success()
@@ -429,7 +452,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
             _mockRepo.Setup(x => x.BankCardRepository.GetAsync(It.IsAny<Expression<Func<BankCard, bool>>>()))
                 .ReturnsAsync(It.IsAny<BankCard>());
 
-            _mockRepo.Setup(x => x.BankCardRepository.BankCardCountAsynce(It.IsAny<string>()))
+            _mockRepo.Setup(x => x.BankCardRepository.BankCardCountAsync(It.IsAny<string>()))
                 .ReturnsAsync(5);
 
 
@@ -477,7 +500,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
             _mockRepo.Setup(x => x.BankCardRepository.GetAsync(It.IsAny<Expression<Func<BankCard, bool>>>()))
                 .ReturnsAsync(It.IsAny<BankCard>());
 
-            _mockRepo.Setup(x => x.BankCardRepository.BankCardCountAsynce(It.IsAny<string>()))
+            _mockRepo.Setup(x => x.BankCardRepository.BankCardCountAsync(It.IsAny<string>()))
                 .ReturnsAsync(11);
 
 
@@ -494,29 +517,6 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         #endregion
 
 
-        #region GetBankCardsTests
-        [Fact]
-        public async Task GetBankCards_Success()
-        {
-            //Arrange------------------------------------------------------------------------------------------------------------------------------
-            _mockRepo.Setup(x => x.BankCardRepository.GetManyAsync(
-                 It.IsAny<Expression<Func<BankCard, bool>>>(),
-                 It.IsAny<Func<IQueryable<BankCard>, IOrderedQueryable<BankCard>>>(),
-                 It.IsAny<string>()))
-                .ReturnsAsync(new List<BankCard>());
-
-            _mockMapper.Setup(x => x.Map<List<BankCardForUserDetailedDto>>(It.IsAny<List<BankCard>>()))
-                .Returns(new List<BankCardForUserDetailedDto>());
-
-            //Act----------------------------------------------------------------------------------------------------------------------------------
-            var result = await _controller.GetBankCards(It.IsAny<string>());
-            var okResult = result as OkObjectResult;
-            //Assert-------------------------------------------------------------------------------------------------------------------------------
-            Assert.NotNull(okResult);
-            Assert.Equal(200, okResult.StatusCode);
-        }
-
-
-        #endregion
+       
     }
 }

@@ -45,51 +45,48 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
         [HttpPost(ApiV1Routes.Document.AddDocument)]
         public async Task<IActionResult> AddDocument(string userId, [FromForm]DocumentForCreateDto documentForCreateDto)
         {
-            var documentFromRepoApprove = await _db.DocumentRepository.GetAsync(p => p.Approve ==1);
-
+            var documentFromRepoApprove = await _db.DocumentRepository.GetAsync(p => p.Approve == 1 || p.Approve == 0);
             if (documentFromRepoApprove == null)
             {
-                var documentFromRepoChecking = await _db.DocumentRepository.GetAsync(p => p.Approve == 0);
-                if (documentFromRepoChecking == null)
-                {
-                    var uploadRes = await _uploadService.UploadFileToLocal(
+                var uploadRes = await _uploadService.UploadFileToLocal(
                         documentForCreateDto.File,
                         userId,
                         _env.WebRootPath,
                         $"{Request.Scheme ?? ""}://{Request.Host.Value ?? ""}{Request.PathBase.Value ?? ""}"
                     );
-                    if (uploadRes.Status)
+                if (uploadRes.Status)
+                {
+                    var documentForCreate = new Document()
                     {
-                        var documentForCreate = new Document()
-                        {
-                            UserId = userId,
-                            Approve = 0,
-                            PicUrl = uploadRes.Url
-                        };
-                        var document = _mapper.Map(documentForCreateDto, documentForCreate);
+                        UserId = userId,
+                        Approve = 0,
+                        PicUrl = uploadRes.Url
+                    };
+                    var document = _mapper.Map(documentForCreateDto, documentForCreate);
 
-                        await _db.DocumentRepository.InsertAsync(document);
+                    await _db.DocumentRepository.InsertAsync(document);
 
-                        if (await _db.SaveAsync())
-                        {
-                            var documentForReturn = _mapper.Map<DocumentForReturnDto>(document);
+                    if (await _db.SaveAsync())
+                    {
+                        var documentForReturn = _mapper.Map<DocumentForReturnDto>(document);
 
-                            return CreatedAtRoute("GetDocument", new { id = document.Id, userId = userId }, documentForReturn);
-                        }
-                        else
-                            return BadRequest("خطا در ثبت اطلاعات");
+                        return CreatedAtRoute("GetDocument", new { id = document.Id, userId = userId }, documentForReturn);
                     }
                     else
-                    {
-                        return BadRequest(uploadRes.Message);
-                    }
+                        return BadRequest("خطا در ثبت اطلاعات");
                 }
+                else
                 {
-                    return BadRequest("مدارک ارسالی قبلیه شما در حال بررسی میباشد");
+                    return BadRequest(uploadRes.Message);
                 }
+
             }
             {
-                return BadRequest("شما مدرک شناسایی تایید شده دارید و نمیتوانید دوباره آنرا ارسال کنید");
+                if(documentFromRepoApprove.Approve ==1)
+                    return BadRequest("شما مدرک شناسایی تایید شده دارید و نمیتوانید دوباره آنرا ارسال کنید");
+                else
+                    return BadRequest("مدارک ارسالی قبلیه شما در حال بررسی میباشد");
+
             }
 
 

@@ -61,7 +61,7 @@ namespace MadPay724.Test.UnitTests.ServicesTests
             _mockFile.Setup(x => x.CopyToAsync(It.IsAny<Stream>(), CancellationToken.None));
 
             //Act----------------------------------------------------------------------------------------------------------------------------------
-            var result = await _service.UploadProfilePicToLocal(_mockFile.Object,
+            var result = await _service.UploadFileToLocal(_mockFile.Object,
                 "1", "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Presentation\\wwwroot", "http://");
 
             //Assert-------------------------------------------------------------------------------------------------------------------------------
@@ -80,7 +80,7 @@ namespace MadPay724.Test.UnitTests.ServicesTests
             _mockFile.Setup(x => x.Length).Returns(0);
 
             //Act----------------------------------------------------------------------------------------------------------------------------------
-            var result = await _service.UploadProfilePicToLocal(_mockFile.Object,
+            var result = await _service.UploadFileToLocal(_mockFile.Object,
                 It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>());
 
             //Assert-------------------------------------------------------------------------------------------------------------------------------

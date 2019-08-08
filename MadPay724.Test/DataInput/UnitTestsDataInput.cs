@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using MadPay724.Data.Dtos.Common.Token;
 using MadPay724.Data.Dtos.Services;
+using MadPay724.Data.Dtos.Site.Panel.BankCards;
 using MadPay724.Data.Dtos.Site.Panel.Notification;
 using MadPay724.Data.Dtos.Site.Panel.Photos;
 using MadPay724.Data.Dtos.Site.Panel.Roles;
@@ -81,6 +82,15 @@ namespace MadPay724.Test.DataInput
                        OwnerName = "",
                         Shaba = "",
 
+                    }
+                },
+                Documents = new List<Document>()
+                {
+                    new Document()
+                    {
+                        Id = "0d47394e-672f-4d477-898c-bf32e2af",
+                        UserId = "0b83c5e3-404e-44ea-8013-122b691453fa",
+                        Approve = 1
                     }
                 }
             }
