@@ -67,15 +67,135 @@ namespace MadPay724.Test.UnitTests.ControllersTests
             _mockMapper.Setup(x => x.Map<DocumentForReturnDto>(It.IsAny<Document>()))
                 .Returns(new DocumentForReturnDto());
 
-            //Act----------------------------------------------------------------------------------------------------------------------------------
+            var httpContext = new DefaultHttpContext();
+            httpContext.Request.Scheme = "222";
+            _controller.ControllerContext = new ControllerContext()
+            {
+                HttpContext = httpContext
+            };
 
+            //Act----------------------------------------------------------------------------------------------------------------------------------
+            var result = await _controller.AddDocument(It.IsAny<string>(), new DocumentForCreateDto());
+            var okResult = result as CreatedAtRouteResult;
 
             //Assert-------------------------------------------------------------------------------------------------------------------------------
-
+            Assert.NotNull(okResult);
+            Assert.IsType<DocumentForReturnDto>(okResult.Value);
+            Assert.Equal(201, okResult.StatusCode);
 
         }
+        [Fact]
+        public async Task AddDocument_Fail_Approve_1()
+        {
+            //Arrange------------------------------------------------------------------------------------------------------------------------------
+            _mockRepo.Setup(x => x.DocumentRepository.GetAsync(It.IsAny<Expression<Func<Document, bool>>>()))
+                .ReturnsAsync(new Document(){Approve = 1});
+
+            var httpContext = new DefaultHttpContext();
+            httpContext.Request.Scheme = "222";
+            _controller.ControllerContext = new ControllerContext()
+            {
+                HttpContext = httpContext
+            };
+            //Act----------------------------------------------------------------------------------------------------------------------------------
+            var result = await _controller.AddDocument(It.IsAny<string>(), new DocumentForCreateDto());
+            var okResult = result as BadRequestObjectResult;
+            //Assert-------------------------------------------------------------------------------------------------------------------------------
+            Assert.NotNull(okResult);
+            Assert.IsType<string>(okResult.Value);
+            Assert.Equal("شما مدرک شناسایی تایید شده دارید و نمیتوانید دوباره آنرا ارسال کنید",
+                okResult.Value.ToString());
+
+            Assert.Equal(400, okResult.StatusCode);
+
+        }
+        [Fact]
+        public async Task AddDocument_Fail_Approve_0()
+        {
+            //Arrange------------------------------------------------------------------------------------------------------------------------------
+            _mockRepo.Setup(x => x.DocumentRepository.GetAsync(It.IsAny<Expression<Func<Document, bool>>>()))
+                .ReturnsAsync(new Document() { Approve = 0});
+
+            var httpContext = new DefaultHttpContext();
+            httpContext.Request.Scheme = "222";
+            _controller.ControllerContext = new ControllerContext()
+            {
+                HttpContext = httpContext
+            };
+            //Act----------------------------------------------------------------------------------------------------------------------------------
+            var result = await _controller.AddDocument(It.IsAny<string>(), new DocumentForCreateDto());
+            var okResult = result as BadRequestObjectResult;
+            //Assert-------------------------------------------------------------------------------------------------------------------------------
+            Assert.NotNull(okResult);
+            Assert.IsType<string>(okResult.Value);
+            Assert.Equal("مدارک ارسالی قبلیه شما در حال بررسی میباشد",
+                okResult.Value.ToString());
+
+            Assert.Equal(400, okResult.StatusCode);
+
+        }
+        [Fact]
+        public async Task AddDocument_Fail_WrongFile()
+        {
+            //Arrange------------------------------------------------------------------------------------------------------------------------------
+            _mockRepo.Setup(x => x.DocumentRepository.GetAsync(It.IsAny<Expression<Func<Document, bool>>>()))
+                .ReturnsAsync(It.IsAny<Document>());
 
 
+            _mockUploadService.Setup(x => x.UploadFileToLocal(It.IsAny<IFormFile>(),
+                    It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync(UnitTestsDataInput.fileUploadedDto_Fail_WrongFile);
+            var httpContext = new DefaultHttpContext();
+            httpContext.Request.Scheme = "222";
+            _controller.ControllerContext = new ControllerContext()
+            {
+                HttpContext = httpContext
+            };
+            //Act----------------------------------------------------------------------------------------------------------------------------------
+            var result = await _controller.AddDocument(It.IsAny<string>(), new DocumentForCreateDto());
+            var okResult = result as BadRequestObjectResult;
+            //Assert-------------------------------------------------------------------------------------------------------------------------------
+            Assert.NotNull(okResult);
+            Assert.IsType<string>(okResult.Value);
+            Assert.Equal("فایلی برای اپلود یافت نشد",
+                okResult.Value.ToString());
+
+            Assert.Equal(400, okResult.StatusCode);
+
+        }
+        [Fact]
+        public async Task AddDocument_Fail_SaveDb()
+        {
+            //Arrange------------------------------------------------------------------------------------------------------------------------------
+            _mockRepo.Setup(x => x.DocumentRepository.GetAsync(It.IsAny<Expression<Func<Document, bool>>>()))
+                .ReturnsAsync(It.IsAny<Document>());
+
+            _mockRepo.Setup(x => x.DocumentRepository.InsertAsync(It.IsAny<Document>()));
+            _mockRepo.Setup(x => x.SaveAsync()).ReturnsAsync(false);
+
+            _mockUploadService.Setup(x => x.UploadFileToLocal(It.IsAny<IFormFile>(),
+                    It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync(UnitTestsDataInput.fileUploadedDto_Success);
+
+            var httpContext = new DefaultHttpContext();
+            httpContext.Request.Scheme = "222";
+            _controller.ControllerContext = new ControllerContext()
+            {
+                HttpContext = httpContext
+            };
+
+            //Act----------------------------------------------------------------------------------------------------------------------------------
+            var result = await _controller.AddDocument(It.IsAny<string>(), new DocumentForCreateDto());
+            var okResult = result as BadRequestObjectResult;
+            //Assert-------------------------------------------------------------------------------------------------------------------------------
+            Assert.NotNull(okResult);
+            Assert.IsType<string>(okResult.Value);
+            Assert.Equal("خطا در ثبت اطلاعات",
+                okResult.Value.ToString());
+
+            Assert.Equal(400, okResult.StatusCode);
+
+        }
         #endregion
 
 

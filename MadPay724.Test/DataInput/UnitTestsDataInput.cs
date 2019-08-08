@@ -4,6 +4,7 @@ using System.Text;
 using MadPay724.Data.Dtos.Common.Token;
 using MadPay724.Data.Dtos.Services;
 using MadPay724.Data.Dtos.Site.Panel.BankCards;
+using MadPay724.Data.Dtos.Site.Panel.Document;
 using MadPay724.Data.Dtos.Site.Panel.Notification;
 using MadPay724.Data.Dtos.Site.Panel.Photos;
 using MadPay724.Data.Dtos.Site.Panel.Roles;
