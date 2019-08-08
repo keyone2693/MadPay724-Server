@@ -118,6 +118,9 @@ namespace MadPay724.Presentation.Routes.V1
             //api/v1/site/panel/users/{userId}/documents
             //GET
             public const string GetDocuments = BaseSitePanel + "/users/{userId}/documents";
+            //api/v1/site/panel/users/{userId}/documents/{id}
+            //GET
+            public const string GetDocument = BaseSitePanel + "/users/{userId}/documents/{id}";
 
         }
         #endregion

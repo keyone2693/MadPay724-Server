@@ -81,7 +81,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
 
             // var uplaodRes = _uploadService.UploadToCloudinary(photoForProfileDto.File);
 
-            var uplaodRes = await _uploadService.UploadProfilePic(
+            var uplaodRes = await _uploadService.UploadFile(
                 photoForProfileDto.File,
                 userId,
                 _env.WebRootPath ,

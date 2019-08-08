@@ -32,19 +32,19 @@ namespace MadPay724.Services.Upload.Service
 
             _cloudinary = new Cloudinary(acc);
         }
-        public async Task<FileUploadedDto> UploadProfilePic(IFormFile file, string userId, string WebRootPath, string UrlBegan)
+        public async Task<FileUploadedDto> UploadFile(IFormFile file, string userId, string WebRootPath, string UrlBegan)
         {
             if(_setting.UploadLocal)
             {
-               return  await UploadProfilePicToLocal(file, userId, WebRootPath, UrlBegan);
+               return  await UploadFileToLocal(file, userId, WebRootPath, UrlBegan);
             }
             else
             {
-                return UploadProfilePicToCloudinary(file, userId);
+                return UploadFileToCloudinary(file, userId);
             }
         }
 
-        public async Task<FileUploadedDto> UploadProfilePicToLocal(IFormFile file, string userId, string WebRootPath, string UrlBegan)
+        public async Task<FileUploadedDto> UploadFileToLocal(IFormFile file, string userId, string WebRootPath, string UrlBegan)
         {
 
             if (file.Length > 0)
@@ -90,7 +90,7 @@ namespace MadPay724.Services.Upload.Service
             }
         }
 
-        public FileUploadedDto UploadProfilePicToCloudinary(IFormFile file, string userId)
+        public FileUploadedDto UploadFileToCloudinary(IFormFile file, string userId)
         {
             var updaodResult = new ImageUploadResult();
 

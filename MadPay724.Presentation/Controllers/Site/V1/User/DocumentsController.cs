@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using MadPay724.Data.DatabaseContext;
@@ -9,7 +10,9 @@ using MadPay724.Data.Models;
 using MadPay724.Presentation.Helpers.Filters;
 using MadPay724.Presentation.Routes.V1;
 using MadPay724.Repo.Infrastructure;
+using MadPay724.Services.Upload.Interface;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -23,50 +26,67 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
         private readonly IUnitOfWork<MadpayDbContext> _db;
         private readonly IMapper _mapper;
         private readonly ILogger<DocumentsController> _logger;
+        private readonly IUploadService _uploadService;
+        private readonly IWebHostEnvironment _env;
+
 
         public DocumentsController(IUnitOfWork<MadpayDbContext> dbContext, IMapper mapper,
-            ILogger<DocumentsController> logger)
+            ILogger<DocumentsController> logger, IUploadService uploadService, IWebHostEnvironment env)
         {
             _db = dbContext;
             _mapper = mapper;
             _logger = logger;
+            _uploadService = uploadService;
+            _env = env;
         }
 
 
         [Authorize(Policy = "RequireUserRole")]
         [HttpPost(ApiV1Routes.Document.AddDocument)]
-        public async Task<IActionResult> AddDocument(string userId, DocumentForCreateDto documentForCreateDto)
+        public async Task<IActionResult> AddDocument(string userId, [FromForm]DocumentForCreateDto documentForCreateDto)
         {
             var documentFromRepoApprove = await _db.DocumentRepository.GetAsync(p => p.Approve ==1);
 
             if (documentFromRepoApprove == null)
             {
                 var documentFromRepoChecking = await _db.DocumentRepository.GetAsync(p => p.Approve == 0);
-                if (documentFromRepoApprove == null)
+                if (documentFromRepoChecking == null)
                 {
-                    var documentForCreate = new Document()
+                    var uploadRes = await _uploadService.UploadFileToLocal(
+                        documentForCreateDto.File,
+                        userId,
+                        _env.WebRootPath,
+                        $"{Request.Scheme ?? ""}://{Request.Host.Value ?? ""}{Request.PathBase.Value ?? ""}"
+                    );
+                    if (uploadRes.Status)
                     {
-                        UserId = userId,
-                        Approve = 0
-                    };
-                    var document = _mapper.Map(documentForCreateDto, documentForCreate);
+                        var documentForCreate = new Document()
+                        {
+                            UserId = userId,
+                            Approve = 0,
+                            PicUrl = uploadRes.Url
+                        };
+                        var document = _mapper.Map(documentForCreateDto, documentForCreate);
 
-                    await _db.DocumentRepository.InsertAsync(document);
+                        await _db.DocumentRepository.InsertAsync(document);
 
-                    if (await _db.SaveAsync())
-                    {
-                        var documentForReturn = _mapper.Map<DocumentForReturnDto>(document);
+                        if (await _db.SaveAsync())
+                        {
+                            var documentForReturn = _mapper.Map<DocumentForReturnDto>(document);
 
-                        return CreatedAtRoute("GetDocument", new { id = document.Id, userId = userId }, documentForReturn);
+                            return CreatedAtRoute("GetDocument", new { id = document.Id, userId = userId }, documentForReturn);
+                        }
+                        else
+                            return BadRequest("خطا در ثبت اطلاعات");
                     }
                     else
-                        return BadRequest("خطا در ثبت اطلاعات");
+                    {
+                        return BadRequest(uploadRes.Message);
+                    }
                 }
                 {
                     return BadRequest("مدارک ارسالی قبلیه شما در حال بررسی میباشد");
                 }
-
-                
             }
             {
                 return BadRequest("شما مدرک شناسایی تایید شده دارید و نمیتوانید دوباره آنرا ارسال کنید");
@@ -86,6 +106,34 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
             var Documents = _mapper.Map<List<DocumentForUserDetailedDto>>(DocumentsFromRepo);
 
             return Ok(Documents);
+        }
+
+        [Authorize(Policy = "RequireUserRole")]
+        [ServiceFilter(typeof(UserCheckIdFilter))]
+        [HttpGet(ApiV1Routes.Document.GetDocument, Name = "GetDocument")]
+        public async Task<IActionResult> GetDocument(string id, string userId)
+        {
+            var DocumentFromRepo = await _db.DocumentRepository.GetByIdAsync(id);
+            if (DocumentFromRepo != null)
+            {
+                if (DocumentFromRepo.UserId == User.FindFirst(ClaimTypes.NameIdentifier).Value)
+                {
+                    var Document = _mapper.Map<DocumentForReturnDto>(DocumentFromRepo);
+
+                    return Ok(Document);
+                }
+                else
+                {
+                    _logger.LogError($"کاربر   {RouteData.Values["userId"]} قصد دسترسی به کارت دیگری را دارد");
+
+                    return BadRequest("شما اجازه دسترسی به کارت کاربر دیگری را ندارید");
+                }
+            }
+            else
+            {
+                return BadRequest("کارتی وجود ندارد");
+            }
+
         }
     }
 }
