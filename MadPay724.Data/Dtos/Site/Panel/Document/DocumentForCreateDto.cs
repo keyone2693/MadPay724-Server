@@ -14,10 +14,10 @@ namespace MadPay724.Data.Dtos.Site.Panel.Document
         [StringLength(100, MinimumLength = 0)]
         public string Name { get; set; }
         [Required]
-        [StringLength(10, MinimumLength = 10)]
+        [StringLength(100, MinimumLength = 0)]
         public string NationalCode { get; set; }
         [Required]
-        [StringLength(30, MinimumLength = 0)]
+        [StringLength(100, MinimumLength = 0)]
         public string FatherNameRegisterCode { get; set; }
         [Required]
         public DateTime BirthDay { get; set; }

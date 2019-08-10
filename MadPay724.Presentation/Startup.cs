@@ -168,6 +168,7 @@ namespace MadPay724.Presentation
             services.AddScoped<IUploadService, UploadService>();
             services.AddScoped<IUtilities, Utilities>();
             services.AddScoped<UserCheckIdFilter>();
+            services.AddScoped<DocumentApproveFilter>();
             //services.AddScoped<TokenSetting>();
 
             IdentityBuilder builder = services.AddIdentityCore<User>(opt =>

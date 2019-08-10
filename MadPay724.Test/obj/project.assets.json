@@ -109,6 +109,18 @@
           "lib/netstandard2.0/System.Net.Http.Formatting.dll": {}
         }
       },
+      "Microsoft.AspNet.WebApi.Core/5.2.7": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.WebApi.Client": "5.2.7"
+        },
+        "compile": {
+          "lib/net45/System.Web.Http.dll": {}
+        },
+        "runtime": {
+          "lib/net45/System.Web.Http.dll": {}
+        }
+      },
       "Microsoft.AspNet.WebPages/3.2.7": {
         "type": "package",
         "dependencies": {
@@ -4181,6 +4193,7 @@
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "6.1.1",
           "MadPay724.Services": "1.0.0",
           "Microsoft.AspNet.Mvc": "5.2.7",
+          "Microsoft.AspNet.WebApi.Core": "5.2.7",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "3.0.0-preview7.19365.7",
           "Microsoft.AspNetCore.Mvc.Formatters.Json": "2.2.0",
           "Microsoft.AspNetCore.Mvc.NewtonsoftJson": "3.0.0-preview7.19365.7",
@@ -4378,6 +4391,20 @@
         "lib/portable-wp8+netcore45+net45+wp81+wpa81/System.Net.Http.Formatting.xml",
         "microsoft.aspnet.webapi.client.5.2.7.nupkg.sha512",
         "microsoft.aspnet.webapi.client.nuspec"
+      ]
+    },
+    "Microsoft.AspNet.WebApi.Core/5.2.7": {
+      "sha512": "gM2QzApnHdy1FbKUJ/ROGJSm69P2G+HMoVd/t5Vq1O/zZ5TI4IKC9PX6nUfRt/NHgebZOIWHpB4/4K4inuy4yQ==",
+      "type": "package",
+      "path": "microsoft.aspnet.webapi.core/5.2.7",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Content/web.config.transform",
+        "lib/net45/System.Web.Http.dll",
+        "lib/net45/System.Web.Http.xml",
+        "microsoft.aspnet.webapi.core.5.2.7.nupkg.sha512",
+        "microsoft.aspnet.webapi.core.nuspec"
       ]
     },
     "Microsoft.AspNet.WebPages/3.2.7": {
@@ -12120,6 +12147,16 @@
       "warningLevel": 1,
       "message": "Package 'Microsoft.AspNet.Razor 3.2.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.0'. This package may not be fully compatible with your project.",
       "libraryId": "Microsoft.AspNet.Razor",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v3.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Microsoft.AspNet.WebApi.Core 5.2.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.0'. This package may not be fully compatible with your project.",
+      "libraryId": "Microsoft.AspNet.WebApi.Core",
       "targetGraphs": [
         ".NETCoreApp,Version=v3.0"
       ]

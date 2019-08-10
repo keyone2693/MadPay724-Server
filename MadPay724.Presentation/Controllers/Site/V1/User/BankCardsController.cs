@@ -23,6 +23,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
 {
     [ApiExplorerSettings(GroupName = "v1_Site_Panel")]
     [ApiController]
+    [ServiceFilter(typeof(DocumentApproveFilter))]
     public class BankCardsController : ControllerBase
     {
         private readonly IUnitOfWork<MadpayDbContext> _db;

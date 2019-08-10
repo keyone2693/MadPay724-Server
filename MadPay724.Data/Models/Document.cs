@@ -24,7 +24,7 @@ namespace MadPay724.Data.Models
         [StringLength(100, MinimumLength = 0)]
         public string Name { get; set; }
         [Required]
-        [StringLength(10, MinimumLength = 10)]
+        [StringLength(100, MinimumLength = 0)]
         public string NationalCode { get; set; }
         [Required]
         [StringLength(100, MinimumLength = 0)]

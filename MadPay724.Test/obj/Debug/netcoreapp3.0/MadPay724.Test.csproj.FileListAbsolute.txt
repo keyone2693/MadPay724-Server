@@ -244,3 +244,4 @@ D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\bin\Debug\netcoreapp
 D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\bin\Debug\netcoreapp3.0\MadPay724.Test.runtimeconfig.dev.json
 D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\bin\Debug\netcoreapp3.0\MadPay724.Test.pdb
 D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\obj\Debug\netcoreapp3.0\MadPay724.Test.csproj.CopyComplete
+D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\bin\Debug\netcoreapp3.0\System.Web.Http.dll

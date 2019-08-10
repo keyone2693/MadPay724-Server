@@ -31,5 +31,6 @@ namespace MadPay724.Data.Models
         public ICollection<Token> Tokens { get; set; }
         public ICollection<Notification> Notifications { get; set; }
         public ICollection<Document> Documents { get; set; }
+        public ICollection<Wallet> Wallets { get; set; }
     }
 }

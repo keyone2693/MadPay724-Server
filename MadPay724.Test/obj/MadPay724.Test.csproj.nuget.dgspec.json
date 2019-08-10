@@ -233,6 +233,10 @@
               "target": "Package",
               "version": "[5.2.7, )"
             },
+            "Microsoft.AspNet.WebApi.Core": {
+              "target": "Package",
+              "version": "[5.2.7, )"
+            },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
               "version": "[3.0.0-preview7.19365.7, )"

@@ -122,6 +122,17 @@
           }
         }
       },
+      "Microsoft.AspNet.WebApi.Core/5.2.7": {
+        "dependencies": {
+          "Microsoft.AspNet.WebApi.Client": "5.2.7"
+        },
+        "runtime": {
+          "lib/net45/System.Web.Http.dll": {
+            "assemblyVersion": "5.2.7.0",
+            "fileVersion": "5.2.61128.0"
+          }
+        }
+      },
       "Microsoft.AspNet.WebPages/3.2.7": {
         "dependencies": {
           "Microsoft.AspNet.Razor": "3.2.7",
@@ -2848,6 +2859,7 @@
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "6.1.1",
           "MadPay724.Services": "1.0.0",
           "Microsoft.AspNet.Mvc": "5.2.7",
+          "Microsoft.AspNet.WebApi.Core": "5.2.7",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "3.0.0-preview7.19365.7",
           "Microsoft.AspNetCore.Mvc.Formatters.Json": "2.2.0",
           "Microsoft.AspNetCore.Mvc.NewtonsoftJson": "3.0.0-preview7.19365.7",
@@ -2947,6 +2959,13 @@
       "sha512": "sha512-/76fAHknzvFqbznS6Uj2sOyE9rJB3PltY+f53TH8dX9RiGhk02EhuFCWljSj5nnqKaTsmma8DFR50OGyQ4yJ1g==",
       "path": "microsoft.aspnet.webapi.client/5.2.7",
       "hashPath": "microsoft.aspnet.webapi.client.5.2.7.nupkg.sha512"
+    },
+    "Microsoft.AspNet.WebApi.Core/5.2.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-gM2QzApnHdy1FbKUJ/ROGJSm69P2G+HMoVd/t5Vq1O/zZ5TI4IKC9PX6nUfRt/NHgebZOIWHpB4/4K4inuy4yQ==",
+      "path": "microsoft.aspnet.webapi.core/5.2.7",
+      "hashPath": "microsoft.aspnet.webapi.core.5.2.7.nupkg.sha512"
     },
     "Microsoft.AspNet.WebPages/3.2.7": {
       "type": "package",
