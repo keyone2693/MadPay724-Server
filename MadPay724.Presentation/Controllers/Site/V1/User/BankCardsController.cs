@@ -85,7 +85,8 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
         [HttpPost(ApiV1Routes.BankCard.AddBankCard)]
         public async Task<IActionResult> AddBankCard(string userId, BankCardForUpdateDto bankCardForUpdateDto)
         {
-            var bankCardFromRepo = await _db.BankCardRepository.GetAsync(p => p.CardNumber == bankCardForUpdateDto.CardNumber);
+            var bankCardFromRepo = await _db.BankCardRepository
+                .GetAsync(p => p.CardNumber == bankCardForUpdateDto.CardNumber && p.UserId == userId);
             var bankCardCount = await _db.BankCardRepository.BankCardCountAsync(userId);
 
             if (bankCardFromRepo == null)

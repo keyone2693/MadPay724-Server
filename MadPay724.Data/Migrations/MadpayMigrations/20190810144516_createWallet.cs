@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MadPay724.Data.Migrations.MadpayMigrations
@@ -7,22 +8,6 @@ namespace MadPay724.Data.Migrations.MadpayMigrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<string>(
-                name: "NationalCode",
-                table: "Documents",
-                maxLength: 100,
-                nullable: false,
-                oldClrType: typeof(string),
-                oldMaxLength: 10);
-
-            migrationBuilder.AlterColumn<string>(
-                name: "FatherNameRegisterCode",
-                table: "Documents",
-                maxLength: 100,
-                nullable: false,
-                oldClrType: typeof(string),
-                oldMaxLength: 30);
-
             migrationBuilder.CreateTable(
                 name: "Wallets",
                 columns: table => new
@@ -30,10 +15,11 @@ namespace MadPay724.Data.Migrations.MadpayMigrations
                     Id = table.Column<string>(nullable: false),
                     DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: false),
+                    Code = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     IsMain = table.Column<bool>(nullable: false),
                     IsSms = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(maxLength: 20, nullable: false),
-                    Code = table.Column<string>(maxLength: 50, nullable: false),
                     Inventory = table.Column<int>(nullable: false),
                     InterMoney = table.Column<int>(nullable: false),
                     ExitMoney = table.Column<int>(nullable: false),
@@ -52,6 +38,12 @@ namespace MadPay724.Data.Migrations.MadpayMigrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Wallets_Code",
+                table: "Wallets",
+                column: "Code",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Wallets_UserId",
                 table: "Wallets",
                 column: "UserId");
@@ -61,22 +53,6 @@ namespace MadPay724.Data.Migrations.MadpayMigrations
         {
             migrationBuilder.DropTable(
                 name: "Wallets");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "NationalCode",
-                table: "Documents",
-                maxLength: 10,
-                nullable: false,
-                oldClrType: typeof(string),
-                oldMaxLength: 100);
-
-            migrationBuilder.AlterColumn<string>(
-                name: "FatherNameRegisterCode",
-                table: "Documents",
-                maxLength: 30,
-                nullable: false,
-                oldClrType: typeof(string),
-                oldMaxLength: 100);
         }
     }
 }

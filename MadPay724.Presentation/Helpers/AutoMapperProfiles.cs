@@ -16,6 +16,7 @@ using MadPay724.Data.Dtos.Common.Token;
 using MadPay724.Data.Dtos.Site.Panel.Auth;
 using MadPay724.Data.Dtos.Site.Panel.Document;
 using MadPay724.Data.Dtos.Site.Panel.Notification;
+using MadPay724.Data.Dtos.Site.Panel.Wallet;
 
 namespace MadPay724.Presentation.Helpers
 {
@@ -49,18 +50,19 @@ namespace MadPay724.Presentation.Helpers
             CreateMap<NotificationForUpdateDto, Notification>();
 
             CreateMap<BankCardForUpdateDto, BankCard>();
-
-
             CreateMap<BankCard,BankCardForReturnDto>();
-
-
             CreateMap<List<BankCardForUserDetailedDto>, List<BankCard>>();
+CreateMap<BankCardForUpdateDto, BankCard>();
 
             CreateMap<List<DocumentForReturnDto>, List<Document>>();
-
             CreateMap<DocumentForCreateDto, Document>();
-
             CreateMap<Document, DocumentForReturnDto>();
+
+            
+
+
+            CreateMap<Wallet, WalletForReturnDto>();
+            CreateMap<List<WalletForReturnDto>, List<BankCard>>();
 
             //CreateMap<TokenResponseDto, LoginResponseDto>();
         }

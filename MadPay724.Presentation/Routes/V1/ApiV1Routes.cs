@@ -124,5 +124,21 @@ namespace MadPay724.Presentation.Routes.V1
 
         }
         #endregion
+
+        #region WalletRoutes
+        public static class Wallet
+        {
+            //api/v1/site/panel/users/{userId}/documents
+            //POST
+            public const string AddWallet = BaseSitePanel + "/users/{userId}/wallets";
+            //api/v1/site/panel/users/{userId}/documents
+            //GET
+            public const string GetWallets = BaseSitePanel + "/users/{userId}/wallets";
+            //api/v1/site/panel/users/{userId}/documents/{id}
+            //GET
+            public const string GetWallet = BaseSitePanel + "/users/{userId}/wallets/{id}";
+
+        }
+        #endregion
     }
 }

@@ -103,7 +103,7 @@ namespace MadPay724.Services.Seed.Service
                         TicketTelegram = true
                     };
 
-                    _authService.AddUserPreNeededAsync(photoToCreate, notifyToCreate).Wait();
+                    _authService.AddUserPreNeededAsync(photoToCreate, notifyToCreate,null,null).Wait();
 
                     var admin = _userManager.FindByNameAsync("admin@madpay724.com").Result;
                     _userManager.AddToRolesAsync(admin, new[] { "Admin", "Blog", "Accountant" }).Wait();
@@ -148,7 +148,7 @@ namespace MadPay724.Services.Seed.Service
                         TicketTelegram = true
                     };
 
-                    _authService.AddUserPreNeededAsync(photoToCreate, notifyToCreate).Wait();
+                    _authService.AddUserPreNeededAsync(photoToCreate, notifyToCreate, null, null).Wait();
 
                     var blog = _userManager.FindByNameAsync("blog@madpay724.com").Result;
                     _userManager.AddToRoleAsync(blog, "Blog").Wait();
@@ -193,7 +193,7 @@ namespace MadPay724.Services.Seed.Service
                         TicketTelegram = true
                     };
 
-                    _authService.AddUserPreNeededAsync(photoToCreate, notifyToCreate).Wait();
+                    _authService.AddUserPreNeededAsync(photoToCreate, notifyToCreate, null, null).Wait();
                     var accountant = _userManager.FindByNameAsync("accountant@madpay724.com").Result;
                     _userManager.AddToRoleAsync(accountant, "Accountant").Wait();
                 }

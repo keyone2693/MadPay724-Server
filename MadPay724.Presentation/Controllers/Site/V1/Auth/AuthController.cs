@@ -103,11 +103,34 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
                 TicketTelegram = true
             };
 
+            var walletMain = new Wallet
+            {
+                Name = "اصلی ماد پی",
+                IsMain = true,
+                IsSms = false,
+                Inventory = 0,
+                InterMoney = 0,
+                ExitMoney = 0,
+                OnExitMoney = 0
+
+            };
+            var walletSms = new Wallet
+            {
+                Name = "پیامک",
+                IsMain = false,
+                IsSms = true,
+                Inventory = 0,
+                InterMoney = 0,
+                ExitMoney = 0,
+                OnExitMoney = 0
+
+            };
+
             var result = await _userManager.CreateAsync(userToCreate, userForRegisterDto.Password);
 
             if (result.Succeeded)
             {
-                await _authService.AddUserPreNeededAsync(photoToCreate, notifyToCreate);
+                await _authService.AddUserPreNeededAsync(photoToCreate, notifyToCreate, walletMain, walletSms);
 
                 var userForReturn = _mapper.Map<UserForDetailedDto>(userToCreate);
 

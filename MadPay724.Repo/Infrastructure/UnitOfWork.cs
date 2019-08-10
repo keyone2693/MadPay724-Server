@@ -122,6 +122,19 @@ namespace MadPay724.Repo.Infrastructure
                 return documentRepository;
             }
         }
+
+        private IWalletRepository walletRepository;
+        public IWalletRepository WalletRepository
+        {
+            get
+            {
+                if (walletRepository == null)
+                {
+                    walletRepository = new WalletRepository(_db);
+                }
+                return walletRepository;
+            }
+        }
         #endregion
 
 

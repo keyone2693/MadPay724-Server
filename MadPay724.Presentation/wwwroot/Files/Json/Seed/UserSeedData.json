@@ -1,4 +1,4 @@
-[
+﻿[
   {
     "Username": "popecopeland@barkarama.com",
     "Name": "Stanton Hatfield",
@@ -28,7 +28,7 @@
         "ExpireDateYear": 4
       }
     ],
-    "Notification": [
+    "Notifications": [
       {
         "EnterEmail": true,
         "EnterSms": false,
@@ -42,6 +42,26 @@
         "LoginEmail": true,
         "LoginSms": false,
         "LoginTelegram": true
+      }
+    ],
+    "Wallets": [
+      {
+        "IsMain": true,
+        "IsSms": false,
+        "Name": 'اصلی ماد پی',
+        "Inventory": 0,
+        "InterMoney": 0,
+        "ExitMoney": 0,
+        "OnExitMoney": 0
+      },
+      {
+        "IsMain": false,
+        "IsSms": true,
+        "Name": "پیامک",
+        "Inventory": 0,
+        "InterMoney": 0,
+        "ExitMoney": 0,
+        "OnExitMoney": 0
       }
     ]
   },
@@ -74,7 +94,7 @@
         "ExpireDateYear": 4
       }
     ],
-    "Notification": [
+    "Notifications": [
       {
         "EnterEmail": true,
         "EnterSms": false,
@@ -88,6 +108,26 @@
         "LoginEmail": true,
         "LoginSms": false,
         "LoginTelegram": true
+      }
+    ],
+    "Wallets": [
+      {
+        "IsMain": true,
+        "IsSms": false,
+        "Name": "اصلی ماد پی",
+        "Inventory": 0,
+        "InterMoney": 0,
+        "ExitMoney": 0,
+        "OnExitMoney": 0
+      },
+      {
+        "IsMain": false,
+        "IsSms": true,
+        "Name": "پیامک",
+        "Inventory": 0,
+        "InterMoney": 0,
+        "ExitMoney": 0,
+        "OnExitMoney": 0
       }
     ]
   },
@@ -118,6 +158,42 @@
         "CardNumber": 5986320015498532,
         "ExpireDateMonth": 98,
         "ExpireDateYear": 4
+      }
+    ],
+    "Notifications": [
+      {
+        "EnterEmail": true,
+        "EnterSms": false,
+        "EnterTelegram": true,
+        "ExitEmail": true,
+        "ExitSms": false,
+        "ExitTelegram": true,
+        "TicketEmail": true,
+        "TicketSms": false,
+        "TicketTelegram": true,
+        "LoginEmail": true,
+        "LoginSms": false,
+        "LoginTelegram": true
+      }
+    ],
+    "Wallets": [
+      {
+        "IsMain": true,
+        "IsSms": false,
+        "Name": "اصلی ماد پی",
+        "Inventory": 0,
+        "InterMoney": 0,
+        "ExitMoney": 0,
+        "OnExitMoney": 0
+      },
+      {
+        "IsMain": false,
+        "IsSms": true,
+        "Name": "پیامک",
+        "Inventory": 0,
+        "InterMoney": 0,
+        "ExitMoney": 0,
+        "OnExitMoney": 0
       }
     ]
   },
@@ -150,7 +226,7 @@
         "ExpireDateYear": 4
       }
     ],
-    "Notification": [
+    "Notifications": [
       {
         "EnterEmail": true,
         "EnterSms": false,
@@ -164,6 +240,26 @@
         "LoginEmail": true,
         "LoginSms": false,
         "LoginTelegram": true
+      }
+    ],
+    "Wallets": [
+      {
+        "IsMain": true,
+        "IsSms": false,
+        "Name": "اصلی ماد پی",
+        "Inventory": 0,
+        "InterMoney": 0,
+        "ExitMoney": 0,
+        "OnExitMoney": 0
+      },
+      {
+        "IsMain": false,
+        "IsSms": true,
+        "Name": "پیامک",
+        "Inventory": 0,
+        "InterMoney": 0,
+        "ExitMoney": 0,
+        "OnExitMoney": 0
       }
     ]
   },
@@ -196,7 +292,7 @@
         "ExpireDateYear": 4
       }
     ],
-    "Notification": [
+    "Notifications": [
       {
         "EnterEmail": true,
         "EnterSms": false,
@@ -210,6 +306,26 @@
         "LoginEmail": true,
         "LoginSms": false,
         "LoginTelegram": true
+      }
+    ],
+    "Wallets": [
+      {
+        "IsMain": true,
+        "IsSms": false,
+        "Name": "اصلی ماد پی",
+        "Inventory": 0,
+        "InterMoney": 0,
+        "ExitMoney": 0,
+        "OnExitMoney": 0
+      },
+      {
+        "IsMain": false,
+        "IsSms": true,
+        "Name": "پیامک",
+        "Inventory": 0,
+        "InterMoney": 0,
+        "ExitMoney": 0,
+        "OnExitMoney": 0
       }
     ]
   },
@@ -242,7 +358,7 @@
         "ExpireDateYear": 4
       }
     ],
-    "Notification": [
+    "Notifications": [
       {
         "EnterEmail": true,
         "EnterSms": false,
@@ -256,6 +372,26 @@
         "LoginEmail": true,
         "LoginSms": false,
         "LoginTelegram": true
+      }
+    ],
+    "Wallets": [
+      {
+        "IsMain": true,
+        "IsSms": false,
+        "Name": "اصلی ماد پی",
+        "Inventory": 0,
+        "InterMoney": 0,
+        "ExitMoney": 0,
+        "OnExitMoney": 0
+      },
+      {
+        "IsMain": false,
+        "IsSms": true,
+        "Name": "پیامک",
+        "Inventory": 0,
+        "InterMoney": 0,
+        "ExitMoney": 0,
+        "OnExitMoney": 0
       }
     ]
   },
@@ -288,7 +424,7 @@
         "ExpireDateYear": 4
       }
     ],
-    "Notification": [
+    "Notifications": [
       {
         "EnterEmail": true,
         "EnterSms": false,
@@ -302,6 +438,26 @@
         "LoginEmail": true,
         "LoginSms": false,
         "LoginTelegram": true
+      }
+    ],
+    "Wallets": [
+      {
+        "IsMain": true,
+        "IsSms": false,
+        "Name": "اصلی ماد پی",
+        "Inventory": 0,
+        "InterMoney": 0,
+        "ExitMoney": 0,
+        "OnExitMoney": 0
+      },
+      {
+        "IsMain": false,
+        "IsSms": true,
+        "Name": "پیامک",
+        "Inventory": 0,
+        "InterMoney": 0,
+        "ExitMoney": 0,
+        "OnExitMoney": 0
       }
     ]
   },
@@ -334,7 +490,7 @@
         "ExpireDateYear": 4
       }
     ],
-    "Notification": [
+    "Notifications": [
       {
         "EnterEmail": true,
         "EnterSms": false,
@@ -348,6 +504,26 @@
         "LoginEmail": true,
         "LoginSms": false,
         "LoginTelegram": true
+      }
+    ],
+    "Wallets": [
+      {
+        "IsMain": true,
+        "IsSms": false,
+        "Name": "اصلی ماد پی",
+        "Inventory": 0,
+        "InterMoney": 0,
+        "ExitMoney": 0,
+        "OnExitMoney": 0
+      },
+      {
+        "IsMain": false,
+        "IsSms": true,
+        "Name": "پیامک",
+        "Inventory": 0,
+        "InterMoney": 0,
+        "ExitMoney": 0,
+        "OnExitMoney": 0
       }
     ]
   },
@@ -380,7 +556,7 @@
         "ExpireDateYear": 4
       }
     ],
-    "Notification": [
+    "Notifications": [
       {
         "EnterEmail": true,
         "EnterSms": false,
@@ -394,6 +570,26 @@
         "LoginEmail": true,
         "LoginSms": false,
         "LoginTelegram": true
+      }
+    ],
+    "Wallets": [
+      {
+        "IsMain": true,
+        "IsSms": false,
+        "Name": "اصلی ماد پی",
+        "Inventory": 0,
+        "InterMoney": 0,
+        "ExitMoney": 0,
+        "OnExitMoney": 0
+      },
+      {
+        "IsMain": false,
+        "IsSms": true,
+        "Name": "پیامک",
+        "Inventory": 0,
+        "InterMoney": 0,
+        "ExitMoney": 0,
+        "OnExitMoney": 0
       }
     ]
   },
@@ -426,7 +622,7 @@
         "ExpireDateYear": 4
       }
     ],
-    "Notification": [
+    "Notifications": [
       {
         "EnterEmail": true,
         "EnterSms": false,
@@ -440,6 +636,26 @@
         "LoginEmail": true,
         "LoginSms": false,
         "LoginTelegram": true
+      }
+    ],
+    "Wallets": [
+      {
+        "IsMain": true,
+        "IsSms": false,
+        "Name": "اصلی ماد پی",
+        "Inventory": 0,
+        "InterMoney": 0,
+        "ExitMoney": 0,
+        "OnExitMoney": 0
+      },
+      {
+        "IsMain": false,
+        "IsSms": true,
+        "Name": "پیامک",
+        "Inventory": 0,
+        "InterMoney": 0,
+        "ExitMoney": 0,
+        "OnExitMoney": 0
       }
     ]
   }

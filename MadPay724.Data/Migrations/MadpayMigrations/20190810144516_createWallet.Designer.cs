@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MadPay724.Data.Migrations.MadpayMigrations
 {
     [DbContext(typeof(MadpayDbContext))]
-    [Migration("20190810133235_createWallet")]
+    [Migration("20190810144516_createWallet")]
     partial class createWallet
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -352,9 +352,9 @@ namespace MadPay724.Data.Migrations.MadpayMigrations
                 {
                     b.Property<string>("Id");
 
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasMaxLength(50);
+                    b.Property<long>("Code")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("DateCreated");
 
@@ -380,6 +380,9 @@ namespace MadPay724.Data.Migrations.MadpayMigrations
                         .IsRequired();
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Code")
+                        .IsUnique();
 
                     b.HasIndex("UserId");
 

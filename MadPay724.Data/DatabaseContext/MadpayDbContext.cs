@@ -52,6 +52,12 @@ namespace MadPay724.Data.DatabaseContext
                     .HasForeignKey(ur => ur.UserId)
                     .IsRequired();
             });
+            builder.Entity<Wallet>(
+                code =>
+                {
+                    code.HasIndex(e => e.Code).IsUnique();
+                    code.Property(e => e.Code).ValueGeneratedOnAdd();
+                });
         }
 
 

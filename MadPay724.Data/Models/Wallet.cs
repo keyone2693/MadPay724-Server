@@ -15,6 +15,9 @@ namespace MadPay724.Data.Models
             DateModified = DateTime.Now;
         }
         [Required]
+        // [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public long Code { get; set; }
+        [Required]
         public bool IsMain { get; set; }
         [Required]
         public bool IsSms { get; set; }
@@ -23,9 +26,7 @@ namespace MadPay724.Data.Models
         [StringLength(20, MinimumLength = 0)]
         public string Name { get; set; }
 
-        [Required]
-        [StringLength(50, MinimumLength = 0)]
-        public string Code { get; set; }
+
 
         [Required]
         public int Inventory { get; set; }

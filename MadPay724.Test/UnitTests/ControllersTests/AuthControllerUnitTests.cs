@@ -123,7 +123,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
 
             _mockUtilities.Setup(x => x.GenerateNewTokenAsync(It.IsAny<TokenRequestDto>()))
                 .ReturnsAsync(new TokenResponseDto() { status = false, message = "کاربری با این یوزر و پس وجود ندارد" });
-            string expected = "کاربری با این یوزر و پس وجود ندارد";
+            string expected = "1x111keyvanx11";
 
 
 
@@ -143,7 +143,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
 
             _mockUtilities.Setup(x => x.RefreshAccessTokenAsync(It.IsAny<TokenRequestDto>()))
                 .ReturnsAsync(new TokenResponseDto() { status = false,message = "خطا در اعتبار سنجی خودکار" });
-            string expected = "خطا در اعتبار سنجی خودکار";
+            string expected = "0x000keyvanx00";
 
 
 
@@ -180,7 +180,8 @@ namespace MadPay724.Test.UnitTests.ControllersTests
             _mockUserManager.Setup(x => x.CreateAsync(It.IsAny<User>(),It.IsAny<string>()))
                 .ReturnsAsync(IdentityResult.Success);
 
-            _mockAuthService.Setup(x => x.AddUserPreNeededAsync(It.IsAny<Photo>(),It.IsAny<Notification>()))
+            _mockAuthService.Setup(x => x.AddUserPreNeededAsync(It.IsAny<Photo>(),It.IsAny<Notification>()
+                , It.IsAny<Wallet>(), It.IsAny<Wallet>()))
                 .ReturnsAsync(true);
 
 
