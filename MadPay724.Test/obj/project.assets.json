@@ -4130,7 +4130,7 @@
           "build/netcoreapp1.0/xunit.runner.visualstudio.props": {}
         }
       },
-      "ZNetCS.AspNetCore.Logging.EntityFrameworkCore/2.0.1": {
+      "ZNetCS.AspNetCore.Logging.EntityFrameworkCore/2.0.2": {
         "type": "package",
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "2.0.1",
@@ -4174,7 +4174,7 @@
           "Microsoft.EntityFrameworkCore": "3.0.0-preview7.19362.6",
           "Microsoft.EntityFrameworkCore.SqlServer": "3.0.0-preview7.19362.6",
           "Microsoft.Extensions.Identity.Stores": "3.0.0-preview7.19365.7",
-          "ZNetCS.AspNetCore.Logging.EntityFrameworkCore": "2.0.1"
+          "ZNetCS.AspNetCore.Logging.EntityFrameworkCore": "2.0.2"
         },
         "compile": {
           "bin/placeholder/MadPay724.Data.dll": {}
@@ -11971,10 +11971,10 @@
         "xunit.runner.visualstudio.nuspec"
       ]
     },
-    "ZNetCS.AspNetCore.Logging.EntityFrameworkCore/2.0.1": {
-      "sha512": "flwPuy57gfWJN9/R8r5ZqxYJ0dNrbVhVWXrYRKno78MKn7u2vyHF5F6yEwbu7GvD+tOhh41EddTVK1bvxtFdTg==",
+    "ZNetCS.AspNetCore.Logging.EntityFrameworkCore/2.0.2": {
+      "sha512": "yys1h7p0+3LD250/7f+LjHw2L3n7PUBXEw2Wn3DSOvWjvGAZ3BKmD418TnfRVyXUxW0U0r3IMl3guXj3Wjudzg==",
       "type": "package",
-      "path": "znetcs.aspnetcore.logging.entityframeworkcore/2.0.1",
+      "path": "znetcs.aspnetcore.logging.entityframeworkcore/2.0.2",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -11982,7 +11982,7 @@
         "lib/net461/ZNetCS.AspNetCore.Logging.EntityFrameworkCore.xml",
         "lib/netstandard2.0/ZNetCS.AspNetCore.Logging.EntityFrameworkCore.dll",
         "lib/netstandard2.0/ZNetCS.AspNetCore.Logging.EntityFrameworkCore.xml",
-        "znetcs.aspnetcore.logging.entityframeworkcore.2.0.1.nupkg.sha512",
+        "znetcs.aspnetcore.logging.entityframeworkcore.2.0.2.nupkg.sha512",
         "znetcs.aspnetcore.logging.entityframeworkcore.nuspec"
       ]
     },

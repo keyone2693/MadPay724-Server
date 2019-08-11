@@ -9,6 +9,7 @@ using MadPay724.Data.Dtos.Site.Panel.Notification;
 using MadPay724.Data.Dtos.Site.Panel.Photos;
 using MadPay724.Data.Dtos.Site.Panel.Roles;
 using MadPay724.Data.Dtos.Site.Panel.Users;
+using MadPay724.Data.Dtos.Site.Panel.Wallet;
 using MadPay724.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -93,9 +94,22 @@ namespace MadPay724.Test.DataInput
                         UserId = "0b83c5e3-404e-44ea-8013-122b691453fa",
                         Approve = 1
                     }
+                },
+                Wallets = new List<Wallet>()
+                {
+                    new Wallet()
+                    {
+                        UserId = "0b83c5e3-404e-44ea-8013-122b691453fa"
+                    }
                 }
             }
         };
+
+        public static readonly WalletForCreateDto walletForCreateDto = new WalletForCreateDto()
+        {
+            Name = "کیف"
+        };
+
         public static readonly BankCardForUpdateDto bankCardForUpdateDto = new BankCardForUpdateDto()
         {
             BankName = "",
