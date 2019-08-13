@@ -1,10 +1,9 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MadPay724.Data.Migrations.MadpayMigrations
 {
-    public partial class createWallet : Migration
+    public partial class creatWallt : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,10 +14,10 @@ namespace MadPay724.Data.Migrations.MadpayMigrations
                     Id = table.Column<string>(nullable: false),
                     DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: false),
-                    Code = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Code = table.Column<long>(nullable: false),
                     IsMain = table.Column<bool>(nullable: false),
                     IsSms = table.Column<bool>(nullable: false),
+                    IsBlock = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(maxLength: 20, nullable: false),
                     Inventory = table.Column<int>(nullable: false),
                     InterMoney = table.Column<int>(nullable: false),
@@ -36,12 +35,6 @@ namespace MadPay724.Data.Migrations.MadpayMigrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Wallets_Code",
-                table: "Wallets",
-                column: "Code",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Wallets_UserId",

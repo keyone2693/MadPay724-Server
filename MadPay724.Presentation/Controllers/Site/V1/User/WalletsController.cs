@@ -91,12 +91,12 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
             {
                 if (walletCount <= 10)
                 {
-                    //var code = await _db.WalletRepository.GetLastWalletCodeAsync() +1;
+                    var code = await _db.WalletRepository.GetLastWalletCodeAsync() +1;
 
-                    //while (await _db.WalletRepository.WalletCodeExistAsync(code))
-                    //{
-                    //    code += 1;
-                    //}
+                    while (await _db.WalletRepository.WalletCodeExistAsync(code))
+                    {
+                        code += 1;
+                    }
 
                     if (await _walletService.CheckInventoryAsync(1500, walletForCreateDto.WalletId))
                     {
@@ -107,7 +107,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
                             {
                                 UserId = userId,
                                 IsBlock = false,
-                                // Code = code
+                                Code = code,
                                 Name = walletForCreateDto.WalletName,
                                 IsMain = false,
                                 IsSms = false,

@@ -350,9 +350,7 @@ namespace MadPay724.Data.Migrations.MadpayMigrations
                 {
                     b.Property<string>("Id");
 
-                    b.Property<long>("Code")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<long>("Code");
 
                     b.Property<DateTime>("DateCreated");
 
@@ -380,9 +378,6 @@ namespace MadPay724.Data.Migrations.MadpayMigrations
                         .IsRequired();
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Code")
-                        .IsUnique();
 
                     b.HasIndex("UserId");
 

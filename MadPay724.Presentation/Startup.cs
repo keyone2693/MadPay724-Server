@@ -30,6 +30,8 @@ using MadPay724.Services.Seed.Interface;
 using MadPay724.Services.Seed.Service;
 using MadPay724.Services.Site.Admin.User.Interface;
 using MadPay724.Services.Site.Admin.User.Service;
+using MadPay724.Services.Site.Admin.Wallet.Interface;
+using MadPay724.Services.Site.Admin.Wallet.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Identity;
@@ -166,6 +168,7 @@ namespace MadPay724.Presentation
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUploadService, UploadService>();
+            services.AddScoped<IWalletService, WalletService>();
             services.AddScoped<IUtilities, Utilities>();
             services.AddScoped<UserCheckIdFilter>();
             services.AddScoped<DocumentApproveFilter>();

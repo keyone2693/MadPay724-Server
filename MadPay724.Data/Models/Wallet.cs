@@ -15,7 +15,7 @@ namespace MadPay724.Data.Models
             DateModified = DateTime.Now;
         }
         [Required]
-        // [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Code { get; set; }
         [Required]
         public bool IsMain { get; set; }
