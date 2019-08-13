@@ -10,6 +10,7 @@ using MadPay724.Data.Models;
 using MadPay724.Presentation.Helpers.Filters;
 using MadPay724.Presentation.Routes.V1;
 using MadPay724.Repo.Infrastructure;
+using MadPay724.Services.Site.Admin.Wallet.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -25,13 +26,15 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
         private readonly IUnitOfWork<MadpayDbContext> _db;
         private readonly IMapper _mapper;
         private readonly ILogger<WalletsController> _logger;
+        private readonly IWalletService _walletService;
 
         public WalletsController(IUnitOfWork<MadpayDbContext> dbContext, IMapper mapper,
-            ILogger<WalletsController> logger)
+            ILogger<WalletsController> logger, IWalletService walletService)
         {
             _db = dbContext;
             _mapper = mapper;
             _logger = logger;
+            _walletService = walletService;
         }
 
 
@@ -41,7 +44,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
         public async Task<IActionResult> GetWallets(string userId)
         {
             var walletsFromRepo = await _db.WalletRepository
-                .GetManyAsync(p => p.UserId == userId, s => s.OrderByDescending(x =>x.IsMain).ThenByDescending(x => x.IsSms), "");
+                .GetManyAsync(p => p.UserId == userId, s => s.OrderByDescending(x => x.IsMain).ThenByDescending(x => x.IsSms), "");
 
             var bankcards = _mapper.Map<List<WalletForReturnDto>>(walletsFromRepo);
 
@@ -81,7 +84,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
         public async Task<IActionResult> AddWallet(string userId, WalletForCreateDto walletForCreateDto)
         {
             var walletFromRepo = await _db.WalletRepository
-                .GetAsync(p => p.Name == walletForCreateDto.Name && p.UserId == userId);
+                .GetAsync(p => p.Name == walletForCreateDto.WalletName && p.UserId == userId);
             var walletCount = await _db.WalletRepository.WalletCountAsync(userId);
 
             if (walletFromRepo == null)
@@ -94,24 +97,50 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
                     //{
                     //    code += 1;
                     //}
-                    var cardForCreate = new Wallet()
+
+                    if (await _walletService.CheckInventoryAsync(1500, walletForCreateDto.WalletId))
                     {
-                        UserId = userId,
-                        IsBlock = false
-                        // Code = code
-                    };
-                    var wallet = _mapper.Map(walletForCreateDto, cardForCreate);
+                        var decResult = await _walletService.DecreaseInventoryAsync(1500, walletForCreateDto.WalletId);
+                        if (decResult.status)
+                        {
+                            var wallet = new Wallet()
+                            {
+                                UserId = userId,
+                                IsBlock = false,
+                                // Code = code
+                                Name = walletForCreateDto.WalletName,
+                                IsMain = false,
+                                IsSms = false,
+                                Inventory = 0,
+                                InterMoney = 0,
+                                ExitMoney = 0,
+                                OnExitMoney = 0
+                            };
 
-                    await _db.WalletRepository.InsertAsync(wallet);
+                            await _db.WalletRepository.InsertAsync(wallet);
 
-                    if (await _db.SaveAsync())
-                    {
-                        var walletForReturn = _mapper.Map<WalletForReturnDto>(wallet);
+                            if (await _db.SaveAsync())
+                            {
+                                var walletForReturn = _mapper.Map<WalletForReturnDto>(wallet);
 
-                        return CreatedAtRoute("GetWallet", new { id = wallet.Id, userId = userId }, walletForReturn);
+                                return CreatedAtRoute("GetWallet", new { id = wallet.Id, userId = userId },
+                                    walletForReturn);
+                            }
+                            else
+                            {
+                                var incResult = await _walletService.IncreaseInventoryAsync(1500, walletForCreateDto.WalletId);
+                                if(incResult.status)
+                                    return BadRequest("خطا در ثبت اطلاعات");
+                                else
+                                    return BadRequest("خطا در ثبت اطلاعات در صورت کسری موجودی با پشتیبانی در تماس باشید");
+
+                            }
+                        }
+                        else
+                        {
+                            return BadRequest(decResult.message);
+                        }
                     }
-                    else
-                        return BadRequest("خطا در ثبت اطلاعات");
                 }
                 {
                     return BadRequest("شما اجازه وارد کردن بیش از 10 کیف پول را ندارید");
