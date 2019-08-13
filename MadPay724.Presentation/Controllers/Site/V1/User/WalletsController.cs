@@ -97,6 +97,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
                     var cardForCreate = new Wallet()
                     {
                         UserId = userId,
+                        IsBlock = false
                         // Code = code
                     };
                     var wallet = _mapper.Map(walletForCreateDto, cardForCreate);

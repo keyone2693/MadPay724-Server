@@ -21,6 +21,8 @@ namespace MadPay724.Data.Models
         public bool IsMain { get; set; }
         [Required]
         public bool IsSms { get; set; }
+        [Required]
+        public bool IsBlock { get; set; }
 
         [Required]
         [StringLength(20, MinimumLength = 0)]

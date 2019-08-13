@@ -69,7 +69,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
             }
             else{
                 _logger.LogError($"کاربر   {userForUpdateDto.Name} اپدیت نشد");
-
+                
                 return BadRequest(new ReturnMessage()
                 {
                     status = false,

@@ -43,7 +43,7 @@
           "dependencies": {
             "IdentityServer4": {
               "target": "Package",
-              "version": "[2.5.0, )"
+              "version": "[3.0.0-preview7.33, )"
             },
             "Microsoft.NETCore.App": {
               "include": "None",
@@ -63,10 +63,14 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "frameworkReferences": [
-            "Microsoft.AspNetCore.App",
-            "Microsoft.NETCore.App"
-          ]
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          }
         }
       }
     }

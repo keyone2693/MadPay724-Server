@@ -9,6 +9,8 @@ namespace MadPay724.Data.Dtos.Site.Panel.Wallet
         public string Id { get; set; }
         public bool IsMain { get; set; }
         public bool IsSms { get; set; }
+        public bool IsBlock { get; set; }
+
 
         public string Name { get; set; }
 
