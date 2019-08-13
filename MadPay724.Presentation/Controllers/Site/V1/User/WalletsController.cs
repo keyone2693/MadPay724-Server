@@ -141,6 +141,9 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
                             return BadRequest(decResult.message);
                         }
                     }
+                    else {
+                        return BadRequest("کیف پول انتخابی موجودی کافی ندارد");
+                    }
                 }
                 {
                     return BadRequest("شما اجازه وارد کردن بیش از 10 کیف پول را ندارید");

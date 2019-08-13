@@ -21,7 +21,7 @@ namespace MadPay724.Services.Site.Admin.Auth.Service
             _db = dbContext;
             _utilities = utilities;
         }
-        public async Task<bool> AddUserPreNeededAsync(Photo photo,Notification notify, Wallet walletMain, Wallet walletSms)
+        public async Task<bool> AddUserPreNeededAsync(Photo photo,Notification notify, Data.Models.Wallet walletMain, Data.Models.Wallet walletSms)
         {
             if(walletMain !=null)
                 await _db.WalletRepository.InsertAsync(walletMain);

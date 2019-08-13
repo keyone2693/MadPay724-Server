@@ -107,7 +107,8 @@ namespace MadPay724.Test.DataInput
 
         public static readonly WalletForCreateDto walletForCreateDto = new WalletForCreateDto()
         {
-            Name = "کیف"
+            WalletName = "کیف",
+            WalletId = "0b83c5e3-404e-44ea-803-45245254254521"
         };
 
         public static readonly BankCardForUpdateDto bankCardForUpdateDto = new BankCardForUpdateDto()

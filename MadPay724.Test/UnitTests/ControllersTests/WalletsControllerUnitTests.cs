@@ -6,11 +6,14 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using MadPay724.Common.ErrorAndMessage;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Site.Panel.Wallet;
 using MadPay724.Data.Models;
 using MadPay724.Presentation.Controllers.Site.V1.User;
 using MadPay724.Repo.Infrastructure;
+using MadPay724.Services.Site.Admin.Wallet.Interface;
+using MadPay724.Services.Site.Admin.Wallet.Service;
 using MadPay724.Test.DataInput;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -27,13 +30,15 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         private readonly Mock<IMapper> _mockMapper;
         private readonly Mock<ILogger<WalletsController>> _mockLogger;
         private readonly WalletsController _controller;
+        private readonly Mock<IWalletService> _mockWalletService;
 
         public WalletsControllerUnitTests()
         {
             _mockRepo = new Mock<IUnitOfWork<MadpayDbContext>>();
             _mockMapper = new Mock<IMapper>();
             _mockLogger = new Mock<ILogger<WalletsController>>();
-            _controller = new WalletsController(_mockRepo.Object, _mockMapper.Object, _mockLogger.Object);
+            _mockWalletService = new Mock<IWalletService>();
+            _controller = new WalletsController(_mockRepo.Object, _mockMapper.Object, _mockLogger.Object, _mockWalletService.Object);
         }
 
         #region GetWalletTests
@@ -172,13 +177,16 @@ namespace MadPay724.Test.UnitTests.ControllersTests
                 .ReturnsAsync(5);
 
 
+            _mockWalletService.Setup(x => x.CheckInventoryAsync(It.IsAny<int>(), It.IsAny<string>()))
+                .ReturnsAsync(true);
+
+            _mockWalletService.Setup(x => x.DecreaseInventoryAsync(It.IsAny<int>(), It.IsAny<string>()))
+                .ReturnsAsync(new ReturnMessage(){status = true});
+
             _mockRepo.Setup(x => x.WalletRepository.InsertAsync(It.IsAny<Wallet>()));
 
             _mockRepo.Setup(x => x.SaveAsync()).ReturnsAsync(true);
 
-
-            _mockMapper.Setup(x => x.Map(It.IsAny<WalletForCreateDto>(), It.IsAny<Wallet>()))
-                .Returns(new Wallet());
 
             _mockMapper.Setup(x => x.Map<WalletForReturnDto>(It.IsAny<Wallet>()))
                 .Returns(new WalletForReturnDto());
@@ -228,6 +236,62 @@ namespace MadPay724.Test.UnitTests.ControllersTests
             Assert.NotNull(okResult);
             Assert.IsType<string>(okResult.Value);
             Assert.Equal("شما اجازه وارد کردن بیش از 10 کیف پول را ندارید", okResult.Value.ToString());
+            Assert.Equal(400, okResult.StatusCode);
+        }
+
+        [Fact]
+        public async Task AddWallet_Fail_NotEnoughInventory()
+        {
+            //Arrange------------------------------------------------------------------------------------------------------------------------------
+            _mockRepo.Setup(x => x.WalletRepository.GetAsync(It.IsAny<Expression<Func<Wallet, bool>>>()))
+                .ReturnsAsync(It.IsAny<Wallet>());
+
+            _mockRepo.Setup(x => x.WalletRepository.WalletCountAsync(It.IsAny<string>()))
+                .ReturnsAsync(5);
+
+
+            _mockWalletService.Setup(x => x.CheckInventoryAsync(It.IsAny<int>(), It.IsAny<string>()))
+                .ReturnsAsync(false);
+
+
+
+            //Act----------------------------------------------------------------------------------------------------------------------------------
+            var result = await _controller.AddWallet(It.IsAny<string>(),
+                UnitTestsDataInput.walletForCreateDto);
+            var okResult = result as BadRequestObjectResult;
+            //Assert-------------------------------------------------------------------------------------------------------------------------------
+            Assert.NotNull(okResult);
+            Assert.IsType<string>(okResult.Value);
+            Assert.Equal("کیف پول انتخابی موجودی کافی ندارد", okResult.Value.ToString());
+            Assert.Equal(400, okResult.StatusCode);
+        }
+        [Fact]
+        public async Task AddWallet_Fail_InventoryDecError()
+        {
+            //Arrange------------------------------------------------------------------------------------------------------------------------------
+            _mockRepo.Setup(x => x.WalletRepository.GetAsync(It.IsAny<Expression<Func<Wallet, bool>>>()))
+                .ReturnsAsync(It.IsAny<Wallet>());
+
+            _mockRepo.Setup(x => x.WalletRepository.WalletCountAsync(It.IsAny<string>()))
+                .ReturnsAsync(5);
+
+
+            _mockWalletService.Setup(x => x.CheckInventoryAsync(It.IsAny<int>(), It.IsAny<string>()))
+                .ReturnsAsync(true);
+
+            _mockWalletService.Setup(x => x.DecreaseInventoryAsync(It.IsAny<int>(), It.IsAny<string>()))
+                .ReturnsAsync(new ReturnMessage() { status = false,message = ""});
+
+
+
+            //Act----------------------------------------------------------------------------------------------------------------------------------
+            var result = await _controller.AddWallet(It.IsAny<string>(),
+                UnitTestsDataInput.walletForCreateDto);
+            var okResult = result as BadRequestObjectResult;
+            //Assert-------------------------------------------------------------------------------------------------------------------------------
+            Assert.NotNull(okResult);
+            Assert.IsType<string>(okResult.Value);
+            //Assert.Equal("خطا در کاهش موجودی", okResult.Value.ToString());
             Assert.Equal(400, okResult.StatusCode);
         }
         #endregion
