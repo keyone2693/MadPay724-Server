@@ -121,21 +121,20 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
         [Authorize(Policy = "RequireUserRole")]
         [ServiceFilter(typeof(UserCheckIdFilter))]
         [HttpGet(ApiV1Routes.Ticket.GetTicketContent, Name = "GetTicketContent")]
-        public async Task<IActionResult> GetTicketContent(string id, string userId)
+        public async Task<IActionResult> GetTicketContent(string userId, string ticketId, string id)
         {
-            var ticketFromRepo = await _db.TicketContentRepository.GetByIdAsync(id);
-            if (ticketFromRepo != null)
+            var ticketFromRepo = await _db.TicketRepository.GetByIdAsync(ticketId);
+            if (ticketFromRepo.UserId != User.FindFirst(ClaimTypes.NameIdentifier).Value)
             {
-                if (ticketFromRepo.Ticket.UserId == User.FindFirst(ClaimTypes.NameIdentifier).Value)
-                {
-                    return Ok(ticketFromRepo);
-                }
-                else
-                {
-                    _logger.LogError($"کاربر   {userId} قصد دسترسی به تیکت دیگری را دارد");
+                _logger.LogError($"کاربر   {userId} قصد دسترسی به تیکت دیگری را دارد");
 
-                    return BadRequest("شما اجازه دسترسی به تیکت کاربر دیگری را ندارید");
-                }
+                return BadRequest("شما اجازه دسترسی به تیکت کاربر دیگری را ندارید");
+            }
+
+            var ticketContentFromRepo = await _db.TicketContentRepository.GetByIdAsync(id);
+            if (ticketContentFromRepo != null)
+            {
+                return Ok(ticketContentFromRepo);
             }
             else
             {
@@ -149,12 +148,9 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
         [HttpGet(ApiV1Routes.Ticket.GetTicketContents)]
         public async Task<IActionResult> GetTicketContents(string id, string userId)
         {
-            var ticketFromRepo = (await _db.TicketRepository.GetManyAsync(p => p.Id == id,
-                s => s.OrderByDescending(x => x.DateCreated), "TicketContents")).SingleOrDefault();
-            if (ticketFromRepo == null)
-                return Ok(new List<TicketContent>());
-            else
-                return Ok(ticketFromRepo.TicketContents.ToList());
+            var ticketFromRepo = await _db.TicketContentRepository.GetManyAsync(p => p.TicketId == id,
+                s => s.OrderByDescending(x => x.DateCreated), "");
+            return Ok(ticketFromRepo);
         }
 
         [Authorize(Policy = "RequireUserRole")]

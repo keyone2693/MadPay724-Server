@@ -211,6 +211,9 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         public async Task GetTicketContent_Success()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
+            _mockRepo.Setup(x => x.TicketRepository.GetByIdAsync(It.IsAny<string>()))
+                .ReturnsAsync(UnitTestsDataInput.Users.First().Tickets.First());
+
             _mockRepo.Setup(x => x.TicketContentRepository.GetByIdAsync(It.IsAny<string>()))
                 .ReturnsAsync(UnitTestsDataInput.Users.First().Tickets.First().TicketContents.First());
 
@@ -235,7 +238,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
 
 
             //Act----------------------------------------------------------------------------------------------------------------------------------
-            var result = await _controller.GetTicketContent(It.IsAny<string>(), It.IsAny<string>());
+            var result = await _controller.GetTicketContent(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>());
             var okResult = result as OkObjectResult;
             //Assert-------------------------------------------------------------------------------------------------------------------------------
             Assert.NotNull(okResult);
@@ -246,9 +249,11 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         public async Task GetTicketContent_Fail_SeeAnOtherOneCard()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
+            _mockRepo.Setup(x => x.TicketRepository.GetByIdAsync(It.IsAny<string>()))
+                .ReturnsAsync(UnitTestsDataInput.Users.First().Tickets.First());
+
             _mockRepo.Setup(x => x.TicketContentRepository.GetByIdAsync(It.IsAny<string>()))
                 .ReturnsAsync(UnitTestsDataInput.Users.First().Tickets.First().TicketContents.First());
-
 
             var rout = new RouteData();
             rout.Values.Add("userId", UnitTestsDataInput.userLogedInId);
@@ -270,7 +275,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
             };
 
             //Act----------------------------------------------------------------------------------------------------------------------------------
-            var result = await _controller.GetTicketContent(It.IsAny<string>(), It.IsAny<string>());
+            var result = await _controller.GetTicketContent(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>());
             var okResult = result as BadRequestObjectResult;
             //Assert-------------------------------------------------------------------------------------------------------------------------------
             Assert.NotNull(okResult);
@@ -284,12 +289,34 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         public async Task GetTicketContent_Fail_NullTicketContent()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
+
+            _mockRepo.Setup(x => x.TicketRepository.GetByIdAsync(It.IsAny<string>()))
+                .ReturnsAsync(UnitTestsDataInput.Users.First().Tickets.First());
+
             _mockRepo.Setup(x => x.TicketContentRepository.GetByIdAsync(It.IsAny<string>()))
                 .ReturnsAsync(It.IsAny<TicketContent>());
 
+            var rout = new RouteData();
+            rout.Values.Add("userId", UnitTestsDataInput.userLogedInId);
+
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.NameIdentifier,UnitTestsDataInput.userLogedInId),
+            };
+            var identity = new ClaimsIdentity(claims);
+            var claimsPrincipal = new ClaimsPrincipal(identity);
+            var mockContext = new Mock<HttpContext>();
+
+            mockContext.SetupGet(x => x.User).Returns(claimsPrincipal);
+
+            _controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = mockContext.Object,
+                RouteData = rout
+            };
 
             //Act----------------------------------------------------------------------------------------------------------------------------------
-            var result = await _controller.GetTicketContent(It.IsAny<string>(), It.IsAny<string>());
+            var result = await _controller.GetTicketContent(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>());
             var okResult = result as BadRequestObjectResult;
             //Assert-------------------------------------------------------------------------------------------------------------------------------
             Assert.NotNull(okResult);
@@ -325,6 +352,9 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
 
+            var fileMock = new Mock<IFormFile>();
+
+            var file = fileMock.Object;
 
             _mockRepo.Setup(x => x.TicketContentRepository.InsertAsync(It.IsAny<TicketContent>()));
 
@@ -344,7 +374,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
 
             //Act----------------------------------------------------------------------------------------------------------------------------------
             var result = await _controller.AddTicketContent(It.IsAny<string>(), It.IsAny<string>(),
-                new TicketContentForCreateDto() { Text = "Text" });
+                new TicketContentForCreateDto() { Text = "Text" ,File = file });
             var okResult = result as CreatedAtRouteResult;
             //Assert-------------------------------------------------------------------------------------------------------------------------------
             Assert.NotNull(okResult);
