@@ -140,5 +140,27 @@ namespace MadPay724.Presentation.Routes.V1
 
         }
         #endregion
+
+        #region WalletRoutes
+        public static class Ticket
+        {
+            //api/v1/site/panel/users/{userId}/tickets
+            //POST
+            public const string AddTicket = BaseSitePanel + "/users/{userId}/tickets";
+            //api/v1/site/panel/users/{userId}/tickets
+            //GET
+            public const string GetTickets = BaseSitePanel + "/users/{userId}/tickets";
+            //api/v1/site/panel/users/{userId}/tickets/{id}
+            //GET
+            public const string GetTicket = BaseSitePanel + "/users/{userId}/tickets/{id}";
+            //api/v1/site/panel/users/{userId}/tickets/{id}/ticketContents
+            //POST
+            public const string AddTicketContent = BaseSitePanel + "/users/{userId}/tickets/{id}/ticketcontents";
+            //api/v1/site/panel/users/{userId}/tickets/{id}/ticketContents
+            //POST
+            public const string AddTicketFile = BaseSitePanel + "/users/{userId}/tickets/file";
+
+        }
+        #endregion
     }
 }

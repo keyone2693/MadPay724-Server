@@ -32,6 +32,8 @@ namespace MadPay724.Data.DatabaseContext
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Document> Documents { get; set; }
         public DbSet<Wallet> Wallets { get; set; }
+        public DbSet<Ticket> Tickets { get; set; }
+        public DbSet<TicketContent> TicketContents { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -52,12 +54,6 @@ namespace MadPay724.Data.DatabaseContext
                     .HasForeignKey(ur => ur.UserId)
                     .IsRequired();
             });
-            //builder.Entity<Wallet>(
-            //    code =>
-            //    {
-            //              code.HasIndex(e => e.Code).IsUnique() ;
-            //              code.Property(e => e.Code).ValueGeneratedOnAdd();
-            //    });
         }
 
 
