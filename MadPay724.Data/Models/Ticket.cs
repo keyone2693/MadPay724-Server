@@ -19,7 +19,9 @@ namespace MadPay724.Data.Models
         [StringLength(50, MinimumLength = 0)]
         public string Title { get; set; }
         [Required]
-        public bool Status { get; set; }
+        public bool Closed { get; set; }
+        [Required]
+        public short Department { get; set; }
         [Required]
         public short Level { get; set; }
         [Required]

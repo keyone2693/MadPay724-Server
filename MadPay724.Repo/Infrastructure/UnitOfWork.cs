@@ -135,6 +135,32 @@ namespace MadPay724.Repo.Infrastructure
                 return walletRepository;
             }
         }
+
+        private ITicketRepository ticketRepository;
+        public ITicketRepository TicketRepository
+        {
+            get
+            {
+                if (ticketRepository == null)
+                {
+                    ticketRepository = new TicketRepository(_db);
+                }
+                return ticketRepository;
+            }
+        }
+
+        private ITicketContentRepository ticketContentRepository;
+        public ITicketContentRepository TicketContentRepository
+        {
+            get
+            {
+                if (ticketContentRepository == null)
+                {
+                    ticketContentRepository = new TicketContentRepository(_db);
+                }
+                return ticketContentRepository;
+            }
+        }
         #endregion
 
 

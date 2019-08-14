@@ -16,6 +16,8 @@ namespace MadPay724.Repo.Infrastructure
         IBankCardRepository BankCardRepository { get; }
         IDocumentRepository DocumentRepository { get; }
         IWalletRepository WalletRepository { get; }
+        ITicketRepository TicketRepository { get; }
+        ITicketContentRepository TicketContentRepository { get; }
         bool Save();
         Task<bool> SaveAsync();
 
