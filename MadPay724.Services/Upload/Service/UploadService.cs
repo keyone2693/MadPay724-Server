@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -44,7 +45,8 @@ namespace MadPay724.Services.Upload.Service
             }
         }
 
-        public async Task<FileUploadedDto> UploadFileToLocal(IFormFile file, string userId, string WebRootPath, string UrlBegan)
+        public async Task<FileUploadedDto> UploadFileToLocal(IFormFile file, string userId,
+            string WebRootPath, string UrlBegan, string Url = "Files\\Pic\\Profile")
         {
 
             if (file.Length > 0)
@@ -54,22 +56,22 @@ namespace MadPay724.Services.Upload.Service
                     string fileName = Path.GetFileName(file.FileName);
                     string fileExtention = Path.GetExtension(fileName);
                     string fileNewName = string.Format("{0}{1}", userId, fileExtention);
-                    string path = Path.Combine(WebRootPath, "Files\\Pic\\Profile");
+                    string path = Path.Combine(WebRootPath, Url);
                     string fullPath = Path.Combine(path, fileNewName);
 
                     using (var stream = new FileStream(fullPath, FileMode.Create))
                     {
                         await file.CopyToAsync(stream);
                     }
-
                     return new FileUploadedDto()
                     {
                         Status = true,
                         LocalUploaded = true,
                         Message = "با موفقیت در لوکال آپلود شد",
                         PublicId = "0",
-                        Url = string.Format("{0}/{1}", UrlBegan, "wwwroot/Files/Pic/Profile/" + fileNewName)
+                        Url = $"{UrlBegan}/{"wwwroot/" + Url.Split('\\').Aggregate("", (current, str) => current + (str + "/")) + fileNewName}"
                     };
+                    
                 }
                 catch (Exception ex)
                 {

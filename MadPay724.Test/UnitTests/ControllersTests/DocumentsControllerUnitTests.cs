@@ -58,7 +58,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
 
 
             _mockUploadService.Setup(x => x.UploadFileToLocal(It.IsAny<IFormFile>(),
-                    It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                    It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(UnitTestsDataInput.fileUploadedDto_Success);
 
             _mockMapper.Setup(x => x.Map(It.IsAny<DocumentForCreateDto>(), It.IsAny<Document>()))
@@ -143,7 +143,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
 
 
             _mockUploadService.Setup(x => x.UploadFileToLocal(It.IsAny<IFormFile>(),
-                    It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                    It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(UnitTestsDataInput.fileUploadedDto_Fail_WrongFile);
             var httpContext = new DefaultHttpContext();
             httpContext.Request.Scheme = "222";
@@ -174,7 +174,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
             _mockRepo.Setup(x => x.SaveAsync()).ReturnsAsync(false);
 
             _mockUploadService.Setup(x => x.UploadFileToLocal(It.IsAny<IFormFile>(),
-                    It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                    It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(UnitTestsDataInput.fileUploadedDto_Success);
 
             var httpContext = new DefaultHttpContext();

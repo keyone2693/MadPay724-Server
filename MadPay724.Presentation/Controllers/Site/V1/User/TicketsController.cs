@@ -10,7 +10,9 @@ using MadPay724.Data.Models;
 using MadPay724.Presentation.Helpers.Filters;
 using MadPay724.Presentation.Routes.V1;
 using MadPay724.Repo.Infrastructure;
+using MadPay724.Services.Upload.Interface;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -23,13 +25,18 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
         private readonly IUnitOfWork<MadpayDbContext> _db;
         private readonly IMapper _mapper;
         private readonly ILogger<TicketsController> _logger;
+        private readonly IUploadService _uploadService;
+        private readonly IWebHostEnvironment _env;
 
         public TicketsController(IUnitOfWork<MadpayDbContext> dbContext, IMapper mapper,
-            ILogger<TicketsController> logger)
+            ILogger<TicketsController> logger, IUploadService uploadService,
+            IWebHostEnvironment env)
         {
             _db = dbContext;
             _mapper = mapper;
             _logger = logger;
+            _uploadService = uploadService;
+            _env = env;
         }
 
 
@@ -62,7 +69,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
                 }
                 else
                 {
-                    _logger.LogError($"کاربر   {RouteData.Values["userId"]} قصد دسترسی به تیکت دیگری را دارد");
+                    _logger.LogError($"کاربر   {userId} قصد دسترسی به تیکت دیگری را دارد");
 
                     return BadRequest("شما اجازه دسترسی به تیکت کاربر دیگری را ندارید");
                 }
@@ -112,31 +119,79 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
 
         }
 
+        //--------------------------------------------------------------------------------------------------------------------------------
+        [Authorize(Policy = "RequireUserRole")]
+        [ServiceFilter(typeof(UserCheckIdFilter))]
+        [HttpGet(ApiV1Routes.Ticket.GetTicketContent, Name = "GetTicketContent")]
+        public async Task<IActionResult> GetTicketContent(string id, string userId)
+        {
+            var ticketFromRepo = await _db.TicketContentRepository.GetByIdAsync(id);
+            if (ticketFromRepo != null)
+            {
+                if (ticketFromRepo.Ticket.UserId == User.FindFirst(ClaimTypes.NameIdentifier).Value)
+                {
+                    return Ok(ticketFromRepo);
+                }
+                else
+                {
+                    _logger.LogError($"کاربر   {userId} قصد دسترسی به تیکت دیگری را دارد");
+
+                    return BadRequest("شما اجازه دسترسی به تیکت کاربر دیگری را ندارید");
+                }
+            }
+            else
+            {
+                return BadRequest("تیکتی وجود ندارد");
+            }
+
+        }
         [Authorize(Policy = "RequireUserRole")]
         [HttpPost(ApiV1Routes.Ticket.AddTicketContent)]
-        public async Task<IActionResult> AddTicketContent(string userId, TicketContentForCreateDto ticketContentForCreateDto)
+        public async Task<IActionResult> AddTicketContent(string id, string userId, [FromForm]TicketContentForCreateDto ticketContentForCreateDto)
         {
-            var ticket = new Ticket()
+            var ticketContent = new TicketContent()
             {
-                UserId = userId,
-                Closed = false,
-                IsAdminSide = false
+                TicketId = id,
+                IsAdminSide = false,
+                Text = ticketContentForCreateDto.Text
             };
+            if (ticketContentForCreateDto.File.Length > 0)
+            {
+                var uploadRes = await _uploadService.UploadFileToLocal(
+                    ticketContentForCreateDto.File,
+                    userId,
+                    _env.WebRootPath,
+                    $"{Request.Scheme ?? ""}://{Request.Host.Value ?? ""}{Request.PathBase.Value ?? ""}",
+                    "Files\\TicketContent"
+                );
+                if (uploadRes.Status)
+                {
+                    ticketContent.FileUrl = uploadRes.Url;
+                }
+                else
+                {
+                    return BadRequest(uploadRes.Message);
+                }
+            }
+            else
+            {
+                ticketContent.FileUrl = "";
+            }
 
-            _mapper.Map(ticketContentForCreateDto, ticket);
-
-            await _db.TicketRepository.InsertAsync(ticket);
+            await _db.TicketContentRepository.InsertAsync(ticketContent);
 
             if (await _db.SaveAsync())
             {
-                return CreatedAtRoute("GetTicket", new { id = ticket.Id, userId = userId },
-                    ticket);
+                return CreatedAtRoute("GetTicketContent", new { id = ticketContent.Id, userId = userId },
+                    ticketContent);
             }
             else
             {
                 return BadRequest("خطا در ثبت اطلاعات ");
 
             }
+
+
         }
     }
 }

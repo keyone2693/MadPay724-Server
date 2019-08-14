@@ -10,7 +10,7 @@ namespace MadPay724.Services.Upload.Interface
     public interface IUploadService
     {
         FileUploadedDto UploadFileToCloudinary(IFormFile file, string userId);
-        Task<FileUploadedDto> UploadFileToLocal(IFormFile file, string userId, string WebRootPath, string UrlBegan);
+        Task<FileUploadedDto> UploadFileToLocal(IFormFile file, string userId, string WebRootPath, string UrlBegan, string UrlUrl = "Files\\Pic\\Profile");
         Task<FileUploadedDto> UploadFile(IFormFile file, string userId, string WebRootPath, string UrlBegan);
         FileUploadedDto RemoveFileFromCloudinary(string publicId);
         FileUploadedDto RemoveFileFromLocal(string photoName, string WebRootPath , string filePath);

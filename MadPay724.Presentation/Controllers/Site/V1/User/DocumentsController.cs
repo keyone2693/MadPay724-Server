@@ -28,7 +28,6 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
         private readonly ILogger<DocumentsController> _logger;
         private readonly IUploadService _uploadService;
         private readonly IWebHostEnvironment _env;
-        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public DocumentsController(IUnitOfWork<MadpayDbContext> dbContext, IMapper mapper,
             ILogger<DocumentsController> logger, IUploadService uploadService,

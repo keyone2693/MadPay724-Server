@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using Microsoft.AspNetCore.Http;
 
 namespace MadPay724.Data.Dtos.Site.Panel.Ticket
 {
@@ -10,7 +11,6 @@ namespace MadPay724.Data.Dtos.Site.Panel.Ticket
         [Required]
         [StringLength(1000, MinimumLength = 0)]
         public string Text { get; set; }
-        [StringLength(1000, MinimumLength = 0)]
-        public string FileUrl { get; set; }
+        public IFormFile File { get; set; }
     }
 }

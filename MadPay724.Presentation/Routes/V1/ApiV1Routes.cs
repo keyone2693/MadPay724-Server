@@ -153,12 +153,13 @@ namespace MadPay724.Presentation.Routes.V1
             //api/v1/site/panel/users/{userId}/tickets/{id}
             //GET
             public const string GetTicket = BaseSitePanel + "/users/{userId}/tickets/{id}";
+            //---------------------------------------------------------------------------------------------------------
             //api/v1/site/panel/users/{userId}/tickets/{id}/ticketContents
             //POST
             public const string AddTicketContent = BaseSitePanel + "/users/{userId}/tickets/{id}/ticketcontents";
-            //api/v1/site/panel/users/{userId}/tickets/{id}/ticketContents
-            //POST
-            public const string AddTicketFile = BaseSitePanel + "/users/{userId}/tickets/file";
+            //api/v1/site/panel/users/{userId}/ticketContents/{id}
+            //GET
+            public const string GetTicketContent = BaseSitePanel + "/users/{userId}/ticketcontents/id";
 
         }
         #endregion
