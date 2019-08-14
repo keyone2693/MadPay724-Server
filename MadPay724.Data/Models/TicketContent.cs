@@ -26,7 +26,7 @@ namespace MadPay724.Data.Models
        [Required]
        public string TicketId { get; set; }
        [ForeignKey("TicketId")]
-       public Ticket Ticket { get; set; }
+       public virtual Ticket Ticket { get; set; }
    }
 }
 

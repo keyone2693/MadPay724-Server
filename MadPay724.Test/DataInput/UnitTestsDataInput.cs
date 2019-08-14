@@ -101,6 +101,21 @@ namespace MadPay724.Test.DataInput
                     {
                         UserId = "0b83c5e3-404e-44ea-8013-122b691453fa"
                     }
+                },
+                Tickets = new List<Ticket>()
+                {
+                    new Ticket()
+                    {
+                        Id = "0b83c5e3-404e-44ea91453fa",
+                        UserId = "0b83c5e3-404e-44ea-8013-122b691453fa",
+                        TicketContents = new List<TicketContent>()
+                        {
+                            new TicketContent()
+                            {
+                            TicketId = "0b83c5e3-404e-44ea91453fa"
+                            }
+                        }
+                    }
                 }
             }
         };

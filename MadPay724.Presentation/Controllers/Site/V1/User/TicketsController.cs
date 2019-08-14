@@ -63,8 +63,6 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
             {
                 if (ticketFromRepo.UserId == User.FindFirst(ClaimTypes.NameIdentifier).Value)
                 {
-                    // var ticket = _mapper.Map<TicketForReturnDto>(ticketFromRepo);
-
                     return Ok(ticketFromRepo);
                 }
                 else
@@ -145,6 +143,20 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
             }
 
         }
+
+        [Authorize(Policy = "RequireUserRole")]
+        [ServiceFilter(typeof(UserCheckIdFilter))]
+        [HttpGet(ApiV1Routes.Ticket.GetTicketContents)]
+        public async Task<IActionResult> GetTicketContents(string id, string userId)
+        {
+            var ticketFromRepo = (await _db.TicketRepository.GetManyAsync(p => p.Id == id,
+                s => s.OrderByDescending(x => x.DateCreated), "TicketContents")).SingleOrDefault();
+            if (ticketFromRepo == null)
+                return Ok(new List<TicketContent>());
+            else
+                return Ok(ticketFromRepo.TicketContents.ToList());
+        }
+
         [Authorize(Policy = "RequireUserRole")]
         [HttpPost(ApiV1Routes.Ticket.AddTicketContent)]
         public async Task<IActionResult> AddTicketContent(string id, string userId, [FromForm]TicketContentForCreateDto ticketContentForCreateDto)

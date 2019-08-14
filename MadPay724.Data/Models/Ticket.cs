@@ -31,7 +31,7 @@ namespace MadPay724.Data.Models
         [ForeignKey("UserId")]
         public User User { get; set; }
 
-        public ICollection<TicketContent> TicketContents { get; set; }
+        public virtual ICollection<TicketContent> TicketContents { get; set; }
 
     }
 }
