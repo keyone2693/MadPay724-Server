@@ -143,10 +143,11 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         public async Task GetTickets_Success()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
-            _mockRepo.Setup(x => x.TicketRepository.GetManyAsync(
+            _mockRepo.Setup(x => x.TicketRepository.GetManyAsyncPaging(
                     It.IsAny<Expression<Func<Ticket, bool>>>(),
                     It.IsAny<Func<IQueryable<Ticket>, IOrderedQueryable<Ticket>>>(),
-                    It.IsAny<string>()))
+                    It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()
+                    , It.IsAny<int>()))
                 .ReturnsAsync(new List<Ticket>());
 
             //Act----------------------------------------------------------------------------------------------------------------------------------

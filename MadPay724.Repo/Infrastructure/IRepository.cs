@@ -36,6 +36,18 @@ namespace MadPay724.Repo.Infrastructure
 
             string includeEntity
             );
+
+        Task<IEnumerable<TEntity>> GetManyAsyncPaging(
+            Expression<Func<TEntity, bool>> filter,
+
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy,
+
+            string includeEntity,
+            int count,
+            int firstCount,
+            int page
+        );
+
         Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> where);
     }
 }

@@ -43,10 +43,11 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
         [Authorize(Policy = "RequireUserRole")]
         [ServiceFilter(typeof(UserCheckIdFilter))]
         [HttpGet(ApiV1Routes.Ticket.GetTickets)]
-        public async Task<IActionResult> GetTickets(string userId)
+        public async Task<IActionResult> GetTickets(string userId,int page = 0)
         {
-            var ticketsFromRepo = await _db.TicketRepository
-                .GetManyAsync(p => p.UserId == userId, s => s.OrderBy(x => x.Closed).ThenByDescending(x => x.DateModified), "");
+            var ticketsFromRepo = (await _db.TicketRepository
+                .GetManyAsyncPaging(p => p.UserId == userId, s => s.OrderBy(x => x.Closed).ThenByDescending(x => x.DateModified), "",
+                10,0, page));
 
             // var tickets = _mapper.Map<List<TicketForReturnDto>>(ticketsFromRepo);
 

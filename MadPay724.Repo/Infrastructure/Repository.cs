@@ -165,6 +165,34 @@ namespace MadPay724.Repo.Infrastructure
             GC.SuppressFinalize(this);
         }
 
+        public async Task<IEnumerable<TEntity>> GetManyAsyncPaging(Expression<Func<TEntity,
+            bool>> filter, Func<IQueryable<TEntity>,
+            IOrderedQueryable<TEntity>> orderBy, 
+            string includeEntity, int count, int firstCount, int page)
+        {
+            IQueryable<TEntity> query = _dbSet;
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            foreach (var includeentity in includeEntity.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeentity);
+            }
+
+            if (orderBy != null)
+            {
+                query =  orderBy(query);
+            }
+
+            return await query.Skip(firstCount).Skip(count * page).Take(count).ToListAsync();
+
+
+
+        }
+
         ~Repository()
         {
             Dispose(false);
