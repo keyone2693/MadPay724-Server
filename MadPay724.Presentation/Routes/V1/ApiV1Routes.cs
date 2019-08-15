@@ -149,7 +149,7 @@ namespace MadPay724.Presentation.Routes.V1
             public const string AddTicket = BaseSitePanel + "/users/{userId}/tickets";
             //api/v1/site/panel/users/{userId}/tickets
             //GET
-            public const string GetTickets = BaseSitePanel + "/users/{userId}/tickets";
+            public const string GetTickets = BaseSitePanel + "/users/{userId}/tickets/{page}";
             //api/v1/site/panel/users/{userId}/tickets/{id}
             //GET
             public const string GetTicket = BaseSitePanel + "/users/{userId}/tickets/{id}";
