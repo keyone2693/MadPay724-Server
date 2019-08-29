@@ -59,11 +59,13 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
         [HttpGet(ApiV1Routes.Ticket.GetTicket, Name = "GetTicket")]
         public async Task<IActionResult> GetTicket(string id, string userId)
         {
-            var ticketFromRepo = await _db.TicketRepository.GetByIdAsync(id);
+            var ticketFromRepo = (await _db.TicketRepository.GetManyAsync(p=>p.Id == id,null, "TicketContents"))
+                .SingleOrDefault();
             if (ticketFromRepo != null)
             {
                 if (ticketFromRepo.UserId == User.FindFirst(ClaimTypes.NameIdentifier).Value)
                 {
+                    ticketFromRepo.TicketContents.OrderByDescending(p => p.DateCreated);
                     return Ok(ticketFromRepo);
                 }
                 else
@@ -82,7 +84,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
 
         [Authorize(Policy = "RequireUserRole")]
         [HttpPost(ApiV1Routes.Ticket.AddTicket)]
-        public async Task<IActionResult> AddTicket(string userId, TicketForCreateDto ticketForCreateDto)
+        public async Task<IActionResult> AddTicket(string userId, [FromForm]TicketForCreateDto ticketForCreateDto)
         {
             var ticketFromRepo = await _db.TicketRepository
                 .GetAsync(p => p.Title == ticketForCreateDto.Title && p.UserId == userId);
@@ -102,8 +104,57 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
 
                 if (await _db.SaveAsync())
                 {
-                    return CreatedAtRoute("GetTicket", new { id = ticket.Id, userId = userId },
+                    var ticketContent = new TicketContent()
+                    {
+                        TicketId = ticket.Id,
+                        IsAdminSide = false,
+                        Text = ticketForCreateDto.Text
+                    };
+                    if(ticketForCreateDto.File != null)
+                    {
+                        if (ticketForCreateDto.File.Length > 0)
+                        {
+                            var uploadRes = await _uploadService.UploadFileToLocal(
+                                ticketForCreateDto.File,
+                                userId,
+                                _env.WebRootPath,
+                                $"{Request.Scheme ?? ""}://{Request.Host.Value ?? ""}{Request.PathBase.Value ?? ""}",
+                                "Files\\TicketContent"
+                            );
+                            if (uploadRes.Status)
+                            {
+                                ticketContent.FileUrl = uploadRes.Url;
+                            }
+                            else
+                            {
+                                _db.TicketRepository.Delete(ticket.Id);
+                                await _db.SaveAsync();
+                                return BadRequest(uploadRes.Message);
+                            }
+                        }
+                        else
+                        {
+                            ticketContent.FileUrl = "";
+                        }
+                    }
+                    else
+                    {
+                        ticketContent.FileUrl = "";
+                    }
+
+                    await _db.TicketContentRepository.InsertAsync(ticketContent);
+
+                    if (await _db.SaveAsync())
+                    {
+                        return CreatedAtRoute("GetTicket", new { id = ticket.Id, userId = userId },
                         ticket);
+                    }
+                    else
+                    {
+                        _db.TicketRepository.Delete(ticket.Id);
+                        await _db.SaveAsync();
+                        return BadRequest("خطا در ثبت اطلاعات ");
+                    }
                 }
                 else
                 {
@@ -164,34 +215,42 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
                 IsAdminSide = false,
                 Text = ticketContentForCreateDto.Text
             };
-            if (ticketContentForCreateDto.File.Length > 0)
+            if (ticketContentForCreateDto.File != null)
             {
-                var uploadRes = await _uploadService.UploadFileToLocal(
-                    ticketContentForCreateDto.File,
-                    userId,
-                    _env.WebRootPath,
-                    $"{Request.Scheme ?? ""}://{Request.Host.Value ?? ""}{Request.PathBase.Value ?? ""}",
-                    "Files\\TicketContent"
-                );
-                if (uploadRes.Status)
+                if (ticketContentForCreateDto.File.Length > 0)
                 {
-                    ticketContent.FileUrl = uploadRes.Url;
+                    var uploadRes = await _uploadService.UploadFileToLocal(
+                        ticketContentForCreateDto.File,
+                        userId,
+                        _env.WebRootPath,
+                        $"{Request.Scheme ?? ""}://{Request.Host.Value ?? ""}{Request.PathBase.Value ?? ""}",
+                        "Files\\TicketContent"
+                    );
+                    if (uploadRes.Status)
+                    {
+                        ticketContent.FileUrl = uploadRes.Url;
+                    }
+                    else
+                    {
+                        return BadRequest(uploadRes.Message);
+                    }
                 }
                 else
                 {
-                    return BadRequest(uploadRes.Message);
+                    ticketContent.FileUrl = "";
                 }
             }
             else
             {
                 ticketContent.FileUrl = "";
             }
+           
 
             await _db.TicketContentRepository.InsertAsync(ticketContent);
 
             if (await _db.SaveAsync())
             {
-                return CreatedAtRoute("GetTicketContent", new { id = ticketContent.Id, userId = userId },
+                return CreatedAtRoute("GetTicketContent", new { userId = userId, ticketId = id, id = ticketContent.Id, },
                     ticketContent);
             }
             else

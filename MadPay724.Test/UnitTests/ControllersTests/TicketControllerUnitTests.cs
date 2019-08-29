@@ -50,8 +50,12 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         public async Task GetTicket_Success()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
-            _mockRepo.Setup(x => x.TicketRepository.GetByIdAsync(It.IsAny<string>()))
-                .ReturnsAsync(UnitTestsDataInput.Users.First().Tickets.First());
+
+            _mockRepo.Setup(x => x.TicketRepository.GetManyAsync(
+                    It.IsAny<Expression<Func<Ticket, bool>>>(),
+                    It.IsAny<Func<IQueryable<Ticket>, IOrderedQueryable<Ticket>>>(),
+                    It.IsAny<string>()))
+                .ReturnsAsync(UnitTestsDataInput.Users.First().Tickets);
 
             var rout = new RouteData();
             rout.Values.Add("userId", UnitTestsDataInput.userLogedInId);
@@ -85,8 +89,11 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         public async Task GetTicket_Fail_SeeAnOtherOneCard()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
-            _mockRepo.Setup(x => x.TicketRepository.GetByIdAsync(It.IsAny<string>()))
-                .ReturnsAsync(UnitTestsDataInput.Users.First().Tickets.First());
+            _mockRepo.Setup(x => x.TicketRepository.GetManyAsync(
+                 It.IsAny<Expression<Func<Ticket, bool>>>(),
+                 It.IsAny<Func<IQueryable<Ticket>, IOrderedQueryable<Ticket>>>(),
+                 It.IsAny<string>()))
+             .ReturnsAsync(UnitTestsDataInput.Users.First().Tickets);
 
 
             var rout = new RouteData();
@@ -123,9 +130,11 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         public async Task GetTicket_Fail_NullTicket()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
-            _mockRepo.Setup(x => x.TicketRepository.GetByIdAsync(It.IsAny<string>()))
-                .ReturnsAsync(It.IsAny<Ticket>());
-
+            _mockRepo.Setup(x => x.TicketRepository.GetManyAsync(
+                It.IsAny<Expression<Func<Ticket, bool>>>(),
+                It.IsAny<Func<IQueryable<Ticket>, IOrderedQueryable<Ticket>>>(),
+                It.IsAny<string>()))
+            .ReturnsAsync(new List<Ticket>());
 
             //Act----------------------------------------------------------------------------------------------------------------------------------
             var result = await _controller.GetTicket(It.IsAny<string>(), It.IsAny<string>());
