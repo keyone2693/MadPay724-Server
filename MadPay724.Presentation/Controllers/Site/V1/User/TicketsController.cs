@@ -169,6 +169,40 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
 
         }
 
+        [Authorize(Policy = "RequireUserRole")]
+        [ServiceFilter(typeof(UserCheckIdFilter))]
+        [HttpPut(ApiV1Routes.Ticket.SetTicketClosed)]
+        public async Task<IActionResult> SetTicketClosed(string id, string userId, UpdateTicketClosed updateTicketClosed)
+        {
+            var ticketFromRepo = (await _db.TicketRepository.GetByIdAsync(id));
+            if (ticketFromRepo != null)
+            {
+                if (ticketFromRepo.UserId == User.FindFirst(ClaimTypes.NameIdentifier).Value)
+                {
+                    ticketFromRepo.Closed = updateTicketClosed.Closed;
+                    _db.TicketRepository.Update(ticketFromRepo);
+                    if (await _db.SaveAsync())
+                    {
+                        return Ok();
+                    }
+                    else{
+                        return BadRequest("خطا در ثبت اطلاعات ");
+                    }
+                }
+                else
+                {
+                    _logger.LogError($"کاربر   {userId} قصد دسترسی به تیکت دیگری را دارد");
+
+                    return BadRequest("شما اجازه دسترسی به تیکت کاربر دیگری را ندارید");
+                }
+            }
+            else
+            {
+                return BadRequest("تیکتی وجود ندارد");
+            }
+
+        }
+
         //--------------------------------------------------------------------------------------------------------------------------------
         [Authorize(Policy = "RequireUserRole")]
         [ServiceFilter(typeof(UserCheckIdFilter))]
