@@ -15,46 +15,58 @@ namespace MadPay724.Data.Migrations.MadpayMigrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.0.0-preview7.19362.6")
+                .HasAnnotation("ProductVersion", "3.0.0-preview8.19405.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("MadPay724.Data.Models.BankCard", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<bool>("Approve");
+                    b.Property<bool>("Approve")
+                        .HasColumnType("bit");
 
                     b.Property<string>("BankName")
                         .IsRequired()
+                        .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
                     b.Property<string>("CardNumber")
                         .IsRequired()
+                        .HasColumnType("nvarchar(20)")
                         .HasMaxLength(20);
 
-                    b.Property<DateTime>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateModified");
+                    b.Property<DateTime>("DateModified")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("ExpireDateMonth")
                         .IsRequired()
+                        .HasColumnType("nvarchar(2)")
                         .HasMaxLength(2);
 
                     b.Property<string>("ExpireDateYear")
                         .IsRequired()
+                        .HasColumnType("nvarchar(4)")
                         .HasMaxLength(4);
 
-                    b.Property<string>("HesabNumber");
+                    b.Property<string>("HesabNumber")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OwnerName")
                         .IsRequired()
+                        .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
-                    b.Property<string>("Shaba");
+                    b.Property<string>("Shaba")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -65,43 +77,56 @@ namespace MadPay724.Data.Migrations.MadpayMigrations
 
             modelBuilder.Entity("MadPay724.Data.Models.Document", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Address")
                         .IsRequired()
+                        .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
-                    b.Property<short>("Approve");
+                    b.Property<short>("Approve")
+                        .HasColumnType("smallint");
 
-                    b.Property<DateTime>("BirthDay");
+                    b.Property<DateTime>("BirthDay")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateModified");
+                    b.Property<DateTime>("DateModified")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("FatherNameRegisterCode")
                         .IsRequired()
+                        .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
-                    b.Property<bool>("IsTrue");
+                    b.Property<bool>("IsTrue")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Message")
+                        .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
                     b.Property<string>("NationalCode")
                         .IsRequired()
+                        .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
                     b.Property<string>("PicUrl")
                         .IsRequired()
+                        .HasColumnType("nvarchar(500)")
                         .HasMaxLength(500);
 
                     b.Property<string>("UserId")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -112,38 +137,54 @@ namespace MadPay724.Data.Migrations.MadpayMigrations
 
             modelBuilder.Entity("MadPay724.Data.Models.Notification", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateModified");
+                    b.Property<DateTime>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<bool>("EnterEmail");
+                    b.Property<bool>("EnterEmail")
+                        .HasColumnType("bit");
 
-                    b.Property<bool>("EnterSms");
+                    b.Property<bool>("EnterSms")
+                        .HasColumnType("bit");
 
-                    b.Property<bool>("EnterTelegram");
+                    b.Property<bool>("EnterTelegram")
+                        .HasColumnType("bit");
 
-                    b.Property<bool>("ExitEmail");
+                    b.Property<bool>("ExitEmail")
+                        .HasColumnType("bit");
 
-                    b.Property<bool>("ExitSms");
+                    b.Property<bool>("ExitSms")
+                        .HasColumnType("bit");
 
-                    b.Property<bool>("ExitTelegram");
+                    b.Property<bool>("ExitTelegram")
+                        .HasColumnType("bit");
 
-                    b.Property<bool>("LoginEmail");
+                    b.Property<bool>("LoginEmail")
+                        .HasColumnType("bit");
 
-                    b.Property<bool>("LoginSms");
+                    b.Property<bool>("LoginSms")
+                        .HasColumnType("bit");
 
-                    b.Property<bool>("LoginTelegram");
+                    b.Property<bool>("LoginTelegram")
+                        .HasColumnType("bit");
 
-                    b.Property<bool>("TicketEmail");
+                    b.Property<bool>("TicketEmail")
+                        .HasColumnType("bit");
 
-                    b.Property<bool>("TicketSms");
+                    b.Property<bool>("TicketSms")
+                        .HasColumnType("bit");
 
-                    b.Property<bool>("TicketTelegram");
+                    b.Property<bool>("TicketTelegram")
+                        .HasColumnType("bit");
 
                     b.Property<string>("UserId")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -154,28 +195,37 @@ namespace MadPay724.Data.Migrations.MadpayMigrations
 
             modelBuilder.Entity("MadPay724.Data.Models.Photo", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Alt")
+                        .HasColumnType("nvarchar(500)")
                         .HasMaxLength(500);
 
-                    b.Property<DateTime>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateModified");
+                    b.Property<DateTime>("DateModified")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .HasColumnType("nvarchar(500)")
                         .HasMaxLength(500);
 
-                    b.Property<bool>("IsMain");
+                    b.Property<bool>("IsMain")
+                        .HasColumnType("bit");
 
-                    b.Property<string>("PublicId");
+                    b.Property<string>("PublicId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Url")
                         .IsRequired()
+                        .HasColumnType("nvarchar(1000)")
                         .HasMaxLength(1000);
 
                     b.Property<string>("UserId")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -186,15 +236,19 @@ namespace MadPay724.Data.Migrations.MadpayMigrations
 
             modelBuilder.Entity("MadPay724.Data.Models.Role", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
                     b.Property<string>("NormalizedName")
+                        .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
@@ -211,22 +265,29 @@ namespace MadPay724.Data.Migrations.MadpayMigrations
                 {
                     b.Property<short>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("smallint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CloudinaryAPIKey")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CloudinaryAPISecret")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CloudinaryCloudName")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateModified");
+                    b.Property<DateTime>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<bool>("UploadLocal");
+                    b.Property<bool>("UploadLocal")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -235,26 +296,35 @@ namespace MadPay724.Data.Migrations.MadpayMigrations
 
             modelBuilder.Entity("MadPay724.Data.Models.Ticket", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<bool>("Closed");
+                    b.Property<bool>("Closed")
+                        .HasColumnType("bit");
 
-                    b.Property<DateTime>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateModified");
+                    b.Property<DateTime>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<short>("Department");
+                    b.Property<short>("Department")
+                        .HasColumnType("smallint");
 
-                    b.Property<bool>("IsAdminSide");
+                    b.Property<bool>("IsAdminSide")
+                        .HasColumnType("bit");
 
-                    b.Property<short>("Level");
+                    b.Property<short>("Level")
+                        .HasColumnType("smallint");
 
                     b.Property<string>("Title")
                         .IsRequired()
+                        .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
                     b.Property<string>("UserId")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -265,23 +335,30 @@ namespace MadPay724.Data.Migrations.MadpayMigrations
 
             modelBuilder.Entity("MadPay724.Data.Models.TicketContent", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateModified");
+                    b.Property<DateTime>("DateModified")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("FileUrl")
+                        .HasColumnType("nvarchar(1000)")
                         .HasMaxLength(1000);
 
-                    b.Property<bool>("IsAdminSide");
+                    b.Property<bool>("IsAdminSide")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Text")
                         .IsRequired()
+                        .HasColumnType("nvarchar(1000)")
                         .HasMaxLength(1000);
 
                     b.Property<string>("TicketId")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -292,25 +369,33 @@ namespace MadPay724.Data.Migrations.MadpayMigrations
 
             modelBuilder.Entity("MadPay724.Data.Models.Token", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ClientId")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateModified");
+                    b.Property<DateTime>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("ExpireTime");
+                    b.Property<DateTime>("ExpireTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Ip")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -321,60 +406,83 @@ namespace MadPay724.Data.Migrations.MadpayMigrations
 
             modelBuilder.Entity("MadPay724.Data.Models.User", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("AccessFailedCount");
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
 
                     b.Property<string>("Address")
                         .IsRequired()
+                        .HasColumnType("nvarchar(500)")
                         .HasMaxLength(500);
 
                     b.Property<string>("City")
+                        .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
                     b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DateOfBirth");
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
+                        .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
-                    b.Property<bool>("EmailConfirmed");
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
 
-                    b.Property<bool>("Gender");
+                    b.Property<bool>("Gender")
+                        .HasColumnType("bit");
 
-                    b.Property<bool>("IsActive");
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
-                    b.Property<DateTime>("LastActive");
+                    b.Property<DateTime>("LastActive")
+                        .HasColumnType("datetime2");
 
-                    b.Property<bool>("LockoutEnabled");
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
 
-                    b.Property<DateTimeOffset?>("LockoutEnd");
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
                     b.Property<string>("NormalizedEmail")
+                        .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
                     b.Property<string>("NormalizedUserName")
+                        .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
-                    b.Property<string>("PasswordHash");
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PhoneNumber");
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("PhoneNumberConfirmed");
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
 
-                    b.Property<string>("SecurityStamp");
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Status");
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
 
-                    b.Property<bool>("TwoFactorEnabled");
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
 
                     b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
@@ -390,11 +498,74 @@ namespace MadPay724.Data.Migrations.MadpayMigrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("MadPay724.Data.Models.UserModel.Gate", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Grouping")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("IconUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(1000)")
+                        .HasMaxLength(1000);
+
+                    b.Property<bool>("Ip")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDirect")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PhonrNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(1000)")
+                        .HasMaxLength(1000);
+
+                    b.Property<string>("WalletId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("WebsiteName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("WebsiteUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(500)")
+                        .HasMaxLength(500);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("WalletId");
+
+                    b.ToTable("Gates");
+                });
+
             modelBuilder.Entity("MadPay724.Data.Models.UserRole", b =>
                 {
-                    b.Property<string>("UserId");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("RoleId");
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -405,34 +576,47 @@ namespace MadPay724.Data.Migrations.MadpayMigrations
 
             modelBuilder.Entity("MadPay724.Data.Models.Wallet", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<long>("Code");
+                    b.Property<long>("Code")
+                        .HasColumnType("bigint");
 
-                    b.Property<DateTime>("DateCreated");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateModified");
+                    b.Property<DateTime>("DateModified")
+                        .HasColumnType("datetime2");
 
-                    b.Property<int>("ExitMoney");
+                    b.Property<int>("ExitMoney")
+                        .HasColumnType("int");
 
-                    b.Property<int>("InterMoney");
+                    b.Property<int>("InterMoney")
+                        .HasColumnType("int");
 
-                    b.Property<int>("Inventory");
+                    b.Property<int>("Inventory")
+                        .HasColumnType("int");
 
-                    b.Property<bool>("IsBlock");
+                    b.Property<bool>("IsBlock")
+                        .HasColumnType("bit");
 
-                    b.Property<bool>("IsMain");
+                    b.Property<bool>("IsMain")
+                        .HasColumnType("bit");
 
-                    b.Property<bool>("IsSms");
+                    b.Property<bool>("IsSms")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasColumnType("nvarchar(20)")
                         .HasMaxLength(20);
 
-                    b.Property<int>("OnExitMoney");
+                    b.Property<int>("OnExitMoney")
+                        .HasColumnType("int");
 
                     b.Property<string>("UserId")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -445,14 +629,18 @@ namespace MadPay724.Data.Migrations.MadpayMigrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ClaimType");
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ClaimValue");
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RoleId")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -465,14 +653,18 @@ namespace MadPay724.Data.Migrations.MadpayMigrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ClaimType");
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ClaimValue");
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -483,14 +675,18 @@ namespace MadPay724.Data.Migrations.MadpayMigrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.Property<string>("LoginProvider");
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("ProviderKey");
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("ProviderDisplayName");
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -501,13 +697,17 @@ namespace MadPay724.Data.Migrations.MadpayMigrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.Property<string>("UserId");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("LoginProvider");
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Value");
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
@@ -573,6 +773,15 @@ namespace MadPay724.Data.Migrations.MadpayMigrations
                     b.HasOne("MadPay724.Data.Models.User", "User")
                         .WithMany("Tokens")
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("MadPay724.Data.Models.UserModel.Gate", b =>
+                {
+                    b.HasOne("MadPay724.Data.Models.Wallet", "Wallet")
+                        .WithMany("Gates")
+                        .HasForeignKey("WalletId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

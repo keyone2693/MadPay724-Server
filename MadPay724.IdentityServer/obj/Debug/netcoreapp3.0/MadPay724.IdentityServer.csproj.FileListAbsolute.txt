@@ -1,6 +1,5 @@
 D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.IdentityServer\bin\Debug\netcoreapp3.0\appsettings.Development.json
 D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.IdentityServer\bin\Debug\netcoreapp3.0\appsettings.json
-D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.IdentityServer\bin\Debug\netcoreapp3.0\Properties\launchSettings.json
 D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.IdentityServer\bin\Debug\netcoreapp3.0\MadPay724.IdentityServer.exe
 D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.IdentityServer\bin\Debug\netcoreapp3.0\MadPay724.IdentityServer.deps.json
 D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.IdentityServer\bin\Debug\netcoreapp3.0\MadPay724.IdentityServer.runtimeconfig.json

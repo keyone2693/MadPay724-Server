@@ -161,6 +161,19 @@ namespace MadPay724.Repo.Infrastructure
                 return ticketContentRepository;
             }
         }
+
+        private IGateRepository gateRepository;
+        public IGateRepository GateRepository
+        {
+            get
+            {
+                if (gateRepository == null)
+                {
+                    gateRepository = new GateRepository(_db);
+                }
+                return gateRepository;
+            }
+        }
         #endregion
 
 

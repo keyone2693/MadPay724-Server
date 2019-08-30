@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using MadPay724.Data.Models.UserModel;
 
 namespace MadPay724.Data.DatabaseContext
 {
@@ -34,6 +35,7 @@ namespace MadPay724.Data.DatabaseContext
         public DbSet<Wallet> Wallets { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<TicketContent> TicketContents { get; set; }
+        public DbSet<Gate> Gates { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
