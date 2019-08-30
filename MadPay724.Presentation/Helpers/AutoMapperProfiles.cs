@@ -18,6 +18,8 @@ using MadPay724.Data.Dtos.Site.Panel.Document;
 using MadPay724.Data.Dtos.Site.Panel.Notification;
 using MadPay724.Data.Dtos.Site.Panel.Ticket;
 using MadPay724.Data.Dtos.Site.Panel.Wallet;
+using MadPay724.Data.Models.UserModel;
+using MadPay724.Data.Dtos.Site.Panel.Gate;
 
 namespace MadPay724.Presentation.Helpers
 {
@@ -68,6 +70,12 @@ CreateMap<BankCardForUpdateDto, BankCard>();
             CreateMap<TicketForCreateDto, Ticket> ();
 
             //CreateMap<TokenResponseDto, LoginResponseDto>();
+
+            //----------------------------------------------------------------------
+            CreateMap<GateForCreateDto, Gate>();
+            CreateMap<List<GateForReturnDto>, List<Gate>>();
+            CreateMap<Gate, GateForReturnDto>();
+
         }
     }
 }

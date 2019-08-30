@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
 using MadPay724.Data.DatabaseContext;
+using MadPay724.Data.Dtos.Site.Panel.Gate;
 using MadPay724.Data.Models.UserModel;
 using MadPay724.Presentation.Helpers.Filters;
 using MadPay724.Presentation.Routes.V1;
 using MadPay724.Repo.Infrastructure;
+using MadPay724.Services.Upload.Interface;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -22,13 +25,17 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
         private readonly IUnitOfWork<MadpayDbContext> _db;
         private readonly IMapper _mapper;
         private readonly ILogger<GatesController> _logger;
-
+        private readonly IUploadService _uploadService;
+        private readonly IWebHostEnvironment _env;
         public GatesController(IUnitOfWork<MadpayDbContext> dbContext, IMapper mapper,
-            ILogger<GatesController> logger)
+            ILogger<GatesController> logger, IUploadService uploadService,
+            IWebHostEnvironment env)
         {
             _db = dbContext;
             _mapper = mapper;
             _logger = logger;
+            _uploadService = uploadService;
+            _env = env;
         }
 
 
@@ -64,34 +71,63 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
                 }
                 else
                 {
-                    _logger.LogError($"کاربر   {RouteData.Values["userId"]} قصد دسترسی به کارت دیگری را دارد");
+                    _logger.LogError($"کاربر   {RouteData.Values["userId"]} قصد دسترسی به درگاه دیگری را دارد");
 
-                    return BadRequest("شما اجازه دسترسی به کارت کاربر دیگری را ندارید");
+                    return BadRequest("شما اجازه دسترسی به درگاه کاربر دیگری را ندارید");
                 }
             }
             else
             {
-                return BadRequest("کارتی وجود ندارد");
+                return BadRequest("درگاهی وجود ندارد");
             }
 
         }
 
         [Authorize(Policy = "RequireUserRole")]
         [HttpPost(ApiV1Routes.Gate.AddGate)]
-        public async Task<IActionResult> AddGate(string userId, GateForCreateDto gateForCreateDto)
+        public async Task<IActionResult> AddGate(string userId, [FromForm]GateForCreateDto gateForCreateDto)
         {
             var gateFromRepo = await _db.GateRepository
                 .GetAsync(p => p.WebsiteUrl == gateForCreateDto.WebsiteUrl && p.Wallet.UserId == userId);
 
             if (gateFromRepo == null)
             {
-                var cardForCreate = new Gate()
+                var gateForCreate = new Gate()
                 {
                     WalletId = gateForCreateDto.WalletId,
                     IsDirect = false,
                     IsActive = false
                 };
-                var gate = _mapper.Map(gateForCreateDto, cardForCreate);
+                if (gateForCreateDto.File != null)
+                {
+                    if (gateForCreateDto.File.Length > 0)
+                    {
+                        var uploadRes = await _uploadService.UploadFileToLocal(
+                            gateForCreateDto.File,
+                            userId,
+                            _env.WebRootPath,
+                            $"{Request.Scheme ?? ""}://{Request.Host.Value ?? ""}{Request.PathBase.Value ?? ""}",
+                            "Files\\Gate"
+                        );
+                        if (uploadRes.Status)
+                        {
+                            gateForCreate.IconUrl = uploadRes.Url;
+                        }
+                        else
+                        {
+                            return BadRequest(uploadRes.Message);
+                        }
+                    }
+                    else
+                    {
+                        gateForCreate.IconUrl = "";
+                    }
+                }
+                else
+                {
+                    gateForCreate.IconUrl = "";
+                }
+                var gate = _mapper.Map(gateForCreateDto, gateForCreate);
 
                 await _db.GateRepository.InsertAsync(gate);
 
@@ -105,23 +141,44 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
                     return BadRequest("خطا در ثبت اطلاعات");
             }
             {
-                return BadRequest("این کارت قبلا ثبت شده است");
+                return BadRequest("این درگاه قبلا ثبت شده است");
             }
 
 
         }
         [Authorize(Policy = "RequireUserRole")]
         [HttpPut(ApiV1Routes.Gate.UpdateGate)]
-        public async Task<IActionResult> UpdateGate(string id, gateForCreateDto gateForUpdateDto)
+        public async Task<IActionResult> UpdateGate(string id, [FromForm]GateForCreateDto gateForUpdateDto)
         {
-            var gateFromRepo =  (await _db.GateRepository
+            var gateFromRepo = (await _db.GateRepository
                 .GetManyAsync(p => p.Id == id, null, "Wallets")).SingleOrDefault();
+
             if (gateFromRepo != null)
             {
                 if (gateFromRepo.Wallet.UserId == User.FindFirst(ClaimTypes.NameIdentifier).Value)
                 {
+                    if (gateForUpdateDto.File != null)
+                    {
+                        if (gateForUpdateDto.File.Length > 0)
+                        {
+                            var uploadRes = await _uploadService.UploadFileToLocal(
+                                gateForUpdateDto.File,
+                                gateFromRepo.Wallet.UserId,
+                                _env.WebRootPath,
+                                $"{Request.Scheme ?? ""}://{Request.Host.Value ?? ""}{Request.PathBase.Value ?? ""}",
+                                "Files\\Gate"
+                            );
+                            if (uploadRes.Status)
+                            {
+                                gateFromRepo.IconUrl = uploadRes.Url;
+                            }
+                            else
+                            {
+                                return BadRequest(uploadRes.Message);
+                            }
+                        }
+                    }
                     var gate = _mapper.Map(gateForUpdateDto, gateFromRepo);
-                    gate.Approve = false;
                     _db.GateRepository.Update(gate);
 
                     if (await _db.SaveAsync())
@@ -131,13 +188,13 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
                 }
                 else
                 {
-                    _logger.LogError($"کاربر   {RouteData.Values["userId"]} قصد اپدیت به کارت دیگری را دارد");
+                    _logger.LogError($"کاربر   {RouteData.Values["userId"]} قصد اپدیت به درگاه دیگری را دارد");
 
-                    return BadRequest("شما اجازه اپدیت کارت کاربر دیگری را ندارید");
+                    return BadRequest("شما اجازه اپدیت درگاه کاربر دیگری را ندارید");
                 }
             }
             {
-                return BadRequest("کارتی وجود ندارد");
+                return BadRequest("درگاهی وجود ندارد");
             }
         }
     }

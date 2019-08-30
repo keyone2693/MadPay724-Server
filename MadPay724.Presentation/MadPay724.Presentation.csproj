@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\Files\NewFolder\**" />
+    <Content Remove="wwwroot\Files\NewFolder\**" />
+    <EmbeddedResource Remove="wwwroot\Files\NewFolder\**" />
+    <None Remove="wwwroot\Files\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="wwwroot\Files\Json\Seed\UserSeedData.json" />
   </ItemGroup>
 
@@ -38,6 +45,7 @@
     <Folder Include="Controllers\Site\V1\App\" />
     <Folder Include="Controllers\Site\V1\Blog\" />
     <Folder Include="Controllers\Site\V1\Accountant\" />
+    <Folder Include="wwwroot\Files\Gate\" />
     <Folder Include="wwwroot\Files\TicketContent\" />
     <Folder Include="wwwroot\Files\Pic\Profile\" />
   </ItemGroup>
