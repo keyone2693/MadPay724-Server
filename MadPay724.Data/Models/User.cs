@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using MadPay724.Data.Models.UserModel;
 using Microsoft.AspNetCore.Identity;
 
 namespace MadPay724.Data.Models

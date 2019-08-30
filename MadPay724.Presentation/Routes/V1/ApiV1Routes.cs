@@ -109,7 +109,7 @@ namespace MadPay724.Presentation.Routes.V1
         }
         #endregion
 
-        #region BankCardRoutes
+        #region DocumentRoutes
         public static class Document
         {
             //api/v1/site/panel/users/{userId}/documents
@@ -141,7 +141,7 @@ namespace MadPay724.Presentation.Routes.V1
         }
         #endregion
 
-        #region WalletRoutes
+        #region TicketRoutes
         public static class Ticket
         {
             //api/v1/site/panel/users/{userId}/tickets
@@ -167,6 +167,25 @@ namespace MadPay724.Presentation.Routes.V1
             //GET
             public const string GetTicketContents = BaseSitePanel + "/users/{userId}/tickets/{id}/ticketcontents";
 
+
+        }
+        #endregion
+
+        #region GateRoutes
+        public static class Gate
+        {
+            //api/v1/site/panel/users/{userId}/gates
+            //POST
+            public const string AddGate = BaseSitePanel + "/users/{userId}/gates";
+            //api/v1/site/panel/users/{userId}/gates
+            //GET
+            public const string GetGates = BaseSitePanel + "/users/{userId}/gates";
+            //api/v1/site/panel/users/{userId}/gates/{id}
+            //GET
+            public const string GetGate = BaseSitePanel + "/users/{userId}/gates/{id}";
+            //api/v1/site/panel/gates/{id}
+            //PUT
+            public const string UpdateGate = BaseSitePanel + "/users/{userId}/gates/{id}";
 
         }
         #endregion
