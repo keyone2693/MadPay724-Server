@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v3.0": {
-      "IdentityModel/3.9.0": {
+      "IdentityModel/3.10.10": {
         "type": "package",
         "dependencies": {
           "Newtonsoft.Json": "11.0.1",
@@ -45,14 +45,14 @@
     }
   },
   "libraries": {
-    "IdentityModel/3.9.0": {
-      "sha512": "a0geQ3AeCBiOSv6iIfTAmfQAG4uw2pQnS4fwJVzAowKeu8ZjcQRlbLHwf+h7fIFwdcwNZH3CashfUP0YhNLUxg==",
+    "IdentityModel/3.10.10": {
+      "sha512": "1CZDkFEZC5hU615GrTXLoamLlLlZVNURnjbdjELw3keSRcPufSIwP5NI0f8quUBV/beuKy9yIqYemmMIDIY87w==",
       "type": "package",
-      "path": "identitymodel/3.9.0",
+      "path": "identitymodel/3.10.10",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "identitymodel.3.9.0.nupkg.sha512",
+        "identitymodel.3.10.10.nupkg.sha512",
         "identitymodel.nuspec",
         "lib/net452/IdentityModel.dll",
         "lib/net452/IdentityModel.pdb",
@@ -132,7 +132,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.0": [
-      "IdentityModel >= 3.9.0",
+      "IdentityModel >= 3.10.10",
       "RestSharp >= 106.6.10"
     ]
   },
@@ -179,7 +179,7 @@
         "dependencies": {
           "IdentityModel": {
             "target": "Package",
-            "version": "[3.9.0, )"
+            "version": "[3.10.10, )"
           },
           "RestSharp": {
             "target": "Package",
@@ -201,7 +201,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100-preview8-013656\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100-preview9-014004\\RuntimeIdentifierGraph.json"
       }
     }
   }

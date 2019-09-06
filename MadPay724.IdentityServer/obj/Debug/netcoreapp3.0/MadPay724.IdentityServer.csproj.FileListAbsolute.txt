@@ -21,7 +21,6 @@ D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.IdentityServer\obj\Debug\
 D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.IdentityServer\obj\Debug\netcoreapp3.0\staticwebassets\MadPay724.IdentityServer.StaticWebAssets.Manifest.cache
 D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.IdentityServer\obj\Debug\netcoreapp3.0\staticwebassets\MadPay724.IdentityServer.StaticWebAssets.xml
 D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.IdentityServer\obj\Debug\netcoreapp3.0\MadPay724.IdentityServer.csproj.CoreCompileInputs.cache
-D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.IdentityServer\obj\Debug\netcoreapp3.0\MadPay724.IdentityServer.MvcApplicationPartsAssemblyInfo.cs
 D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.IdentityServer\obj\Debug\netcoreapp3.0\MadPay724.IdentityServer.MvcApplicationPartsAssemblyInfo.cache
 D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.IdentityServer\obj\Debug\netcoreapp3.0\MadPay724.IdentityServer.AssemblyInfoInputs.cache
 D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.IdentityServer\obj\Debug\netcoreapp3.0\MadPay724.IdentityServer.AssemblyInfo.cs
@@ -29,3 +28,4 @@ D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.IdentityServer\obj\Debug\
 D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.IdentityServer\obj\Debug\netcoreapp3.0\MadPay724.IdentityServer.csproj.CopyComplete
 D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.IdentityServer\obj\Debug\netcoreapp3.0\MadPay724.IdentityServer.dll
 D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.IdentityServer\obj\Debug\netcoreapp3.0\MadPay724.IdentityServer.pdb
+D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.IdentityServer\bin\Debug\netcoreapp3.0\Properties\launchSettings.json

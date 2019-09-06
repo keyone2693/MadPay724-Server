@@ -43,7 +43,7 @@
           "dependencies": {
             "IdentityModel": {
               "target": "Package",
-              "version": "[3.9.0, )"
+              "version": "[3.10.10, )"
             },
             "RestSharp": {
               "target": "Package",
@@ -65,7 +65,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100-preview8-013656\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100-preview9-014004\\RuntimeIdentifierGraph.json"
         }
       }
     }

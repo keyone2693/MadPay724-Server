@@ -15,7 +15,7 @@ namespace MadPay724.Data.Migrations.MadpayMigrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.0.0-preview8.19405.11")
+                .HasAnnotation("ProductVersion", "3.0.0-preview9.19423.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -519,8 +519,9 @@ namespace MadPay724.Data.Migrations.MadpayMigrations
                         .HasColumnType("nvarchar(1000)")
                         .HasMaxLength(1000);
 
-                    b.Property<bool>("Ip")
-                        .HasColumnType("bit");
+                    b.Property<string>("Ip")
+                        .HasColumnType("nvarchar(500)")
+                        .HasMaxLength(500);
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -528,7 +529,10 @@ namespace MadPay724.Data.Migrations.MadpayMigrations
                     b.Property<bool>("IsDirect")
                         .HasColumnType("bit");
 
-                    b.Property<string>("PhonrNumber")
+                    b.Property<bool>("IsIp")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);

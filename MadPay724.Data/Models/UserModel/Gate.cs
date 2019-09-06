@@ -18,8 +18,10 @@ namespace MadPay724.Data.Models.UserModel
         public bool IsActive { get; set; }
         [Required]
         public bool IsDirect { get; set; }
+        [StringLength(500, MinimumLength = 0)]
+        public string Ip { get; set; }
         [Required]
-        public bool Ip { get; set; }
+        public bool IsIp { get; set; }
         [StringLength(100, MinimumLength = 0)]
         [Required]
         public string WebsiteName { get; set; }
@@ -28,7 +30,7 @@ namespace MadPay724.Data.Models.UserModel
         public string WebsiteUrl{ get; set; }
         [Required]
         [StringLength(50, MinimumLength = 0)]
-        public string PhonrNumber { get; set; }
+        public string PhoneNumber { get; set; }
         [Required]
         [StringLength(1000, MinimumLength = 0)]
         public string Text { get; set; }

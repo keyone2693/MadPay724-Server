@@ -8,22 +8,22 @@
     ".NETCoreApp,Version=v3.0": {
       "IdentityServer-Test-ConsoleApp/1.0.0": {
         "dependencies": {
-          "IdentityModel": "3.9.0",
+          "IdentityModel": "3.10.10",
           "RestSharp": "106.6.10"
         },
         "runtime": {
           "IdentityServer-Test-ConsoleApp.dll": {}
         }
       },
-      "IdentityModel/3.9.0": {
+      "IdentityModel/3.10.10": {
         "dependencies": {
           "Newtonsoft.Json": "11.0.1",
           "System.Text.Encodings.Web": "4.5.0"
         },
         "runtime": {
           "lib/netstandard2.0/IdentityModel.dll": {
-            "assemblyVersion": "3.9.0.0",
-            "fileVersion": "3.9.0.0"
+            "assemblyVersion": "3.10.10.0",
+            "fileVersion": "3.10.10.0"
           }
         }
       },
@@ -52,12 +52,12 @@
       "serviceable": false,
       "sha512": ""
     },
-    "IdentityModel/3.9.0": {
+    "IdentityModel/3.10.10": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-a0geQ3AeCBiOSv6iIfTAmfQAG4uw2pQnS4fwJVzAowKeu8ZjcQRlbLHwf+h7fIFwdcwNZH3CashfUP0YhNLUxg==",
-      "path": "identitymodel/3.9.0",
-      "hashPath": "identitymodel.3.9.0.nupkg.sha512"
+      "sha512": "sha512-1CZDkFEZC5hU615GrTXLoamLlLlZVNURnjbdjELw3keSRcPufSIwP5NI0f8quUBV/beuKy9yIqYemmMIDIY87w==",
+      "path": "identitymodel/3.10.10",
+      "hashPath": "identitymodel.3.10.10.nupkg.sha512"
     },
     "Newtonsoft.Json/11.0.1": {
       "type": "package",
