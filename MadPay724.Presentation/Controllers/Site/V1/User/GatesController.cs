@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Site.Panel.Gate;
+using MadPay724.Data.Dtos.Site.Panel.Wallet;
 using MadPay724.Data.Models.UserModel;
 using MadPay724.Presentation.Helpers.Filters;
 using MadPay724.Presentation.Routes.V1;
@@ -47,10 +48,16 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
             var gatesFromRepo = await _db.GateRepository
                 .GetManyAsync(p => p.Wallet.UserId == userId, s => s.OrderByDescending(x => x.IsActive), "");
 
+            var walletsFromRepo = await _db.WalletRepository
+                .GetManyAsync(p => p.UserId == userId, s => s.OrderByDescending(x => x.IsMain).ThenByDescending(x => x.IsSms), "");
 
-            var bankcards = _mapper.Map<List<GateForReturnDto>>(gatesFromRepo);
+            var result = new GatesWalletsForReturnDto()
+            {
+                Gates = _mapper.Map<List<GateForReturnDto>>(gatesFromRepo),
+                Wallets = _mapper.Map<List<WalletForReturnDto>>(walletsFromRepo)
+            };
 
-            return Ok(bankcards);
+            return Ok(result);
         }
 
         [Authorize(Policy = "RequireUserRole")]

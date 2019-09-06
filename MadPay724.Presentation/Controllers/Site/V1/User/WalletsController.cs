@@ -46,9 +46,9 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
             var walletsFromRepo = await _db.WalletRepository
                 .GetManyAsync(p => p.UserId == userId, s => s.OrderByDescending(x => x.IsMain).ThenByDescending(x => x.IsSms), "");
 
-            var bankcards = _mapper.Map<List<WalletForReturnDto>>(walletsFromRepo);
+            var wallets = _mapper.Map<List<WalletForReturnDto>>(walletsFromRepo);
 
-            return Ok(bankcards);
+            return Ok(wallets);
         }
 
         [Authorize(Policy = "RequireUserRole")]

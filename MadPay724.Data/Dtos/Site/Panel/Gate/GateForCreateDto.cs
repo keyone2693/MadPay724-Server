@@ -10,8 +10,6 @@ namespace MadPay724.Data.Dtos.Site.Panel.Gate
     {
         [Required]
         public string WalletId { get; set; }
-        [Required]
-        public bool Ip { get; set; }
         [StringLength(100, MinimumLength = 0)]
         [Required]
         public string WebsiteName { get; set; }
@@ -20,7 +18,7 @@ namespace MadPay724.Data.Dtos.Site.Panel.Gate
         public string WebsiteUrl { get; set; }
         [Required]
         [StringLength(50, MinimumLength = 0)]
-        public string PhonrNumber { get; set; }
+        public string PhoneNumber { get; set; }
         [Required]
         [StringLength(1000, MinimumLength = 0)]
         public string Text { get; set; }
