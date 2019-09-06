@@ -7,6 +7,7 @@ namespace MadPay724.Data.Dtos.Site.Panel.Gate
     public class GateForReturnDto
     {
         public string Id { get; set; }
+        public string WalletId { get; set; }
         public bool IsActive { get; set; }
         public bool IsDirect { get; set; }
         public bool IsIp { get; set; }
