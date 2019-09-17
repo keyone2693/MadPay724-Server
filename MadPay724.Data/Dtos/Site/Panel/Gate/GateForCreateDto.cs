@@ -9,6 +9,8 @@ namespace MadPay724.Data.Dtos.Site.Panel.Gate
   public  class GateForCreateDto
     {
         [Required]
+        public bool IsIp { get; set; }
+        [Required]
         public string WalletId { get; set; }
         [StringLength(100, MinimumLength = 0)]
         [Required]

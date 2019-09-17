@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -111,7 +112,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
                     {
                         var uploadRes = await _uploadService.UploadFileToLocal(
                             gateForCreateDto.File,
-                            userId,
+                            Guid.NewGuid().ToString(),
                             _env.WebRootPath,
                             $"{Request.Scheme ?? ""}://{Request.Host.Value ?? ""}{Request.PathBase.Value ?? ""}",
                             "Files\\Gate"
@@ -127,12 +128,20 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
                     }
                     else
                     {
-                        gateForCreate.IconUrl = "";
+                        gateForCreate.IconUrl = string.Format("{0}://{1}{2}/{3}",
+                          Request.Scheme,
+                          Request.Host.Value ?? "",
+                          Request.PathBase.Value ?? "",
+                          "wwwroot/Files/Pic/Logo/logo-gate.png");
                     }
                 }
                 else
                 {
-                    gateForCreate.IconUrl = "";
+                    gateForCreate.IconUrl = string.Format("{0}://{1}{2}/{3}",
+                        Request.Scheme,
+                        Request.Host.Value ?? "",
+                        Request.PathBase.Value ?? "",
+                        "wwwroot/Files/Pic/Logo/logo-gate.png");
                 }
                 var gate = _mapper.Map(gateForCreateDto, gateForCreate);
 
