@@ -66,16 +66,24 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
         [HttpGet(ApiV1Routes.Gate.GetGate, Name = "GetGate")]
         public async Task<IActionResult> GetGate(string id, string userId)
         {
+
             var gateFromRepo = (await _db.GateRepository
-                .GetManyAsync(p => p.Id == id, null, "Wallets")).SingleOrDefault();
+                .GetManyAsync(p => p.Id == id, null, "Wallet")).SingleOrDefault();
 
             if (gateFromRepo != null)
             {
                 if (gateFromRepo.Wallet.UserId == User.FindFirst(ClaimTypes.NameIdentifier).Value)
                 {
-                    var gate = _mapper.Map<GateForReturnDto>(gateFromRepo);
+                    var walletsFromRepo = await _db.WalletRepository
+                        .GetManyAsync(p => p.UserId == userId, s => s.OrderByDescending(x => x.IsMain).ThenByDescending(x => x.IsSms), "");
 
-                    return Ok(gate);
+                    var result = new GateWalletsForReturnDto()
+                    {
+                        Gate = _mapper.Map<GateForReturnDto>(gateFromRepo),
+                        Wallets = _mapper.Map<List<WalletForReturnDto>>(walletsFromRepo)
+                    };
+
+                    return Ok(result);
                 }
                 else
                 {
@@ -164,10 +172,10 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
         }
         [Authorize(Policy = "RequireUserRole")]
         [HttpPut(ApiV1Routes.Gate.UpdateGate)]
-        public async Task<IActionResult> UpdateGate(string id, [FromForm]GateForCreateDto gateForUpdateDto)
+        public async Task<IActionResult> UpdateGate(string userId, string id, [FromForm]GateForCreateDto gateForUpdateDto)
         {
             var gateFromRepo = (await _db.GateRepository
-                .GetManyAsync(p => p.Id == id, null, "Wallets")).SingleOrDefault();
+                .GetManyAsync(p => p.Id == id, null, "Wallet")).SingleOrDefault();
 
             if (gateFromRepo != null)
             {
