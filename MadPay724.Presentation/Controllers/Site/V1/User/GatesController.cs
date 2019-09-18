@@ -236,19 +236,52 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
             {
                 if (gateFromRepo.Wallet.UserId == User.FindFirst(ClaimTypes.NameIdentifier).Value)
                 {
-                    if (await _walletService.CheckInventoryAsync(20000, activeDirectGateDto.WalletId))
+                    if (activeDirectGateDto.IsDirect)
+                    {
+                        if (await _walletService.CheckInventoryAsync(20000, activeDirectGateDto.WalletId))
+                        {
+                            var decResult = await _walletService.DecreaseInventoryAsync(20000, activeDirectGateDto.WalletId);
+                            if (decResult.status)
+                            {
+                                gateFromRepo.IsDirect = activeDirectGateDto.IsDirect;
+                                _db.GateRepository.Update(gateFromRepo);
+
+                                if (await _db.SaveAsync())
+                                {
+                                    return NoContent();
+                                }
+                                else
+                                {
+                                    var incResult = await _walletService.IncreaseInventoryAsync(20000, activeDirectGateDto.WalletId);
+                                    if (incResult.status)
+                                        return BadRequest("خطا در ثبت اطلاعات");
+                                    else
+                                        return BadRequest("خطا در ثبت اطلاعات در صورت کسری موجودی با پشتیبانی در تماس باشید");
+                                }
+                            }
+                            else
+                            {
+                                return BadRequest(decResult.message);
+                            }
+                        }
+                        else
+                        {
+                            return BadRequest("کیف پول انتخابی موجودی کافی ندارد");
+                        }
+                    }
+                    else
                     {
                         gateFromRepo.IsDirect = activeDirectGateDto.IsDirect;
                         _db.GateRepository.Update(gateFromRepo);
 
                         if (await _db.SaveAsync())
+                        {
                             return NoContent();
+                        }
                         else
+                        {
                             return BadRequest("خطا در ثبت اطلاعات");
-                    }
-                    else
-                    {
-                        return BadRequest("کیف پول انتخابی موجودی کافی ندارد");
+                        }
                     }
                 }
                 else
