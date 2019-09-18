@@ -6,6 +6,7 @@ using MadPay724.Data.Models.UserModel;
 using MadPay724.Presentation.Helpers.Filters;
 using MadPay724.Presentation.Routes.V1;
 using MadPay724.Repo.Infrastructure;
+using MadPay724.Services.Site.Admin.Wallet.Interface;
 using MadPay724.Services.Upload.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -28,16 +29,18 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
         private readonly IMapper _mapper;
         private readonly ILogger<GatesController> _logger;
         private readonly IUploadService _uploadService;
+        private readonly IWalletService _walletService;
         private readonly IWebHostEnvironment _env;
         public GatesController(IUnitOfWork<MadpayDbContext> dbContext, IMapper mapper,
             ILogger<GatesController> logger, IUploadService uploadService,
-            IWebHostEnvironment env)
+            IWebHostEnvironment env, IWalletService walletService)
         {
             _db = dbContext;
             _mapper = mapper;
             _logger = logger;
             _uploadService = uploadService;
             _env = env;
+            _walletService = walletService;
         }
 
 
@@ -209,6 +212,44 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
                         return NoContent();
                     else
                         return BadRequest("خطا در ثبت اطلاعات");
+                }
+                else
+                {
+                    _logger.LogError($"کاربر   {RouteData.Values["userId"]} قصد اپدیت به درگاه دیگری را دارد");
+
+                    return BadRequest("شما اجازه اپدیت درگاه کاربر دیگری را ندارید");
+                }
+            }
+            {
+                return BadRequest("درگاهی وجود ندارد");
+            }
+        }
+
+        [Authorize(Policy = "RequireUserRole")]
+        [HttpPut(ApiV1Routes.Gate.ActiveDirectGate)]
+        public async Task<IActionResult> ActiveDirectGate(string userId, string id, ActiveDirectGateDto activeDirectGateDto)
+        {
+            var gateFromRepo = (await _db.GateRepository
+                .GetManyAsync(p => p.Id == id, null, "Wallet")).SingleOrDefault();
+
+            if (gateFromRepo != null)
+            {
+                if (gateFromRepo.Wallet.UserId == User.FindFirst(ClaimTypes.NameIdentifier).Value)
+                {
+                    if (await _walletService.CheckInventoryAsync(20000, activeDirectGateDto.WalletId))
+                    {
+                        gateFromRepo.IsDirect = activeDirectGateDto.IsDirect;
+                        _db.GateRepository.Update(gateFromRepo);
+
+                        if (await _db.SaveAsync())
+                            return NoContent();
+                        else
+                            return BadRequest("خطا در ثبت اطلاعات");
+                    }
+                    else
+                    {
+                        return BadRequest("کیف پول انتخابی موجودی کافی ندارد");
+                    }
                 }
                 else
                 {

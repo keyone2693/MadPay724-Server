@@ -183,9 +183,13 @@ namespace MadPay724.Presentation.Routes.V1
             //api/v1/site/panel/users/{userId}/gates/{id}
             //GET
             public const string GetGate = BaseSitePanel + "/users/{userId}/gates/{id}";
-            //api/v1/site/panel/gates/{id}
+            //api/v1/site/panel/users/{userId}/gates/{id}
             //PUT
             public const string UpdateGate = BaseSitePanel + "/users/{userId}/gates/{id}";
+            //api/v1/site/panel/users/{userId}/gates/{id}/active
+            //PUT
+            public const string ActiveDirectGate = BaseSitePanel + "/users/{userId}/gates/{id}/active";
+            
 
         }
         #endregion
