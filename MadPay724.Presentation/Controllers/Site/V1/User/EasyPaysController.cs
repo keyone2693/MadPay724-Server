@@ -159,7 +159,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
         {
 
             var epFromRepo = await _db.EasyPayRepository
-              .GetAsync(p => p.Name == easyPayForUpdateDto.Name && p.UserId == userId);
+              .GetAsync(p => p.Name == easyPayForUpdateDto.Name && p.UserId == userId && p.Id != id);
             if (epFromRepo == null)
             {
                 var easyPayFromRepo = await _db.EasyPayRepository.GetByIdAsync(id);
