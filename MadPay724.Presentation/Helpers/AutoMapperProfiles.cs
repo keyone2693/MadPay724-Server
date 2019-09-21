@@ -75,7 +75,11 @@ CreateMap<BankCardForUpdateDto, BankCard>();
             CreateMap<GateForCreateDto, Gate>();
             CreateMap<List<GateForReturnDto>, List<Gate>>();
             CreateMap<Gate, GateForReturnDto>();
-
+            //----------------------------------------------------------------------
+            CreateMap<EasyPayForCreateUpdateDto, EasyPay>();
+            CreateMap<EasyPay, EasyPayForReturnDto>();
+            CreateMap<List<EasyPayForReturnDto>, List<EasyPay>>();
+            CreateMap<EasyPayForCreateUpdateDto, EasyPay>();
         }
     }
 }

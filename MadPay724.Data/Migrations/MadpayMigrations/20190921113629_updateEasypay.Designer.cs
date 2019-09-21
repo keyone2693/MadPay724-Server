@@ -4,14 +4,16 @@ using MadPay724.Data.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MadPay724.Data.Migrations.MadpayMigrations
 {
     [DbContext(typeof(MadpayDbContext))]
-    partial class MadpayDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190921113629_updateEasypay")]
+    partial class updateEasypay
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

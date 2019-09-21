@@ -4,6 +4,7 @@ using System.IO;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 
@@ -112,5 +113,20 @@ namespace MadPay724.Common.Helpers.Helpers
 
 
         #endregion
+
+        public static bool IsUrl1(this string str)
+        {
+            return Uri.TryCreate(str, UriKind.Absolute, out Uri uriResult)
+                && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+        }
+        public static bool IsUrl2(this string str)
+        {
+            return Regex.IsMatch(str, @"^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$");
+        }
+
+        public static bool IsMobile(this string str)
+        {
+            return Regex.IsMatch(str, @"^(((\+|00)98)|0)?9[123]\d{8}$");
+        }
     }
 }

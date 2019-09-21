@@ -193,5 +193,27 @@ namespace MadPay724.Presentation.Routes.V1
 
         }
         #endregion
+
+        #region EasyPayRoutes
+        public static class EasyPay
+        {
+            //api/v1/site/panel/users/{userId}/easyPays
+            //POST
+            public const string AddEasyPay = BaseSitePanel + "/users/{userId}/easyPays";
+            //api/v1/site/panel/users/{userId}/easyPays
+            //GET
+            public const string GetEasyPays = BaseSitePanel + "/users/{userId}/easyPays";
+            //api/v1/site/panel/users/{userId}/easyPays/{id}
+            //GET
+            public const string GetEasyPay = BaseSitePanel + "/users/{userId}/easyPays/{id}";
+            //api/v1/site/panel/easyPays/{id}
+            //PUT
+            public const string UpdateEasyPay = BaseSitePanel + "/users/{userId}/easyPays/{id}";
+            //api/v1/site/panel/users/{userId}/easyPays/{id}
+            //DELETE
+            public const string DeleteEasyPay = BaseSitePanel + "/users/{userId}/easyPays/{id}";
+
+        }
+        #endregion
     }
 }

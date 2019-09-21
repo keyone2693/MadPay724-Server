@@ -1,19 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace MadPay724.Data.Models.UserModel
+namespace MadPay724.Data.Dtos.Site.Panel.BankCards
 {
-  public  class EasyPay: BaseEntity<string>
+    public class EasyPayForCreateUpdateDto
     {
-        public EasyPay()
-        {
-            Id = Guid.NewGuid().ToString();
-            DateCreated = DateTime.Now;
-            DateModified = DateTime.Now;
-        }
         [Required]
         public string WalletGateId { get; set; }
         [Required]
@@ -62,9 +55,5 @@ namespace MadPay724.Data.Models.UserModel
         public int CountLimit { get; set; }
         public string ReturnSuccess { get; set; }
         public string ReturnFail { get; set; }
-        [Required]
-        public string UserId { get; set; }
-        [ForeignKey("UserId")]
-        public User User { get; set; }
     }
 }

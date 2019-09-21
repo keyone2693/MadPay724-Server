@@ -240,3 +240,5 @@ D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\bin\Debug\netcoreapp
 D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\obj\Debug\netcoreapp3.0\MadPay724.Test.csproj.CopyComplete
 D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\bin\Debug\netcoreapp3.0\Properties\launchSettings.json
 D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\bin\Debug\netcoreapp3.0\Microsoft.Identity.Client.dll
+D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\bin\Debug\netcoreapp3.0\Microsoft.Extensions.DependencyInjection.dll
+D:\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\bin\Debug\netcoreapp3.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
