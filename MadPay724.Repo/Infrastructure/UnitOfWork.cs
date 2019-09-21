@@ -174,6 +174,19 @@ namespace MadPay724.Repo.Infrastructure
                 return gateRepository;
             }
         }
+
+        private IEasyPayRepository easyPayRepository;
+        public IEasyPayRepository EasyPayRepository
+        {
+            get
+            {
+                if (easyPayRepository == null)
+                {
+                    easyPayRepository = new EasyPayRepository(_db);
+                }
+                return easyPayRepository;
+            }
+        }
         #endregion
 
 

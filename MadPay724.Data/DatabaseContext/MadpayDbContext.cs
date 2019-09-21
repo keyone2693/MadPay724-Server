@@ -36,6 +36,7 @@ namespace MadPay724.Data.DatabaseContext
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<TicketContent> TicketContents { get; set; }
         public DbSet<Gate> Gates { get; set; }
+        public DbSet<EasyPay> EasyPays { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
