@@ -206,6 +206,9 @@ namespace MadPay724.Presentation.Routes.V1
             //api/v1/site/panel/users/{userId}/easyPays/{id}
             //GET
             public const string GetEasyPay = BaseSitePanel + "/users/{userId}/easyPays/{id}";
+            //api/v1/site/panel/users/{userId}/easyPays/{id}/gateswallets
+            //GET
+            public const string GetEasyPayGatesWallets = BaseSitePanel + "/users/{userId}/easyPays/{id}/gateswallets";
             //api/v1/site/panel/easyPays/{id}
             //PUT
             public const string UpdateEasyPay = BaseSitePanel + "/users/{userId}/easyPays/{id}";

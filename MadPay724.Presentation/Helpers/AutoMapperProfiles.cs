@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MadPay724.Common.Helpers;
 using MadPay724.Data.Dtos.Site.Panel.BankCards;
+using MadPay724.Data.Dtos.Site.Panel.EasyPay;
 using MadPay724.Data.Dtos.Site.Panel.Photos;
 using MadPay724.Data.Dtos.Site.Panel.Users;
 using MadPay724.Data.Models;

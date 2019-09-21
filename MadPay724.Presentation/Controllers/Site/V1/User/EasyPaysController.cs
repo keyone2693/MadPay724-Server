@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MadPay724.Common.Helpers.Helpers;
 using MadPay724.Data.DatabaseContext;
-using MadPay724.Data.Dtos.Site.Panel.BankCards;
+using MadPay724.Data.Dtos.Site.Panel.EasyPay;
+using MadPay724.Data.Dtos.Site.Panel.Gate;
+using MadPay724.Data.Dtos.Site.Panel.Wallet;
 using MadPay724.Data.Models.UserModel;
 using MadPay724.Presentation.Helpers.Filters;
 using MadPay724.Presentation.Routes.V1;
@@ -75,7 +77,46 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
             }
 
         }
+        [Authorize(Policy = "RequireUserRole")]
+        [ServiceFilter(typeof(UserCheckIdFilter))]
+        [HttpGet(ApiV1Routes.EasyPay.GetEasyPayGatesWallets)]
+        public async Task<IActionResult> GetEasyPayGatesWallets(string id, string userId)
+        {
+            var easyPayFromRepo = await _db.EasyPayRepository.GetByIdAsync(id);
+            if (easyPayFromRepo != null)
+            {
+                if (easyPayFromRepo.UserId == User.FindFirst(ClaimTypes.NameIdentifier).Value)
+                {
+                    var easyPay = _mapper.Map<EasyPayForReturnDto>(easyPayFromRepo);
 
+                    var gatesFromRepo = await _db.GateRepository
+                        .GetManyAsync(p => p.Wallet.UserId == userId, s => s.OrderByDescending(x => x.IsActive), "");
+
+                    var walletsFromRepo = await _db.WalletRepository
+                        .GetManyAsync(p => p.UserId == userId, s => s.OrderByDescending(x => x.IsMain).ThenByDescending(x => x.IsSms), "");
+
+                    var result = new EasyPayGatesWalletsForReturnDto()
+                    {
+                        EasyPay = easyPay,
+                        Gates = _mapper.Map<List<GateForReturnDto>>(gatesFromRepo),
+                        Wallets = _mapper.Map<List<WalletForReturnDto>>(walletsFromRepo)
+                    };
+
+                    return Ok(result);
+                }
+                else
+                {
+                    _logger.LogError($"کاربر   {RouteData.Values["userId"]} قصد دسترسی به ایزی پی دیگری را دارد");
+
+                    return BadRequest("شما اجازه دسترسی به ایزی پی کاربر دیگری را ندارید");
+                }
+            }
+            else
+            {
+                return BadRequest("ایزی پیی وجود ندارد");
+            }
+
+        }
         [Authorize(Policy = "RequireUserRole")]
         [HttpPost(ApiV1Routes.EasyPay.AddEasyPay)]
         public async Task<IActionResult> AddEasyPay(string userId, EasyPayForCreateUpdateDto easyPayForCreateDto)

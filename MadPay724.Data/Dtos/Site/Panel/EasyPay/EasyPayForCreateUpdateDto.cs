@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace MadPay724.Data.Dtos.Site.Panel.BankCards
+namespace MadPay724.Data.Dtos.Site.Panel.EasyPay
 {
     public class EasyPayForCreateUpdateDto
     {
@@ -15,7 +15,6 @@ namespace MadPay724.Data.Dtos.Site.Panel.BankCards
         [StringLength(50, MinimumLength = 4)]
         public string Name { get; set; }
         [Required]
-        [StringLength(15, MinimumLength = 0)]
         public int Price { get; set; }
         [Required]
         [StringLength(250, MinimumLength = 0)]
