@@ -101,10 +101,10 @@ namespace MadPay724.Presentation.Routes.V1
             public const string GetBankCard = BaseSitePanel + "/users/{userId}/bankcards/{id}";
             //api/v1/site/panel/bankcards/{id}
             //PUT
-            public const string UpdateBankCard = BaseSitePanel + "/bankcards/{id}";
+            public const string UpdateBankCard = BaseSitePanel + "/users/{userId}/bankcards/{id}";
             //api/v1/site/panel/users/{userId}/bankcard/{id}
             //DELETE
-            public const string DeleteBankCard = BaseSitePanel + "/bankcards/{id}";
+            public const string DeleteBankCard = BaseSitePanel + "/users/{userId}/bankcards/{id}";
 
         }
         #endregion

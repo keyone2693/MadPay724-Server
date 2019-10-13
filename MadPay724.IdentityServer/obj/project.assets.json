@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v3.0": {
-      "IdentityModel/4.0.0-preview.4": {
+      "IdentityModel/4.0.0": {
         "type": "package",
         "dependencies": {
           "Newtonsoft.Json": "11.0.2",
@@ -15,12 +15,12 @@
           "lib/netstandard2.0/IdentityModel.dll": {}
         }
       },
-      "IdentityServer4/3.0.0-preview8.19": {
+      "IdentityServer4/3.0.1": {
         "type": "package",
         "dependencies": {
-          "IdentityModel": "4.0.0-preview.4",
-          "IdentityServer4.Storage": "3.0.0-preview8.19",
-          "Microsoft.AspNetCore.Authentication.OpenIdConnect": "3.0.0-preview8.19405.7",
+          "IdentityModel": "4.0.0",
+          "IdentityServer4.Storage": "3.0.1",
+          "Microsoft.AspNetCore.Authentication.OpenIdConnect": "3.0.0",
           "Newtonsoft.Json": "12.0.1"
         },
         "compile": {
@@ -33,10 +33,10 @@
           "Microsoft.AspNetCore.App"
         ]
       },
-      "IdentityServer4.Storage/3.0.0-preview8.19": {
+      "IdentityServer4.Storage/3.0.1": {
         "type": "package",
         "dependencies": {
-          "IdentityModel": "4.0.0-preview.4"
+          "IdentityModel": "4.0.0"
         },
         "compile": {
           "lib/netstandard2.0/IdentityServer4.Storage.dll": {}
@@ -45,7 +45,7 @@
           "lib/netstandard2.0/IdentityServer4.Storage.dll": {}
         }
       },
-      "Microsoft.AspNetCore.Authentication.OpenIdConnect/3.0.0-preview8.19405.7": {
+      "Microsoft.AspNetCore.Authentication.OpenIdConnect/3.0.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.IdentityModel.Protocols.OpenIdConnect": "5.5.0"
@@ -173,14 +173,14 @@
     }
   },
   "libraries": {
-    "IdentityModel/4.0.0-preview.4": {
-      "sha512": "JfH9R+D4jMiF75wNGH1MF/wTZfdCYFg/KbDQUKm8xsHXFCjBBeCXxVeZeGwGBxTOoCaan0dWDaqB7I6JMV3rsw==",
+    "IdentityModel/4.0.0": {
+      "sha512": "Y7i2fezKKKnmxdENfEOpby4Es84e76D16SYcxWKggYraFOvvfKfQAn5KGuuR1X2h1aTrlKZy0lct0NxHg4aVVw==",
       "type": "package",
-      "path": "identitymodel/4.0.0-preview.4",
+      "path": "identitymodel/4.0.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "identitymodel.4.0.0-preview.4.nupkg.sha512",
+        "identitymodel.4.0.0.nupkg.sha512",
         "identitymodel.nuspec",
         "lib/net461/IdentityModel.dll",
         "lib/net461/IdentityModel.pdb",
@@ -190,44 +190,44 @@
         "lib/netstandard2.0/IdentityModel.xml"
       ]
     },
-    "IdentityServer4/3.0.0-preview8.19": {
-      "sha512": "rGgdC7tZHXph8A0xGKPvqFDJdSe1eBryV5n0ICQ45uT6kghgD0dc79Urro1sisbaqupvMZCvEqfh41P3s+QLJA==",
+    "IdentityServer4/3.0.1": {
+      "sha512": "MtMMG+Obqwx/zRfuzkVyxpHo/jMUA8qQzEJOzpZfmwqrt3dDHOHJxRm3n6jhQ/3FWuYyyV1MpvDtLhzPUwMf2A==",
       "type": "package",
-      "path": "identityserver4/3.0.0-preview8.19",
+      "path": "identityserver4/3.0.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "identityserver4.3.0.0-preview8.19.nupkg.sha512",
+        "identityserver4.3.0.1.nupkg.sha512",
         "identityserver4.nuspec",
         "lib/netcoreapp3.0/IdentityServer4.dll",
         "lib/netcoreapp3.0/IdentityServer4.pdb",
         "lib/netcoreapp3.0/IdentityServer4.xml"
       ]
     },
-    "IdentityServer4.Storage/3.0.0-preview8.19": {
-      "sha512": "DNkG+nUinRbxzDdfeTPYTS7ewBaDdRJa+csbXAaxe88oQS9c60eXUbU+elsnCTxBEJ/emtEp2Pmhi5INYdeV5w==",
+    "IdentityServer4.Storage/3.0.1": {
+      "sha512": "97juaDDuq1NA/gV8y5iplv2wYBJCUEXE7b3MuVmTRt7uGCS3DaZWtbEKYwWr1djlwBqyo9HvciyPZYP8MD3Eaw==",
       "type": "package",
-      "path": "identityserver4.storage/3.0.0-preview8.19",
+      "path": "identityserver4.storage/3.0.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "identityserver4.storage.3.0.0-preview8.19.nupkg.sha512",
+        "identityserver4.storage.3.0.1.nupkg.sha512",
         "identityserver4.storage.nuspec",
         "lib/netstandard2.0/IdentityServer4.Storage.dll",
         "lib/netstandard2.0/IdentityServer4.Storage.pdb",
         "lib/netstandard2.0/IdentityServer4.Storage.xml"
       ]
     },
-    "Microsoft.AspNetCore.Authentication.OpenIdConnect/3.0.0-preview8.19405.7": {
-      "sha512": "UZlhquYI7wfKeXNJEGVbhra3CFqmLfada/jBWpMM1gEQVBHnvbDxUlgMZ+ENwpl256s3r4ih7WqD7TDJ+bigoA==",
+    "Microsoft.AspNetCore.Authentication.OpenIdConnect/3.0.0": {
+      "sha512": "z/VvjURz5vS9SLVIHSKzPRe6PH5DPQxuzu+5Cv+2zojg7sVmXmj+sldBoGlGLvf7AA/F53+pc4oE7S8Fa9kfOQ==",
       "type": "package",
-      "path": "microsoft.aspnetcore.authentication.openidconnect/3.0.0-preview8.19405.7",
+      "path": "microsoft.aspnetcore.authentication.openidconnect/3.0.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "lib/netcoreapp3.0/Microsoft.AspNetCore.Authentication.OpenIdConnect.dll",
         "lib/netcoreapp3.0/Microsoft.AspNetCore.Authentication.OpenIdConnect.xml",
-        "microsoft.aspnetcore.authentication.openidconnect.3.0.0-preview8.19405.7.nupkg.sha512",
+        "microsoft.aspnetcore.authentication.openidconnect.3.0.0.nupkg.sha512",
         "microsoft.aspnetcore.authentication.openidconnect.nuspec"
       ]
     },
@@ -481,7 +481,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.0": [
-      "IdentityServer4 >= 3.0.0-preview8.19"
+      "IdentityServer4 >= 3.0.1"
     ]
   },
   "packageFolders": {
@@ -527,7 +527,7 @@
         "dependencies": {
           "IdentityServer4": {
             "target": "Package",
-            "version": "[3.0.0-preview8.19, )"
+            "version": "[3.0.1, )"
           }
         },
         "imports": [
@@ -548,7 +548,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100-preview9-014004\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }
