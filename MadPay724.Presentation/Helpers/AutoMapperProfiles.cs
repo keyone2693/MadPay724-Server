@@ -21,6 +21,8 @@ using MadPay724.Data.Dtos.Site.Panel.Ticket;
 using MadPay724.Data.Dtos.Site.Panel.Wallet;
 using MadPay724.Data.Models.UserModel;
 using MadPay724.Data.Dtos.Site.Panel.Gate;
+using MadPay724.Data.Models.Blog;
+using MadPay724.Data.Dtos.Site.Panel.BlogGroup;
 
 namespace MadPay724.Presentation.Helpers
 {
@@ -81,6 +83,11 @@ CreateMap<BankCardForUpdateDto, BankCard>();
             CreateMap<EasyPay, EasyPayForReturnDto>();
             CreateMap<List<EasyPayForReturnDto>, List<EasyPay>>();
             CreateMap<EasyPayForCreateUpdateDto, EasyPay>();
+            //----------------------------------------------------------------------
+            CreateMap<BlogGroupForCreateUpdateDto, BlogGroup>();
+            CreateMap<BlogGroup, BlogGroupForReturnDto>();
+            CreateMap<List<BlogGroupForReturnDto>, List<BlogGroup>>();
+            CreateMap<BlogGroupForCreateUpdateDto, BlogGroup>();
         }
     }
 }

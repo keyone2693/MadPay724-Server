@@ -7,9 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MadPay724.Presentation.Controllers.Site.V1.BlogAdmin
 {
-    [Route("api/[controller]")]
+    [ApiExplorerSettings(GroupName = "v1_Site_Panel_BlogAdmin")]
     [ApiController]
-    public class BlogAdminController : ControllerBase
+    public class BlogsController : ControllerBase
     {
     }
 }

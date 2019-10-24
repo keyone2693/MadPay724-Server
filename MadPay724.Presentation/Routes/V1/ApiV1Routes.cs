@@ -218,5 +218,50 @@ namespace MadPay724.Presentation.Routes.V1
 
         }
         #endregion
+
+        #region BlogGroupRoutes
+        public static class BlogGroup
+        {
+            //api/v1/site/panel/users/{userId}/blogGroups
+            //POST
+            public const string AddBlogGroup = BaseSitePanel + "/users/{userId}/blogGroups";
+            //api/v1/site/panel/users/{userId}/blogGroups
+            //GET
+            public const string GetBlogGroups = BaseSitePanel + "/users/{userId}/blogGroups";
+            //api/v1/site/panel/users/{userId}/blogGroups/{id}
+            //GET
+            public const string GetBlogGroup = BaseSitePanel + "/users/{userId}/blogGroups/{id}";
+            //api/v1/site/panel/blogGroups/{id}
+            //PUT
+            public const string UpdateBlogGroup = BaseSitePanel + "/users/{userId}/blogGroups/{id}";
+            //api/v1/site/panel/users/{userId}/blogGroups/{id}
+            //DELETE
+            public const string DeleteBlogGroup = BaseSitePanel + "/users/{userId}/blogGroups/{id}";
+
+        }
+        #endregion
+
+
+        #region BlogRoutes
+        public static class Blog
+        {
+            //api/v1/site/panel/users/{userId}/blogs
+            //POST
+            public const string AddBlog = BaseSitePanel + "/users/{userId}/blogs";
+            //api/v1/site/panel/users/{userId}/blogs
+            //GET
+            public const string GetBlogs = BaseSitePanel + "/users/{userId}/blogs";
+            //api/v1/site/panel/users/{userId}/blogs/{id}
+            //GET
+            public const string GetBlog = BaseSitePanel + "/users/{userId}/blogs/{id}";
+            //api/v1/site/panel/blogs/{id}
+            //PUT
+            public const string UpdateBlog = BaseSitePanel + "/users/{userId}/blogs/{id}";
+            //api/v1/site/panel/users/{userId}/blogs/{id}
+            //DELETE
+            public const string DeleteBlog = BaseSitePanel + "/users/{userId}/blogs/{id}";
+
+        }
+        #endregion
     }
 }
