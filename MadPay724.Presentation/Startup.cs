@@ -128,7 +128,7 @@ namespace MadPay724.Presentation
                 document.ApiGroupNames = new[] { "v1_Site_Panel" };
                 document.PostProcess = d =>
                 {
-                    d.Info.Title = "MadPay724 Api Docs";
+                    d.Info.Title = "MadPay724 Api Docs For Users";
                     //d.Info.Contact = new OpenApiContact
                     //{
                     //    Name = "keyone",
@@ -141,8 +141,6 @@ namespace MadPay724.Presentation
                     //    Url = "https://example.com/license"
                     //};
                 };
-
-
                 document.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
                 {
                     Type = OpenApiSecuritySchemeType.ApiKey,
@@ -150,17 +148,32 @@ namespace MadPay724.Presentation
                     In = OpenApiSecurityApiKeyLocation.Header,
                     Description = "Type into the textbox: Bearer {your JWT token}."
                 });
-
                 document.OperationProcessors.Add(
                     new AspNetCoreOperationSecurityScopeProcessor("JWT"));
                 //      new OperationSecurityScopeProcessor("JWT"));
+            });
 
-
+            services.AddOpenApiDocument(document =>
+            {
+                document.DocumentName = "v1_Site_Panel_Blog";
+                document.ApiGroupNames = new[] { "v1_Site_Panel_Blog" };
+                document.PostProcess = d =>
+                {
+                    d.Info.Title = "MadPay724 Api Docs For Blog , AdminBlog , Admin";
+                };
+                document.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
+                {
+                    Type = OpenApiSecuritySchemeType.ApiKey,
+                    Name = "Authorization",
+                    In = OpenApiSecurityApiKeyLocation.Header,
+                    Description = "Type into the textbox: Bearer {your JWT token}."
+                });
+                document.OperationProcessors.Add(
+                    new AspNetCoreOperationSecurityScopeProcessor("JWT"));
             });
 
             services.AddCors();
-
-
+                       
             services.AddAutoMapper(typeof(Startup));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IUnitOfWork<MadpayDbContext>, UnitOfWork<MadpayDbContext>>();

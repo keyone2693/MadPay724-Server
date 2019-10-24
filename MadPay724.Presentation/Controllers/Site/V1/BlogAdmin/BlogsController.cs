@@ -42,7 +42,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.BlogAdmin
             if (User.HasClaim(ClaimTypes.Role, "AdminBlog") || User.HasClaim(ClaimTypes.Role, "Admin"))
             {
                 var blogsFromRepo = await _db.BlogRepository
-                    .GetManyAsync(null, s => s.OrderByDescending(x => x.DateModified), "Users");
+                    .GetManyAsync(null, s => s.OrderByDescending(x => x.DateModified), "User");
 
                 var bankcards = _mapper.Map<List<BlogForReturnDto>>(blogsFromRepo);
 
@@ -51,7 +51,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.BlogAdmin
             else
             {
                 var blogsFromRepo = await _db.BlogRepository
-                    .GetManyAsync(p => p.UserId == userId, s => s.OrderByDescending(x => x.DateModified), "Users");
+                    .GetManyAsync(p => p.UserId == userId, s => s.OrderByDescending(x => x.DateModified), "User");
 
                 var bankcards = _mapper.Map<List<BlogForReturnDto>>(blogsFromRepo);
 
@@ -69,7 +69,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.BlogAdmin
             {
                 var blogFromRepo =
                  (await _db.BlogRepository
-                 .GetManyAsync(p => p.Id == id, s => s.OrderByDescending(x => x.DateModified), "Users")).FirstOrDefault();
+                 .GetManyAsync(p => p.Id == id, s => s.OrderByDescending(x => x.DateModified), "User")).FirstOrDefault();
 
                 if (blogFromRepo != null)
                 {
@@ -86,7 +86,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.BlogAdmin
             {
                 var blogFromRepo =
                     (await _db.BlogRepository
-                    .GetManyAsync(p => p.Id == id, s => s.OrderByDescending(x => x.DateModified), "Users")).FirstOrDefault();
+                    .GetManyAsync(p => p.Id == id, s => s.OrderByDescending(x => x.DateModified), "User")).FirstOrDefault();
 
                 if (blogFromRepo != null)
                 {
@@ -125,6 +125,8 @@ namespace MadPay724.Presentation.Controllers.Site.V1.BlogAdmin
                 var cardForCreate = new Blog()
                 {
                     UserId = userId,
+                    Status = false,
+                    IsSelected = false
                 };
                 var blog = _mapper.Map(blogForCreateDto, cardForCreate);
 

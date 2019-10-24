@@ -21,13 +21,7 @@ namespace MadPay724.Data.Dtos.Site.Panel.Blog
         [Required]
         public string Text { get; set; }
         [Required]
-        public bool Status { get; set; }
-        [Required]
         [StringLength(1000, MinimumLength = 0)]
         public string SummerText { get; set; }
-        [Required]
-        public bool IsSelected { get; set; }
-        [Required]
-        public int ViewCount { get; set; }
     }
 }
