@@ -35,5 +35,6 @@ namespace MadPay724.Data.Models
         public ICollection<Wallet> Wallets { get; set; }
         public ICollection<Ticket> Tickets { get; set; }
         public ICollection<EasyPay> EasyPays { get; set; }
+        public ICollection<Blog.Blog> Blogs { get; set; }
     }
 }

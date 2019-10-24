@@ -20,6 +20,8 @@ namespace MadPay724.Repo.Infrastructure
         ITicketContentRepository TicketContentRepository { get; }
         IGateRepository GateRepository { get; }
         IEasyPayRepository EasyPayRepository { get; }
+        IBlogRepository BlogRepository { get; }
+        IBlogGroupRepository BlogGroupRepository { get; }
         bool Save();
         Task<bool> SaveAsync();
 

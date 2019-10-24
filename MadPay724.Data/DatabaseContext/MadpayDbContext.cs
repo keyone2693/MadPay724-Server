@@ -6,6 +6,7 @@ using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using MadPay724.Data.Models.UserModel;
+using MadPay724.Data.Models.Blog;
 
 namespace MadPay724.Data.DatabaseContext
 {
@@ -37,6 +38,8 @@ namespace MadPay724.Data.DatabaseContext
         public DbSet<TicketContent> TicketContents { get; set; }
         public DbSet<Gate> Gates { get; set; }
         public DbSet<EasyPay> EasyPays { get; set; }
+        public DbSet<Blog> Blogs { get; set; }
+        public DbSet<BlogGroup> BlogGroups { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)

@@ -187,6 +187,32 @@ namespace MadPay724.Repo.Infrastructure
                 return easyPayRepository;
             }
         }
+
+        private IBlogRepository blogRepository;
+        public IBlogRepository BlogRepository
+        {
+            get
+            {
+                if (blogRepository == null)
+                {
+                    blogRepository = new BlogRepository(_db);
+                }
+                return blogRepository;
+            }
+        }
+
+        private IBlogGroupRepository blogGroupRepository;
+        public IBlogGroupRepository BlogGroupRepository
+        {
+            get
+            {
+                if (blogGroupRepository == null)
+                {
+                    blogGroupRepository = new BlogGroupRepository(_db);
+                }
+                return blogGroupRepository;
+            }
+        }
         #endregion
 
 
