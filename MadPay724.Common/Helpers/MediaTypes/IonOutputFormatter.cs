@@ -10,9 +10,9 @@ namespace MadPay724.Common.Helpers.MediaTypes
 {
     public class IonOutputFormatter : TextOutputFormatter
     {
-        private readonly JsonOutputFormatter _jsonOutputFormatter;
+        private readonly IonOutputFormatter _jsonOutputFormatter;
 
-        public IonOutputFormatter(JsonOutputFormatter jsonOutputFormatter)
+        public IonOutputFormatter(IonOutputFormatter jsonOutputFormatter)
         {
                 if(jsonOutputFormatter == null) 
                     throw new ArgumentNullException(nameof(jsonOutputFormatter));
