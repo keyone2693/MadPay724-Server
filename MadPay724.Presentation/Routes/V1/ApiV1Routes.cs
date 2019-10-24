@@ -260,6 +260,12 @@ namespace MadPay724.Presentation.Routes.V1
             //api/v1/site/panel/users/{userId}/blogs/{id}
             //DELETE
             public const string DeleteBlog = BaseSitePanel + "/users/{userId}/blogs/{id}";
+            //api/v1/site/panel/users/{userId}/blogs/{id}
+            //PUT
+            public const string SelectBlog = BaseSitePanel + "/users/{userId}/blogs/{id}/selectBlog";
+            //api/v1/site/panel/users/{userId}/blogs/{id}
+            //PUT
+            public const string ApproveBlog = BaseSitePanel + "/users/{userId}/blogs/{id}/approveBlog";
 
         }
         #endregion

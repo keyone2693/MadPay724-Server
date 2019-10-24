@@ -23,6 +23,7 @@ using MadPay724.Data.Models.UserModel;
 using MadPay724.Data.Dtos.Site.Panel.Gate;
 using MadPay724.Data.Models.Blog;
 using MadPay724.Data.Dtos.Site.Panel.BlogGroup;
+using MadPay724.Data.Dtos.Site.Panel.Blog;
 
 namespace MadPay724.Presentation.Helpers
 {
@@ -79,15 +80,35 @@ CreateMap<BankCardForUpdateDto, BankCard>();
             CreateMap<List<GateForReturnDto>, List<Gate>>();
             CreateMap<Gate, GateForReturnDto>();
             //----------------------------------------------------------------------
-            CreateMap<EasyPayForCreateUpdateDto, EasyPay>();
             CreateMap<EasyPay, EasyPayForReturnDto>();
             CreateMap<List<EasyPayForReturnDto>, List<EasyPay>>();
             CreateMap<EasyPayForCreateUpdateDto, EasyPay>();
             //----------------------------------------------------------------------
-            CreateMap<BlogGroupForCreateUpdateDto, BlogGroup>();
             CreateMap<BlogGroup, BlogGroupForReturnDto>();
             CreateMap<List<BlogGroupForReturnDto>, List<BlogGroup>>();
             CreateMap<BlogGroupForCreateUpdateDto, BlogGroup>();
+            //----------------------------------------------------------------------
+            CreateMap<BlogForCreateUpdateDto, Blog>();
+            CreateMap<Blog, BlogForReturnDto>()
+                .ForMember(dest => dest.UserName, opt =>
+                {
+                    opt.MapFrom(src => src.User.UserName);
+                })
+               .ForMember(dest => dest.Name, opt =>
+               {
+                   opt.MapFrom(src => src.User.Name);
+               });
+            CreateMap<List<BlogForReturnDto>, List<Blog>>()
+                .ForMember(dest => dest.Select(p=>p.User.UserName), opt =>
+                {
+                    opt.MapFrom(src => src.Select(p => p.UserName));
+                })
+               .ForMember(dest => dest.Select(p => p.User.Name), opt =>
+               {
+                   opt.MapFrom(src => src.Select(p => p.Name));
+               });
+            CreateMap<BlogForCreateUpdateDto, Blog>();
+               
         }
     }
 }
