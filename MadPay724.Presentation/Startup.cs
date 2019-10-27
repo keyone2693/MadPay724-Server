@@ -229,7 +229,7 @@ namespace MadPay724.Presentation
                 opt.AddPolicy("AccessAccounting", policy => policy.RequireRole("Admin", "Accountant"));
 
 
-                opt.AddPolicy("AccessProfile", policy => policy.RequireRole("Admin", "User", "Blog", "Accountant"));
+                opt.AddPolicy("AccessProfile", policy => policy.RequireRole("Admin", "User", "AdminBlog", "Blog", "Accountant"));
 
                 opt.AddPolicy("RequireUserRole", policy => policy.RequireRole("User"));
                 opt.AddPolicy("RequireBlogsRole", policy => policy.RequireRole("Blog"));

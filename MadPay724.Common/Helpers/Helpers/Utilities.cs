@@ -101,6 +101,7 @@ namespace MadPay724.Common.Helpers.Helpers
             {
                 claims.Add(new Claim(ClaimTypes.Role, role));
             }
+            //claims.Add(new Claim(ClaimTypes.Role, "Fake"));
 
             var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_tokenSetting.Secret));
             var tokenHandler = new JwtSecurityTokenHandler();
