@@ -129,15 +129,33 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Blogger
         [HttpDelete(ApiV1Routes.BlogGroup.DeleteBlogGroup)]
         public async Task<IActionResult> DeleteBlogGroup(string id, string userId)
         {
-            var blogGroupFromRepo = await _db.BlogGroupRepository.GetByIdAsync(id);
+            var blogGroupFromRepo = (await _db.BlogGroupRepository.GetManyAsync(
+                p => p.Id == id, null, "Blogs")).SingleOrDefault();
             if (blogGroupFromRepo != null)
             {
-                _db.BlogGroupRepository.Delete(blogGroupFromRepo);
+                var parentFromRepo = await _db.BlogGroupRepository.GetManyAsync(
+                p => p.Parent == id, null, "");
 
-                if (await _db.SaveAsync())
-                    return NoContent();
+                if (parentFromRepo.Any())
+                {
+                    return BadRequest("امکان حذف دسته بندی هایی که  زیر مجموعه دارند را ندارید، ابتدا دسته بندی های زیر مجموعه را حذف کنید");
+                }
                 else
-                    return BadRequest("خطا در حذف اطلاعات");
+                {
+                    if (blogGroupFromRepo.Blogs.Count > 0)
+                    {
+                        return BadRequest("امکان حذف دسته بدنی هایی که دارای بلاگ هستند نیست");
+                    }
+                    else
+                    {
+                        _db.BlogGroupRepository.Delete(blogGroupFromRepo);
+
+                        if (await _db.SaveAsync())
+                            return NoContent();
+                        else
+                            return BadRequest("خطا در حذف اطلاعات");
+                    }
+                }               
             }
             else
             {
