@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace MadPay724.Presentation.Controllers.Site.V1.BlogAdmin
+namespace MadPay724.Presentation.Controllers.Site.V1.Blogger
 {
     [ApiExplorerSettings(GroupName = "v1_Site_Panel_Blog")]
     [ApiController]

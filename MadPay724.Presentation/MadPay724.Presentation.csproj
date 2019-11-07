@@ -43,7 +43,6 @@
   <ItemGroup>
     <Folder Include="Controllers\Api\" />
     <Folder Include="Controllers\Site\V1\App\" />
-    <Folder Include="Controllers\Site\V1\Blog\" />
     <Folder Include="Controllers\Site\V1\Accountant\" />
     <Folder Include="wwwroot\Files\Gate\" />
     <Folder Include="wwwroot\Files\TicketContent\" />

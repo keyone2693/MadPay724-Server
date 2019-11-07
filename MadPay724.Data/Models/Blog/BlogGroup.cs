@@ -15,7 +15,6 @@ namespace MadPay724.Data.Models.Blog
             DateModified = DateTime.Now;
         }
         [Required]
-        [StringLength(450, MinimumLength = 0)]
         public string Parent { get; set; }
         [Required]
         [StringLength(150, MinimumLength = 0)]
