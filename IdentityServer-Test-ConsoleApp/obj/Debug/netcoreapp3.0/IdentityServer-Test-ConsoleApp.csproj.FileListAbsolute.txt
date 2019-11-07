@@ -7,9 +7,9 @@ D:\Daneshjooyar\ProjectFile\MadPay724-Server\IdentityServer-Test-ConsoleApp\bin\
 D:\Daneshjooyar\ProjectFile\MadPay724-Server\IdentityServer-Test-ConsoleApp\bin\Debug\netcoreapp3.0\IdentityModel.dll
 D:\Daneshjooyar\ProjectFile\MadPay724-Server\IdentityServer-Test-ConsoleApp\bin\Debug\netcoreapp3.0\Newtonsoft.Json.dll
 D:\Daneshjooyar\ProjectFile\MadPay724-Server\IdentityServer-Test-ConsoleApp\bin\Debug\netcoreapp3.0\RestSharp.dll
+D:\Daneshjooyar\ProjectFile\MadPay724-Server\IdentityServer-Test-ConsoleApp\obj\Debug\netcoreapp3.0\IdentityServer-Test-ConsoleApp.csprojAssemblyReference.cache
 D:\Daneshjooyar\ProjectFile\MadPay724-Server\IdentityServer-Test-ConsoleApp\obj\Debug\netcoreapp3.0\IdentityServer-Test-ConsoleApp.AssemblyInfoInputs.cache
 D:\Daneshjooyar\ProjectFile\MadPay724-Server\IdentityServer-Test-ConsoleApp\obj\Debug\netcoreapp3.0\IdentityServer-Test-ConsoleApp.AssemblyInfo.cs
 D:\Daneshjooyar\ProjectFile\MadPay724-Server\IdentityServer-Test-ConsoleApp\obj\Debug\netcoreapp3.0\IdentityServer-Test-ConsoleApp.csproj.CopyComplete
 D:\Daneshjooyar\ProjectFile\MadPay724-Server\IdentityServer-Test-ConsoleApp\obj\Debug\netcoreapp3.0\IdentityServer-Test-ConsoleApp.dll
 D:\Daneshjooyar\ProjectFile\MadPay724-Server\IdentityServer-Test-ConsoleApp\obj\Debug\netcoreapp3.0\IdentityServer-Test-ConsoleApp.pdb
-D:\Daneshjooyar\ProjectFile\MadPay724-Server\IdentityServer-Test-ConsoleApp\obj\Debug\netcoreapp3.0\IdentityServer-Test-ConsoleApp.csprojAssemblyReference.cache
