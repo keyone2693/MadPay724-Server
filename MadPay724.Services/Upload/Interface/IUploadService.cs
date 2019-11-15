@@ -1,4 +1,5 @@
-﻿using MadPay724.Data.Dtos.Services;
+﻿using MadPay724.Common.ErrorAndMessage;
+using MadPay724.Data.Dtos.Services;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -14,5 +15,7 @@ namespace MadPay724.Services.Upload.Interface
         Task<FileUploadedDto> UploadFile(IFormFile file, string userId, string WebRootPath, string UrlBegan);
         FileUploadedDto RemoveFileFromCloudinary(string publicId);
         FileUploadedDto RemoveFileFromLocal(string photoName, string WebRootPath , string filePath);
+
+        ReturnMessage CreateDirectory(string WebRootPath, string UrlUrl);
     }
 }

@@ -10,7 +10,9 @@ using MadPay724.Data.Models.Blog;
 using MadPay724.Presentation.Helpers.Filters;
 using MadPay724.Presentation.Routes.V1;
 using MadPay724.Repo.Infrastructure;
+using MadPay724.Services.Upload.Interface;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -24,13 +26,18 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Blogger
         private readonly IUnitOfWork<MadpayDbContext> _db;
         private readonly IMapper _mapper;
         private readonly ILogger<BlogsController> _logger;
+        private readonly IUploadService _uploadService;
+        private readonly IWebHostEnvironment _env;
 
         public BlogsController(IUnitOfWork<MadpayDbContext> dbContext, IMapper mapper,
-            ILogger<BlogsController> logger)
+            ILogger<BlogsController> logger, IUploadService uploadService,
+            IWebHostEnvironment env)
         {
             _db = dbContext;
             _mapper = mapper;
             _logger = logger;
+            _uploadService = uploadService;
+            _env = env;
         }
 
 
@@ -127,7 +134,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Blogger
         }
         [Authorize(Policy = "AccessBlog")]
         [HttpPost(ApiV1Routes.Blog.AddBlog)]
-        public async Task<IActionResult> AddBlog(string userId, BlogForCreateUpdateDto blogForCreateDto)
+        public async Task<IActionResult> AddBlog(string userId, [FromForm]BlogForCreateUpdateDto blogForCreateDto)
         {
             blogForCreateDto.Title = blogForCreateDto.Title.Trim();
 
@@ -136,24 +143,52 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Blogger
 
             if (blogFromRepo == null)
             {
-                var cardForCreate = new Blog()
+                var blogForCreate = new Blog()
                 {
                     UserId = userId,
                     Status = false,
                     IsSelected = false
                 };
-                var blog = _mapper.Map(blogForCreateDto, cardForCreate);
 
-                await _db.BlogRepository.InsertAsync(blog);
+                var creatDir = _uploadService.CreateDirectory(_env.WebRootPath,
+                    "Files\\Blog\\" + DateTime.Now.Year + "\\" + DateTime.Now.Month + "\\" + DateTime.Now.Day);
 
-                if (await _db.SaveAsync())
+                if (creatDir.status)
                 {
-                    var blogForReturn = _mapper.Map<BlogForReturnDto>(blog);
+                    var uploadRes = await _uploadService.UploadFileToLocal(
+                      blogForCreateDto.File,
+                          blogForCreate.Id,
+                          _env.WebRootPath,
+                          $"{Request.Scheme ?? ""}://{Request.Host.Value ?? ""}{Request.PathBase.Value ?? ""}",
+                          "Files\\Blog\\" + DateTime.Now.Year + "\\" + DateTime.Now.Month + "\\" + DateTime.Now.Day
+                      );
+                    if (uploadRes.Status)
+                    {
+                        blogForCreate.PicAddress = uploadRes.Url;
 
-                    return CreatedAtRoute("GetBlog", new { id = blog.Id, userId = userId }, blogForReturn);
+                        var blog = _mapper.Map(blogForCreateDto, blogForCreate);
+
+                        await _db.BlogRepository.InsertAsync(blog);
+
+                        if (await _db.SaveAsync())
+                        {
+                            var blogForReturn = _mapper.Map<BlogForReturnDto>(blog);
+
+                            return CreatedAtRoute("GetBlog", new { id = blog.Id, userId = userId }, blogForReturn);
+                        }
+                        else
+                            return BadRequest("خطا در ثبت اطلاعات");
+                    }
+                    else
+                    {
+                        return BadRequest(uploadRes.Message);
+                    }
                 }
                 else
-                    return BadRequest("خطا در ثبت اطلاعات");
+                {
+                    return BadRequest(creatDir.message);
+                }
+
             }
             {
                 return BadRequest(" بلاگی با این تایتل قبلا ثبت شده است");

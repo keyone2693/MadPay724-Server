@@ -1,5 +1,6 @@
 ﻿using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
+using MadPay724.Common.ErrorAndMessage;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Services;
 using MadPay724.Data.Models;
@@ -193,5 +194,32 @@ namespace MadPay724.Services.Upload.Service
                 };
             }
         }
+
+        public ReturnMessage CreateDirectory(string WebRootPath, string Url)
+        {
+            try
+            {
+                var path = Path.Combine(WebRootPath, Url);
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+                return new ReturnMessage
+                {
+                    status = true
+                };
+
+            }
+            catch (Exception ex)
+            {
+                return new ReturnMessage
+                {
+                    status = false,
+                    message = ex.Message
+                };
+            }
+            
+        }
+
     }
 }
