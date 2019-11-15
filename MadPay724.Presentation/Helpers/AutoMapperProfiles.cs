@@ -97,17 +97,12 @@ CreateMap<BankCardForUpdateDto, BankCard>();
                .ForMember(dest => dest.Name, opt =>
                {
                    opt.MapFrom(src => src.User.Name);
+               })
+               .ForMember(dest => dest.BlogGroupName, opt =>
+               {
+                   opt.MapFrom(src => src.BlogGroup.Name);
                });
-            CreateMap<List<BlogForReturnDto>, List<Blog>>()
-               // .ForMember(dest => dest.Select(p=>p.User.UserName), opt =>
-               // {
-               //     opt.MapFrom(src => src.Select(p => p.UserName));
-               // })
-               //.ForMember(dest => dest.Select(p => p.User.Name), opt =>
-               //{
-               //    opt.MapFrom(src => src.Select(p => p.Name));
-               //})
-               ;
+            CreateMap<List<BlogForReturnDto>, List<Blog>>();
             CreateMap<BlogForCreateUpdateDto, Blog>();
                
         }

@@ -15,10 +15,13 @@ namespace MadPay724.Data.Dtos.Site.Panel.Blog
         public string SummerText { get; set; }
         public bool IsSelected { get; set; }
         public int ViewCount { get; set; }
-        public string UserId { get; set; }
-        public string BlogGroupId { get; set; }
 
+        public string UserId { get; set; }
         public string UserName { get; set; }
         public string Name { get; set; }
+
+        public string BlogGroupId { get; set; }
+        public string BlogGroupName { get; set; }
+
     }
 }

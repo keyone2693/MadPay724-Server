@@ -42,20 +42,34 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Blogger
             if (User.HasClaim(ClaimTypes.Role, "AdminBlog") || User.HasClaim(ClaimTypes.Role, "Admin"))
             {
                 var blogsFromRepo = await _db.BlogRepository
-                    .GetManyAsync(null, s => s.OrderByDescending(x => x.DateModified), "User");
+                    .GetManyAsync(null, s => s.OrderByDescending(x => x.DateModified), "User,BlogGroup");
 
-                var bankcards = _mapper.Map<List<BlogForReturnDto>>(blogsFromRepo);
 
-                return Ok(bankcards);
+                var blogs = new List<BlogForReturnDto>();
+
+                foreach (var item in blogsFromRepo)
+                {
+                    blogs.Add(_mapper.Map<BlogForReturnDto>(item));
+                }
+
+                return Ok(blogs);
             }
             else
             {
                 var blogsFromRepo = await _db.BlogRepository
-                    .GetManyAsync(p => p.UserId == userId, s => s.OrderByDescending(x => x.DateModified), "User");
+                    .GetManyAsync(p => p.UserId == userId, s => s.OrderByDescending(x => x.DateModified), "User,BlogGroup");
 
-                var bankcards = _mapper.Map<List<BlogForReturnDto>>(blogsFromRepo);
+                //var blogs = _mapper.Map<List<BlogForReturnDto>>(blogsFromRepo);
 
-                return Ok(bankcards);
+                var blogs = new List<BlogForReturnDto>();
+
+                foreach (var item in blogsFromRepo)
+                {
+                    blogs.Add(_mapper.Map<BlogForReturnDto>(item));
+                }
+
+
+                return Ok(blogs);
             }
 
         }
