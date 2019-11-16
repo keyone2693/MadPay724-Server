@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
+using MadPay724.Common.ErrorAndMessage;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Site.Panel.Blog;
 using MadPay724.Data.Models.Blog;
@@ -40,7 +41,48 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Blogger
             _env = env;
         }
 
+        [Authorize(Policy = "AccessBlog")]
+        //[ServiceFilter(typeof(UserCheckIdFilter))]
+        [HttpPost(ApiV1Routes.Blog.UploadBlogImage)]
+        public async Task<IActionResult> UploadBlogImage(IFormFile upload)
+        {
+            var creatDir = _uploadService.CreateDirectory(_env.WebRootPath,
+                 "Files\\Blog\\" + DateTime.Now.Year + "\\" + DateTime.Now.Month + "\\" + DateTime.Now.Day);
 
+            if (creatDir.status)
+            {
+                var uploadRes = await _uploadService.UploadFileToLocal(
+                      upload,
+                      Guid.NewGuid().ToString(),
+                      _env.WebRootPath,
+                      $"{Request.Scheme ?? ""}://{Request.Host.Value ?? ""}{Request.PathBase.Value ?? ""}",
+                      "Files\\Blog\\" + DateTime.Now.Year + "\\" + DateTime.Now.Month + "\\" + DateTime.Now.Day
+                  );
+                if (uploadRes.Status)
+                {
+
+                    return Ok(new CkEditorUploadImgReaturnMesssage{
+                            uploaded=true,
+                            url=uploadRes.Url
+                        });
+                }
+                else
+                {
+                    return BadRequest(new CkEditorUploadImgReaturnMesssage
+                    {
+                        uploaded = false
+                    });
+                }
+            }
+            else
+            {
+                return BadRequest(new CkEditorUploadImgReaturnMesssage
+                {
+                    uploaded = false
+                });
+            }
+
+        }
         [Authorize(Policy = "AccessBlog")]
         [ServiceFilter(typeof(UserCheckIdFilter))]
         [HttpGet(ApiV1Routes.Blog.GetBlogs)]

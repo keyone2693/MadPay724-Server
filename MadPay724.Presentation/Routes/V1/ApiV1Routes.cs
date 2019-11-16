@@ -245,6 +245,9 @@ namespace MadPay724.Presentation.Routes.V1
         #region BlogRoutes
         public static class Blog
         {
+            //api/v1/site/panel/users/{userId}/blogs/upload
+            //POST
+            public const string UploadBlogImage = BaseSitePanel + "/users/{userId}/blogs/upload";
             //api/v1/site/panel/users/{userId}/blogs
             //POST
             public const string AddBlog = BaseSitePanel + "/users/{userId}/blogs";
