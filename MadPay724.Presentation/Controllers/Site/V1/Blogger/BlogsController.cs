@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using MadPay724.Common.ErrorAndMessage;
+using MadPay724.Common.Helpers.Interface;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Site.Panel.Blog;
 using MadPay724.Data.Models.Blog;
@@ -29,22 +31,22 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Blogger
         private readonly ILogger<BlogsController> _logger;
         private readonly IUploadService _uploadService;
         private readonly IWebHostEnvironment _env;
+        private readonly IUtilities _utilities;
 
         public BlogsController(IUnitOfWork<MadpayDbContext> dbContext, IMapper mapper,
             ILogger<BlogsController> logger, IUploadService uploadService,
-            IWebHostEnvironment env)
+            IWebHostEnvironment env, IUtilities utilities)
         {
             _db = dbContext;
             _mapper = mapper;
             _logger = logger;
             _uploadService = uploadService;
             _env = env;
+            _utilities = utilities;
         }
-
         [Authorize(Policy = "AccessBlog")]
-        //[ServiceFilter(typeof(UserCheckIdFilter))]
         [HttpPost(ApiV1Routes.Blog.UploadBlogImage)]
-        public async Task<IActionResult> UploadBlogImage(IFormFile upload)
+        public async Task<IActionResult> UploadBlogImage(IFormFile UploadFiles)
         {
             var creatDir = _uploadService.CreateDirectory(_env.WebRootPath,
                  "Files\\Blog\\" + DateTime.Now.Year + "\\" + DateTime.Now.Month + "\\" + DateTime.Now.Day);
@@ -52,7 +54,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Blogger
             if (creatDir.status)
             {
                 var uploadRes = await _uploadService.UploadFileToLocal(
-                      upload,
+                      UploadFiles,
                       Guid.NewGuid().ToString(),
                       _env.WebRootPath,
                       $"{Request.Scheme ?? ""}://{Request.Host.Value ?? ""}{Request.PathBase.Value ?? ""}",
@@ -60,11 +62,8 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Blogger
                   );
                 if (uploadRes.Status)
                 {
-
-                    return Ok(new CkEditorUploadImgReaturnMesssage{
-                            uploaded=true,
-                            url=uploadRes.Url
-                        });
+                    Response.Headers.Add("ejUrl", uploadRes.Url);
+                    return Ok();
                 }
                 else
                 {
@@ -73,6 +72,27 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Blogger
                         uploaded = false
                     });
                 }
+            }
+            else
+            {
+                return BadRequest(new CkEditorUploadImgReaturnMesssage
+                {
+                    uploaded = false
+                });
+            }
+
+        }
+        [Authorize(Policy = "AccessBlog")]
+        [HttpPost(ApiV1Routes.Blog.DeleteBlogImage)]
+        public async Task<IActionResult> DeleteBlogImage(BlogImgDeletingDto blogImgDeletingDto)
+        {
+            var deleteRes = _uploadService.RemoveFileFromLocal(
+                  Path.GetFileName(blogImgDeletingDto.ImgUrl),
+                  _env.WebRootPath,
+                  _utilities.FindLocalPathFromUrl(blogImgDeletingDto.ImgUrl).Replace("wwwroot\\", ""));
+            if (deleteRes.Status)
+            {
+                return Ok();
             }
             else
             {
@@ -122,7 +142,6 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Blogger
             }
 
         }
-
         [Authorize(Policy = "AccessBlog")]
         [ServiceFilter(typeof(UserCheckIdFilter))]
         [HttpGet(ApiV1Routes.Blog.GetBlog, Name = "GetBlog")]
@@ -347,7 +366,6 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Blogger
                 return BadRequest("بلاگ وجود ندارد");
             }
         }
-
         [Authorize(Policy = "AccessAdminBlog")]
         [HttpDelete(ApiV1Routes.Blog.DeleteBlog)]
         public async Task<IActionResult> DeleteBlog(string id, string userId)
@@ -355,6 +373,11 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Blogger
             var blogFromRepo = await _db.BlogRepository.GetByIdAsync(id);
             if (blogFromRepo != null)
             {
+
+                _uploadService.RemoveFileFromLocal(blogFromRepo.PicAddress.Split('/').Last(),
+                    _env.WebRootPath,
+                    _utilities.FindLocalPathFromUrl(blogFromRepo.PicAddress).Replace("wwwroot\\", ""));
+
                 _db.BlogRepository.Delete(blogFromRepo);
 
                 if (await _db.SaveAsync())

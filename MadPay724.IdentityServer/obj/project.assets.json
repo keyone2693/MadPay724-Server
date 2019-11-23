@@ -491,11 +491,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.IdentityServer\\MadPay724.IdentityServer.csproj",
+      "projectUniqueName": "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.IdentityServer\\MadPay724.IdentityServer.csproj",
       "projectName": "MadPay724.IdentityServer",
-      "projectPath": "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.IdentityServer\\MadPay724.IdentityServer.csproj",
+      "projectPath": "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.IdentityServer\\MadPay724.IdentityServer.csproj",
       "packagesPath": "C:\\Users\\Key1-lab\\.nuget\\packages\\",
-      "outputPath": "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.IdentityServer\\obj\\",
+      "outputPath": "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.IdentityServer\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

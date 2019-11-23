@@ -17,5 +17,7 @@ namespace MadPay724.Common.Helpers.Interface
         Token CreateRefreshToken(string clientId, string userId, bool isRemember);
 
         Task<TokenResponseDto> RefreshAccessTokenAsync(TokenRequestDto tokenRequestDto);
+
+        string FindLocalPathFromUrl(string url);
     }
 }

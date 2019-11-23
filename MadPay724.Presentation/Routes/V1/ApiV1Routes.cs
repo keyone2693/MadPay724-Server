@@ -248,6 +248,9 @@ namespace MadPay724.Presentation.Routes.V1
             //api/v1/site/panel/users/{userId}/blogs/upload
             //POST
             public const string UploadBlogImage = BaseSitePanel + "/users/{userId}/blogs/upload";
+            //api/v1/site/panel/users/{userId}/blogs/deleteupload
+            //DELETE
+            public const string DeleteBlogImage = BaseSitePanel + "/users/{userId}/blogs/deleteupload";
             //api/v1/site/panel/users/{userId}/blogs
             //POST
             public const string AddBlog = BaseSitePanel + "/users/{userId}/blogs";

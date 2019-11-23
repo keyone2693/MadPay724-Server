@@ -39,7 +39,15 @@ namespace MadPay724.Common.Helpers.Helpers
             _tokenSetting = tokenSettingSection.Get<TokenSetting>();
             _http = http;
         }
+        public string FindLocalPathFromUrl(string url)
+        {
+            //var arry = url.Split("//")[1].Split('/');
+            var arry = url.Replace("https://", "").Replace("http://", "")
+                .Split('/').Skip(1).SkipLast(1);
 
+            return (arry.Aggregate("", (current, item) => current + (item + "\\"))).TrimEnd('\\');
+
+        }
         #region tokenCreateNew
 
         public async Task<TokenResponseDto> GenerateNewTokenAsync(TokenRequestDto tokenRequestDto)
@@ -144,6 +152,8 @@ namespace MadPay724.Common.Helpers.Helpers
 
         }
 
+
+       
         #endregion
 
         #region tokenRefresh

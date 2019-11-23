@@ -143,11 +143,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\IdentityServer-Test-ConsoleApp\\IdentityServer-Test-ConsoleApp.csproj",
+      "projectUniqueName": "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\IdentityServer-Test-ConsoleApp\\IdentityServer-Test-ConsoleApp.csproj",
       "projectName": "IdentityServer-Test-ConsoleApp",
-      "projectPath": "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\IdentityServer-Test-ConsoleApp\\IdentityServer-Test-ConsoleApp.csproj",
+      "projectPath": "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\IdentityServer-Test-ConsoleApp\\IdentityServer-Test-ConsoleApp.csproj",
       "packagesPath": "C:\\Users\\Key1-lab\\.nuget\\packages\\",
-      "outputPath": "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\IdentityServer-Test-ConsoleApp\\obj\\",
+      "outputPath": "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\IdentityServer-Test-ConsoleApp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

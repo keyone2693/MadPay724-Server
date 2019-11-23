@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Test\\MadPay724.Test.csproj": {}
+    "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Test\\MadPay724.Test.csproj": {}
   },
   "projects": {
-    "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Common\\MadPay724.Common.csproj": {
+    "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Common\\MadPay724.Common.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Common\\MadPay724.Common.csproj",
+        "projectUniqueName": "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Common\\MadPay724.Common.csproj",
         "projectName": "MadPay724.Common",
-        "projectPath": "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Common\\MadPay724.Common.csproj",
+        "projectPath": "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Common\\MadPay724.Common.csproj",
         "packagesPath": "C:\\Users\\Key1-lab\\.nuget\\packages\\",
-        "outputPath": "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Common\\obj\\",
+        "outputPath": "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Common\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -30,8 +30,8 @@
         "frameworks": {
           "netcoreapp3.0": {
             "projectReferences": {
-              "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Data\\MadPay724.Data.csproj": {
-                "projectPath": "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Data\\MadPay724.Data.csproj"
+              "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Data\\MadPay724.Data.csproj": {
+                "projectPath": "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Data\\MadPay724.Data.csproj"
               }
             }
           }
@@ -88,14 +88,14 @@
         }
       }
     },
-    "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Data\\MadPay724.Data.csproj": {
+    "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Data\\MadPay724.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Data\\MadPay724.Data.csproj",
+        "projectUniqueName": "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Data\\MadPay724.Data.csproj",
         "projectName": "MadPay724.Data",
-        "projectPath": "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Data\\MadPay724.Data.csproj",
+        "projectPath": "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Data\\MadPay724.Data.csproj",
         "packagesPath": "C:\\Users\\Key1-lab\\.nuget\\packages\\",
-        "outputPath": "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Data\\obj\\",
+        "outputPath": "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Data\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -179,14 +179,14 @@
         }
       }
     },
-    "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Presentation\\MadPay724.Presentation.csproj": {
+    "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Presentation\\MadPay724.Presentation.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Presentation\\MadPay724.Presentation.csproj",
+        "projectUniqueName": "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Presentation\\MadPay724.Presentation.csproj",
         "projectName": "MadPay724.Presentation",
-        "projectPath": "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Presentation\\MadPay724.Presentation.csproj",
+        "projectPath": "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Presentation\\MadPay724.Presentation.csproj",
         "packagesPath": "C:\\Users\\Key1-lab\\.nuget\\packages\\",
-        "outputPath": "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Presentation\\obj\\",
+        "outputPath": "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Presentation\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -205,8 +205,8 @@
         "frameworks": {
           "netcoreapp3.0": {
             "projectReferences": {
-              "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Services\\MadPay724.Services.csproj": {
-                "projectPath": "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Services\\MadPay724.Services.csproj"
+              "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Services\\MadPay724.Services.csproj": {
+                "projectPath": "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Services\\MadPay724.Services.csproj"
               }
             }
           }
@@ -305,14 +305,14 @@
         }
       }
     },
-    "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Repo\\MadPay724.Repo.csproj": {
+    "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Repo\\MadPay724.Repo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Repo\\MadPay724.Repo.csproj",
+        "projectUniqueName": "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Repo\\MadPay724.Repo.csproj",
         "projectName": "MadPay724.Repo",
-        "projectPath": "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Repo\\MadPay724.Repo.csproj",
+        "projectPath": "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Repo\\MadPay724.Repo.csproj",
         "packagesPath": "C:\\Users\\Key1-lab\\.nuget\\packages\\",
-        "outputPath": "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Repo\\obj\\",
+        "outputPath": "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Repo\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -331,8 +331,8 @@
         "frameworks": {
           "netcoreapp3.0": {
             "projectReferences": {
-              "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Common\\MadPay724.Common.csproj": {
-                "projectPath": "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Common\\MadPay724.Common.csproj"
+              "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Common\\MadPay724.Common.csproj": {
+                "projectPath": "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Common\\MadPay724.Common.csproj"
               }
             }
           }
@@ -367,14 +367,14 @@
         }
       }
     },
-    "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Services\\MadPay724.Services.csproj": {
+    "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Services\\MadPay724.Services.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Services\\MadPay724.Services.csproj",
+        "projectUniqueName": "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Services\\MadPay724.Services.csproj",
         "projectName": "MadPay724.Services",
-        "projectPath": "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Services\\MadPay724.Services.csproj",
+        "projectPath": "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Services\\MadPay724.Services.csproj",
         "packagesPath": "C:\\Users\\Key1-lab\\.nuget\\packages\\",
-        "outputPath": "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Services\\obj\\",
+        "outputPath": "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Services\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -393,8 +393,8 @@
         "frameworks": {
           "netcoreapp3.0": {
             "projectReferences": {
-              "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Repo\\MadPay724.Repo.csproj": {
-                "projectPath": "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Repo\\MadPay724.Repo.csproj"
+              "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Repo\\MadPay724.Repo.csproj": {
+                "projectPath": "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Repo\\MadPay724.Repo.csproj"
               }
             }
           }
@@ -447,14 +447,14 @@
         }
       }
     },
-    "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Test\\MadPay724.Test.csproj": {
+    "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Test\\MadPay724.Test.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Test\\MadPay724.Test.csproj",
+        "projectUniqueName": "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Test\\MadPay724.Test.csproj",
         "projectName": "MadPay724.Test",
-        "projectPath": "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Test\\MadPay724.Test.csproj",
+        "projectPath": "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Test\\MadPay724.Test.csproj",
         "packagesPath": "C:\\Users\\Key1-lab\\.nuget\\packages\\",
-        "outputPath": "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Test\\obj\\",
+        "outputPath": "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Test\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -473,8 +473,8 @@
         "frameworks": {
           "netcoreapp3.0": {
             "projectReferences": {
-              "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Presentation\\MadPay724.Presentation.csproj": {
-                "projectPath": "D:\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Presentation\\MadPay724.Presentation.csproj"
+              "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Presentation\\MadPay724.Presentation.csproj": {
+                "projectPath": "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Presentation\\MadPay724.Presentation.csproj"
               }
             }
           }
