@@ -48,6 +48,24 @@ namespace MadPay724.Common.Helpers.Helpers
             return (arry.Aggregate("", (current, item) => current + (item + "\\"))).TrimEnd('\\');
 
         }
+        public bool IsFile(IFormFile file)
+        {
+            if(file != null)
+            {
+                if (file.Length >0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+                }
+        }
         #region tokenCreateNew
 
         public async Task<TokenResponseDto> GenerateNewTokenAsync(TokenRequestDto tokenRequestDto)

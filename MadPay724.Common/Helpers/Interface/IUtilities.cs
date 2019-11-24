@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MadPay724.Data.Dtos.Common.Token;
 using MadPay724.Data.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace MadPay724.Common.Helpers.Interface
 {
@@ -19,5 +20,6 @@ namespace MadPay724.Common.Helpers.Interface
         Task<TokenResponseDto> RefreshAccessTokenAsync(TokenRequestDto tokenRequestDto);
 
         string FindLocalPathFromUrl(string url);
+        bool IsFile(IFormFile file);
     }
 }

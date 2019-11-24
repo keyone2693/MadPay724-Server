@@ -259,29 +259,82 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Blogger
         }
         [Authorize(Policy = "AccessBlog")]
         [HttpPut(ApiV1Routes.Blog.UpdateBlog)]
-        public async Task<IActionResult> UpdateBlog(string id, string userId, BlogForCreateUpdateDto blogForUpdateDto)
+        public async Task<IActionResult> UpdateBlog(string id, string userId, [FromForm]BlogForCreateUpdateDto blogForUpdateDto)
         {
             if (User.HasClaim(ClaimTypes.Role, "AdminBlog") || User.HasClaim(ClaimTypes.Role, "Admin"))
             {
+                blogForUpdateDto.Title = blogForUpdateDto.Title.Trim();
+
                 var epFromRepo = await _db.BlogRepository
                .GetAsync(p => p.Title == blogForUpdateDto.Title && p.Id != id);
                 if (epFromRepo == null)
                 {
-                    var blogFromRepo = await _db.BlogRepository.GetByIdAsync(id);
-                    if (blogFromRepo != null)
+                    var blogForUpdate = _db.BlogRepository.GetById(id);
+
+                    if (_utilities.IsFile(blogForUpdateDto.File))
                     {
-                        var blog = _mapper.Map(blogForUpdateDto, blogFromRepo);
-                        blog.DateModified = DateTime.Now;
+                        var deleteRes = _uploadService.RemoveFileFromLocal(
+                          Path.GetFileName(blogForUpdate.PicAddress),
+                          _env.WebRootPath,
+                          _utilities.FindLocalPathFromUrl(blogForUpdate.PicAddress).Replace("wwwroot\\", ""));
+                        if (deleteRes.Status)
+                        {
+                            var creatDir = _uploadService.CreateDirectory(_env.WebRootPath,
+                                "Files\\Blog\\" + DateTime.Now.Year + "\\" + DateTime.Now.Month + "\\" + DateTime.Now.Day);
+
+                            if (creatDir.status)
+                            {
+                                var uploadRes = await _uploadService.UploadFileToLocal(
+                                  blogForUpdateDto.File,
+                                      id,
+                                      _env.WebRootPath,
+                                      $"{Request.Scheme ?? ""}://{Request.Host.Value ?? ""}{Request.PathBase.Value ?? ""}",
+                                      "Files\\Blog\\" + DateTime.Now.Year + "\\" + DateTime.Now.Month + "\\" + DateTime.Now.Day
+                                  );
+                                if (uploadRes.Status)
+                                {
+                                    blogForUpdate.PicAddress = uploadRes.Url;
+
+                                    var blog = _mapper.Map(blogForUpdateDto, blogForUpdate);
+
+                                    _db.BlogRepository.Update(blog);
+
+                                    if (await _db.SaveAsync())
+                                    {
+                                        return NoContent();
+                                    }
+                                    else
+                                        return BadRequest("خطا در ویرایش اطلاعات");
+                                }
+                                else
+                                {
+                                    return BadRequest(uploadRes.Message);
+                                }
+                            }
+                            else
+                            {
+                                return BadRequest(creatDir.message);
+                            }
+                        }
+                        else
+                        {
+                            return BadRequest("خطا در حذف عکس قبلی");
+                        }
+                    }
+                    else
+                    {
+                        var blog = _mapper.Map(blogForUpdateDto, blogForUpdate);
+
                         _db.BlogRepository.Update(blog);
 
                         if (await _db.SaveAsync())
+                        {
                             return NoContent();
+                        }
                         else
-                            return BadRequest("خطا در ثبت اطلاعات");
+                            return BadRequest("خطا در ویرایش اطلاعات");
                     }
-                    {
-                        return BadRequest("بلاگ وجود ندارد");
-                    }
+
                 }
                 {
                     return BadRequest("این بلاگ قبلا ثبت شده است");
@@ -289,42 +342,9 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Blogger
             }
             else
             {
-                var epFromRepo = await _db.BlogRepository
-                .GetAsync(p => p.Title == blogForUpdateDto.Title && p.Id != id);
-                if (epFromRepo == null)
-                {
-                    var blogFromRepo = await _db.BlogRepository.GetByIdAsync(id);
-                    if (blogFromRepo != null)
-                    {
-                        if (blogFromRepo.UserId == User.FindFirst(ClaimTypes.NameIdentifier).Value)
-                        {
-                            var blog = _mapper.Map(blogForUpdateDto, blogFromRepo);
-                            blog.DateModified = DateTime.Now;
-                            _db.BlogRepository.Update(blog);
 
-                            if (await _db.SaveAsync())
-                                return NoContent();
-                            else
-                                return BadRequest("خطا در ثبت اطلاعات");
-                        }
-                        else
-                        {
-                            _logger.LogError($"کاربر   {RouteData.Values["userId"]} قصد اپدیت به بلاگ دیگری را دارد");
-
-                            return BadRequest("شما اجازه اپدیت بلاگ کاربر دیگری را ندارید");
-                        }
-                    }
-                    {
-                        return BadRequest("بلاگ وجود ندارد");
-                    }
-                }
-                {
-                    return BadRequest("این بلاگ قبلا ثبت شده است");
-                }
+                return Unauthorized("اجازه ویرایش ندارید");
             }
-
-
-
         }
         [Authorize(Policy = "AccessAdminBlog")]
         [HttpPut(ApiV1Routes.Blog.ApproveBlog)]
