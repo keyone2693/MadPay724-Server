@@ -6,6 +6,7 @@ namespace MadPay724.Data.Dtos.Site.Panel.Blog
 {
    public class BlogForReturnDto
     {
+        public DateTime DateModified { get; set; }
         public string Id { get; set; }   
         public string Title { get; set; }
         public string Tags { get; set; }

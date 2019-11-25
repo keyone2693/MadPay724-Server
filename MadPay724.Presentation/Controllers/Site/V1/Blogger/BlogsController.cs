@@ -5,12 +5,12 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
-using MadPay724.Common.Data;
 using MadPay724.Common.ErrorAndMessage;
 using MadPay724.Common.Helpers.Helpers;
 using MadPay724.Common.Helpers.Helpers.Pagination;
 using MadPay724.Common.Helpers.Interface;
 using MadPay724.Data.DatabaseContext;
+using MadPay724.Data.Dtos.Common.Pagination;
 using MadPay724.Data.Dtos.Site.Panel.Blog;
 using MadPay724.Data.Models.Blog;
 using MadPay724.Presentation.Helpers.Filters;
@@ -22,6 +22,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using PersianDate.Standard;
 
 namespace MadPay724.Presentation.Controllers.Site.V1.Blogger
 {
@@ -110,12 +111,12 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Blogger
         [Authorize(Policy = "AccessBlog")]
         [ServiceFilter(typeof(UserCheckIdFilter))]
         [HttpGet(ApiV1Routes.Blog.GetBlogs)]
-        public async Task<IActionResult> GetBlogs(string userId,[FromQuery]PaginationDto paginationDto)
+        public async Task<IActionResult> GetBlogs(string userId, [FromQuery]PaginationDto paginationDto)
         {
             if (User.HasClaim(ClaimTypes.Role, "AdminBlog") || User.HasClaim(ClaimTypes.Role, "Admin"))
             {
                 var blogsFromRepo = await _db.BlogRepository
-                    .GetAllPagedListAsync(paginationDto, "User,BlogGroup");
+                    .GetAllPagedListAsync(paginationDto, paginationDto.Filter.ToBlogExpression(true), "User,BlogGroup");
 
                 Response.AddPagination(blogsFromRepo.CurrentPage, blogsFromRepo.PageSize,
                     blogsFromRepo.TotalCount, blogsFromRepo.TotalPage);
@@ -132,9 +133,10 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Blogger
             else
             {
                 var blogsFromRepo = await _db.BlogRepository
-                    .GetManyAsync(p => p.UserId == userId, s => s.OrderByDescending(x => x.DateModified), "User,BlogGroup");
+           .GetAllPagedListAsync(paginationDto, paginationDto.Filter.ToBlogExpression(false, userId), "User,BlogGroup");
 
-                //var blogs = _mapper.Map<List<BlogForReturnDto>>(blogsFromRepo);
+                Response.AddPagination(blogsFromRepo.CurrentPage, blogsFromRepo.PageSize,
+                    blogsFromRepo.TotalCount, blogsFromRepo.TotalPage);
 
                 var blogs = new List<BlogForReturnDto>();
 
@@ -276,6 +278,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Blogger
                 if (epFromRepo == null)
                 {
                     var blogForUpdate = _db.BlogRepository.GetById(id);
+                    blogForUpdate.DateModified = DateTime.Now;
 
                     if (_utilities.IsFile(blogForUpdateDto.File))
                     {

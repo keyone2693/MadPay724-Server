@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using MadPay724.Common.Helpers.Helpers.Pagination;
+using MadPay724.Data.Models;
+using MadPay724.Data.Models.Blog;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using PersianDate.Standard;
 
 namespace MadPay724.Common.Helpers.Helpers
 {
@@ -35,16 +39,7 @@ namespace MadPay724.Common.Helpers.Helpers
         }
 
 
-        public static int ToAge(this DateTime dateTime)
-        {
-            var age = DateTime.Today.Year - dateTime.Year;
-            if(dateTime.AddYears(age) > DateTime.Today)
-            {
-                age--;
-            }
 
-            return age;
-        }
         public static IEnumerable<ConstructorInfo> GetAllConstructors(this TypeInfo typeInfo)
             => typeInfo.GetAll(ti => ti.DeclaredConstructors);
 
@@ -129,6 +124,46 @@ namespace MadPay724.Common.Helpers.Helpers
 
         #endregion
 
+        public static Expression<Func<Blog, bool>> ToBlogExpression(this string Filter, 
+            bool isAdmin, string id ="")
+        {
+            if (string.IsNullOrEmpty(Filter) || string.IsNullOrWhiteSpace(Filter))
+                return null;
+            else
+            {
+                Expression<Func<Blog, bool>> exp;
+                if (isAdmin)
+                {
+                    exp =
+                                p => p.Id.Contains(Filter) ||
+                                p.DateModified.ToString().Contains(Filter) ||
+                                p.PicAddress.Contains(Filter) ||
+                                p.SummerText.Contains(Filter) ||
+                                p.Tags.Contains(Filter) ||
+                                p.Text.Contains(Filter) ||
+                                p.Title.Contains(Filter) ||
+                                p.BlogGroup.Name.Contains(Filter);
+                }
+                else
+                {
+                    exp =
+                        
+                               p => p.Id.Contains(Filter) ||
+                               p.DateModified.ToString().Contains(Filter) ||
+                               p.PicAddress.Contains(Filter) ||
+                               p.SummerText.Contains(Filter) ||
+                               p.Tags.Contains(Filter) ||
+                               p.Text.Contains(Filter) ||
+                               p.Title.Contains(Filter) ||
+                               p.BlogGroup.Name.Contains(Filter) &&
+                               p.Id == id;
+                }
+
+
+                return exp;
+            }
+
+        }
         public static bool IsUrl1(this string str)
         {
             return Uri.TryCreate(str, UriKind.Absolute, out Uri uriResult)
@@ -143,5 +178,16 @@ namespace MadPay724.Common.Helpers.Helpers
         {
             return Regex.IsMatch(str, @"^(((\+|00)98)|0)?9[123]\d{8}$");
         }
+        public static int ToAge(this DateTime dateTime)
+        {
+            var age = DateTime.Today.Year - dateTime.Year;
+            if (dateTime.AddYears(age) > DateTime.Today)
+            {
+                age--;
+            }
+
+            return age;
+        }
+
     }
 }

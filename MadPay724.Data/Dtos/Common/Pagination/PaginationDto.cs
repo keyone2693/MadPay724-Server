@@ -1,9 +1,9 @@
-﻿using MadPay724.Common.Data;
+﻿using MadPay724.Data.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MadPay724.Common.Helpers.Helpers.Pagination
+namespace MadPay724.Data.Dtos.Common.Pagination
 {
    public class PaginationDto
     {
@@ -16,5 +16,6 @@ namespace MadPay724.Common.Helpers.Helpers.Pagination
             get { return pageSize; }
             set { pageSize = (value > Constants.MaxPageSize) ? Constants.MaxPageSize : value; }
         }
+        public string Filter { get; set; }
     }
 }

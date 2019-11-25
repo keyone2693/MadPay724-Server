@@ -1,4 +1,5 @@
 ﻿using MadPay724.Common.Helpers.Helpers.Pagination;
+using MadPay724.Data.Dtos.Common.Pagination;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -60,9 +61,16 @@ namespace MadPay724.Repo.Infrastructure
         {
             return _dbSet.AsQueryable();
         }
-        public PagedList<TEntity> GetAllPagedList(PaginationDto paginationDto, string includeEntity)
+        public PagedList<TEntity> GetAllPagedList(PaginationDto paginationDto,
+            Expression<Func<TEntity, bool>> filter = null, 
+            string includeEntity = "")
         {
-            var query = _dbSet.AsQueryable();
+            IQueryable<TEntity> query;
+            if (filter != null)
+                query = _dbSet.Where(filter);
+            else
+                query = _dbSet.AsQueryable();
+
             foreach (var includeentity in includeEntity.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
             {
                 query = query.Include(includeentity);
@@ -118,9 +126,17 @@ namespace MadPay724.Repo.Infrastructure
         {
             return await _dbSet.ToListAsync();
         }
-        public async Task<PagedList<TEntity>> GetAllPagedListAsync(PaginationDto paginationDto, string includeEntity)
+        public async Task<PagedList<TEntity>> GetAllPagedListAsync(PaginationDto paginationDto,
+            Expression<Func<TEntity, bool>> filter = null,
+            string includeEntity = "")
         {
-            var query = _dbSet.AsQueryable();
+            IQueryable<TEntity> query;
+
+            if (filter != null)
+                query = _dbSet.Where(filter);
+            else
+                query = _dbSet.AsQueryable();
+
             foreach (var includeentity in includeEntity.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
             {
                 query = query.Include(includeentity);
