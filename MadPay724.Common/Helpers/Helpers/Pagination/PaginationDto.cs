@@ -7,7 +7,7 @@ namespace MadPay724.Common.Helpers.Helpers.Pagination
 {
    public class PaginationDto
     {
-        public int PageNumber { get; set; } = 1;
+        public int PageNumber { get; set; } = 0;
 
         private int pageSize = 10;
 
