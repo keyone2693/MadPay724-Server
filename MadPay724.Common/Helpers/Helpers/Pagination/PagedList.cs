@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MadPay724.Common.Helpers.Helpers
+namespace MadPay724.Common.Helpers.Helpers.Pagination
 {
     public class PagedList<T> : List<T>
     {

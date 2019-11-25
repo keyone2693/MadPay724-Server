@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
+using MadPay724.Common.Data;
 using MadPay724.Common.ErrorAndMessage;
 using MadPay724.Common.Helpers.Interface;
 using MadPay724.Data.DatabaseContext;
@@ -63,6 +64,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Blogger
                 if (uploadRes.Status)
                 {
                     Response.Headers.Add("ejUrl", uploadRes.Url);
+                    Response.Headers.Add("Access-Control-Expose-Headers", "ejUrl");
                     return Ok();
                 }
                 else

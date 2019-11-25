@@ -278,7 +278,9 @@ namespace MadPay724.Presentation
             app.UseCors(p => 
                 p.WithOrigins("http://localhost:4200")
                     .AllowAnyMethod()
-                    .AllowAnyHeader().WithExposedHeaders("ejUrl"));
+                    .AllowAnyHeader()
+                    //.WithExposedHeaders("ejUrl")
+                    );
             //
             app.UseRouting();
             app.UseAuthentication();

@@ -5,8 +5,10 @@ using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
+using MadPay724.Common.Helpers.Helpers.Pagination;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 
 namespace MadPay724.Common.Helpers.Helpers
 {
@@ -17,6 +19,16 @@ namespace MadPay724.Common.Helpers.Helpers
             response.Headers.Add("App-Error", message);
             response.Headers.Add("Access-Control-Expose-Headers", "App-Error");
             response.Headers.Add("Access-Control-Allow-Origin", "*");
+        }
+        public static void AddPagination(this HttpResponse response,
+            int currentPage, int itemsPerPage,
+            int totalItems, int totalPages)
+        {
+            var paginationHeader = new PaginationHeader(currentPage, itemsPerPage,
+             totalItems, totalPages);
+            response.Headers.Add("Pagination", JsonConvert.SerializeObject(paginationHeader));
+            response.Headers.Add("Access-Control-Expose-Headers", "Pagination");
+
         }
 
 
