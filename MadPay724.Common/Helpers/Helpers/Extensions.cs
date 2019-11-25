@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using MadPay724.Common.Helpers.Helpers.Pagination;
-using MadPay724.Data.Models;
 using MadPay724.Data.Models.Blog;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using PersianDate.Standard;
 
 namespace MadPay724.Common.Helpers.Helpers
 {
@@ -124,8 +122,8 @@ namespace MadPay724.Common.Helpers.Helpers
 
         #endregion
 
-        public static Expression<Func<Blog, bool>> ToBlogExpression(this string Filter, 
-            bool isAdmin, string id ="")
+        public static Expression<Func<Blog, bool>> ToBlogExpression(this string Filter,
+            bool isAdmin, string id = "")
         {
             if (string.IsNullOrEmpty(Filter) || string.IsNullOrWhiteSpace(Filter))
                 return null;
@@ -147,7 +145,7 @@ namespace MadPay724.Common.Helpers.Helpers
                 else
                 {
                     exp =
-                        
+
                                p => p.Id.Contains(Filter) ||
                                p.DateModified.ToString().Contains(Filter) ||
                                p.PicAddress.Contains(Filter) ||
@@ -164,6 +162,22 @@ namespace MadPay724.Common.Helpers.Helpers
             }
 
         }
+        public static string ToBlogOrderBy(
+            this string sortHe,
+            string sortDir)
+        {
+            if (string.IsNullOrEmpty(sortHe) || string.IsNullOrWhiteSpace(sortHe))
+                return "";
+            else
+            {
+                return sortHe.FirstCharToUpper() + "," + sortDir;
+            }
+        }
+        public static string FirstCharToUpper(this string input)
+        {
+            return input.First().ToString().ToUpper() + input.Substring(1);
+        }
+
         public static bool IsUrl1(this string str)
         {
             return Uri.TryCreate(str, UriKind.Absolute, out Uri uriResult)

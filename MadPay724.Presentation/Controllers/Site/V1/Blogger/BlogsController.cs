@@ -116,7 +116,11 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Blogger
             if (User.HasClaim(ClaimTypes.Role, "AdminBlog") || User.HasClaim(ClaimTypes.Role, "Admin"))
             {
                 var blogsFromRepo = await _db.BlogRepository
-                    .GetAllPagedListAsync(paginationDto, paginationDto.Filter.ToBlogExpression(true), "User,BlogGroup");
+                    .GetAllPagedListAsync(
+                    paginationDto, 
+                    paginationDto.Filter.ToBlogExpression(true),
+                    paginationDto.SortHe.ToBlogOrderBy(paginationDto.SortDir),
+                    "User,BlogGroup");
 
                 Response.AddPagination(blogsFromRepo.CurrentPage, blogsFromRepo.PageSize,
                     blogsFromRepo.TotalCount, blogsFromRepo.TotalPage);
@@ -133,7 +137,11 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Blogger
             else
             {
                 var blogsFromRepo = await _db.BlogRepository
-           .GetAllPagedListAsync(paginationDto, paginationDto.Filter.ToBlogExpression(false, userId), "User,BlogGroup");
+           .GetAllPagedListAsync(
+                    paginationDto,
+           paginationDto.Filter.ToBlogExpression(false, userId),
+           paginationDto.SortHe.ToBlogOrderBy(paginationDto.SortDir),
+           "User,BlogGroup");
 
                 Response.AddPagination(blogsFromRepo.CurrentPage, blogsFromRepo.PageSize,
                     blogsFromRepo.TotalCount, blogsFromRepo.TotalPage);

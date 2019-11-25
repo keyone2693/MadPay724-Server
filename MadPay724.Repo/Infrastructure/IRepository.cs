@@ -22,6 +22,7 @@ namespace MadPay724.Repo.Infrastructure
         IEnumerable<TEntity> GetAll();
         PagedList<TEntity> GetAllPagedList(PaginationDto paginationDto,
             Expression<Func<TEntity, bool>> filter,
+            string orderBy,
             string includeEntity);
         IEnumerable<TEntity> GetMany(Expression<Func<TEntity, bool>> filter,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy,
@@ -35,7 +36,8 @@ namespace MadPay724.Repo.Infrastructure
         Task<TEntity> GetByIdAsync(object id);
         Task<IEnumerable<TEntity>> GetAllAsync();
         Task<PagedList<TEntity>> GetAllPagedListAsync(PaginationDto paginationDto,
-            Expression<Func<TEntity, bool>> filter, 
+            Expression<Func<TEntity, bool>> filter,
+            string orderBy,
             string includeEntity);
         Task<IEnumerable<TEntity>> GetManyAsync(
             Expression<Func<TEntity, bool>> filter,

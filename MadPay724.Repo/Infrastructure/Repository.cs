@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-
+using MadPay724.Common.Helpers.Helpers;
 namespace MadPay724.Repo.Infrastructure
 {
     public abstract class Repository<TEntity> : IRepository<TEntity>, IDisposable where TEntity : class
@@ -62,36 +62,55 @@ namespace MadPay724.Repo.Infrastructure
             return _dbSet.AsQueryable();
         }
         public PagedList<TEntity> GetAllPagedList(PaginationDto paginationDto,
-            Expression<Func<TEntity, bool>> filter = null, 
+            Expression<Func<TEntity, bool>> filter = null,
+            string orderBy = "",
             string includeEntity = "")
         {
             IQueryable<TEntity> query;
+            //filter
             if (filter != null)
                 query = _dbSet.Where(filter);
             else
                 query = _dbSet.AsQueryable();
-
+            //include
             foreach (var includeentity in includeEntity.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
             {
                 query = query.Include(includeentity);
+            }
+            //orderby
+            if (string.IsNullOrEmpty(orderBy) || string.IsNullOrWhiteSpace(orderBy))
+            {
+                if (orderBy.Split(',')[1] == "asc")
+                {
+                    query = query.OrderBy(orderBy.Split(',')[0]);
+                }
+                else if (orderBy.Split(',')[1] == "desc")
+                {
+                    query = query.OrderByDescending(orderBy.Split(',')[0]);
+                }
+                else
+                {
+                    query = query.OrderBy(orderBy.Split(',')[0]);
+                }
+
             }
             return PagedList<TEntity>.Create(query, paginationDto.PageNumber, paginationDto.PageSize);
         }
         public IEnumerable<TEntity> GetMany(
             Expression<Func<TEntity, bool>> filter = null,
-            Func<IQueryable<TEntity>,IOrderedQueryable<TEntity>> orderBy = null,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             string includeEntity = "")
         {
             //return _dbSet.Where(where).FirstOrDefault();
 
             IQueryable<TEntity> query = _dbSet;
 
-            if(filter != null)
+            if (filter != null)
             {
                 query = query.Where(filter);
             }
 
-            foreach (var includeentity in includeEntity.Split(new char[] { ',' },StringSplitOptions.RemoveEmptyEntries))
+            foreach (var includeentity in includeEntity.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
             {
                 query = query.Include(includeentity);
             }
@@ -128,19 +147,38 @@ namespace MadPay724.Repo.Infrastructure
         }
         public async Task<PagedList<TEntity>> GetAllPagedListAsync(PaginationDto paginationDto,
             Expression<Func<TEntity, bool>> filter = null,
+            string orderBy = "",
             string includeEntity = "")
         {
             IQueryable<TEntity> query;
-
+            //filter
             if (filter != null)
                 query = _dbSet.Where(filter);
             else
                 query = _dbSet.AsQueryable();
-
+            //include
             foreach (var includeentity in includeEntity.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
             {
                 query = query.Include(includeentity);
             }
+            //orderby
+            if (!string.IsNullOrEmpty(orderBy) && !string.IsNullOrWhiteSpace(orderBy))
+            {
+                if (orderBy.Split(',')[1] == "asc")
+                {
+                    query = query.OrderBy(orderBy.Split(',')[0]);
+                }
+                else if (orderBy.Split(',')[1] == "desc")
+                {
+                    query = query.OrderByDescending(orderBy.Split(',')[0]);
+                }
+                else
+                {
+                    query = query.OrderBy(orderBy.Split(',')[0]);
+                }
+
+            }
+            //
             return await PagedList<TEntity>.CreateAsync(query,
                 paginationDto.PageNumber, paginationDto.PageSize);
         }
@@ -203,7 +241,7 @@ namespace MadPay724.Repo.Infrastructure
 
         public async Task<IEnumerable<TEntity>> GetManyAsyncPaging(Expression<Func<TEntity,
             bool>> filter, Func<IQueryable<TEntity>,
-            IOrderedQueryable<TEntity>> orderBy, 
+            IOrderedQueryable<TEntity>> orderBy,
             string includeEntity, int count, int firstCount, int page)
         {
             IQueryable<TEntity> query = _dbSet;
@@ -220,7 +258,7 @@ namespace MadPay724.Repo.Infrastructure
 
             if (orderBy != null)
             {
-                query =  orderBy(query);
+                query = orderBy(query);
             }
 
             return await query.Skip(firstCount).Skip(count * page).Take(count).ToListAsync();
