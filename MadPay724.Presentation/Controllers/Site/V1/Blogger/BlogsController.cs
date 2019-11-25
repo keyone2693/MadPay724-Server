@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MadPay724.Common.Data;
 using MadPay724.Common.ErrorAndMessage;
+using MadPay724.Common.Helpers.Helpers;
+using MadPay724.Common.Helpers.Helpers.Pagination;
 using MadPay724.Common.Helpers.Interface;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Site.Panel.Blog;
@@ -108,13 +110,15 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Blogger
         [Authorize(Policy = "AccessBlog")]
         [ServiceFilter(typeof(UserCheckIdFilter))]
         [HttpGet(ApiV1Routes.Blog.GetBlogs)]
-        public async Task<IActionResult> GetBlogs(string userId)
+        public async Task<IActionResult> GetBlogs(string userId,[FromQuery]PaginationDto paginationDto)
         {
             if (User.HasClaim(ClaimTypes.Role, "AdminBlog") || User.HasClaim(ClaimTypes.Role, "Admin"))
             {
                 var blogsFromRepo = await _db.BlogRepository
-                    .GetManyAsync(null, s => s.OrderByDescending(x => x.DateModified), "User,BlogGroup");
+                    .GetAllPagedListAsync(paginationDto, "User,BlogGroup");
 
+                Response.AddPagination(blogsFromRepo.CurrentPage, blogsFromRepo.PageSize,
+                    blogsFromRepo.TotalCount, blogsFromRepo.TotalPage);
 
                 var blogs = new List<BlogForReturnDto>();
 

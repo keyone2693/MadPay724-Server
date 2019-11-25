@@ -9,6 +9,7 @@ using MadPay724.Common.Helpers.Helpers.Pagination;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace MadPay724.Common.Helpers.Helpers
 {
@@ -26,7 +27,9 @@ namespace MadPay724.Common.Helpers.Helpers
         {
             var paginationHeader = new PaginationHeader(currentPage, itemsPerPage,
              totalItems, totalPages);
-            response.Headers.Add("Pagination", JsonConvert.SerializeObject(paginationHeader));
+            var camelCaseFormater = new JsonSerializerSettings();
+            camelCaseFormater.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            response.Headers.Add("Pagination", JsonConvert.SerializeObject(paginationHeader, camelCaseFormater));
             response.Headers.Add("Access-Control-Expose-Headers", "Pagination");
 
         }

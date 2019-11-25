@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MadPay724.Common.Helpers.Helpers.Pagination;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -18,6 +19,7 @@ namespace MadPay724.Repo.Infrastructure
 
         TEntity GetById(object id);
         IEnumerable<TEntity> GetAll();
+        PagedList<TEntity> GetAllPagedList(PaginationDto paginationDto,string includeEntity);
         IEnumerable<TEntity> GetMany(Expression<Func<TEntity, bool>> filter,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy,
             string includeEntity);
@@ -29,11 +31,10 @@ namespace MadPay724.Repo.Infrastructure
 
         Task<TEntity> GetByIdAsync(object id);
         Task<IEnumerable<TEntity>> GetAllAsync();
+        Task<PagedList<TEntity>> GetAllPagedListAsync(PaginationDto paginationDto, string includeEntity);
         Task<IEnumerable<TEntity>> GetManyAsync(
             Expression<Func<TEntity, bool>> filter,
-
             Func<IQueryable<TEntity>,IOrderedQueryable<TEntity>> orderBy,
-
             string includeEntity
             );
 

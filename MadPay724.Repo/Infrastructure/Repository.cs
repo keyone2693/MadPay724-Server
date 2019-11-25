@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MadPay724.Common.Helpers.Helpers.Pagination;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,6 +60,15 @@ namespace MadPay724.Repo.Infrastructure
         {
             return _dbSet.AsQueryable();
         }
+        public PagedList<TEntity> GetAllPagedList(PaginationDto paginationDto, string includeEntity)
+        {
+            var query = _dbSet.AsQueryable();
+            foreach (var includeentity in includeEntity.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeentity);
+            }
+            return PagedList<TEntity>.Create(query, paginationDto.PageNumber, paginationDto.PageSize);
+        }
         public IEnumerable<TEntity> GetMany(
             Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>,IOrderedQueryable<TEntity>> orderBy = null,
@@ -107,6 +117,16 @@ namespace MadPay724.Repo.Infrastructure
         public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
             return await _dbSet.ToListAsync();
+        }
+        public async Task<PagedList<TEntity>> GetAllPagedListAsync(PaginationDto paginationDto, string includeEntity)
+        {
+            var query = _dbSet.AsQueryable();
+            foreach (var includeentity in includeEntity.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeentity);
+            }
+            return await PagedList<TEntity>.CreateAsync(query,
+                paginationDto.PageNumber, paginationDto.PageSize);
         }
         public async Task<IEnumerable<TEntity>> GetManyAsync(
       Expression<Func<TEntity, bool>> filter = null,
