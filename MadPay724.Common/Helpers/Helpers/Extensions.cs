@@ -126,7 +126,18 @@ namespace MadPay724.Common.Helpers.Helpers
             bool isAdmin, string id = "")
         {
             if (string.IsNullOrEmpty(Filter) || string.IsNullOrWhiteSpace(Filter))
-                return null;
+            {
+                Expression<Func<Blog, bool>> exp;
+                if (isAdmin)
+                {
+                    exp =null;
+                }
+                else
+                {
+                    exp = p => p.UserId == id;
+                }
+                return exp;
+            }
             else
             {
                 Expression<Func<Blog, bool>> exp;
@@ -146,15 +157,15 @@ namespace MadPay724.Common.Helpers.Helpers
                 {
                     exp =
 
-                               p => p.Id.Contains(Filter) ||
+                               p => (p.Id.Contains(Filter) ||
                                p.DateModified.ToString().Contains(Filter) ||
                                p.PicAddress.Contains(Filter) ||
                                p.SummerText.Contains(Filter) ||
                                p.Tags.Contains(Filter) ||
                                p.Text.Contains(Filter) ||
                                p.Title.Contains(Filter) ||
-                               p.BlogGroup.Name.Contains(Filter) &&
-                               p.Id == id;
+                               p.BlogGroup.Name.Contains(Filter)) &&
+                               p.UserId == id;
                 }
 
 
