@@ -38,6 +38,9 @@ namespace MadPay724.Presentation.Routes.V1
 
         public static class Users
         {
+            //api​/v1​/site​/panel​/Users​
+            //GET
+            public const string GetUsers = BaseSitePanel + "/users";
             //api​/v1​/site​/panel​/Users​/{id}
             //GET
             public const string GetUser = BaseSitePanel + "/users/{id}";

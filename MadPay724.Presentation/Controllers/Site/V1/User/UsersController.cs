@@ -32,9 +32,9 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
         private readonly IMapper _mapper;
         private readonly IUserService _userService;
         private readonly ILogger<UsersController> _logger;
-  
 
-        public UsersController(IUnitOfWork<MadpayDbContext> dbContext, IMapper mapper, 
+
+        public UsersController(IUnitOfWork<MadpayDbContext> dbContext, IMapper mapper,
             IUserService userService, ILogger<UsersController> logger)
         {
             _db = dbContext;
@@ -43,8 +43,65 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
             _logger = logger;
         }
 
+
+
+        [AllowAnonymous]
+        [HttpPost(ApiV1Routes.Users.GetUsers)]
+        public async Task<IActionResult> GetUsers(dtott dto)
+        {
+            var users = (await _db.UserRepository.GetManyAsync(null, null, "Photos")).ToList();
+            switch (dto.Flag)
+            {
+                case 1:
+                    {
+                        var usersForReturn = new List<UserForDetailedDto>();
+                        foreach (var item in users)
+                        {
+                            usersForReturn.Add(_mapper.Map<UserForDetailedDto>(item));
+                        }
+                        return Ok(usersForReturn);
+                    }
+                case 2:
+                    {
+                        var usersForReturn = _mapper.Map<UserForDetailedDto>
+                            (users.Where(p=>p.Id == dto.Id).Single());
+                        return Ok(usersForReturn);
+                    }
+                case 3:
+                    {
+                        var user = users.First();
+                        var rand = new Random();
+                        user.Id = rand.Next(500,20000).ToString();
+                        user.UserName = "111111111111";
+                        users.Add(user);
+                        var usersForReturn = _mapper.Map<UserForDetailedDto>(user);
+                        return Ok(usersForReturn);
+                    }
+                case 4:
+                    {
+                        var us = users.Where(p => p.Id == dto.Id).Single();
+                        us.Name = "33333333333333";
+
+                        var usersForReturn = _mapper.Map<UserForDetailedDto>(us);
+                        return Ok(usersForReturn);
+                    }
+                case 5:
+                    {
+                        var us = users.Where(p => p.Id == dto.Id).Single();
+                        users.Remove(us);
+                        return Ok();
+                    }
+                default:
+                    return Ok("");
+            }
+
+
+        }
+
+
+
         [Authorize(Policy = "AccessProfile")]
-        [HttpGet(ApiV1Routes.Users.GetUser, Name ="GetUser")]
+        [HttpGet(ApiV1Routes.Users.GetUser, Name = "GetUser")]
         [ServiceFilter(typeof(UserCheckIdFilter))]
         public async Task<IActionResult> GetUser(string id)
         {
@@ -52,7 +109,6 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
             var userToReturn = _mapper.Map<UserForDetailedDto>(user.SingleOrDefault());
             return Ok(userToReturn);
         }
-
         [Authorize(Policy = "AccessProfile")]
         [HttpPut(ApiV1Routes.Users.UpdateUser)]
         [ServiceFilter(typeof(UserCheckIdFilter))]
@@ -63,13 +119,14 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
             _mapper.Map(userForUpdateDto, userFromRepo);
             _db.UserRepository.Update(userFromRepo);
 
-            if(await _db.SaveAsync())
+            if (await _db.SaveAsync())
             {
                 return NoContent();
             }
-            else{
+            else
+            {
                 _logger.LogError($"کاربر   {userForUpdateDto.Name} اپدیت نشد");
-                
+
                 return BadRequest(new ReturnMessage()
                 {
                     status = false,
@@ -96,11 +153,12 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
                     message = "پسورد قبلی اشتباه میباشد"
                 });
 
-            if(await _userService.UpdateUserPass(userFromRepo, passwordForChangeDto.NewPassword))
+            if (await _userService.UpdateUserPass(userFromRepo, passwordForChangeDto.NewPassword))
             {
                 return NoContent();
             }
-            else{
+            else
+            {
 
                 return BadRequest(new ReturnMessage()
                 {

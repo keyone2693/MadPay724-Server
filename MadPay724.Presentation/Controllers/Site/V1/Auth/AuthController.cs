@@ -23,6 +23,7 @@ using MadPay724.Presentation.Routes.V1;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System.IO;
 
 namespace MadPay724.Presentation.Controllers.Site.V1.Auth
 {
@@ -167,6 +168,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
         [HttpPost(ApiV1Routes.Auth.Login)]
         public async Task<IActionResult> Login(TokenRequestDto tokenRequestDto)
         {
+
             switch (tokenRequestDto.GrantType)
             {
                 case "password":
