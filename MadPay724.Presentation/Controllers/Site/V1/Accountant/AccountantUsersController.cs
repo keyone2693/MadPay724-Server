@@ -42,8 +42,8 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
         }
         //[AllowAnonymous]
         [Authorize(Policy = "AccessAccounting")]
-        [HttpGet(ApiV1Routes.Accountant.GetUsers)]
-        public async Task<IActionResult> GetUsers(string id, [FromQuery]PaginationDto paginationDto)
+        [HttpGet(ApiV1Routes.Accountant.GetInventories)]
+        public async Task<IActionResult> GetInventories(string id, [FromQuery]PaginationDto paginationDto)
         {
 
             var usersFromRepo = await _db.UserRepository
