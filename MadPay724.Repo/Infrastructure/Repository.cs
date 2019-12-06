@@ -211,6 +211,19 @@ namespace MadPay724.Repo.Infrastructure
             }
 
         }
+        public async Task<long> GetCountAsync(
+      Expression<Func<TEntity, bool>> filter = null)
+        {
+            IQueryable<TEntity> query = _dbSet;
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+            return await query.CountAsync();
+
+
+        }
         public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> where)
         {
             return await _dbSet.Where(where).FirstOrDefaultAsync();

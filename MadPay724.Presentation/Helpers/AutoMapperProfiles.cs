@@ -47,6 +47,32 @@ namespace MadPay724.Presentation.Helpers
                 {
                     opt.MapFrom(src => src.DateOfBirth.ToAge());
                 });
+            CreateMap<User, UserForAccountantDto>()
+                .ForMember(dest => dest.InventorySum, opt =>
+                {
+                    opt.MapFrom(src => src.Wallets.Sum(p => p.Inventory));
+                })
+                .ForMember(dest => dest.InterMoneySum, opt =>
+                {
+                    opt.MapFrom(src => src.Wallets.Sum(p => p.InterMoney));
+                })
+                .ForMember(dest => dest.ExitMoneySum, opt =>
+                {
+                    opt.MapFrom(src => src.Wallets.Sum(p => p.ExitMoney));
+                })
+                .ForMember(dest => dest.OnExitMoneySum, opt =>
+                {
+                    opt.MapFrom(src => src.Wallets.Sum(p => p.OnExitMoney));
+                })
+               .ForMember(dest => dest.PhotoUrl, opt =>
+               {
+                   opt.MapFrom(src => src.Photos.FirstOrDefault(p => p.IsMain).Url);
+               })
+               .ForMember(dest => dest.Age, opt =>
+               {
+                   opt.MapFrom(src => src.DateOfBirth.ToAge());
+               });
+            //*****
             CreateMap<Photo, PhotoForUserDetailedDto>();
             CreateMap<PhotoForProfileDto, Photo>();
             CreateMap<Photo, PhotoForReturnProfileDto>();

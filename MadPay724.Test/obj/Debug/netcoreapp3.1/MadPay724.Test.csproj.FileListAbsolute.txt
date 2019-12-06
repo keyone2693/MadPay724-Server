@@ -1,3 +1,0 @@
-D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\obj\Debug\netcoreapp3.1\MadPay724.Test.csprojAssemblyReference.cache
-D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\obj\Debug\netcoreapp3.1\MadPay724.Test.AssemblyInfoInputs.cache
-D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\obj\Debug\netcoreapp3.1\MadPay724.Test.AssemblyInfo.cs

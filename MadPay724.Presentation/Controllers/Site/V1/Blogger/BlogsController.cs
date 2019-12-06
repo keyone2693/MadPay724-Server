@@ -115,9 +115,9 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Blogger
             {
                 var blogsFromRepo = await _db.BlogRepository
                     .GetAllPagedListAsync(
-                    paginationDto, 
+                    paginationDto,
                     paginationDto.Filter.ToBlogExpression(true),
-                    paginationDto.SortHe.ToBlogOrderBy(paginationDto.SortDir),
+                    paginationDto.SortHe.ToOrderBy(paginationDto.SortDir),
                     "User,BlogGroup");
 
                 Response.AddPagination(blogsFromRepo.CurrentPage, blogsFromRepo.PageSize,
@@ -424,6 +424,19 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Blogger
             {
                 return BadRequest("بلاگ وجود ندارد");
             }
+        }
+
+        //------------------------------
+        [Authorize(Policy = "AccessAdminBlog")]
+        [ServiceFilter(typeof(UserCheckIdFilter))]
+        [HttpGet(ApiV1Routes.Blog.GetUnverifiedBlogCount)]
+        public async Task<IActionResult> GetUnverifiedBlogCount(string id)
+        {
+
+            var count =
+             await _db.BlogRepository.GetCountAsync(p => !p.Status);
+
+            return Ok(count);
         }
     }
 }

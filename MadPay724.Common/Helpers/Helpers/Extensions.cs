@@ -8,6 +8,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using MadPay724.Common.Helpers.Helpers.Pagination;
+using MadPay724.Data.Models;
 using MadPay724.Data.Models.Blog;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
@@ -130,7 +131,7 @@ namespace MadPay724.Common.Helpers.Helpers
                 Expression<Func<Blog, bool>> exp;
                 if (isAdmin)
                 {
-                    exp =null;
+                    exp = null;
                 }
                 else
                 {
@@ -173,7 +174,30 @@ namespace MadPay724.Common.Helpers.Helpers
             }
 
         }
-        public static string ToBlogOrderBy(
+        public static Expression<Func<User, bool>> ToUserExpression(this string Filter,
+            bool isAdmin, string id = "")
+        {
+            if (string.IsNullOrEmpty(Filter) || string.IsNullOrWhiteSpace(Filter))
+            {
+                return null;
+            }
+            else
+            {
+                Expression<Func<User, bool>> exp =
+                                p => p.Id.Contains(Filter) ||
+                                p.UserName.Contains(Filter) ||
+                                p.Name.Contains(Filter) ||
+                                p.Id.Contains(Filter) ||
+                                p.Wallets.Any(s => s.Name.Contains(Filter)) ||
+                                p.Wallets.Any(s => s.Inventory.ToString().Contains(Filter)) ||
+                                p.Wallets.Any(s => s.InterMoney.ToString().Contains(Filter)) ||
+                                p.Wallets.Any(s => s.ExitMoney.ToString().Contains(Filter));
+
+                return exp;
+            }
+
+        }
+        public static string ToOrderBy(
             this string sortHe,
             string sortDir)
         {

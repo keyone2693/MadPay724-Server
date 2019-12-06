@@ -33,7 +33,16 @@ namespace MadPay724.Presentation.Routes.V1
         }
 
         #endregion
+        #region AccountantRoutes
 
+        public static class Accountant
+        {
+            //api/v1/site/panel/Accountant
+            //GET
+            public const string GetUsers = BaseSitePanel + "/accountantusers";
+        }
+
+        #endregion
         #region UsersRoutes
 
         public static class Users
@@ -275,6 +284,20 @@ namespace MadPay724.Presentation.Routes.V1
             //api/v1/site/panel/users/{userId}/blogs/{id}
             //PUT
             public const string ApproveBlog = BaseSitePanel + "/users/{userId}/blogs/{id}/approveBlog";
+            //api/v1/site/panel/blogs/{id}
+            //Get
+            public const string GetUnverifiedBlogCount = BaseSitePanel + "/users/{userId}/blogs/unverifiedcount";
+
+
+        }
+        #endregion
+
+        #region CommonRoutes
+        public static class Common
+        {
+            //api/v1/site/panel/blogs/{id}
+            //Get
+            public const string GetNotifications = BaseSitePanel + "/users/{id}/common/getnotifications";
 
         }
         #endregion

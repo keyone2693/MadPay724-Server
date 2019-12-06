@@ -171,7 +171,42 @@ namespace MadPay724.Presentation
                 document.OperationProcessors.Add(
                     new AspNetCoreOperationSecurityScopeProcessor("JWT"));
             });
-
+            services.AddOpenApiDocument(document =>
+            {
+                document.DocumentName = "v1_Site_Panel_Common";
+                document.ApiGroupNames = new[] { "v1_Site_Panel_Common" };
+                document.PostProcess = d =>
+                {
+                    d.Info.Title = "MadPay724 Api Docs For Accountant , AdminBlog , Admin";
+                };
+                document.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
+                {
+                    Type = OpenApiSecuritySchemeType.ApiKey,
+                    Name = "Authorization",
+                    In = OpenApiSecurityApiKeyLocation.Header,
+                    Description = "Type into the textbox: Bearer {your JWT token}."
+                });
+                document.OperationProcessors.Add(
+                    new AspNetCoreOperationSecurityScopeProcessor("JWT"));
+            });
+            services.AddOpenApiDocument(document =>
+            {
+                document.DocumentName = "v1_Site_Panel_Accountant";
+                document.ApiGroupNames = new[] { "v1_Site_Panel_Accountant" };
+                document.PostProcess = d =>
+                {
+                    d.Info.Title = "MadPay724 Api Docs For Accountant , Admin";
+                };
+                document.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
+                {
+                    Type = OpenApiSecuritySchemeType.ApiKey,
+                    Name = "Authorization",
+                    In = OpenApiSecurityApiKeyLocation.Header,
+                    Description = "Type into the textbox: Bearer {your JWT token}."
+                });
+                document.OperationProcessors.Add(
+                    new AspNetCoreOperationSecurityScopeProcessor("JWT"));
+            });
             services.AddCors();
                        
             services.AddAutoMapper(typeof(Startup));
@@ -228,6 +263,7 @@ namespace MadPay724.Presentation
                 opt.AddPolicy("AccessAdminBlog", policy => policy.RequireRole("Admin", "AdminBlog"));
                 opt.AddPolicy("AccessAccounting", policy => policy.RequireRole("Admin", "Accountant"));
 
+                opt.AddPolicy("AccessNotify", policy => policy.RequireRole("Admin", "Accountant", "AdminBlog", "User"));
 
                 opt.AddPolicy("AccessProfile", policy => policy.RequireRole("Admin", "User", "AdminBlog", "Blog", "Accountant"));
 

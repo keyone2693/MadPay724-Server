@@ -45,6 +45,10 @@ namespace MadPay724.Repo.Infrastructure
             string includeEntity
             );
 
+        Task<long> GetCountAsync(
+            Expression<Func<TEntity, bool>> filter
+            );
+
         Task<IEnumerable<TEntity>> GetManyAsyncPaging(
             Expression<Func<TEntity, bool>> filter,
 
