@@ -138,7 +138,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Blogger
            .GetAllPagedListAsync(
                     paginationDto,
            paginationDto.Filter.ToBlogExpression(false, userId),
-           paginationDto.SortHe.ToBlogOrderBy(paginationDto.SortDir),
+           paginationDto.SortHe.ToOrderBy(paginationDto.SortDir),
            "User,BlogGroup");
 
                 Response.AddPagination(blogsFromRepo.CurrentPage, blogsFromRepo.PageSize,

@@ -40,6 +40,15 @@ namespace MadPay724.Presentation.Routes.V1
             //api/v1/site/panel/Accountant
             //GET
             public const string GetInventories = BaseSitePanel + "/inventories";
+            //api/v1/site/panel/Accountant
+            //GET
+            public const string GetInventoryWallets = BaseSitePanel + "/inventories/wallets/{userId}";
+            //api/v1/site/panel/Accountant
+            //GET
+            public const string GetInventoryBankCard = BaseSitePanel + "/inventories/bankcards/{userId}";
+            //api/v1/site/panel/Accountant
+            //PATCH
+            public const string BlockInventoryWallet = BaseSitePanel + "/inventories/blockwallet/{walletId}";
         }
 
         #endregion
