@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MadPay724.Data.Dtos.Common.Token;
 using MadPay724.Data.Models;
+using MadPay724.Data.Models.MainDB;
 using Microsoft.AspNetCore.Http;
 
 namespace MadPay724.Common.Helpers.Interface

@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
-using MadPay724.Common.ErrorAndMessage;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Site.Panel.Notification;
-using MadPay724.Data.Dtos.Site.Panel.Photos;
-using MadPay724.Data.Models;
+using MadPay724.Data.Models.MainDB;
 using MadPay724.Presentation.Helpers.Filters;
 using MadPay724.Presentation.Routes.V1;
 using MadPay724.Repo.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 

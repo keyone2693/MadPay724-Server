@@ -3,7 +3,7 @@ using CloudinaryDotNet.Actions;
 using MadPay724.Common.ErrorAndMessage;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Services;
-using MadPay724.Data.Models;
+using MadPay724.Data.Models.MainDB;
 using MadPay724.Repo.Infrastructure;
 using MadPay724.Services.Upload.Interface;
 using Microsoft.AspNetCore.Http;

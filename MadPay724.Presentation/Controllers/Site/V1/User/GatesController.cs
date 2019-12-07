@@ -2,7 +2,7 @@
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Site.Panel.Gate;
 using MadPay724.Data.Dtos.Site.Panel.Wallet;
-using MadPay724.Data.Models.UserModel;
+using MadPay724.Data.Models.MainDB.UserModel;
 using MadPay724.Presentation.Helpers.Filters;
 using MadPay724.Presentation.Routes.V1;
 using MadPay724.Repo.Infrastructure;

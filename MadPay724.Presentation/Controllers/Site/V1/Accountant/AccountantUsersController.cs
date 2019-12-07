@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using MadPay724.Common.Helpers.Helpers;
+using MadPay724.Common.Helpers.Utilities.Extensions;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Common.Pagination;
 using MadPay724.Data.Dtos.Site.Panel.BankCards;
@@ -12,10 +11,8 @@ using MadPay724.Data.Dtos.Site.Panel.Wallet;
 using MadPay724.Presentation.Routes.V1;
 using MadPay724.Repo.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
@@ -28,13 +25,13 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
         private readonly MadpayDbContext _dbMad;
         private readonly IMapper _mapper;
         private readonly ILogger<AccountantUsersController> _logger;
-        private readonly UserManager<Data.Models.User> _userManager;
+        private readonly UserManager<Data.Models.MainDB.User> _userManager;
 
 
 
         public AccountantUsersController(IUnitOfWork<MadpayDbContext> dbContext, MadpayDbContext dbMad,
             IMapper mapper,
-            ILogger<AccountantUsersController> logger, UserManager<Data.Models.User> userManager)
+            ILogger<AccountantUsersController> logger, UserManager<Data.Models.MainDB.User> userManager)
         {
             _db = dbContext;
             _mapper = mapper;

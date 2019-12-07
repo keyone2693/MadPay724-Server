@@ -1,12 +1,13 @@
-﻿using MadPay724.Common.Helpers.Helpers.Pagination;
-using MadPay724.Data.Dtos.Common.Pagination;
+﻿using MadPay724.Data.Dtos.Common.Pagination;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using MadPay724.Common.Helpers.Helpers;
+using MadPay724.Common.Helpers.Utilities.Pagination;
+using MadPay724.Common.Helpers.Utilities.Extensions;
+
 namespace MadPay724.Repo.Infrastructure
 {
     public abstract class Repository<TEntity> : IRepository<TEntity>, IDisposable where TEntity : class

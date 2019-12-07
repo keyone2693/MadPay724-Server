@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Reflection;
-using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
-using MadPay724.Common.Helpers.Helpers;
 using MadPay724.Common.Helpers.MediaTypes;
+using MadPay724.Common.Helpers.Utilities.Extensions;
 using MadPay724.Data.Dtos.Common.ION;
-using MadPay724.Data.Dtos.Site.Panel.Users;
-using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Routing;

@@ -1,5 +1,5 @@
 ﻿using System;
-using MadPay724.Data.Models;
+using MadPay724.Data.Models.MainDB;
 using MadPay724.Services.Seed.Interface;
 using Newtonsoft.Json;
 using System.Collections.Generic;

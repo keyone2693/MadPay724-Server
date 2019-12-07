@@ -22,7 +22,7 @@ namespace MadPay724.Services.Site.Admin.User.Service
 
  
 
-        public async Task<Data.Models.User> GetUserForPassChange(string id, string password)
+        public async Task<Data.Models.MainDB.User> GetUserForPassChange(string id, string password)
         {
 
             var user = await _db.UserRepository.GetByIdAsync(id);
@@ -39,7 +39,7 @@ namespace MadPay724.Services.Site.Admin.User.Service
             return user;
         }
 
-        public async Task<bool> UpdateUserPass(Data.Models.User user, string newPassword)
+        public async Task<bool> UpdateUserPass(Data.Models.MainDB.User user, string newPassword)
         {
             byte[] passwordHash, passwordSalt;
             _utilities.CreatePasswordHash(newPassword, out passwordHash, out passwordSalt);

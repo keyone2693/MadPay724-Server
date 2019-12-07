@@ -4,27 +4,19 @@ using MadPay724.Data.Dtos.Site.Panel.BankCards;
 using MadPay724.Data.Dtos.Site.Panel.EasyPay;
 using MadPay724.Data.Dtos.Site.Panel.Photos;
 using MadPay724.Data.Dtos.Site.Panel.Users;
-using MadPay724.Data.Models;
-using System;
+using MadPay724.Data.Models.MainDB;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using MadPay724.Common.Helpers.Helpers;
-using MadPay724.Common.Helpers.MediaTypes;
-using MadPay724.Data.Dtos.Common;
-using MadPay724.Data.Dtos.Common.ION;
-using MadPay724.Data.Dtos.Common.Token;
-using MadPay724.Data.Dtos.Site.Panel.Auth;
 using MadPay724.Data.Dtos.Site.Panel.Document;
 using MadPay724.Data.Dtos.Site.Panel.Notification;
 using MadPay724.Data.Dtos.Site.Panel.Ticket;
 using MadPay724.Data.Dtos.Site.Panel.Wallet;
-using MadPay724.Data.Models.UserModel;
+using MadPay724.Data.Models.MainDB.UserModel;
 using MadPay724.Data.Dtos.Site.Panel.Gate;
-using MadPay724.Data.Models.Blog;
+using MadPay724.Data.Models.MainDB.Blog;
 using MadPay724.Data.Dtos.Site.Panel.BlogGroup;
 using MadPay724.Data.Dtos.Site.Panel.Blog;
-using MadPay724.Common.Helpers.Helpers.Pagination;
+using MadPay724.Common.Helpers.Utilities.Extensions;
 
 namespace MadPay724.Presentation.Helpers
 {

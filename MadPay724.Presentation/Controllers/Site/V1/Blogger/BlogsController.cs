@@ -6,12 +6,12 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using MadPay724.Common.ErrorAndMessage;
-using MadPay724.Common.Helpers.Helpers;
+using MadPay724.Common.Helpers.Utilities;
 using MadPay724.Common.Helpers.Interface;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Common.Pagination;
 using MadPay724.Data.Dtos.Site.Panel.Blog;
-using MadPay724.Data.Models.Blog;
+using MadPay724.Data.Models.MainDB.Blog;
 using MadPay724.Presentation.Helpers.Filters;
 using MadPay724.Presentation.Routes.V1;
 using MadPay724.Repo.Infrastructure;
@@ -21,6 +21,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using MadPay724.Common.Helpers.Utilities.Extensions;
 
 namespace MadPay724.Presentation.Controllers.Site.V1.Blogger
 {

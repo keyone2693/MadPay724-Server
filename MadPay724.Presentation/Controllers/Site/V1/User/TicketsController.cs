@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Site.Panel.Ticket;
-using MadPay724.Data.Models;
+using MadPay724.Data.Models.MainDB;
 using MadPay724.Presentation.Helpers.Filters;
 using MadPay724.Presentation.Routes.V1;
 using MadPay724.Repo.Infrastructure;

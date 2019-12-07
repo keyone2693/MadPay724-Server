@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using MadPay724.Data.Dtos.Site.Panel.Users;
 using MadPay724.Data.Models;
+using MadPay724.Data.Models.MainDB;
 
 namespace MadPay724.Data.Dtos.Common.Token
 {

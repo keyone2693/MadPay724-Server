@@ -23,13 +23,13 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Admin
         private readonly MadpayDbContext _dbMad;
         private readonly IMapper _mapper;
         private readonly ILogger<AdminUsersController> _logger;
-        private readonly UserManager<Data.Models.User> _userManager;
+        private readonly UserManager<Data.Models.MainDB.User> _userManager;
 
 
 
         public AdminUsersController(IUnitOfWork<MadpayDbContext> dbContext, MadpayDbContext dbMad,
             IMapper mapper,
-            ILogger<AdminUsersController> logger, UserManager<Data.Models.User> userManager)
+            ILogger<AdminUsersController> logger, UserManager<Data.Models.MainDB.User> userManager)
         {
             _db = dbContext;
             _mapper = mapper;

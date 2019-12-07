@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
 using MadPay724.Data.DatabaseContext;
-using MadPay724.Data.Models;
+using MadPay724.Data.Models.MainDB;
 using MadPay724.Repo.Infrastructure;
 using MadPay724.Services.Site.Admin.Auth.Interface;
-using Newtonsoft.Json;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using Microsoft.Extensions.Configuration;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using MadPay724.Data.Dtos.Site.Panel.Users;
@@ -21,9 +16,7 @@ using MadPay724.Data.Dtos.Common.Token;
 using MadPay724.Data.Dtos.Site.Panel.Auth;
 using MadPay724.Presentation.Routes.V1;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System.IO;
 
 namespace MadPay724.Presentation.Controllers.Site.V1.Auth
 {
@@ -39,13 +32,13 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
         private readonly IMapper _mapper;
         private readonly ILogger<AuthController> _logger;
         private readonly IUtilities _utilities;
-        private readonly UserManager<Data.Models.User> _userManager;
+        private readonly UserManager<Data.Models.MainDB.User> _userManager;
         //private readonly SignInManager<Data.Models.User> _signInManager;
 
 
         public AuthController(IUnitOfWork<MadpayDbContext> dbContext, IAuthService authService,
             IConfiguration config, IMapper mapper, ILogger<AuthController> logger, IUtilities utilities,
-            UserManager<Data.Models.User> userManager)
+            UserManager<Data.Models.MainDB.User> userManager)
         {
             _db = dbContext;
             _authService = authService;
@@ -60,7 +53,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
         [HttpPost(ApiV1Routes.Auth.Register)]
         public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
         {
-            var userToCreate = new Data.Models.User
+            var userToCreate = new Data.Models.MainDB.User
             {
                 UserName = userForRegisterDto.UserName,
                 Name = userForRegisterDto.Name,

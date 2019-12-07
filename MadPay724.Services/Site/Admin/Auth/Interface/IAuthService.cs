@@ -1,14 +1,14 @@
-﻿using MadPay724.Data.Models;
+﻿using MadPay724.Data.Models.MainDB;
 using System.Threading.Tasks;
 
 namespace MadPay724.Services.Site.Admin.Auth.Interface
 {
     public interface IAuthService
     {
-        Task<Data.Models.User> RegisterAsync(Data.Models.User user,Photo photo, string password);
-        Task<Data.Models.User> LoginAsync(string username, string password);
+        Task<Data.Models.MainDB.User> RegisterAsync(Data.Models.MainDB.User user,Photo photo, string password);
+        Task<Data.Models.MainDB.User> LoginAsync(string username, string password);
 
-        Task<bool> AddUserPreNeededAsync(Data.Models.Photo photo,Notification notify,Data.Models.Wallet walletMain,Data.Models.Wallet walletSms );
+        Task<bool> AddUserPreNeededAsync(Photo photo,Notification notify,Data.Models.MainDB.Wallet walletMain,Data.Models.MainDB.Wallet walletSms );
 
     }
 }

@@ -19,28 +19,23 @@ using NSwag;
 using NSwag.Generation.Processors.Security;
 using AutoMapper;
 using MadPay724.Common.Helpers.AppSetting;
-using MadPay724.Common.Helpers.Helpers;
+using MadPay724.Common.Helpers.Utilities;
 using MadPay724.Common.Helpers.Interface;
-using MadPay724.Common.Helpers.MediaTypes;
-using MadPay724.Data.Models;
+using MadPay724.Data.Models.MainDB;
 using MadPay724.Services.Upload.Interface;
 using MadPay724.Services.Upload.Service;
 using MadPay724.Presentation.Helpers.Filters;
-using MadPay724.Services.Seed.Interface;
 using MadPay724.Services.Seed.Service;
 using MadPay724.Services.Site.Admin.User.Interface;
 using MadPay724.Services.Site.Admin.User.Service;
 using MadPay724.Services.Site.Admin.Wallet.Interface;
 using MadPay724.Services.Site.Admin.Wallet.Service;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Formatters;
-using Microsoft.AspNetCore.ResponseCompression;
-using Microsoft.CodeAnalysis.FlowAnalysis;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
+using MadPay724.Common.Helpers.Utilities.Extensions;
 
 namespace MadPay724.Presentation
 {

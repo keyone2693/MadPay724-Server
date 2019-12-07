@@ -5,8 +5,9 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using MadPay724.Data.Models.UserModel;
-using MadPay724.Data.Models.Blog;
+using MadPay724.Data.Models.MainDB;
+using MadPay724.Data.Models.MainDB.UserModel;
+using MadPay724.Data.Models.MainDB.Blog;
 
 namespace MadPay724.Data.DatabaseContext
 {

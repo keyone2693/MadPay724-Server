@@ -1,4 +1,5 @@
 ﻿using MadPay724.Data.Models;
+using MadPay724.Data.Models.MainDB;
 using Microsoft.EntityFrameworkCore;
 using ZNetCS.AspNetCore.Logging.EntityFrameworkCore;
 

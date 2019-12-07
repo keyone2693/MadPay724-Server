@@ -1,4 +1,5 @@
-﻿using MadPay724.Common.Helpers.Helpers.Pagination;
+﻿using MadPay724.Common.Helpers.Utilities.Pagination;
+using MadPay724.Common.Helpers.Utilities.Pagination;
 using MadPay724.Data.Dtos.Common.Pagination;
 using System;
 using System.Collections.Generic;
