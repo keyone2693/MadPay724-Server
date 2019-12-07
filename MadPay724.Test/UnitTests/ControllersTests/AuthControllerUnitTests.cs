@@ -12,7 +12,7 @@ using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Common.Token;
 using MadPay724.Data.Dtos.Site.Panel.Auth;
 using MadPay724.Data.Dtos.Site.Panel.Users;
-using MadPay724.Data.Models;
+using MadPay724.Data.Models.MainDB;
 using MadPay724.Presentation.Controllers.Site.V1.Auth;
 using MadPay724.Presentation.Controllers.Site.V1.User;
 using MadPay724.Repo.Infrastructure;
@@ -36,7 +36,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
 {
     public class AuthControllerUnitTests
     {
-        private readonly Mock<IUnitOfWork<MadpayDbContext>> _mockRepo;
+        private readonly Mock<IUnitOfWork<Main_MadpayDbContext>> _mockRepo;
         private readonly Mock<IMapper> _mockMapper;
         private readonly Mock<IAuthService> _mockAuthService;
         private readonly Mock<IConfiguration> _mockConfig;
@@ -51,7 +51,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         public AuthControllerUnitTests()
         {
 
-            _mockRepo = new Mock<IUnitOfWork<MadpayDbContext>>();
+            _mockRepo = new Mock<IUnitOfWork<Main_MadpayDbContext>>();
             _mockMapper = new Mock<IMapper>();
             //_mockUtilities = new Mock<IUtilities>();
             _mockAuthService = new Mock<IAuthService>();

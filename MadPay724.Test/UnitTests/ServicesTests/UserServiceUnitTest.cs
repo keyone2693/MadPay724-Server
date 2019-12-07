@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MadPay724.Common.Helpers.Interface;
 using MadPay724.Data.DatabaseContext;
-using MadPay724.Data.Models;
+using MadPay724.Data.Models.MainDB;
 using MadPay724.Repo.Infrastructure;
 using MadPay724.Services.Site.Admin.Auth.Service;
 using MadPay724.Services.Site.Admin.User.Service;
@@ -18,13 +18,13 @@ namespace MadPay724.Test.UnitTests.ServicesTests
 {
     public class UserServiceUnitTest
     {
-        private readonly Mock<IUnitOfWork<MadpayDbContext>> _mockRepo;
+        private readonly Mock<IUnitOfWork<Main_MadpayDbContext>> _mockRepo;
         private readonly Mock<IUtilities> _mockUtilities;
         private readonly UserService _service;
 
         public UserServiceUnitTest()
         {
-            _mockRepo = new Mock<IUnitOfWork<MadpayDbContext>>();
+            _mockRepo = new Mock<IUnitOfWork<Main_MadpayDbContext>>();
             _mockUtilities = new Mock<IUtilities>();
             _service = new UserService(_mockRepo.Object, _mockUtilities.Object);
 

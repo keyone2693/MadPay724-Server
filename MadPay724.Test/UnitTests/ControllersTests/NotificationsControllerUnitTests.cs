@@ -9,7 +9,7 @@ using AutoMapper;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Site.Panel.Notification;
 using MadPay724.Data.Dtos.Site.Panel.Users;
-using MadPay724.Data.Models;
+using MadPay724.Data.Models.MainDB;
 using MadPay724.Presentation.Controllers.Site.V1.User;
 using MadPay724.Repo.Infrastructure;
 using MadPay724.Services.Site.Admin.User.Interface;
@@ -27,7 +27,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
 {
   public  class NotificationsControllerUnitTests
     {
-        private readonly Mock<IUnitOfWork<MadpayDbContext>> _mockRepo;
+        private readonly Mock<IUnitOfWork<Main_MadpayDbContext>> _mockRepo;
         private readonly Mock<IMapper> _mockMapper;
         //private readonly Mock<IUtilities> _mockUtilities;
         private readonly Mock<ILogger<NotificationsController>> _mockLogger;
@@ -35,7 +35,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
 
         public NotificationsControllerUnitTests()
         {
-            _mockRepo = new Mock<IUnitOfWork<MadpayDbContext>>();
+            _mockRepo = new Mock<IUnitOfWork<Main_MadpayDbContext>>();
             _mockMapper = new Mock<IMapper>();
             _mockLogger = new Mock<ILogger<NotificationsController>>();
             _controller = new NotificationsController(_mockRepo.Object, _mockLogger.Object, _mockMapper.Object);

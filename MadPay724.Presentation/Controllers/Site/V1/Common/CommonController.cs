@@ -23,14 +23,14 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Common
     [ApiController]
     public class CommonController : ControllerBase
     {
-        private readonly IUnitOfWork<MadpayDbContext> _db;
+        private readonly IUnitOfWork<Main_MadpayDbContext> _db;
         private readonly IMapper _mapper;
         private readonly ILogger<CommonController> _logger;
         private readonly IUploadService _uploadService;
         private readonly IWebHostEnvironment _env;
         private readonly IUtilities _utilities;
 
-        public CommonController(IUnitOfWork<MadpayDbContext> dbContext, IMapper mapper,
+        public CommonController(IUnitOfWork<Main_MadpayDbContext> dbContext, IMapper mapper,
             ILogger<CommonController> logger, IUploadService uploadService,
             IWebHostEnvironment env, IUtilities utilities)
         {

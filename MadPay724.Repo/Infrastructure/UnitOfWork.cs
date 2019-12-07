@@ -1,5 +1,5 @@
-﻿using MadPay724.Repo.Repositories.Interface;
-using MadPay724.Repo.Repositories.Repo;
+﻿using MadPay724.Repo.Repositories.MainDB.Interface;
+using MadPay724.Repo.Repositories.MainDB.Repo;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;

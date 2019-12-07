@@ -11,10 +11,10 @@ namespace MadPay724.Services.Site.Admin.Auth.Service
 {
     public class AuthService : IAuthService
     {
-        private readonly IUnitOfWork<MadpayDbContext> _db;
+        private readonly IUnitOfWork<Main_MadpayDbContext> _db;
         private readonly IUtilities _utilities;
 
-        public AuthService(IUnitOfWork<MadpayDbContext> dbContext, IUtilities utilities)
+        public AuthService(IUnitOfWork<Main_MadpayDbContext> dbContext, IUtilities utilities)
         {
             _db = dbContext;
             _utilities = utilities;

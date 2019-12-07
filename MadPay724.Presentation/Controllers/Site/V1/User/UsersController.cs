@@ -28,13 +28,13 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly IUnitOfWork<MadpayDbContext> _db;
+        private readonly IUnitOfWork<Main_MadpayDbContext> _db;
         private readonly IMapper _mapper;
         private readonly IUserService _userService;
         private readonly ILogger<UsersController> _logger;
 
 
-        public UsersController(IUnitOfWork<MadpayDbContext> dbContext, IMapper mapper,
+        public UsersController(IUnitOfWork<Main_MadpayDbContext> dbContext, IMapper mapper,
             IUserService userService, ILogger<UsersController> logger)
         {
             _db = dbContext;

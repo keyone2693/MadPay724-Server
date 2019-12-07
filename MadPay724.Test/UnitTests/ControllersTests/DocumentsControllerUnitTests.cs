@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Site.Panel.Document;
-using MadPay724.Data.Models;
+using MadPay724.Data.Models.MainDB;
 using MadPay724.Presentation.Controllers.Site.V1.User;
 using MadPay724.Repo.Infrastructure;
 using MadPay724.Services.Upload.Interface;
@@ -25,7 +25,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
 {
     public class DocumentsControllerUnitTests
     {
-        private readonly Mock<IUnitOfWork<MadpayDbContext>> _mockRepo;
+        private readonly Mock<IUnitOfWork<Main_MadpayDbContext>> _mockRepo;
         private readonly Mock<IMapper> _mockMapper;
 
         private readonly Mock<ILogger<DocumentsController>> _mockLogger;
@@ -36,7 +36,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
 
         public DocumentsControllerUnitTests()
         {
-            _mockRepo = new Mock<IUnitOfWork<MadpayDbContext>>();
+            _mockRepo = new Mock<IUnitOfWork<Main_MadpayDbContext>>();
             _mockMapper = new Mock<IMapper>();
             _mockWebHostEnvironment = new Mock<IWebHostEnvironment>();
             _mockUploadService = new Mock<IUploadService>();

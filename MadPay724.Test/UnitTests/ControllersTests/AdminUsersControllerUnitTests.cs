@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Site.Panel.Users;
-using MadPay724.Data.Models;
+using MadPay724.Data.Models.MainDB;
 using MadPay724.Presentation.Controllers.Site.V1.Admin;
 using MadPay724.Repo.Infrastructure;
 using MadPay724.Test.DataInput;
@@ -22,24 +22,24 @@ namespace MadPay724.Test.UnitTests.ControllersTests
 {
     public class AdminUsersControllerUnitTests
     {
-        private readonly Mock<IUnitOfWork<MadpayDbContext>> _mockRepo;
+        private readonly Mock<IUnitOfWork<Main_MadpayDbContext>> _mockRepo;
         private readonly Mock<IMapper> _mockMapper;
         //private readonly Mock<IUtilities> _mockUtilities;
         private readonly Mock<ILogger<AdminUsersController>> _mockLogger;
         private readonly AdminUsersController _controller;
         private readonly Mock<FakeUserManager> _mockUserManager;
 
-        private readonly Mock<MadpayDbContext> _dbMad;
+        private readonly Mock<Main_MadpayDbContext> _dbMad;
 
         public AdminUsersControllerUnitTests()
         {
-            _mockRepo = new Mock<IUnitOfWork<MadpayDbContext>>();
+            _mockRepo = new Mock<IUnitOfWork<Main_MadpayDbContext>>();
 
             _mockMapper = new Mock<IMapper>();
             //_mockUtilities = new Mock<IUtilities>();
             _mockLogger = new Mock<ILogger<AdminUsersController>>();
             _mockUserManager = new Mock<FakeUserManager>();
-            _dbMad = new Mock<MadpayDbContext>();
+            _dbMad = new Mock<Main_MadpayDbContext>();
             _controller = new AdminUsersController(_mockRepo.Object, _dbMad.Object, _mockMapper.Object, _mockLogger.Object, _mockUserManager.Object);
 
         }

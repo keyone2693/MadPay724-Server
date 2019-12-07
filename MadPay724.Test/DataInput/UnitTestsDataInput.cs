@@ -10,7 +10,7 @@ using MadPay724.Data.Dtos.Site.Panel.Photos;
 using MadPay724.Data.Dtos.Site.Panel.Roles;
 using MadPay724.Data.Dtos.Site.Panel.Users;
 using MadPay724.Data.Dtos.Site.Panel.Wallet;
-using MadPay724.Data.Models;
+using MadPay724.Data.Models.MainDB;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 

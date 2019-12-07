@@ -19,11 +19,11 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
     [ApiController]
     public class NotificationsController : ControllerBase
     {
-        private readonly IUnitOfWork<MadpayDbContext> _db;
+        private readonly IUnitOfWork<Main_MadpayDbContext> _db;
         private readonly ILogger<NotificationsController> _logger;
         private readonly IMapper _mapper;
 
-        public NotificationsController(IUnitOfWork<MadpayDbContext> dbContext, ILogger<NotificationsController> logger,
+        public NotificationsController(IUnitOfWork<Main_MadpayDbContext> dbContext, ILogger<NotificationsController> logger,
             IMapper mapper)
         {
             _db = dbContext;

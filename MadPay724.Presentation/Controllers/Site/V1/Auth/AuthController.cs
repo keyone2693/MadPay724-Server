@@ -26,7 +26,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly IUnitOfWork<MadpayDbContext> _db;
+        private readonly IUnitOfWork<Main_MadpayDbContext> _db;
         private readonly IAuthService _authService;
         private readonly IConfiguration _config;
         private readonly IMapper _mapper;
@@ -36,7 +36,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
         //private readonly SignInManager<Data.Models.User> _signInManager;
 
 
-        public AuthController(IUnitOfWork<MadpayDbContext> dbContext, IAuthService authService,
+        public AuthController(IUnitOfWork<Main_MadpayDbContext> dbContext, IAuthService authService,
             IConfiguration config, IMapper mapper, ILogger<AuthController> logger, IUtilities utilities,
             UserManager<Data.Models.MainDB.User> userManager)
         {

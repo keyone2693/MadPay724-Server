@@ -21,12 +21,12 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
     [ServiceFilter(typeof(DocumentApproveFilter))]
     public class WalletsController : ControllerBase
     {
-        private readonly IUnitOfWork<MadpayDbContext> _db;
+        private readonly IUnitOfWork<Main_MadpayDbContext> _db;
         private readonly IMapper _mapper;
         private readonly ILogger<WalletsController> _logger;
         private readonly IWalletService _walletService;
 
-        public WalletsController(IUnitOfWork<MadpayDbContext> dbContext, IMapper mapper,
+        public WalletsController(IUnitOfWork<Main_MadpayDbContext> dbContext, IMapper mapper,
             ILogger<WalletsController> logger, IWalletService walletService)
         {
             _db = dbContext;

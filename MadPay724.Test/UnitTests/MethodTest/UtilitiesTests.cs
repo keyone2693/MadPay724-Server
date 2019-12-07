@@ -1,5 +1,5 @@
 ﻿using MadPay724.Common.Helpers.AppSetting;
-using MadPay724.Common.Helpers.Helpers;
+using MadPay724.Common.Helpers.Utilities;
 using MadPay724.Common.Helpers.Interface;
 using Microsoft.Extensions.Configuration;
 using Moq;

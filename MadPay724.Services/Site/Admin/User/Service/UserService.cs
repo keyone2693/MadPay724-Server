@@ -11,10 +11,10 @@ namespace MadPay724.Services.Site.Admin.User.Service
 {
     public class UserService : IUserService
     {
-        private readonly IUnitOfWork<MadpayDbContext> _db;
+        private readonly IUnitOfWork<Main_MadpayDbContext> _db;
         private readonly IUtilities _utilities;
 
-        public UserService(IUnitOfWork<MadpayDbContext> dbContext,IUtilities utilities)
+        public UserService(IUnitOfWork<Main_MadpayDbContext> dbContext,IUtilities utilities)
         {
             _db = dbContext;
             _utilities = utilities;

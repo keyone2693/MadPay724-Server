@@ -18,10 +18,10 @@ namespace MadPay724.Services.Upload.Service
 {
     public class UploadService : IUploadService
     {
-        private readonly IUnitOfWork<MadpayDbContext> _db;
+        private readonly IUnitOfWork<Main_MadpayDbContext> _db;
         private readonly Cloudinary _cloudinary;
         private readonly Setting _setting;
-        public UploadService(IUnitOfWork<MadpayDbContext> dbContext)
+        public UploadService(IUnitOfWork<Main_MadpayDbContext> dbContext)
         {
             _db = dbContext;
 

@@ -25,13 +25,13 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
     [ServiceFilter(typeof(DocumentApproveFilter))]
     public class GatesController : ControllerBase
     {
-        private readonly IUnitOfWork<MadpayDbContext> _db;
+        private readonly IUnitOfWork<Main_MadpayDbContext> _db;
         private readonly IMapper _mapper;
         private readonly ILogger<GatesController> _logger;
         private readonly IUploadService _uploadService;
         private readonly IWalletService _walletService;
         private readonly IWebHostEnvironment _env;
-        public GatesController(IUnitOfWork<MadpayDbContext> dbContext, IMapper mapper,
+        public GatesController(IUnitOfWork<Main_MadpayDbContext> dbContext, IMapper mapper,
             ILogger<GatesController> logger, IUploadService uploadService,
             IWebHostEnvironment env, IWalletService walletService)
         {

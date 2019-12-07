@@ -10,5 +10,10 @@
   <ItemGroup>
     <ProjectReference Include="..\MadPay724.Common\MadPay724.Common.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Repositories\FinancialDB\Interface\" />
+    <Folder Include="Repositories\FinancialDB\Repo\" />
+  </ItemGroup>
   
 </Project>

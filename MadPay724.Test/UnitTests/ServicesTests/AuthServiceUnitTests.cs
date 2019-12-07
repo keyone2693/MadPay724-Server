@@ -8,7 +8,7 @@ using AutoMapper;
 using MadPay724.Common.Helpers.Interface;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Site.Panel.Users;
-using MadPay724.Data.Models;
+using MadPay724.Data.Models.MainDB;
 using MadPay724.Presentation.Controllers.Site.V1.User;
 using MadPay724.Repo.Infrastructure;
 using MadPay724.Services.Site.Admin.Auth.Service;
@@ -23,13 +23,13 @@ namespace MadPay724.Test.Tests.ServicesUnitTests
 {
     public class AuthServiceUnitTests
     {
-        private readonly Mock<IUnitOfWork<MadpayDbContext>> _mockRepo;
+        private readonly Mock<IUnitOfWork<Main_MadpayDbContext>> _mockRepo;
         private readonly Mock<IUtilities> _mockUtilities;
         private readonly AuthService _service;
 
         public AuthServiceUnitTests()
         {
-            _mockRepo = new Mock<IUnitOfWork<MadpayDbContext>>();
+            _mockRepo = new Mock<IUnitOfWork<Main_MadpayDbContext>>();
             _mockUtilities = new Mock<IUtilities>();
             _service = new AuthService(_mockRepo.Object, _mockUtilities.Object);
 

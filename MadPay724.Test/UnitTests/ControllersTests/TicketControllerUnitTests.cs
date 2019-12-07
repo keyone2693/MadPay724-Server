@@ -10,7 +10,7 @@ using AutoMapper;
 using MadPay724.Common.ErrorAndMessage;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Site.Panel.Ticket;
-using MadPay724.Data.Models;
+using MadPay724.Data.Models.MainDB;
 using MadPay724.Presentation.Controllers.Site.V1.User;
 using MadPay724.Repo.Infrastructure;
 using MadPay724.Services.Upload.Interface;
@@ -27,7 +27,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
 {
    public class TicketControllerUnitTests
     {
-        private readonly Mock<IUnitOfWork<MadpayDbContext>> _mockRepo;
+        private readonly Mock<IUnitOfWork<Main_MadpayDbContext>> _mockRepo;
         private readonly Mock<IMapper> _mockMapper;
         private readonly Mock<ILogger<TicketsController>> _mockLogger;
         private readonly TicketsController _controller;
@@ -36,7 +36,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
 
         public TicketControllerUnitTests()
         {
-            _mockRepo = new Mock<IUnitOfWork<MadpayDbContext>>();
+            _mockRepo = new Mock<IUnitOfWork<Main_MadpayDbContext>>();
             _mockMapper = new Mock<IMapper>();
             _mockLogger = new Mock<ILogger<TicketsController>>();
             _mockUploadService = new Mock<IUploadService>();

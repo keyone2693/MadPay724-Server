@@ -10,7 +10,7 @@ using CloudinaryDotNet;
 using MadPay724.Common.Helpers.Interface;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Services;
-using MadPay724.Data.Models;
+using MadPay724.Data.Models.MainDB;
 using MadPay724.Repo.Infrastructure;
 using MadPay724.Services.Site.Admin.Auth.Service;
 using MadPay724.Services.Upload.Service;
@@ -23,14 +23,14 @@ namespace MadPay724.Test.UnitTests.ServicesTests
 {
     public class UploadServiceUnitTests
     {
-        private readonly Mock<IUnitOfWork<MadpayDbContext>> _mockRepo;
+        private readonly Mock<IUnitOfWork<Main_MadpayDbContext>> _mockRepo;
         private readonly Mock<IFormFile> _mockFile;
 
         private readonly UploadService _service;
 
         public UploadServiceUnitTests()
         {
-            _mockRepo = new Mock<IUnitOfWork<MadpayDbContext>>();
+            _mockRepo = new Mock<IUnitOfWork<Main_MadpayDbContext>>();
             _mockFile = new Mock<IFormFile>();
 
             _mockRepo.Setup(x => x.SettingRepository.GetById(It.IsAny<short>()))

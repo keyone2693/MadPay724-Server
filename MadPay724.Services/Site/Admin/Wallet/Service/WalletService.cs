@@ -12,10 +12,10 @@ namespace MadPay724.Services.Site.Admin.Wallet.Service
 {
     public class WalletService : IWalletService
     {
-        private readonly IUnitOfWork<MadpayDbContext> _db;
+        private readonly IUnitOfWork<Main_MadpayDbContext> _db;
         private readonly IUtilities _utilities;
 
-        public WalletService(IUnitOfWork<MadpayDbContext> dbContext, IUtilities utilities)
+        public WalletService(IUnitOfWork<Main_MadpayDbContext> dbContext, IUtilities utilities)
         {
             _db = dbContext;
             _utilities = utilities;

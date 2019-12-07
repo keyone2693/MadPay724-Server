@@ -21,7 +21,7 @@ namespace MadPay724.Presentation
                 .ConfigureLogging((hostingContext, logging) =>
                 {
                     logging.AddNLog();
-                    logging.AddEntityFramework<LogDbContext, ExtendedLog>();
+                    logging.AddEntityFramework<Log_MadPayDbContext, ExtendedLog>();
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
