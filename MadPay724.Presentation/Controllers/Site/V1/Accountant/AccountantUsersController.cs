@@ -95,11 +95,8 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
         [HttpPatch(ApiV1Routes.Accountant.BlockInventoryWallet)]
         public async Task<IActionResult> BlockInventoryWallet(string walletId, WalletBlockDto walletBlockDto)
         {
-
             var walletsFromRepo = await _db.WalletRepository.GetByIdAsync(walletId);
-
             walletsFromRepo.IsBlock = walletBlockDto.Block;
-
             _db.WalletRepository.Update(walletsFromRepo);
 
             if (await _db.SaveAsync())
@@ -110,8 +107,62 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
             {
                 return BadRequest("خطا در تغییر بلاکی بودن کیف پول");
             }
+        }
+        [Authorize(Policy = "AccessAccounting")]
+        [HttpPatch(ApiV1Routes.Accountant.ApproveInventoryWallet)]
+        public async Task<IActionResult> ApproveInventoryWallet(string bankcardId, BankCardApproveDto bankCardApproveDto)
+        {
+            var bankcardFromRepo = await _db.BankCardRepository.GetByIdAsync(bankcardId);
+            bankcardFromRepo.Approve = bankCardApproveDto.Approve;
+            _db.BankCardRepository.Update(bankcardFromRepo);
+
+            if (await _db.SaveAsync())
+            {
+                return NoContent();
+            }
+            else
+            {
+                return BadRequest("خطا در تغییر تاییدی بودن کارت");
+            }
+        }
+
+        [Authorize(Policy = "AccessAccounting")]
+        [HttpGet(ApiV1Routes.Accountant.GetBankCards)]
+        public async Task<IActionResult> GetBankCards([FromQuery]PaginationDto paginationDto)
+        {
+            var bankCardsFromRepo = await _db.BankCardRepository
+                   .GetAllPagedListAsync(
+                   paginationDto,
+                   paginationDto.Filter.ToBankCardExpression(true),
+                   paginationDto.SortHe.ToOrderBy(paginationDto.SortDir),
+                   "");
+
+            Response.AddPagination(bankCardsFromRepo.CurrentPage, bankCardsFromRepo.PageSize,
+                bankCardsFromRepo.TotalCount, bankCardsFromRepo.TotalPage);
+
+            var bankCards = _mapper.Map<List<BankCardForUserDetailedDto>>(bankCardsFromRepo);
+            
+
+            return Ok(bankCards);
+        }
+        [Authorize(Policy = "AccessAccounting")]
+        [HttpGet(ApiV1Routes.Accountant.GetWallets)]
+        public async Task<IActionResult> GetWallets([FromQuery]PaginationDto paginationDto)
+        {
+            var walletsFromRepo = await _db.WalletRepository
+                 .GetAllPagedListAsync(
+                 paginationDto,
+                 paginationDto.Filter.ToWalletExpression(true),
+                 paginationDto.SortHe.ToOrderBy(paginationDto.SortDir),
+                 "");
+
+            Response.AddPagination(walletsFromRepo.CurrentPage, walletsFromRepo.PageSize,
+                walletsFromRepo.TotalCount, walletsFromRepo.TotalPage);
+
+            var wallets = _mapper.Map<List<WalletForReturnDto>>(walletsFromRepo);
 
 
+            return Ok(wallets);
         }
     }
 }

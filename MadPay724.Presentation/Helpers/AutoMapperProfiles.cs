@@ -24,6 +24,7 @@ using MadPay724.Data.Dtos.Site.Panel.Gate;
 using MadPay724.Data.Models.Blog;
 using MadPay724.Data.Dtos.Site.Panel.BlogGroup;
 using MadPay724.Data.Dtos.Site.Panel.Blog;
+using MadPay724.Common.Helpers.Helpers.Pagination;
 
 namespace MadPay724.Presentation.Helpers
 {
@@ -85,7 +86,8 @@ namespace MadPay724.Presentation.Helpers
             CreateMap<BankCardForUpdateDto, BankCard>();
             CreateMap<BankCard,BankCardForReturnDto>();
             CreateMap<List<BankCardForUserDetailedDto>, List<BankCard>>();
-CreateMap<BankCardForUpdateDto, BankCard>();
+            //CreateMap<List<BankCardForUserDetailedDto>, List<PagedList<BankCard>>>();
+            CreateMap<BankCardForUpdateDto, BankCard>();
 
             CreateMap<List<DocumentForReturnDto>, List<Document>>();
             CreateMap<DocumentForCreateDto, Document>();

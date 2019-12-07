@@ -197,6 +197,58 @@ namespace MadPay724.Common.Helpers.Helpers
             }
 
         }
+        public static Expression<Func<Wallet, bool>> ToWalletExpression(this string Filter,
+           bool isAdmin, string id = "")
+        {
+            if (string.IsNullOrEmpty(Filter) || string.IsNullOrWhiteSpace(Filter))
+            {
+                return null;
+            }
+            else
+            {
+                Expression<Func<Wallet, bool>> exp =
+                                p => p.Id.Contains(Filter) ||
+                                p.Code.ToString().Contains(Filter) ||
+                                p.Name.Contains(Filter) ||
+                                p.Inventory.ToString().Contains(Filter) ||
+                                p.InterMoney.ToString().Contains(Filter) ||
+                                p.ExitMoney.ToString().Contains(Filter) ||
+                                p.OnExitMoney.ToString().Contains(Filter) ||
+
+                                p.User.Name.Contains(Filter) ||
+                                p.User.UserName.Contains(Filter) ||
+                                p.Gates.Any(s => s.WebsiteName.Contains(Filter)) ||
+                                p.Gates.Any(s => s.WebsiteUrl.Contains(Filter));
+
+                return exp;
+            }
+
+        }
+        public static Expression<Func<BankCard, bool>> ToBankCardExpression(this string Filter,
+         bool isAdmin, string id = "")
+        {
+            if (string.IsNullOrEmpty(Filter) || string.IsNullOrWhiteSpace(Filter))
+            {
+                return null;
+            }
+            else
+            {
+                Expression<Func<BankCard, bool>> exp =
+                                p => p.Id.Contains(Filter) ||
+                                p.OwnerName.Contains(Filter) ||
+                                p.BankName.Contains(Filter) ||
+                                p.Shaba.Contains(Filter) ||
+                                p.CardNumber.Contains(Filter) ||
+                                p.HesabNumber.Contains(Filter) ||
+                                p.ExpireDateMonth.Contains(Filter) ||
+                                p.ExpireDateYear.Contains(Filter) ||
+                                p.User.Name.Contains(Filter) ||
+                                p.User.UserName.Contains(Filter);
+
+                return exp;
+            }
+
+        }
         public static string ToOrderBy(
             this string sortHe,
             string sortDir)
