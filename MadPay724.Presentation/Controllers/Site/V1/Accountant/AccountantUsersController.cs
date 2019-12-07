@@ -21,15 +21,15 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
     [ApiController]
     public class AccountantUsersController : ControllerBase
     {
-        private readonly IUnitOfWork<Main_MadpayDbContext> _db;
-        private readonly Main_MadpayDbContext _dbMad;
+        private readonly IUnitOfWork<Main_MadPayDbContext> _db;
+        private readonly Main_MadPayDbContext _dbMad;
         private readonly IMapper _mapper;
         private readonly ILogger<AccountantUsersController> _logger;
         private readonly UserManager<Data.Models.MainDB.User> _userManager;
 
 
 
-        public AccountantUsersController(IUnitOfWork<Main_MadpayDbContext> dbContext, Main_MadpayDbContext dbMad,
+        public AccountantUsersController(IUnitOfWork<Main_MadPayDbContext> dbContext, Main_MadPayDbContext dbMad,
             IMapper mapper,
             ILogger<AccountantUsersController> logger, UserManager<Data.Models.MainDB.User> userManager)
         {

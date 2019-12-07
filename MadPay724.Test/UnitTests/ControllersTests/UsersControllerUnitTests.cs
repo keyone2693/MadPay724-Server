@@ -23,7 +23,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
 {
     public class UsersControllerUnitTests
     {
-        private readonly Mock<IUnitOfWork<Main_MadpayDbContext>> _mockRepo;
+        private readonly Mock<IUnitOfWork<Main_MadPayDbContext>> _mockRepo;
         private readonly Mock<IMapper> _mockMapper;
         private readonly Mock<IUserService> _mockUserService;
         //private readonly Mock<IUtilities> _mockUtilities;
@@ -32,7 +32,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
 
         public UsersControllerUnitTests()
         {
-            _mockRepo = new Mock<IUnitOfWork<Main_MadpayDbContext>>();
+            _mockRepo = new Mock<IUnitOfWork<Main_MadPayDbContext>>();
             _mockMapper = new Mock<IMapper>();
             //_mockUtilities = new Mock<IUtilities>();
             _mockUserService = new Mock<IUserService>();

@@ -22,24 +22,24 @@ namespace MadPay724.Test.UnitTests.ControllersTests
 {
     public class AdminUsersControllerUnitTests
     {
-        private readonly Mock<IUnitOfWork<Main_MadpayDbContext>> _mockRepo;
+        private readonly Mock<IUnitOfWork<Main_MadPayDbContext>> _mockRepo;
         private readonly Mock<IMapper> _mockMapper;
         //private readonly Mock<IUtilities> _mockUtilities;
         private readonly Mock<ILogger<AdminUsersController>> _mockLogger;
         private readonly AdminUsersController _controller;
         private readonly Mock<FakeUserManager> _mockUserManager;
 
-        private readonly Mock<Main_MadpayDbContext> _dbMad;
+        private readonly Mock<Main_MadPayDbContext> _dbMad;
 
         public AdminUsersControllerUnitTests()
         {
-            _mockRepo = new Mock<IUnitOfWork<Main_MadpayDbContext>>();
+            _mockRepo = new Mock<IUnitOfWork<Main_MadPayDbContext>>();
 
             _mockMapper = new Mock<IMapper>();
             //_mockUtilities = new Mock<IUtilities>();
             _mockLogger = new Mock<ILogger<AdminUsersController>>();
             _mockUserManager = new Mock<FakeUserManager>();
-            _dbMad = new Mock<Main_MadpayDbContext>();
+            _dbMad = new Mock<Main_MadPayDbContext>();
             _controller = new AdminUsersController(_mockRepo.Object, _dbMad.Object, _mockMapper.Object, _mockLogger.Object, _mockUserManager.Object);
 
         }

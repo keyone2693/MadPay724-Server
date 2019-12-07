@@ -21,9 +21,9 @@ namespace MadPay724.Presentation.Helpers.Filters
     {
         private readonly ILogger _logger;
         private readonly IHttpContextAccessor _httpContextAcc;
-        private readonly IUnitOfWork<Main_MadpayDbContext> _db;
+        private readonly IUnitOfWork<Main_MadPayDbContext> _db;
         public DocumentApproveFilter(ILoggerFactory loggerFactory, IHttpContextAccessor httpContextAcc,
-            IUnitOfWork<Main_MadpayDbContext> db)
+            IUnitOfWork<Main_MadPayDbContext> db)
         {
             _logger = loggerFactory.CreateLogger("UserCheckIdFilter");
             _httpContextAcc = httpContextAcc;

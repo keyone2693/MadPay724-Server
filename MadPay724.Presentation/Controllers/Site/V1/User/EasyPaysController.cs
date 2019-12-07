@@ -24,11 +24,11 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
     [ServiceFilter(typeof(DocumentApproveFilter))]
     public class EasyPaysController : ControllerBase
     {
-        private readonly IUnitOfWork<Main_MadpayDbContext> _db;
+        private readonly IUnitOfWork<Main_MadPayDbContext> _db;
         private readonly IMapper _mapper;
         private readonly ILogger<EasyPaysController> _logger;
 
-        public EasyPaysController(IUnitOfWork<Main_MadpayDbContext> dbContext, IMapper mapper,
+        public EasyPaysController(IUnitOfWork<Main_MadPayDbContext> dbContext, IMapper mapper,
             ILogger<EasyPaysController> logger)
         {
             _db = dbContext;

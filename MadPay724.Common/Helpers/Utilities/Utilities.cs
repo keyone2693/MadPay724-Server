@@ -28,9 +28,9 @@ namespace MadPay724.Common.Helpers.Utilities
         private readonly IConfiguration _config;
         private readonly UserManager<User> _userManager;
         private readonly TokenSetting _tokenSetting;
-        private readonly Main_MadpayDbContext _db;
+        private readonly Main_MadPayDbContext _db;
         private readonly IHttpContextAccessor _http;
-        public Utilities(Main_MadpayDbContext dbContext, IConfiguration config, UserManager<User> userManager,
+        public Utilities(Main_MadPayDbContext dbContext, IConfiguration config, UserManager<User> userManager,
             IHttpContextAccessor http)
         {
             _db = dbContext;

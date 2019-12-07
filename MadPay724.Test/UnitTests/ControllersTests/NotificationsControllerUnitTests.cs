@@ -27,7 +27,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
 {
   public  class NotificationsControllerUnitTests
     {
-        private readonly Mock<IUnitOfWork<Main_MadpayDbContext>> _mockRepo;
+        private readonly Mock<IUnitOfWork<Main_MadPayDbContext>> _mockRepo;
         private readonly Mock<IMapper> _mockMapper;
         //private readonly Mock<IUtilities> _mockUtilities;
         private readonly Mock<ILogger<NotificationsController>> _mockLogger;
@@ -35,7 +35,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
 
         public NotificationsControllerUnitTests()
         {
-            _mockRepo = new Mock<IUnitOfWork<Main_MadpayDbContext>>();
+            _mockRepo = new Mock<IUnitOfWork<Main_MadPayDbContext>>();
             _mockMapper = new Mock<IMapper>();
             _mockLogger = new Mock<ILogger<NotificationsController>>();
             _controller = new NotificationsController(_mockRepo.Object, _mockLogger.Object, _mockMapper.Object);

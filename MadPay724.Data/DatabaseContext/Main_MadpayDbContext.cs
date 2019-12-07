@@ -11,14 +11,14 @@ using MadPay724.Data.Models.MainDB.Blog;
 
 namespace MadPay724.Data.DatabaseContext
 {
-    public class Main_MadpayDbContext : IdentityDbContext<User,Role,string,
+    public class Main_MadPayDbContext : IdentityDbContext<User,Role,string,
     IdentityUserClaim<string>,UserRole,IdentityUserLogin<string>,
     IdentityRoleClaim<string>,IdentityUserToken<string>>
     {
-        public Main_MadpayDbContext()
+        public Main_MadPayDbContext()
         {
         }
-        public Main_MadpayDbContext(DbContextOptions<Main_MadpayDbContext> opt) : base(opt)
+        public Main_MadPayDbContext(DbContextOptions<Main_MadPayDbContext> opt) : base(opt)
         {
 
         }

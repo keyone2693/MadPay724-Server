@@ -22,13 +22,13 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
     [ApiController]
     public class DocumentsController : ControllerBase
     {
-        private readonly IUnitOfWork<Main_MadpayDbContext> _db;
+        private readonly IUnitOfWork<Main_MadPayDbContext> _db;
         private readonly IMapper _mapper;
         private readonly ILogger<DocumentsController> _logger;
         private readonly IUploadService _uploadService;
         private readonly IWebHostEnvironment _env;
 
-        public DocumentsController(IUnitOfWork<Main_MadpayDbContext> dbContext, IMapper mapper,
+        public DocumentsController(IUnitOfWork<Main_MadPayDbContext> dbContext, IMapper mapper,
             ILogger<DocumentsController> logger, IUploadService uploadService,
             IWebHostEnvironment env)
         {

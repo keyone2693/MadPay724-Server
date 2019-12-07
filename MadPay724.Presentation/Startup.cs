@@ -63,7 +63,7 @@ namespace MadPay724.Presentation
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddDbContext<Main_MadpayDbContext>(p => p.UseSqlServer(
+            services.AddDbContext<Main_MadPayDbContext>(p => p.UseSqlServer(
                 @"Data Source=KEY1-LAB\MSSQLSERVER2016;Initial Catalog=MadPay724db;Integrated Security=True;MultipleActiveResultSets=True;"));
 
             services.AddMvc(config =>
@@ -206,7 +206,8 @@ namespace MadPay724.Presentation
                        
             services.AddAutoMapper(typeof(Startup));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddScoped<IUnitOfWork<Main_MadpayDbContext>, UnitOfWork<Main_MadpayDbContext>>();
+            services.AddScoped<IUnitOfWork<Main_MadPayDbContext>, UnitOfWork<Main_MadPayDbContext>>();
+            services.AddScoped<IUnitOfWork<Financial_MadPayDbContext>, UnitOfWork<Financial_MadPayDbContext>>();
             services.AddTransient<SeedService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserService, UserService>();
@@ -225,7 +226,7 @@ namespace MadPay724.Presentation
                 opt.Password.RequireUppercase = false;
             });
             builder = new IdentityBuilder(builder.UserType,typeof(Role),builder.Services);
-            builder.AddEntityFrameworkStores<Main_MadpayDbContext>();
+            builder.AddEntityFrameworkStores<Main_MadPayDbContext>();
             builder.AddRoleValidator<RoleValidator<Role>>();
             builder.AddRoleManager<RoleManager<Role>>();
             builder.AddSignInManager<SignInManager<User>>();

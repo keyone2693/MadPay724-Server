@@ -18,13 +18,13 @@ namespace MadPay724.Test.UnitTests.ServicesTests
 {
     public class UserServiceUnitTest
     {
-        private readonly Mock<IUnitOfWork<Main_MadpayDbContext>> _mockRepo;
+        private readonly Mock<IUnitOfWork<Main_MadPayDbContext>> _mockRepo;
         private readonly Mock<IUtilities> _mockUtilities;
         private readonly UserService _service;
 
         public UserServiceUnitTest()
         {
-            _mockRepo = new Mock<IUnitOfWork<Main_MadpayDbContext>>();
+            _mockRepo = new Mock<IUnitOfWork<Main_MadPayDbContext>>();
             _mockUtilities = new Mock<IUtilities>();
             _service = new UserService(_mockRepo.Object, _mockUtilities.Object);
 

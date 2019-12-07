@@ -29,14 +29,14 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Blogger
     [ApiController]
     public class BlogsController : ControllerBase
     {
-        private readonly IUnitOfWork<Main_MadpayDbContext> _db;
+        private readonly IUnitOfWork<Main_MadPayDbContext> _db;
         private readonly IMapper _mapper;
         private readonly ILogger<BlogsController> _logger;
         private readonly IUploadService _uploadService;
         private readonly IWebHostEnvironment _env;
         private readonly IUtilities _utilities;
 
-        public BlogsController(IUnitOfWork<Main_MadpayDbContext> dbContext, IMapper mapper,
+        public BlogsController(IUnitOfWork<Main_MadPayDbContext> dbContext, IMapper mapper,
             ILogger<BlogsController> logger, IUploadService uploadService,
             IWebHostEnvironment env, IUtilities utilities)
         {

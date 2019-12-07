@@ -23,14 +23,14 @@ namespace MadPay724.Test.UnitTests.ControllersTests
 {
     public class BankCardsControllerUnitTests
     {
-        private readonly Mock<IUnitOfWork<Main_MadpayDbContext>> _mockRepo;
+        private readonly Mock<IUnitOfWork<Main_MadPayDbContext>> _mockRepo;
         private readonly Mock<IMapper> _mockMapper;
         private readonly Mock<ILogger<BankCardsController>> _mockLogger;
         private readonly BankCardsController _controller;
 
         public BankCardsControllerUnitTests()
         {
-            _mockRepo = new Mock<IUnitOfWork<Main_MadpayDbContext>>();
+            _mockRepo = new Mock<IUnitOfWork<Main_MadPayDbContext>>();
             _mockMapper = new Mock<IMapper>();
             _mockLogger = new Mock<ILogger<BankCardsController>>();
             _controller = new BankCardsController(_mockRepo.Object, _mockMapper.Object, _mockLogger.Object);

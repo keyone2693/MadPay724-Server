@@ -22,13 +22,13 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
     [ApiController]
     public class TicketsController : ControllerBase
     {
-        private readonly IUnitOfWork<Main_MadpayDbContext> _db;
+        private readonly IUnitOfWork<Main_MadPayDbContext> _db;
         private readonly IMapper _mapper;
         private readonly ILogger<TicketsController> _logger;
         private readonly IUploadService _uploadService;
         private readonly IWebHostEnvironment _env;
 
-        public TicketsController(IUnitOfWork<Main_MadpayDbContext> dbContext, IMapper mapper,
+        public TicketsController(IUnitOfWork<Main_MadPayDbContext> dbContext, IMapper mapper,
             ILogger<TicketsController> logger, IUploadService uploadService,
             IWebHostEnvironment env)
         {

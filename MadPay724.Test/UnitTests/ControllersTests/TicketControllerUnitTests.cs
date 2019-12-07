@@ -27,7 +27,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
 {
    public class TicketControllerUnitTests
     {
-        private readonly Mock<IUnitOfWork<Main_MadpayDbContext>> _mockRepo;
+        private readonly Mock<IUnitOfWork<Main_MadPayDbContext>> _mockRepo;
         private readonly Mock<IMapper> _mockMapper;
         private readonly Mock<ILogger<TicketsController>> _mockLogger;
         private readonly TicketsController _controller;
@@ -36,7 +36,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
 
         public TicketControllerUnitTests()
         {
-            _mockRepo = new Mock<IUnitOfWork<Main_MadpayDbContext>>();
+            _mockRepo = new Mock<IUnitOfWork<Main_MadPayDbContext>>();
             _mockMapper = new Mock<IMapper>();
             _mockLogger = new Mock<ILogger<TicketsController>>();
             _mockUploadService = new Mock<IUploadService>();

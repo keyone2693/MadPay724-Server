@@ -22,13 +22,13 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
     [ApiController]
     public class PhotosController : ControllerBase
     {
-        private readonly IUnitOfWork<Main_MadpayDbContext> _db;
+        private readonly IUnitOfWork<Main_MadPayDbContext> _db;
         private readonly IMapper _mapper;
         private readonly IUploadService _uploadService;
         private readonly IWebHostEnvironment _env;
         private readonly ILogger<PhotosController> _logger;
 
-        public PhotosController(IUnitOfWork<Main_MadpayDbContext> dbContext, IMapper mapper, IUploadService uploadService,
+        public PhotosController(IUnitOfWork<Main_MadPayDbContext> dbContext, IMapper mapper, IUploadService uploadService,
              IWebHostEnvironment env, ILogger<PhotosController> logger)
         {
             _env = env;

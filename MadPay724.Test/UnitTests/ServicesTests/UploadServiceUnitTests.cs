@@ -23,14 +23,14 @@ namespace MadPay724.Test.UnitTests.ServicesTests
 {
     public class UploadServiceUnitTests
     {
-        private readonly Mock<IUnitOfWork<Main_MadpayDbContext>> _mockRepo;
+        private readonly Mock<IUnitOfWork<Main_MadPayDbContext>> _mockRepo;
         private readonly Mock<IFormFile> _mockFile;
 
         private readonly UploadService _service;
 
         public UploadServiceUnitTests()
         {
-            _mockRepo = new Mock<IUnitOfWork<Main_MadpayDbContext>>();
+            _mockRepo = new Mock<IUnitOfWork<Main_MadPayDbContext>>();
             _mockFile = new Mock<IFormFile>();
 
             _mockRepo.Setup(x => x.SettingRepository.GetById(It.IsAny<short>()))

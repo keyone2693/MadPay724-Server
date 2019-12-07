@@ -22,11 +22,11 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Blogger
     public class BlogGroupsController : ControllerBase
     {
 
-        private readonly IUnitOfWork<Main_MadpayDbContext> _db;
+        private readonly IUnitOfWork<Main_MadPayDbContext> _db;
         private readonly IMapper _mapper;
         private readonly ILogger<BlogGroupsController> _logger;
 
-        public BlogGroupsController(IUnitOfWork<Main_MadpayDbContext> dbContext, IMapper mapper,
+        public BlogGroupsController(IUnitOfWork<Main_MadPayDbContext> dbContext, IMapper mapper,
             ILogger<BlogGroupsController> logger)
         {
             _db = dbContext;

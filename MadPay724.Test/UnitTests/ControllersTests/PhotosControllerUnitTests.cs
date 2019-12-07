@@ -31,7 +31,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
 {
     public class PhotosControllerUnitTests
     {
-        private readonly Mock<IUnitOfWork<Main_MadpayDbContext>> _mockRepo;
+        private readonly Mock<IUnitOfWork<Main_MadPayDbContext>> _mockRepo;
         private readonly Mock<IMapper> _mockMapper;
         private readonly Mock<IUploadService> _mockUploadService;
         private readonly Mock<IWebHostEnvironment> _mockWebHostEnvironment;
@@ -40,7 +40,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
 
         public PhotosControllerUnitTests()
         {
-            _mockRepo = new Mock<IUnitOfWork<Main_MadpayDbContext>>();
+            _mockRepo = new Mock<IUnitOfWork<Main_MadPayDbContext>>();
             _mockMapper = new Mock<IMapper>();
             _mockWebHostEnvironment = new Mock<IWebHostEnvironment>();
             _mockUploadService = new Mock<IUploadService>();

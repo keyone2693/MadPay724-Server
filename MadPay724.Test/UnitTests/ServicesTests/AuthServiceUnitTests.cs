@@ -23,13 +23,13 @@ namespace MadPay724.Test.Tests.ServicesUnitTests
 {
     public class AuthServiceUnitTests
     {
-        private readonly Mock<IUnitOfWork<Main_MadpayDbContext>> _mockRepo;
+        private readonly Mock<IUnitOfWork<Main_MadPayDbContext>> _mockRepo;
         private readonly Mock<IUtilities> _mockUtilities;
         private readonly AuthService _service;
 
         public AuthServiceUnitTests()
         {
-            _mockRepo = new Mock<IUnitOfWork<Main_MadpayDbContext>>();
+            _mockRepo = new Mock<IUnitOfWork<Main_MadPayDbContext>>();
             _mockUtilities = new Mock<IUtilities>();
             _service = new AuthService(_mockRepo.Object, _mockUtilities.Object);
 

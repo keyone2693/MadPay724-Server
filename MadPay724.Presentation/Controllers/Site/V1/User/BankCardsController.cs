@@ -21,11 +21,11 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
     [ServiceFilter(typeof(DocumentApproveFilter))]
     public class BankCardsController : ControllerBase
     {
-        private readonly IUnitOfWork<Main_MadpayDbContext> _db;
+        private readonly IUnitOfWork<Main_MadPayDbContext> _db;
         private readonly IMapper _mapper;
         private readonly ILogger<BankCardsController> _logger;
 
-        public BankCardsController(IUnitOfWork<Main_MadpayDbContext> dbContext, IMapper mapper,
+        public BankCardsController(IUnitOfWork<Main_MadPayDbContext> dbContext, IMapper mapper,
             ILogger<BankCardsController> logger)
         {
             _db = dbContext;

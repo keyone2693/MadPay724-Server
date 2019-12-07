@@ -36,7 +36,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
 {
     public class AuthControllerUnitTests
     {
-        private readonly Mock<IUnitOfWork<Main_MadpayDbContext>> _mockRepo;
+        private readonly Mock<IUnitOfWork<Main_MadPayDbContext>> _mockRepo;
         private readonly Mock<IMapper> _mockMapper;
         private readonly Mock<IAuthService> _mockAuthService;
         private readonly Mock<IConfiguration> _mockConfig;
@@ -51,7 +51,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         public AuthControllerUnitTests()
         {
 
-            _mockRepo = new Mock<IUnitOfWork<Main_MadpayDbContext>>();
+            _mockRepo = new Mock<IUnitOfWork<Main_MadPayDbContext>>();
             _mockMapper = new Mock<IMapper>();
             //_mockUtilities = new Mock<IUtilities>();
             _mockAuthService = new Mock<IAuthService>();
