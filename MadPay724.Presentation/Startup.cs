@@ -62,9 +62,9 @@ namespace MadPay724.Presentation
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            services.AddDbContext<Main_MadPayDbContext>(p => p.UseSqlServer(
-                @"Data Source=KEY1-LAB\MSSQLSERVER2016;Initial Catalog=Main_MadPay724db;Integrated Security=True;MultipleActiveResultSets=True;"));
+            services.AddDbContext<Main_MadPayDbContext>();
+            //services.AddDbContext<Financial_MadPayDbContext>();
+            //services.AddDbContext<Log_MadPayDbContext>();
 
             services.AddMvc(config =>
                 {
@@ -82,16 +82,12 @@ namespace MadPay724.Presentation
                     //config.OutputFormatters.Add(new IonOutputFormatter(jsonFormatter));
                     //config.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());
                     //config.InputFormatters.Add(new XmlSerializerInputFormatter(config));
-
                 })
                 .AddNewtonsoftJson(opt =>
                 {
                     opt.SerializerSettings.ReferenceLoopHandling =
                     Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 });
-
-
-
             //services.AddAuthentication("Bearer")
             //    .AddIdentityServerAuthentication(opt =>
             //    {
@@ -206,10 +202,11 @@ namespace MadPay724.Presentation
                        
             services.AddAutoMapper(typeof(Startup));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddScoped<IUnitOfWork<Main_MadPayDbContext>, UnitOfWork<Main_MadPayDbContext>>();
-            services.AddScoped<IUnitOfWork<Financial_MadPayDbContext>, UnitOfWork<Financial_MadPayDbContext>>();
-            
-            
+            //services.AddScoped<IUnitOfWork<Main_MadPayDbContext>, UnitOfWork<Main_MadPayDbContext>>();
+            //services.AddScoped<IUnitOfWork<Financial_MadPayDbContext>, UnitOfWork<Financial_MadPayDbContext>>();
+            services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
+
+
             services.AddTransient<SeedService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserService, UserService>();

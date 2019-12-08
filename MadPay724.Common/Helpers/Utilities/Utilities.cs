@@ -38,6 +38,7 @@ namespace MadPay724.Common.Helpers.Utilities
             var tokenSettingSection = _config.GetSection("TokenSetting");
             _tokenSetting = tokenSettingSection.Get<TokenSetting>();
             _http = http;
+            _userManager = userManager;
         }
         public string FindLocalPathFromUrl(string url)
         {

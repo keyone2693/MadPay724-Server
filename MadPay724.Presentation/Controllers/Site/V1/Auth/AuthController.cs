@@ -164,7 +164,6 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
         [HttpPost(ApiV1Routes.Auth.Login)]
         public async Task<IActionResult> Login(TokenRequestDto tokenRequestDto)
         {
-
             switch (tokenRequestDto.GrantType)
             {
                 case "password":

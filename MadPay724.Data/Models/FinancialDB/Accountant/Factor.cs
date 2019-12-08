@@ -30,10 +30,8 @@ namespace MadPay724.Data.Models.FinancialDB.Accountant
         public bool IsGifted { get; set; }
 
         [Required]
-        [StringLength(150, MinimumLength = 0)]
         public int Price { get; set; }
         [Required]
-        [StringLength(150, MinimumLength = 0)]
         public int EndPrice { get; set; }
         [Required]
         [StringLength(500, MinimumLength = 0)]
