@@ -66,7 +66,11 @@ namespace MadPay724.Presentation.Routes.V1
         public static class Entry
         {
             //GET
-            public const string GetEntries = BaseSitePanel + "/entries";
+            public const string GetApproveEntries = BaseSitePanel + "/entries/approve";
+            //GET
+            public const string GetPardakhtEntries = BaseSitePanel + "/entries/pardakht";
+            //GET
+            public const string GetDoneEntries = BaseSitePanel + "/entries/archive";
             //GET
             public const string GetEntry = BaseSitePanel + "/entries/{entryId}";
             //PUT

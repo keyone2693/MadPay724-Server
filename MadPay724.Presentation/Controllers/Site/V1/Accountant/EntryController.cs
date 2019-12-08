@@ -38,16 +38,49 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
             _walletService = walletService;
         }
 
-
         [Authorize(Policy = "AccessAccounting")]
-        [HttpGet(ApiV1Routes.Entry.GetEntries)]
-        public async Task<IActionResult> GetEntries([FromQuery]PaginationDto paginationDto)
+        [HttpGet(ApiV1Routes.Entry.GetApproveEntries)]
+        public async Task<IActionResult> GetApproveEntries([FromQuery]PaginationDto paginationDto)
         {
 
             var entriesFromRepo = await _db.EntryRepository
                     .GetAllPagedListAsync(
                     paginationDto,
-                    paginationDto.Filter.ToEntryExpression(true),
+                    paginationDto.Filter.ToEntryExpression(1),
+                    paginationDto.SortHe.ToOrderBy(paginationDto.SortDir),
+                    "");//,Entries
+
+            Response.AddPagination(entriesFromRepo.CurrentPage, entriesFromRepo.PageSize,
+                entriesFromRepo.TotalCount, entriesFromRepo.TotalPage);
+
+            return Ok(entriesFromRepo);
+        }
+        [Authorize(Policy = "AccessAccounting")]
+        [HttpGet(ApiV1Routes.Entry.GetPardakhtEntries)]
+        public async Task<IActionResult> GetPardakhtEntries([FromQuery]PaginationDto paginationDto)
+        {
+
+            var entriesFromRepo = await _db.EntryRepository
+                    .GetAllPagedListAsync(
+                    paginationDto,
+                    paginationDto.Filter.ToEntryExpression(2),
+                    paginationDto.SortHe.ToOrderBy(paginationDto.SortDir),
+                    "");//,Entries
+
+            Response.AddPagination(entriesFromRepo.CurrentPage, entriesFromRepo.PageSize,
+                entriesFromRepo.TotalCount, entriesFromRepo.TotalPage);
+
+            return Ok(entriesFromRepo);
+        }
+        [Authorize(Policy = "AccessAccounting")]
+        [HttpGet(ApiV1Routes.Entry.GetDoneEntries)]
+        public async Task<IActionResult> GetDoneEntries([FromQuery]PaginationDto paginationDto)
+        {
+
+            var entriesFromRepo = await _db.EntryRepository
+                    .GetAllPagedListAsync(
+                    paginationDto,
+                    paginationDto.Filter.ToEntryExpression(3),
                     paginationDto.SortHe.ToOrderBy(paginationDto.SortDir),
                     "");//,Entries
 
