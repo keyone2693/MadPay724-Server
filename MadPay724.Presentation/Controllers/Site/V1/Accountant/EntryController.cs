@@ -12,6 +12,7 @@ using MadPay724.Data.Models.FinancialDB.Accountant;
 using MadPay724.Presentation.Helpers.Filters;
 using MadPay724.Presentation.Routes.V1;
 using MadPay724.Repo.Infrastructure;
+using MadPay724.Services.Site.Admin.Wallet.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -27,18 +28,18 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
         private readonly IUnitOfWork<Financial_MadPayDbContext> _db;
         private readonly IMapper _mapper;
         private readonly ILogger<EntryController> _logger;
-
+        private readonly IWalletService _walletService;
         public EntryController(IUnitOfWork<Financial_MadPayDbContext> dbContext, IMapper mapper,
-            ILogger<EntryController> logger)
+            ILogger<EntryController> logger, IWalletService walletService)
         {
             _db = dbContext;
             _mapper = mapper;
             _logger = logger;
+            _walletService = walletService;
         }
 
 
         [Authorize(Policy = "AccessAccounting")]
-        [ServiceFilter(typeof(UserCheckIdFilter))]
         [HttpGet(ApiV1Routes.Entry.GetEntries)]
         public async Task<IActionResult> GetEntries([FromQuery]PaginationDto paginationDto)
         {
@@ -57,7 +58,6 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
         }
 
         [Authorize(Policy = "AccessAccounting")]
-        [ServiceFilter(typeof(UserCheckIdFilter))]
         [HttpGet(ApiV1Routes.Entry.GetEntry, Name = "GetEntry")]
         public async Task<IActionResult> GetEntry(string entryId)
         {
@@ -136,6 +136,42 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
             {
                 if (entyFromRepo.IsApprove && !entyFromRepo.IsReject)
                 {
+                    //کاهش موجودی
+                    if (changeEntryStateDto.IsPardakht)
+                    {
+                        if (entyFromRepo.IsPardakht)
+                        {
+                            return NoContent();
+                        }
+                        else
+                        {
+                            var decreaseInventoryResult =await _walletService
+                                .EntryDecreaseInventoryAsync(entyFromRepo.Price, entyFromRepo.WalletId);
+
+                            if (!decreaseInventoryResult.status)
+                            {
+                                return BadRequest("خطا در تغغیر موجودی کیف پول احتمالا کیف ول موجود یندارد");
+                            }
+                        }
+                    }
+                    //افزایش موجودی
+                    else
+                    {
+                        if (!entyFromRepo.IsPardakht)
+                        {
+                            return NoContent();
+                        }
+                        else
+                        {
+                            var decreaseInventoryResult = await _walletService
+                                .EntryIncreaseInventoryAsync(entyFromRepo.Price, entyFromRepo.WalletId);
+
+                            if (!decreaseInventoryResult.status)
+                            {
+                                return BadRequest("خطا در تغغیر موجودی کیف پول احتمالا کیف ول موجود یندارد");
+                            }
+                        }
+                    }
                     entyFromRepo.IsPardakht = changeEntryStateDto.IsPardakht;
                     if (await _db.SaveAsync())
                     {
@@ -165,6 +201,42 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
             {
                 if (!entyFromRepo.IsPardakht)
                 {
+                    //کاهش پول خروجی
+                    if (changeEntryStateDto.IsReject)
+                    {
+                        if (entyFromRepo.IsReject)
+                        {
+                            return NoContent();
+                        }
+                        else
+                        {
+                            var decreaseOnExitMoneyResult = await _walletService
+                                .EntryDecreaseOnExitMoneyAsync(entyFromRepo.Price, entyFromRepo.WalletId);
+
+                            if (!decreaseOnExitMoneyResult.status)
+                            {
+                                return BadRequest("خطا در تغیر پول خروجی کیف پول ");
+                            }
+                        }
+                    }
+                    //افزایش پول خروجی
+                    else
+                    {
+                        if (!entyFromRepo.IsReject)
+                        {
+                            return NoContent();
+                        }
+                        else
+                        {
+                            var decreaseOnExitMoneyResult = await _walletService
+                                .EntryIncreaseOnExitMoneyAsync(entyFromRepo.Price, entyFromRepo.WalletId);
+
+                            if (!decreaseOnExitMoneyResult.status)
+                            {
+                                return BadRequest("خطا در تغیر پول خروجی کیف پول ");
+                            }
+                        }
+                    }
                     entyFromRepo.IsReject = changeEntryStateDto.IsReject;
                     if (await _db.SaveAsync())
                     {
@@ -185,7 +257,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
                 return BadRequest("واریزی با این شناسه یافت نشد");
             }
         }
-        [Authorize(Policy = "AccessAccounting")]
+        [Authorize(Policy = "RequireNoAccess")]
         [HttpDelete(ApiV1Routes.Entry.DeleteEntry)]
         public async Task<IActionResult> DeleteEntry(string entryId)
         {

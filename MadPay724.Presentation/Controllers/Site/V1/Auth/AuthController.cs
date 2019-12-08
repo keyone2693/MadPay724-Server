@@ -41,11 +41,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
 
         public AuthController(IUnitOfWork<Main_MadPayDbContext> dbContext, IAuthService authService,
             IConfiguration config, IMapper mapper, ILogger<AuthController> logger, IUtilities utilities,
-            IOptions<IdentityOptions> optionsAccessor,
-            IPasswordHasher<Data.Models.MainDB.User> passwordHasher, IEnumerable<IUserValidator<Data.Models.MainDB.User>> userValidators,
-            IEnumerable<IPasswordValidator<Data.Models.MainDB.User>> passwordValidators, ILookupNormalizer keyNormalizer,
-            IdentityErrorDescriber errors, IServiceProvider services,
-            ILogger<UserManager<Data.Models.MainDB.User>> userlogger)
+            UserManager<Data.Models.MainDB.User> userManager)
         {
             _db = dbContext;
             _authService = authService;
@@ -53,13 +49,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
             _mapper = mapper;
             _logger = logger;
             _utilities = utilities;
-            //_userManager = userManager;
-            UserStore<Data.Models.MainDB.User> store = new UserStore<Data.Models.MainDB.User>(_db.GetDbContext<Main_MadPayDbContext>());
-            _userManager = new UserManager<Data.Models.MainDB.User>(store,optionsAccessor,
-            passwordHasher,userValidators,
-            passwordValidators,keyNormalizer,
-            errors,services,
-            userlogger);
+            _userManager = userManager;
         }
 
 
@@ -174,6 +164,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
         [HttpPost(ApiV1Routes.Auth.Login)]
         public async Task<IActionResult> Login(TokenRequestDto tokenRequestDto)
         {
+
             switch (tokenRequestDto.GrantType)
             {
                 case "password":

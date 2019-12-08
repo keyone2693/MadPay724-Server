@@ -208,6 +208,8 @@ namespace MadPay724.Presentation
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IUnitOfWork<Main_MadPayDbContext>, UnitOfWork<Main_MadPayDbContext>>();
             services.AddScoped<IUnitOfWork<Financial_MadPayDbContext>, UnitOfWork<Financial_MadPayDbContext>>();
+            
+            
             services.AddTransient<SeedService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserService, UserService>();
@@ -254,6 +256,8 @@ namespace MadPay724.Presentation
                 });
             services.AddAuthorization(opt =>
             {
+                opt.AddPolicy("RequireNoAccess", policy => policy.RequireRole("NoAccess"));
+
                 opt.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
 
                 opt.AddPolicy("AccessBlog", policy => policy.RequireRole("Admin", "Blog", "AdminBlog"));

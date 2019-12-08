@@ -34,12 +34,16 @@ namespace MadPay724.Services.Site.Admin.Wallet.Service
             else
                 return false;
         }
-        public async Task<ReturnMessage> IncreaseInventoryAsync(int cost, string walletId)
+        public async Task<ReturnMessage> IncreaseInventoryAsync(int cost, string walletId, bool isFactor = false)
         {
             var wallet = await _db.WalletRepository.GetByIdAsync(walletId);
             if (wallet != null)
             {
                 wallet.Inventory += cost;
+                if (isFactor)
+                {
+                    wallet.InterMoney += cost;
+                }
                 _db.WalletRepository.Update(wallet);
                 if (await _db.SaveAsync())
                 {
@@ -67,7 +71,7 @@ namespace MadPay724.Services.Site.Admin.Wallet.Service
             }
         }
 
-        public async Task<ReturnMessage> DecreaseInventoryAsync(int cost, string walletId)
+        public async Task<ReturnMessage> DecreaseInventoryAsync(int cost, string walletId, bool isFactor = false)
         {
             var wallet = await _db.WalletRepository.GetByIdAsync(walletId);
             if (wallet != null)
@@ -75,6 +79,10 @@ namespace MadPay724.Services.Site.Admin.Wallet.Service
                 if (wallet.Inventory >= cost)
                 {
                     wallet.Inventory -= cost;
+                    if (isFactor)
+                    {
+                        wallet.InterMoney -= cost;
+                    }
                     _db.WalletRepository.Update(wallet);
                     if (await _db.SaveAsync())
                     {
@@ -111,6 +119,146 @@ namespace MadPay724.Services.Site.Admin.Wallet.Service
             }
         }
 
+        public async Task<ReturnMessage> EntryIncreaseInventoryAsync(int cost, string walletId)
+        {
+            var wallet = await _db.WalletRepository.GetByIdAsync(walletId);
+            if (wallet != null)
+            {
+                wallet.Inventory += cost;
+                wallet.OnExitMoney += cost;
+                wallet.ExitMoney -= cost;
 
+                _db.WalletRepository.Update(wallet);
+                if (await _db.SaveAsync())
+                {
+                    return new ReturnMessage()
+                    {
+                        status = true
+                    };
+                }
+                else
+                {
+                    return new ReturnMessage()
+                    {
+                        status = false
+                    };
+                }
+            }
+            else
+            {
+                return new ReturnMessage()
+                {
+                    status = false
+                };
+            }
+        }
+
+        public async Task<ReturnMessage> EntryDecreaseInventoryAsync(int cost, string walletId)
+        {
+            var wallet = await _db.WalletRepository.GetByIdAsync(walletId);
+            if (wallet != null)
+            {
+                if (wallet.Inventory >= cost)
+                {
+                    wallet.Inventory -= cost;
+                    wallet.OnExitMoney -= cost;
+                    wallet.ExitMoney += cost;
+
+                    _db.WalletRepository.Update(wallet);
+                    if (await _db.SaveAsync())
+                    {
+                        return new ReturnMessage()
+                        {
+                            status = true
+                        };
+                    }
+                    else
+                    {
+                        return new ReturnMessage()
+                        {
+                            status = false
+                        };
+                    }
+                }
+                else
+                {
+                    return new ReturnMessage()
+                    {
+                        status = false
+                    };
+                }
+            }
+            else
+            {
+                return new ReturnMessage()
+                {
+                    status = false
+                };
+            }
+        }
+
+        public async Task<ReturnMessage> EntryIncreaseOnExitMoneyAsync(int cost, string walletId)
+        {
+            var wallet = await _db.WalletRepository.GetByIdAsync(walletId);
+            if (wallet != null)
+            {
+                wallet.OnExitMoney += cost;
+
+                _db.WalletRepository.Update(wallet);
+                if (await _db.SaveAsync())
+                {
+                    return new ReturnMessage()
+                    {
+                        status = true
+                    };
+                }
+                else
+                {
+                    return new ReturnMessage()
+                    {
+                        status = false
+                    };
+                }
+            }
+            else
+            {
+                return new ReturnMessage()
+                {
+                    status = false
+                };
+            }
+        }
+
+        public async Task<ReturnMessage> EntryDecreaseOnExitMoneyAsync(int cost, string walletId)
+        {
+            var wallet = await _db.WalletRepository.GetByIdAsync(walletId);
+            if (wallet != null)
+            {
+                wallet.OnExitMoney -= cost;
+
+                _db.WalletRepository.Update(wallet);
+                if (await _db.SaveAsync())
+                {
+                    return new ReturnMessage()
+                    {
+                        status = true
+                    };
+                }
+                else
+                {
+                    return new ReturnMessage()
+                    {
+                        status = false
+                    };
+                }
+            }
+            else
+            {
+                return new ReturnMessage()
+                {
+                    status = false
+                };
+            }
+        }
     }
 }
