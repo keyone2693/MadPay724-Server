@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace MadPay724.Repo.Infrastructure
 {
-    public class UnitOfWork<TContext> : IUnitOfWork<TContext> where TContext : DbContext, new()
+    public class UnitOfWork<TContext> : IUnitOfWork<TContext> where TContext : DbContext
     {
         #region ctor
         protected readonly DbContext _db;
-        public UnitOfWork()
+        public UnitOfWork(TContext tContext)
         {
-            _db = new TContext();
+            _db = tContext;
         }
         #endregion
         #region privateMainrepository

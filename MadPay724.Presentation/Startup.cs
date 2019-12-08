@@ -63,8 +63,8 @@ namespace MadPay724.Presentation
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<Main_MadPayDbContext>();
-            //services.AddDbContext<Financial_MadPayDbContext>();
-            //services.AddDbContext<Log_MadPayDbContext>();
+            services.AddDbContext<Financial_MadPayDbContext>();
+            services.AddDbContext<Log_MadPayDbContext>();
 
             services.AddMvc(config =>
                 {

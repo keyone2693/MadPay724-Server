@@ -13,7 +13,6 @@ namespace MadPay724.Data.Models.FinancialDB.Accountant
             DateCreated = DateTime.Now;
             DateModified = DateTime.Now;
         }
-
         [Required]
         [StringLength(150, MinimumLength = 0)]
         public string UserName { get; set; }
@@ -28,6 +27,7 @@ namespace MadPay724.Data.Models.FinancialDB.Accountant
         public string GiftCode { get; set; }
         [Required]
         public bool IsGifted { get; set; }
+        
 
         [Required]
         public int Price { get; set; }
