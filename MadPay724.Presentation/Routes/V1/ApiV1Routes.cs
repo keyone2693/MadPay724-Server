@@ -61,6 +61,22 @@ namespace MadPay724.Presentation.Routes.V1
         }
 
         #endregion
+
+        #region BankCardRoutes
+        public static class Entry
+        {
+            public const string GetEntries = BaseSitePanel + "/entries";
+            public const string GetEntry = BaseSitePanel + "/entries/{entryId}";
+            public const string AddEntry = BaseSitePanel + "/entries/add";
+            public const string UpdateEntry = BaseSitePanel + "/entries/{entryId}/update";
+            public const string ApproveEntry = BaseSitePanel + "/entries/{entryId}/approve";
+            public const string PardakhtEntry = BaseSitePanel + "/entries/{entryId}/pardakht";
+            public const string RejectEntry = BaseSitePanel + "/entries/{entryId}/reject";
+            public const string DeleteEntry = BaseSitePanel + "/entries/{entryId}/delete";
+
+        }
+        #endregion
+
         #region UsersRoutes
 
         public static class Users

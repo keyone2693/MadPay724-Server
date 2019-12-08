@@ -34,8 +34,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
-using Microsoft.EntityFrameworkCore;
 using MadPay724.Common.Helpers.Utilities.Extensions;
+using Microsoft.EntityFrameworkCore;
 
 namespace MadPay724.Presentation
 {
@@ -64,7 +64,7 @@ namespace MadPay724.Presentation
         {
 
             services.AddDbContext<Main_MadPayDbContext>(p => p.UseSqlServer(
-                @"Data Source=KEY1-LAB\MSSQLSERVER2016;Initial Catalog=MadPay724db;Integrated Security=True;MultipleActiveResultSets=True;"));
+                @"Data Source=KEY1-LAB\MSSQLSERVER2016;Initial Catalog=Main_MadPay724db;Integrated Security=True;MultipleActiveResultSets=True;"));
 
             services.AddMvc(config =>
                 {
@@ -230,6 +230,7 @@ namespace MadPay724.Presentation
             builder.AddRoleValidator<RoleValidator<Role>>();
             builder.AddRoleManager<RoleManager<Role>>();
             builder.AddSignInManager<SignInManager<User>>();
+            builder.AddUserManager<UserManager<User>>();
             builder.AddDefaultTokenProviders();
            
             //services.Configure<TokenSetting>(Configuration.GetSection("TokenSetting"));

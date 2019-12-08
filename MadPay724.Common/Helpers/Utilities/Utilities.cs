@@ -35,7 +35,6 @@ namespace MadPay724.Common.Helpers.Utilities
         {
             _db = dbContext;
             _config = config;
-            _userManager = userManager;
             var tokenSettingSection = _config.GetSection("TokenSetting");
             _tokenSetting = tokenSettingSection.Get<TokenSetting>();
             _http = http;

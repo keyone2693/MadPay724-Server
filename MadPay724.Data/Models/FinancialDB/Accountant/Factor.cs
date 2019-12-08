@@ -31,10 +31,10 @@ namespace MadPay724.Data.Models.FinancialDB.Accountant
 
         [Required]
         [StringLength(150, MinimumLength = 0)]
-        public string Price { get; set; }
+        public int Price { get; set; }
         [Required]
         [StringLength(150, MinimumLength = 0)]
-        public string EndPrice { get; set; }
+        public int EndPrice { get; set; }
         [Required]
         [StringLength(500, MinimumLength = 0)]
         public string RefBank { get; set; }

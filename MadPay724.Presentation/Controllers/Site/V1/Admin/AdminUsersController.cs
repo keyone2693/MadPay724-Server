@@ -1,8 +1,10 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Site.Panel.Roles;
+using MadPay724.Data.Dtos.Site.Panel.Users;
 using MadPay724.Presentation.Routes.V1;
 using MadPay724.Repo.Infrastructure;
 using MadPay724.Services.Site.Admin.User.Interface;
@@ -27,15 +29,15 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Admin
 
 
 
-        public AdminUsersController(IUnitOfWork<Main_MadPayDbContext> dbContext, Main_MadPayDbContext dbMad,
-            IMapper mapper,
+        public AdminUsersController(IUnitOfWork<Main_MadPayDbContext> dbContext, Main_MadPayDbContext dbMad
+            ,IMapper mapper,
             ILogger<AdminUsersController> logger, UserManager<Data.Models.MainDB.User> userManager)
         {
             _db = dbContext;
             _mapper = mapper;
             _logger = logger;
-            _dbMad = dbMad;
             _userManager = userManager;
+            _dbMad = dbMad;
         }
         //[AllowAnonymous]
         [Authorize(Policy = "RequireAdminRole")]
@@ -55,8 +57,8 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Admin
                                           equals role.Id
                                       select role.Name)
                          }).ToListAsync();
-           //await _db.UserRepository.GetManyAsync(null, null, "Photos,BankCards");
-            // var usersToReturn = _mapper.Map<IEnumerable<UserFroListDto>>(users);
+            await _db.UserRepository.GetManyAsync(null, null, "Photos,BankCards");
+             var usersToReturn = _mapper.Map<IEnumerable<UserFroListDto>>(users);
 
             return Ok(users);
         }

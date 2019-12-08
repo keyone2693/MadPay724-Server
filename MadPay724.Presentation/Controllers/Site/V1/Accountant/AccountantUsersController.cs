@@ -22,21 +22,20 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
     public class AccountantUsersController : ControllerBase
     {
         private readonly IUnitOfWork<Main_MadPayDbContext> _db;
-        private readonly Main_MadPayDbContext _dbMad;
         private readonly IMapper _mapper;
         private readonly ILogger<AccountantUsersController> _logger;
         private readonly UserManager<Data.Models.MainDB.User> _userManager;
 
 
 
-        public AccountantUsersController(IUnitOfWork<Main_MadPayDbContext> dbContext, Main_MadPayDbContext dbMad,
+        public AccountantUsersController(IUnitOfWork<Main_MadPayDbContext> dbContext,
             IMapper mapper,
-            ILogger<AccountantUsersController> logger, UserManager<Data.Models.MainDB.User> userManager)
+            ILogger<AccountantUsersController> logger,
+            UserManager<Data.Models.MainDB.User> userManager)
         {
             _db = dbContext;
             _mapper = mapper;
             _logger = logger;
-            _dbMad = dbMad;
             _userManager = userManager;
         }
         //[AllowAnonymous]

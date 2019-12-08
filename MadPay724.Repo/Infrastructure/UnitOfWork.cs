@@ -1,4 +1,6 @@
-﻿using MadPay724.Repo.Repositories.MainDB.Interface;
+﻿using MadPay724.Repo.Repositories.FinancialDB.Interface;
+using MadPay724.Repo.Repositories.FinancialDB.Repo;
+using MadPay724.Repo.Repositories.MainDB.Interface;
 using MadPay724.Repo.Repositories.MainDB.Repo;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -15,8 +17,7 @@ namespace MadPay724.Repo.Infrastructure
             _db = new TContext();
         }
         #endregion
-
-        #region privaterepository
+        #region privateMainrepository
         private IUserRepository userRepository;
         public IUserRepository UserRepository
         {
@@ -215,7 +216,32 @@ namespace MadPay724.Repo.Infrastructure
         }
         #endregion
 
-
+        #region privateFinancialrepository
+        private IEntryRepository entryRepository;
+        public IEntryRepository EntryRepository
+        {
+            get
+            {
+                if (entryRepository == null)
+                {
+                    entryRepository = new EntryRepository(_db);
+                }
+                return entryRepository;
+            }
+        }
+        private IFactorRepository factorRepository;
+        public IFactorRepository FactorRepository
+        {
+            get
+            {
+                if (factorRepository == null)
+                {
+                    factorRepository = new FactorRepository(_db);
+                }
+                return factorRepository;
+            }
+        }
+        #endregion
         #region save
         public bool Save()
         {

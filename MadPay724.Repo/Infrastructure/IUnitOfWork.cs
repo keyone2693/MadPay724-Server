@@ -1,4 +1,5 @@
-﻿using MadPay724.Repo.Repositories.MainDB.Interface;
+﻿using MadPay724.Repo.Repositories.FinancialDB.Interface;
+using MadPay724.Repo.Repositories.MainDB.Interface;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
@@ -22,6 +23,8 @@ namespace MadPay724.Repo.Infrastructure
         IEasyPayRepository EasyPayRepository { get; }
         IBlogRepository BlogRepository { get; }
         IBlogGroupRepository BlogGroupRepository { get; }
+        IEntryRepository EntryRepository { get; }
+        IFactorRepository FactorRepository { get; }
         bool Save();
         Task<bool> SaveAsync();
 

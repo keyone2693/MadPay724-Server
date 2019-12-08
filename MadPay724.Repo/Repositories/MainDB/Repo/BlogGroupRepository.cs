@@ -16,5 +16,6 @@ namespace MadPay724.Repo.Repositories.MainDB.Repo
         {
             _db ??= (Main_MadPayDbContext)_db;
         }
+
     }
 }

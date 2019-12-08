@@ -1,4 +1,5 @@
-﻿using MadPay724.Data.Models.MainDB;
+﻿using MadPay724.Data.Models.FinancialDB.Accountant;
+using MadPay724.Data.Models.MainDB;
 using MadPay724.Data.Models.MainDB.Blog;
 using System;
 using System.Collections.Generic;
@@ -131,6 +132,58 @@ namespace MadPay724.Common.Helpers.Utilities.Extensions
                                 p.ExpireDateYear.Contains(Filter) ||
                                 p.User.Name.Contains(Filter) ||
                                 p.User.UserName.Contains(Filter);
+
+                return exp;
+            }
+
+        }
+
+        public static Expression<Func<Entry, bool>> ToEntryExpression(this string Filter,
+        bool isAdmin, string id = "")
+        {
+            if (string.IsNullOrEmpty(Filter) || string.IsNullOrWhiteSpace(Filter))
+            {
+                return null;
+            }
+            else
+            {
+                Expression<Func<Entry, bool>> exp =
+                                p => p.Id.Contains(Filter) ||
+                                p.TextForUser.Contains(Filter) ||
+                                p.BankName.Contains(Filter) ||
+                                p.OwnerName.Contains(Filter) ||
+                                p.Shaba.Contains(Filter) ||
+
+                                p.CardNumber.Contains(Filter) ||
+                                p.WalletName.Contains(Filter) ||
+                                p.UserId.Contains(Filter) ||
+                                p.BankCardId.Contains(Filter) ||
+                                p.WalletId.Contains(Filter);
+
+
+                return exp;
+            }
+
+        }
+        public static Expression<Func<Factor, bool>> ToFactorExpression(this string Filter,
+        bool isAdmin, string id = "")
+        {
+            if (string.IsNullOrEmpty(Filter) || string.IsNullOrWhiteSpace(Filter))
+            {
+                return null;
+            }
+            else
+            {
+                Expression<Func<Factor, bool>> exp =
+                                p => p.Id.Contains(Filter) ||
+                                p.UserName.Contains(Filter) ||
+                                p.GiftCode.Contains(Filter) ||
+                                p.Price.ToString().Contains(Filter) ||
+                                p.EndPrice.ToString().Contains(Filter) ||
+                                p.RefBank.Contains(Filter) ||
+                                p.EnterMoneyWalletId.Contains(Filter) ||
+                                p.UserId.Contains(Filter) ||
+                                p.GateId.Contains(Filter);
 
                 return exp;
             }
