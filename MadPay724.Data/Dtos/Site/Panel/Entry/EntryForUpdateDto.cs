@@ -13,5 +13,9 @@ namespace MadPay724.Data.Dtos.Site.Panel.Entry
         [Required]
         [StringLength(1000, MinimumLength = 0)]
         public string TextForUser { get; set; }
+        [Required]
+        [StringLength(1000, MinimumLength = 0)]
+        public string BankTrackingCode { get; set; }
+        
     }
 }

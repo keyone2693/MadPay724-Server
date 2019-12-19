@@ -41,6 +41,10 @@ namespace MadPay724.Data.Models.FinancialDB.Accountant
         [Required]
         [StringLength(20, MinimumLength = 0)]
         public string WalletName { get; set; }
+        //peygiri
+        [Required]
+        [StringLength(200, MinimumLength = 0)]
+        public string BankTrackingCode { get; set; }
         //ids
         [Required]
         public string UserId { get; set; }
