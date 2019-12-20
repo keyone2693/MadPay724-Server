@@ -16,6 +16,7 @@ using MadPay724.Services.Site.Admin.Wallet.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
@@ -26,13 +27,18 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
     {
 
         private readonly IUnitOfWork<Financial_MadPayDbContext> _db;
+        private readonly IUnitOfWork<Main_MadPayDbContext> _dbMain;
         private readonly IMapper _mapper;
         private readonly ILogger<EntryController> _logger;
         private readonly IWalletService _walletService;
-        public EntryController(IUnitOfWork<Financial_MadPayDbContext> dbContext, IMapper mapper,
+        public EntryController(
+            IUnitOfWork<Financial_MadPayDbContext> dbContext,
+            IUnitOfWork<Main_MadPayDbContext> dbMain,
+            IMapper mapper,
             ILogger<EntryController> logger, IWalletService walletService)
         {
             _db = dbContext;
+            _dbMain = dbMain;
             _mapper = mapper;
             _logger = logger;
             _walletService = walletService;
@@ -95,6 +101,21 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
         public async Task<IActionResult> GetEntry(string entryId)
         {
             var entryFromRepo = await _db.EntryRepository.GetByIdAsync(entryId);
+
+            var bankCardFromRepo = await _dbMain.BankCardRepository.GetByIdAsync(entryFromRepo.BankCardId);
+
+            var walletFromRepo = await _dbMain.WalletRepository.GetByIdAsync(entryFromRepo.WalletId);
+
+            entryFromRepo.BankName = bankCardFromRepo.BankName;
+            entryFromRepo.OwnerName = bankCardFromRepo.OwnerName;
+            entryFromRepo.Shaba = bankCardFromRepo.Shaba;
+            entryFromRepo.CardNumber = bankCardFromRepo.CardNumber;
+            entryFromRepo.WalletName = walletFromRepo.Name;
+
+            _db.EntryRepository.Update(entryFromRepo);
+
+            await _db.SaveAsync();
+
             if (entryFromRepo != null)
             {
                 return Ok(entryFromRepo);
@@ -181,7 +202,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
                         }
                         else
                         {
-                            var decreaseInventoryResult =await _walletService
+                            var decreaseInventoryResult = await _walletService
                                 .EntryDecreaseInventoryAsync(entyFromRepo.Price, entyFromRepo.WalletId);
 
                             if (!decreaseInventoryResult.status)
