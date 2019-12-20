@@ -22,13 +22,16 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
     public class BankCardsController : ControllerBase
     {
         private readonly IUnitOfWork<Main_MadPayDbContext> _db;
+        private readonly IUnitOfWork<Financial_MadPayDbContext> _dbFinancial;
         private readonly IMapper _mapper;
         private readonly ILogger<BankCardsController> _logger;
 
-        public BankCardsController(IUnitOfWork<Main_MadPayDbContext> dbContext, IMapper mapper,
+        public BankCardsController(IUnitOfWork<Main_MadPayDbContext> dbContext
+            , IUnitOfWork<Financial_MadPayDbContext> dbFinancial, IMapper mapper,
             ILogger<BankCardsController> logger)
         {
             _db = dbContext;
+            _dbFinancial = dbFinancial;
             _mapper = mapper;
             _logger = logger;
         }
@@ -154,6 +157,12 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
             var bankCardFromRepo = await _db.BankCardRepository.GetByIdAsync(id);
             if (bankCardFromRepo != null)
             {
+
+                if (await _dbFinancial.EntryRepository.IsAnyAsync(p=>p.BankCardId == id))
+                {
+                    return BadRequest("کارتی که برای آن واریزی ثبت شده است امکان حذف ندارد");
+                }
+
                 if (bankCardFromRepo.UserId == User.FindFirst(ClaimTypes.NameIdentifier).Value)
                 {
                     _db.BankCardRepository.Delete(bankCardFromRepo);

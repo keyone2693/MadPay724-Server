@@ -9,5 +9,6 @@ namespace MadPay724.Repo.Repositories.FinancialDB.Interface
 {
   public  interface IEntryRepository : IRepository<Entry>
     {
+
     }
 }

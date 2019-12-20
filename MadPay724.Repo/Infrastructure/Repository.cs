@@ -130,6 +130,20 @@ namespace MadPay724.Repo.Infrastructure
         {
             return _dbSet.Where(where).FirstOrDefault();
         }
+
+       public bool IsAny(Expression<Func<TEntity, bool>> filter)
+        {
+            if (_dbSet.Any(filter))
+                return true;
+            return false;
+
+        }
+        public async Task<bool> IsAnyAsync(Expression<Func<TEntity, bool>> filter)
+        {
+            if (await _dbSet.AnyAsync(filter))
+                return true;
+            return false;
+        }
         #endregion
 
         #region async
@@ -229,8 +243,6 @@ namespace MadPay724.Repo.Infrastructure
         {
             return await _dbSet.Where(where).FirstOrDefaultAsync();
         }
-
-
 
         #endregion
 

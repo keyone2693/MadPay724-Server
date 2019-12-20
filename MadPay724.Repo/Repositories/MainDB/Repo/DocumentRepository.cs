@@ -14,7 +14,7 @@ namespace MadPay724.Repo.Repositories.MainDB.Repo
         private readonly DbContext _db;
         public DocumentRepository(DbContext dbContext) : base(dbContext)
         {
-            _db ??= (Main_MadPayDbContext)_db;
+            _db ??= (Main_MadPayDbContext)dbContext;
         }
 
         public async Task<int> DocumentCountAsync(string userId)

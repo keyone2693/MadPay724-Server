@@ -14,7 +14,7 @@ namespace MadPay724.Repo.Repositories.FinancialDB.Repo
         private readonly DbContext _db;
         public FactorRepository(DbContext dbContext) : base(dbContext)
         {
-            _db ??= (Financial_MadPayDbContext)_db;
+            _db ??= (Financial_MadPayDbContext)dbContext;
         }
     }
 }

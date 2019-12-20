@@ -29,7 +29,8 @@ namespace MadPay724.Repo.Infrastructure
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy,
             string includeEntity);
         TEntity Get(Expression<Func<TEntity, bool>> where);
-
+        bool IsAny(Expression<Func<TEntity, bool>> filter);
+        
         //--------------------------------------------
 
         Task InsertAsync(TEntity entity);
@@ -62,5 +63,7 @@ namespace MadPay724.Repo.Infrastructure
         );
 
         Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> where);
+
+        Task<bool> IsAnyAsync(Expression<Func<TEntity, bool>> filter);
     }
 }

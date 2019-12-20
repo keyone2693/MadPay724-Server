@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MadPay724.Repo.Repositories.FinancialDB.Repo
 {
@@ -14,7 +15,7 @@ namespace MadPay724.Repo.Repositories.FinancialDB.Repo
         private readonly DbContext _db;
         public EntryRepository(DbContext dbContext) : base(dbContext)
         {
-            _db ??= (Financial_MadPayDbContext)_db;
+            _db ??= (Financial_MadPayDbContext)dbContext;
         }
     }
 }
