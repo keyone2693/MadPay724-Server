@@ -214,6 +214,7 @@ namespace MadPay724.Presentation
             services.AddScoped<IWalletService, WalletService>();
             services.AddScoped<IUtilities, Utilities>();
             services.AddScoped<UserCheckIdFilter>();
+            services.AddScoped<IsBloggerHimselfFilter>();
             services.AddScoped<DocumentApproveFilter>();
             //services.AddScoped<TokenSetting>();
 
@@ -313,7 +314,6 @@ namespace MadPay724.Presentation
                 p.WithOrigins("http://localhost:4200")
                     .AllowAnyMethod()
                     .AllowAnyHeader()
-                    //.WithExposedHeaders("ejUrl")
                     );
             //
             app.UseRouting();

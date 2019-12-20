@@ -7,14 +7,12 @@ namespace MadPay724.Data.Dtos.Site.Panel.Entry
 {
    public class EntryForUpdateDto
     {
-        [Required]
-        public int Price { get; set; }
 
         [Required]
         [StringLength(1000, MinimumLength = 0)]
         public string TextForUser { get; set; }
         [Required]
-        [StringLength(1000, MinimumLength = 0)]
+        [StringLength(200, MinimumLength = 0)]
         public string BankTrackingCode { get; set; }
         
     }

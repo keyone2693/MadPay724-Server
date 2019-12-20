@@ -117,6 +117,8 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
                 entyFromRepo.TextForUser = entryForUpdateDto.TextForUser;
                 entyFromRepo.BankTrackingCode = entryForUpdateDto.BankTrackingCode;
 
+                _db.EntryRepository.Update(entyFromRepo);
+
                 if (await _db.SaveAsync())
                 {
                     return NoContent();
