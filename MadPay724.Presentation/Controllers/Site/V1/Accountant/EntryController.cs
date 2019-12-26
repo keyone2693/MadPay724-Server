@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
+using MadPay724.Common.Enums;
 using MadPay724.Common.Helpers.Utilities.Extensions;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Common.Pagination;
@@ -48,11 +49,10 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
         [HttpGet(ApiV1Routes.Entry.GetApproveEntries)]
         public async Task<IActionResult> GetApproveEntries([FromQuery]PaginationDto paginationDto)
         {
-
             var entriesFromRepo = await _db.EntryRepository
                     .GetAllPagedListAsync(
                     paginationDto,
-                    paginationDto.Filter.ToEntryExpression(1),
+                    paginationDto.Filter.ToEntryExpression(EntryState.Approve),
                     paginationDto.SortHe.ToOrderBy(paginationDto.SortDir),
                     "");//,Entries
 
@@ -69,7 +69,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
             var entriesFromRepo = await _db.EntryRepository
                     .GetAllPagedListAsync(
                     paginationDto,
-                    paginationDto.Filter.ToEntryExpression(2),
+                    paginationDto.Filter.ToEntryExpression(EntryState.Pardakht),
                     paginationDto.SortHe.ToOrderBy(paginationDto.SortDir),
                     "");//,Entries
 
@@ -86,7 +86,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
             var entriesFromRepo = await _db.EntryRepository
                     .GetAllPagedListAsync(
                     paginationDto,
-                    paginationDto.Filter.ToEntryExpression(3),
+                    paginationDto.Filter.ToEntryExpression(EntryState.Archive),
                     paginationDto.SortHe.ToOrderBy(paginationDto.SortDir),
                     "");//,Entries
 
@@ -95,11 +95,28 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
 
             return Ok(entriesFromRepo);
         }
+        [Authorize(Policy = "AccessAccounting")]
+        [HttpGet(ApiV1Routes.Entry.GetBankCardEntries)]
+        public async Task<IActionResult> GetBankCardEntries(string bankcardId, [FromQuery]PaginationDto paginationDto)
+        {
 
+            var bancardEntriesFromRepo = await _db.EntryRepository
+                    .GetAllPagedListAsync(
+                    paginationDto,
+                    paginationDto.Filter.ToEntryExpression(EntryState.All, null , bankcardId),
+                    paginationDto.SortHe.ToOrderBy(paginationDto.SortDir),
+                    "");
+
+            Response.AddPagination(bancardEntriesFromRepo.CurrentPage, bancardEntriesFromRepo.PageSize,
+                bancardEntriesFromRepo.TotalCount, bancardEntriesFromRepo.TotalPage);
+
+            return Ok(bancardEntriesFromRepo);
+        }
         [Authorize(Policy = "AccessAccounting")]
         [HttpGet(ApiV1Routes.Entry.GetEntry, Name = "GetEntry")]
         public async Task<IActionResult> GetEntry(string entryId)
         {
+
             var entryFromRepo = await _db.EntryRepository.GetByIdAsync(entryId);
 
             var bankCardFromRepo = await _dbMain.BankCardRepository.GetByIdAsync(entryFromRepo.BankCardId);
