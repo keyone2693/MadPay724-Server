@@ -26,7 +26,6 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
     [ApiController]
     public class EntryController : ControllerBase
     {
-
         private readonly IUnitOfWork<Financial_MadPayDbContext> _db;
         private readonly IUnitOfWork<Main_MadPayDbContext> _dbMain;
         private readonly IMapper _mapper;
@@ -103,7 +102,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
             var bancardEntriesFromRepo = await _db.EntryRepository
                     .GetAllPagedListAsync(
                     paginationDto,
-                    paginationDto.Filter.ToEntryExpression(EntryState.All, null , bankcardId),
+                    paginationDto.Filter.ToEntryExpression(EntryState.All, null , bankcardId,true),
                     paginationDto.SortHe.ToOrderBy(paginationDto.SortDir),
                     "");
 
@@ -111,6 +110,22 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
                 bancardEntriesFromRepo.TotalCount, bancardEntriesFromRepo.TotalPage);
 
             return Ok(bancardEntriesFromRepo);
+        }
+        [Authorize(Policy = "AccessAccounting")]
+        [HttpGet(ApiV1Routes.Entry.GetWalletEntries)]
+        public async Task<IActionResult> GetWalletEntries(string walletId, [FromQuery]PaginationDto paginationDto)
+        {
+            var walletEntriesFromRepo = await _db.EntryRepository
+                    .GetAllPagedListAsync(
+                    paginationDto,
+                    paginationDto.Filter.ToEntryExpression(EntryState.All, null, walletId,false),
+                    paginationDto.SortHe.ToOrderBy(paginationDto.SortDir),
+                    "");
+
+            Response.AddPagination(walletEntriesFromRepo.CurrentPage, walletEntriesFromRepo.PageSize,
+                walletEntriesFromRepo.TotalCount, walletEntriesFromRepo.TotalPage);
+
+            return Ok(walletEntriesFromRepo);
         }
         [Authorize(Policy = "AccessAccounting")]
         [HttpGet(ApiV1Routes.Entry.GetEntry, Name = "GetEntry")]

@@ -75,6 +75,8 @@ namespace MadPay724.Presentation.Routes.V1
             public const string GetEntry = BaseSitePanel + "/entries/{entryId}";
             //GET
             public const string GetBankCardEntries = BaseSitePanel + "/bankcards/{bankcardId}/entries";
+            //GET
+            public const string GetWalletEntries = BaseSitePanel + "/wallets/{walletId}/entries";
             //PUT
             public const string UpdateEntry = BaseSitePanel + "/entries/{entryId}/update";
             //PATCH

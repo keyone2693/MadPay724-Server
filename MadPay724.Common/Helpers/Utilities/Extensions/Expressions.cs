@@ -10,7 +10,7 @@ using System.Text;
 
 namespace MadPay724.Common.Helpers.Utilities.Extensions
 {
-   public static class Expressions
+    public static class Expressions
     {
         public static Expression<Func<Blog, bool>> ToBlogExpression(this string Filter,
     bool isAdmin, string id = "")
@@ -72,15 +72,15 @@ namespace MadPay724.Common.Helpers.Utilities.Extensions
             }
             else
             {
-               Expression<Func<User, bool>> exp =
-                                p => p.Id.Contains(Filter) ||
-                                p.UserName.Contains(Filter) ||
-                                p.Name.Contains(Filter) ||
-                                p.Id.Contains(Filter) ||
-                                p.Wallets.Any(s => s.Name.Contains(Filter)) ||
-                                p.Wallets.Any(s => s.Inventory.ToString().Contains(Filter)) ||
-                                p.Wallets.Any(s => s.InterMoney.ToString().Contains(Filter)) ||
-                                p.Wallets.Any(s => s.ExitMoney.ToString().Contains(Filter));
+                Expression<Func<User, bool>> exp =
+                                 p => p.Id.Contains(Filter) ||
+                                 p.UserName.Contains(Filter) ||
+                                 p.Name.Contains(Filter) ||
+                                 p.Id.Contains(Filter) ||
+                                 p.Wallets.Any(s => s.Name.Contains(Filter)) ||
+                                 p.Wallets.Any(s => s.Inventory.ToString().Contains(Filter)) ||
+                                 p.Wallets.Any(s => s.InterMoney.ToString().Contains(Filter)) ||
+                                 p.Wallets.Any(s => s.ExitMoney.ToString().Contains(Filter));
 
                 return exp;
             }
@@ -140,216 +140,431 @@ namespace MadPay724.Common.Helpers.Utilities.Extensions
         }
 
         public static Expression<Func<Entry, bool>> ToEntryExpression(this string Filter,
-        EntryState state, string id = "", string bankcardId = "")
+        EntryState state, string id = "", string entityId = "", bool isIsBankCard = true)
         {
-            if(string.IsNullOrEmpty(bankcardId) || string.IsNullOrWhiteSpace(bankcardId))
+            if (isIsBankCard)
             {
-                if (string.IsNullOrEmpty(Filter) || string.IsNullOrWhiteSpace(Filter))
+                if (string.IsNullOrEmpty(entityId) || string.IsNullOrWhiteSpace(entityId))
                 {
-                    switch (state)
+                    if (string.IsNullOrEmpty(Filter) || string.IsNullOrWhiteSpace(Filter))
                     {
-                        case EntryState.All:
-                            return null;
-                        case EntryState.Approve:
-                            return p => !p.IsApprove && !p.IsPardakht && !p.IsReject;
-                        case EntryState.Pardakht:
-                            return p => p.IsApprove && !p.IsPardakht && !p.IsReject;
-                        case EntryState.Archive:
-                            return p => p.IsReject || p.IsPardakht;
-                        default:
-                            return null;
+                        switch (state)
+                        {
+                            case EntryState.All:
+                                return null;
+                            case EntryState.Approve:
+                                return p => !p.IsApprove && !p.IsPardakht && !p.IsReject;
+                            case EntryState.Pardakht:
+                                return p => p.IsApprove && !p.IsPardakht && !p.IsReject;
+                            case EntryState.Archive:
+                                return p => p.IsReject || p.IsPardakht;
+                            default:
+                                return null;
+                        }
+                    }
+                    else
+                    {
+                        switch (state)
+                        {
+                            case EntryState.All:
+                                return p => p.Id.Contains(Filter) ||
+                                        p.TextForUser.Contains(Filter) ||
+                                        p.BankName.Contains(Filter) ||
+                                        p.OwnerName.Contains(Filter) ||
+                                        p.Shaba.Contains(Filter) ||
+
+                                        p.CardNumber.Contains(Filter) ||
+                                        p.WalletName.Contains(Filter) ||
+                                        p.UserId.Contains(Filter) ||
+                                        p.BankCardId.Contains(Filter) ||
+                                        p.WalletId.Contains(Filter);
+                            case EntryState.Approve:
+                                {
+                                    return p => (
+                                    p.Id.Contains(Filter) ||
+                                        p.TextForUser.Contains(Filter) ||
+                                        p.BankName.Contains(Filter) ||
+                                        p.OwnerName.Contains(Filter) ||
+                                        p.Shaba.Contains(Filter) ||
+
+                                        p.CardNumber.Contains(Filter) ||
+                                        p.WalletName.Contains(Filter) ||
+                                        p.UserId.Contains(Filter) ||
+                                        p.BankCardId.Contains(Filter) ||
+                                        p.WalletId.Contains(Filter)
+                                        )
+                                        &&
+                                        (
+                                        !p.IsApprove && !p.IsPardakht && !p.IsReject
+                                        );
+                                }
+                            case EntryState.Pardakht:
+                                {
+                                    return p => (
+                                    p.Id.Contains(Filter) ||
+                                        p.TextForUser.Contains(Filter) ||
+                                        p.BankName.Contains(Filter) ||
+                                        p.OwnerName.Contains(Filter) ||
+                                        p.Shaba.Contains(Filter) ||
+
+                                        p.CardNumber.Contains(Filter) ||
+                                        p.WalletName.Contains(Filter) ||
+                                        p.UserId.Contains(Filter) ||
+                                        p.BankCardId.Contains(Filter) ||
+                                        p.WalletId.Contains(Filter)
+                                        )
+                                        &&
+                                        (
+                                        p.IsApprove && !p.IsPardakht && !p.IsReject
+                                        );
+                                }
+                            case EntryState.Archive:
+                                {
+                                    return p => (
+                                    p.Id.Contains(Filter) ||
+                                        p.TextForUser.Contains(Filter) ||
+                                        p.BankName.Contains(Filter) ||
+                                        p.OwnerName.Contains(Filter) ||
+                                        p.Shaba.Contains(Filter) ||
+
+                                        p.CardNumber.Contains(Filter) ||
+                                        p.WalletName.Contains(Filter) ||
+                                        p.UserId.Contains(Filter) ||
+                                        p.BankCardId.Contains(Filter) ||
+                                        p.WalletId.Contains(Filter)
+                                        )
+                                        &&
+                                        (
+                                        p.IsReject || p.IsPardakht
+                                        );
+                                }
+                            default:
+                                return p => p.Id.Contains(Filter) ||
+                                        p.TextForUser.Contains(Filter) ||
+                                        p.BankName.Contains(Filter) ||
+                                        p.OwnerName.Contains(Filter) ||
+                                        p.Shaba.Contains(Filter) ||
+
+                                        p.CardNumber.Contains(Filter) ||
+                                        p.WalletName.Contains(Filter) ||
+                                        p.UserId.Contains(Filter) ||
+                                        p.BankCardId.Contains(Filter) ||
+                                        p.WalletId.Contains(Filter);
+                        }
                     }
                 }
                 else
                 {
-                    switch (state)
+                    if (string.IsNullOrEmpty(Filter) || string.IsNullOrWhiteSpace(Filter))
                     {
-                        case EntryState.All:
-                            return p => p.Id.Contains(Filter) ||
-                                    p.TextForUser.Contains(Filter) ||
-                                    p.BankName.Contains(Filter) ||
-                                    p.OwnerName.Contains(Filter) ||
-                                    p.Shaba.Contains(Filter) ||
+                        switch (state)
+                        {
+                            case EntryState.All:
+                                return p => p.BankCardId == entityId;
+                            case EntryState.Approve:
+                                return p => p.BankCardId == entityId && !p.IsApprove && !p.IsPardakht && !p.IsReject;
+                            case EntryState.Pardakht:
+                                return p => p.BankCardId == entityId && p.IsApprove && !p.IsPardakht && !p.IsReject;
+                            case EntryState.Archive:
+                                return p => p.BankCardId == entityId && p.IsReject || p.IsPardakht;
+                            default:
+                                return null;
+                        }
+                    }
+                    else
+                    {
+                        switch (state)
+                        {
+                            case EntryState.All:
+                                return p => p.BankCardId == entityId &&
+                                        (p.Id.Contains(Filter) ||
+                                        p.TextForUser.Contains(Filter) ||
+                                        p.BankName.Contains(Filter) ||
+                                        p.OwnerName.Contains(Filter) ||
+                                        p.Shaba.Contains(Filter) ||
 
-                                    p.CardNumber.Contains(Filter) ||
-                                    p.WalletName.Contains(Filter) ||
-                                    p.UserId.Contains(Filter) ||
-                                    p.BankCardId.Contains(Filter) ||
-                                    p.WalletId.Contains(Filter);
-                        case EntryState.Approve:
-                            {
-                                return p => (
-                                p.Id.Contains(Filter) ||
-                                    p.TextForUser.Contains(Filter) ||
-                                    p.BankName.Contains(Filter) ||
-                                    p.OwnerName.Contains(Filter) ||
-                                    p.Shaba.Contains(Filter) ||
+                                        p.CardNumber.Contains(Filter) ||
+                                        p.WalletName.Contains(Filter) ||
+                                        p.UserId.Contains(Filter) ||
+                                        p.BankCardId.Contains(Filter) ||
+                                        p.WalletId.Contains(Filter));
+                            case EntryState.Approve:
+                                {
+                                    return p => (p.Id.Contains(Filter) ||
+                                        p.TextForUser.Contains(Filter) ||
+                                        p.BankName.Contains(Filter) ||
+                                        p.OwnerName.Contains(Filter) ||
+                                        p.Shaba.Contains(Filter) ||
 
-                                    p.CardNumber.Contains(Filter) ||
-                                    p.WalletName.Contains(Filter) ||
-                                    p.UserId.Contains(Filter) ||
-                                    p.BankCardId.Contains(Filter) ||
-                                    p.WalletId.Contains(Filter)
-                                    )
-                                    &&
-                                    (
-                                    !p.IsApprove && !p.IsPardakht && !p.IsReject
-                                    );
-                            }
-                        case EntryState.Pardakht:
-                            {
-                                return p => (
-                                p.Id.Contains(Filter) ||
-                                    p.TextForUser.Contains(Filter) ||
-                                    p.BankName.Contains(Filter) ||
-                                    p.OwnerName.Contains(Filter) ||
-                                    p.Shaba.Contains(Filter) ||
+                                        p.CardNumber.Contains(Filter) ||
+                                        p.WalletName.Contains(Filter) ||
+                                        p.UserId.Contains(Filter) ||
+                                        p.BankCardId.Contains(Filter) ||
+                                        p.WalletId.Contains(Filter))
+                                        &&
+                                        (p.BankCardId == entityId && !p.IsApprove && !p.IsPardakht && !p.IsReject);
+                                }
+                            case EntryState.Pardakht:
+                                {
+                                    return p => (p.Id.Contains(Filter) ||
+                                        p.TextForUser.Contains(Filter) ||
+                                        p.BankName.Contains(Filter) ||
+                                        p.OwnerName.Contains(Filter) ||
+                                        p.Shaba.Contains(Filter) ||
 
-                                    p.CardNumber.Contains(Filter) ||
-                                    p.WalletName.Contains(Filter) ||
-                                    p.UserId.Contains(Filter) ||
-                                    p.BankCardId.Contains(Filter) ||
-                                    p.WalletId.Contains(Filter)
-                                    )
-                                    &&
-                                    (
-                                    p.IsApprove && !p.IsPardakht && !p.IsReject
-                                    );
-                            }
-                        case EntryState.Archive:
-                            {
-                                return p => (
-                                p.Id.Contains(Filter) ||
-                                    p.TextForUser.Contains(Filter) ||
-                                    p.BankName.Contains(Filter) ||
-                                    p.OwnerName.Contains(Filter) ||
-                                    p.Shaba.Contains(Filter) ||
+                                        p.CardNumber.Contains(Filter) ||
+                                        p.WalletName.Contains(Filter) ||
+                                        p.UserId.Contains(Filter) ||
+                                        p.BankCardId.Contains(Filter) ||
+                                        p.WalletId.Contains(Filter))
+                                        &&
+                                        (p.BankCardId == entityId && p.IsApprove && !p.IsPardakht && !p.IsReject);
+                                }
+                            case EntryState.Archive:
+                                {
+                                    return p => (p.Id.Contains(Filter) ||
+                                        p.TextForUser.Contains(Filter) ||
+                                        p.BankName.Contains(Filter) ||
+                                        p.OwnerName.Contains(Filter) ||
+                                        p.Shaba.Contains(Filter) ||
 
-                                    p.CardNumber.Contains(Filter) ||
-                                    p.WalletName.Contains(Filter) ||
-                                    p.UserId.Contains(Filter) ||
-                                    p.BankCardId.Contains(Filter) ||
-                                    p.WalletId.Contains(Filter)
-                                    )
-                                    &&
-                                    (
-                                    p.IsReject || p.IsPardakht
-                                    );
-                            }
-                        default:
-                            return p => p.Id.Contains(Filter) ||
-                                    p.TextForUser.Contains(Filter) ||
-                                    p.BankName.Contains(Filter) ||
-                                    p.OwnerName.Contains(Filter) ||
-                                    p.Shaba.Contains(Filter) ||
+                                        p.CardNumber.Contains(Filter) ||
+                                        p.WalletName.Contains(Filter) ||
+                                        p.UserId.Contains(Filter) ||
+                                        p.BankCardId.Contains(Filter) ||
+                                        p.WalletId.Contains(Filter)) &&
+                                        p.BankCardId == entityId &&
+                                        (p.IsReject || p.IsPardakht);
+                                }
+                            default:
+                                return p => p.BankCardId == entityId &&
+                                        (p.Id.Contains(Filter) ||
+                                        p.TextForUser.Contains(Filter) ||
+                                        p.BankName.Contains(Filter) ||
+                                        p.OwnerName.Contains(Filter) ||
+                                        p.Shaba.Contains(Filter) ||
 
-                                    p.CardNumber.Contains(Filter) ||
-                                    p.WalletName.Contains(Filter) ||
-                                    p.UserId.Contains(Filter) ||
-                                    p.BankCardId.Contains(Filter) ||
-                                    p.WalletId.Contains(Filter);
+                                        p.CardNumber.Contains(Filter) ||
+                                        p.WalletName.Contains(Filter) ||
+                                        p.UserId.Contains(Filter) ||
+                                        p.BankCardId.Contains(Filter) ||
+                                        p.WalletId.Contains(Filter));
+                        }
                     }
                 }
             }
             else
             {
-                if (string.IsNullOrEmpty(Filter) || string.IsNullOrWhiteSpace(Filter))
+                if (string.IsNullOrEmpty(entityId) || string.IsNullOrWhiteSpace(entityId))
                 {
-                    switch (state)
+                    if (string.IsNullOrEmpty(Filter) || string.IsNullOrWhiteSpace(Filter))
                     {
-                        case EntryState.All:
-                            return p=>p.BankCardId == bankcardId;
-                        case EntryState.Approve:
-                            return p => p.BankCardId == bankcardId && !p.IsApprove && !p.IsPardakht && !p.IsReject;
-                        case EntryState.Pardakht:
-                            return p => p.BankCardId == bankcardId && p.IsApprove && !p.IsPardakht && !p.IsReject;
-                        case EntryState.Archive:
-                            return p => p.BankCardId == bankcardId && p.IsReject || p.IsPardakht;
-                        default:
-                            return null;
+                        switch (state)
+                        {
+                            case EntryState.All:
+                                return null;
+                            case EntryState.Approve:
+                                return p => !p.IsApprove && !p.IsPardakht && !p.IsReject;
+                            case EntryState.Pardakht:
+                                return p => p.IsApprove && !p.IsPardakht && !p.IsReject;
+                            case EntryState.Archive:
+                                return p => p.IsReject || p.IsPardakht;
+                            default:
+                                return null;
+                        }
+                    }
+                    else
+                    {
+                        switch (state)
+                        {
+                            case EntryState.All:
+                                return p => p.Id.Contains(Filter) ||
+                                        p.TextForUser.Contains(Filter) ||
+                                        p.BankName.Contains(Filter) ||
+                                        p.OwnerName.Contains(Filter) ||
+                                        p.Shaba.Contains(Filter) ||
+
+                                        p.CardNumber.Contains(Filter) ||
+                                        p.WalletName.Contains(Filter) ||
+                                        p.UserId.Contains(Filter) ||
+                                        p.BankCardId.Contains(Filter) ||
+                                        p.WalletId.Contains(Filter);
+                            case EntryState.Approve:
+                                {
+                                    return p => (
+                                    p.Id.Contains(Filter) ||
+                                        p.TextForUser.Contains(Filter) ||
+                                        p.BankName.Contains(Filter) ||
+                                        p.OwnerName.Contains(Filter) ||
+                                        p.Shaba.Contains(Filter) ||
+
+                                        p.CardNumber.Contains(Filter) ||
+                                        p.WalletName.Contains(Filter) ||
+                                        p.UserId.Contains(Filter) ||
+                                        p.BankCardId.Contains(Filter) ||
+                                        p.WalletId.Contains(Filter)
+                                        )
+                                        &&
+                                        (
+                                        !p.IsApprove && !p.IsPardakht && !p.IsReject
+                                        );
+                                }
+                            case EntryState.Pardakht:
+                                {
+                                    return p => (
+                                    p.Id.Contains(Filter) ||
+                                        p.TextForUser.Contains(Filter) ||
+                                        p.BankName.Contains(Filter) ||
+                                        p.OwnerName.Contains(Filter) ||
+                                        p.Shaba.Contains(Filter) ||
+
+                                        p.CardNumber.Contains(Filter) ||
+                                        p.WalletName.Contains(Filter) ||
+                                        p.UserId.Contains(Filter) ||
+                                        p.BankCardId.Contains(Filter) ||
+                                        p.WalletId.Contains(Filter)
+                                        )
+                                        &&
+                                        (
+                                        p.IsApprove && !p.IsPardakht && !p.IsReject
+                                        );
+                                }
+                            case EntryState.Archive:
+                                {
+                                    return p => (
+                                    p.Id.Contains(Filter) ||
+                                        p.TextForUser.Contains(Filter) ||
+                                        p.BankName.Contains(Filter) ||
+                                        p.OwnerName.Contains(Filter) ||
+                                        p.Shaba.Contains(Filter) ||
+
+                                        p.CardNumber.Contains(Filter) ||
+                                        p.WalletName.Contains(Filter) ||
+                                        p.UserId.Contains(Filter) ||
+                                        p.BankCardId.Contains(Filter) ||
+                                        p.WalletId.Contains(Filter)
+                                        )
+                                        &&
+                                        (
+                                        p.IsReject || p.IsPardakht
+                                        );
+                                }
+                            default:
+                                return p => p.Id.Contains(Filter) ||
+                                        p.TextForUser.Contains(Filter) ||
+                                        p.BankName.Contains(Filter) ||
+                                        p.OwnerName.Contains(Filter) ||
+                                        p.Shaba.Contains(Filter) ||
+
+                                        p.CardNumber.Contains(Filter) ||
+                                        p.WalletName.Contains(Filter) ||
+                                        p.UserId.Contains(Filter) ||
+                                        p.BankCardId.Contains(Filter) ||
+                                        p.WalletId.Contains(Filter);
+                        }
                     }
                 }
                 else
                 {
-                    switch (state)
+                    if (string.IsNullOrEmpty(Filter) || string.IsNullOrWhiteSpace(Filter))
                     {
-                        case EntryState.All:
-                            return p => p.BankCardId == bankcardId && 
-                                    (p.Id.Contains(Filter) ||
-                                    p.TextForUser.Contains(Filter) ||
-                                    p.BankName.Contains(Filter) ||
-                                    p.OwnerName.Contains(Filter) ||
-                                    p.Shaba.Contains(Filter) ||
+                        switch (state)
+                        {
+                            case EntryState.All:
+                                return p => p.WalletId == entityId;
+                            case EntryState.Approve:
+                                return p => p.WalletId == entityId && !p.IsApprove && !p.IsPardakht && !p.IsReject;
+                            case EntryState.Pardakht:
+                                return p => p.WalletId == entityId && p.IsApprove && !p.IsPardakht && !p.IsReject;
+                            case EntryState.Archive:
+                                return p => p.WalletId == entityId && p.IsReject || p.IsPardakht;
+                            default:
+                                return null;
+                        }
+                    }
+                    else
+                    {
+                        switch (state)
+                        {
+                            case EntryState.All:
+                                return p => p.WalletId == entityId &&
+                                        (p.Id.Contains(Filter) ||
+                                        p.TextForUser.Contains(Filter) ||
+                                        p.BankName.Contains(Filter) ||
+                                        p.OwnerName.Contains(Filter) ||
+                                        p.Shaba.Contains(Filter) ||
 
-                                    p.CardNumber.Contains(Filter) ||
-                                    p.WalletName.Contains(Filter) ||
-                                    p.UserId.Contains(Filter) ||
-                                    p.BankCardId.Contains(Filter) ||
-                                    p.WalletId.Contains(Filter));
-                        case EntryState.Approve:
-                            {
-                                return p => (p.Id.Contains(Filter) ||
-                                    p.TextForUser.Contains(Filter) ||
-                                    p.BankName.Contains(Filter) ||
-                                    p.OwnerName.Contains(Filter) ||
-                                    p.Shaba.Contains(Filter) ||
+                                        p.CardNumber.Contains(Filter) ||
+                                        p.WalletName.Contains(Filter) ||
+                                        p.UserId.Contains(Filter) ||
+                                        p.BankCardId.Contains(Filter) ||
+                                        p.WalletId.Contains(Filter));
+                            case EntryState.Approve:
+                                {
+                                    return p => (p.Id.Contains(Filter) ||
+                                        p.TextForUser.Contains(Filter) ||
+                                        p.BankName.Contains(Filter) ||
+                                        p.OwnerName.Contains(Filter) ||
+                                        p.Shaba.Contains(Filter) ||
 
-                                    p.CardNumber.Contains(Filter) ||
-                                    p.WalletName.Contains(Filter) ||
-                                    p.UserId.Contains(Filter) ||
-                                    p.BankCardId.Contains(Filter) ||
-                                    p.WalletId.Contains(Filter))
-                                    &&
-                                    (p.BankCardId == bankcardId && !p.IsApprove && !p.IsPardakht && !p.IsReject);
-                            }
-                        case EntryState.Pardakht:
-                            {
-                                return p => (p.Id.Contains(Filter) ||
-                                    p.TextForUser.Contains(Filter) ||
-                                    p.BankName.Contains(Filter) ||
-                                    p.OwnerName.Contains(Filter) ||
-                                    p.Shaba.Contains(Filter) ||
+                                        p.CardNumber.Contains(Filter) ||
+                                        p.WalletName.Contains(Filter) ||
+                                        p.UserId.Contains(Filter) ||
+                                        p.BankCardId.Contains(Filter) ||
+                                        p.WalletId.Contains(Filter))
+                                        &&
+                                        (p.WalletId == entityId && !p.IsApprove && !p.IsPardakht && !p.IsReject);
+                                }
+                            case EntryState.Pardakht:
+                                {
+                                    return p => (p.Id.Contains(Filter) ||
+                                        p.TextForUser.Contains(Filter) ||
+                                        p.BankName.Contains(Filter) ||
+                                        p.OwnerName.Contains(Filter) ||
+                                        p.Shaba.Contains(Filter) ||
 
-                                    p.CardNumber.Contains(Filter) ||
-                                    p.WalletName.Contains(Filter) ||
-                                    p.UserId.Contains(Filter) ||
-                                    p.BankCardId.Contains(Filter) ||
-                                    p.WalletId.Contains(Filter))
-                                    &&
-                                    (p.BankCardId == bankcardId && p.IsApprove && !p.IsPardakht && !p.IsReject);
-                            }
-                        case EntryState.Archive:
-                            {
-                                return p => (p.Id.Contains(Filter) ||
-                                    p.TextForUser.Contains(Filter) ||
-                                    p.BankName.Contains(Filter) ||
-                                    p.OwnerName.Contains(Filter) ||
-                                    p.Shaba.Contains(Filter) ||
+                                        p.CardNumber.Contains(Filter) ||
+                                        p.WalletName.Contains(Filter) ||
+                                        p.UserId.Contains(Filter) ||
+                                        p.BankCardId.Contains(Filter) ||
+                                        p.WalletId.Contains(Filter))
+                                        &&
+                                        (p.WalletId == entityId && p.IsApprove && !p.IsPardakht && !p.IsReject);
+                                }
+                            case EntryState.Archive:
+                                {
+                                    return p => (p.Id.Contains(Filter) ||
+                                        p.TextForUser.Contains(Filter) ||
+                                        p.BankName.Contains(Filter) ||
+                                        p.OwnerName.Contains(Filter) ||
+                                        p.Shaba.Contains(Filter) ||
 
-                                    p.CardNumber.Contains(Filter) ||
-                                    p.WalletName.Contains(Filter) ||
-                                    p.UserId.Contains(Filter) ||
-                                    p.BankCardId.Contains(Filter) ||
-                                    p.WalletId.Contains(Filter)) &&
-                                    p.BankCardId == bankcardId &&
-                                    (p.IsReject || p.IsPardakht);
-                            }
-                        default:
-                            return p => p.BankCardId == bankcardId && 
-                                    (p.Id.Contains(Filter) ||
-                                    p.TextForUser.Contains(Filter) ||
-                                    p.BankName.Contains(Filter) ||
-                                    p.OwnerName.Contains(Filter) ||
-                                    p.Shaba.Contains(Filter) ||
+                                        p.CardNumber.Contains(Filter) ||
+                                        p.WalletName.Contains(Filter) ||
+                                        p.UserId.Contains(Filter) ||
+                                        p.BankCardId.Contains(Filter) ||
+                                        p.WalletId.Contains(Filter)) &&
+                                        p.WalletId == entityId &&
+                                        (p.IsReject || p.IsPardakht);
+                                }
+                            default:
+                                return p => p.WalletId == entityId &&
+                                        (p.Id.Contains(Filter) ||
+                                        p.TextForUser.Contains(Filter) ||
+                                        p.BankName.Contains(Filter) ||
+                                        p.OwnerName.Contains(Filter) ||
+                                        p.Shaba.Contains(Filter) ||
 
-                                    p.CardNumber.Contains(Filter) ||
-                                    p.WalletName.Contains(Filter) ||
-                                    p.UserId.Contains(Filter) ||
-                                    p.BankCardId.Contains(Filter) ||
-                                    p.WalletId.Contains(Filter));
+                                        p.CardNumber.Contains(Filter) ||
+                                        p.WalletName.Contains(Filter) ||
+                                        p.UserId.Contains(Filter) ||
+                                        p.BankCardId.Contains(Filter) ||
+                                        p.WalletId.Contains(Filter));
+                        }
                     }
                 }
             }
+
 
         }
         public static Expression<Func<Factor, bool>> ToFactorExpression(this string Filter,
