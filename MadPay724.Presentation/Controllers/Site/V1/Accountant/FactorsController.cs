@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using MadPay724.Common.Enums;
 using MadPay724.Common.Helpers.Utilities.Extensions;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Common.Pagination;
@@ -36,7 +37,6 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
             _walletService = walletService;
         }
 
-
         [Authorize(Policy = "AccessAccounting")]
         [HttpGet(ApiV1Routes.Factors.GetFactors)]
         public async Task<IActionResult> GetFactors([FromQuery]PaginationDto paginationDto)
@@ -45,7 +45,25 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
             var factorsFromRepo = await _db.FactorRepository
                     .GetAllPagedListAsync(
                     paginationDto,
-                    paginationDto.Filter.ToFactorExpression(true),
+                    paginationDto.Filter.ToFactorExpression(SearchIdEnums.None),
+                    paginationDto.SortHe.ToOrderBy(paginationDto.SortDir),
+                    "");//,Factors
+
+            Response.AddPagination(factorsFromRepo.CurrentPage, factorsFromRepo.PageSize,
+                factorsFromRepo.TotalCount, factorsFromRepo.TotalPage);
+
+            return Ok(factorsFromRepo);
+        }
+
+        [Authorize(Policy = "AccessAccounting")]
+        [HttpGet(ApiV1Routes.Factors.GetWalletFactors)]
+        public async Task<IActionResult> GetWalletFactors(string walletId,[FromQuery]PaginationDto paginationDto)
+        {
+
+            var factorsFromRepo = await _db.FactorRepository
+                    .GetAllPagedListAsync(
+                    paginationDto,
+                    paginationDto.Filter.ToFactorExpression(SearchIdEnums.Wallet, walletId),
                     paginationDto.SortHe.ToOrderBy(paginationDto.SortDir),
                     "");//,Factors
 

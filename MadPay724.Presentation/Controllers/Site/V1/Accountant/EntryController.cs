@@ -51,7 +51,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
             var entriesFromRepo = await _db.EntryRepository
                     .GetAllPagedListAsync(
                     paginationDto,
-                    paginationDto.Filter.ToEntryExpression(EntryState.Approve),
+                    paginationDto.Filter.ToEntryExpression(EntryState.Approve, SearchIdEnums.None),
                     paginationDto.SortHe.ToOrderBy(paginationDto.SortDir),
                     "");//,Entries
 
@@ -68,7 +68,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
             var entriesFromRepo = await _db.EntryRepository
                     .GetAllPagedListAsync(
                     paginationDto,
-                    paginationDto.Filter.ToEntryExpression(EntryState.Pardakht),
+                    paginationDto.Filter.ToEntryExpression(EntryState.Pardakht, SearchIdEnums.None),
                     paginationDto.SortHe.ToOrderBy(paginationDto.SortDir),
                     "");//,Entries
 
@@ -85,7 +85,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
             var entriesFromRepo = await _db.EntryRepository
                     .GetAllPagedListAsync(
                     paginationDto,
-                    paginationDto.Filter.ToEntryExpression(EntryState.Archive),
+                    paginationDto.Filter.ToEntryExpression(EntryState.Archive,SearchIdEnums.None),
                     paginationDto.SortHe.ToOrderBy(paginationDto.SortDir),
                     "");//,Entries
 
@@ -102,7 +102,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
             var bancardEntriesFromRepo = await _db.EntryRepository
                     .GetAllPagedListAsync(
                     paginationDto,
-                    paginationDto.Filter.ToEntryExpression(EntryState.All, null , bankcardId,true),
+                    paginationDto.Filter.ToEntryExpression(EntryState.All, SearchIdEnums.BankCard, bankcardId),
                     paginationDto.SortHe.ToOrderBy(paginationDto.SortDir),
                     "");
 
@@ -118,7 +118,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
             var walletEntriesFromRepo = await _db.EntryRepository
                     .GetAllPagedListAsync(
                     paginationDto,
-                    paginationDto.Filter.ToEntryExpression(EntryState.All, null, walletId,false),
+                    paginationDto.Filter.ToEntryExpression(EntryState.All, SearchIdEnums.Wallet, walletId),
                     paginationDto.SortHe.ToOrderBy(paginationDto.SortDir),
                     "");
 

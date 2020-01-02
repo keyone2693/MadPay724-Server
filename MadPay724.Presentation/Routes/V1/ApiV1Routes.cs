@@ -97,6 +97,9 @@ namespace MadPay724.Presentation.Routes.V1
         {
             //GET
             public const string GetFactors = BaseSitePanel + "/factors";
+            
+            //GET
+            public const string GetWalletFactors = BaseSitePanel + "/wallets/{walletId}/factors";
             //GET
             public const string GetFactor = BaseSitePanel + "/factors/{factorId}";
             //PATCH
