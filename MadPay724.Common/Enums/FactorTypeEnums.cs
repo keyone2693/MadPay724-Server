@@ -12,6 +12,8 @@ namespace MadPay724.Common.Enums
         [Display(Name = "ایزی پی")]
         EasyPay = 2,
         [Display(Name = "حمایتی")]
-        Support = 3
+        Support = 3,
+        [Display(Name = "افزایش موجودی")]
+        IncInventory = 4
     }
 }

@@ -8,6 +8,8 @@ using MadPay724.Common.Helpers.Utilities.Extensions;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Common.Pagination;
 using MadPay724.Data.Dtos.Site.Panel.Factors;
+using MadPay724.Data.Dtos.Site.Panel.Gate;
+using MadPay724.Data.Dtos.Site.Panel.Wallet;
 using MadPay724.Presentation.Routes.V1;
 using MadPay724.Repo.Infrastructure;
 using MadPay724.Services.Site.Admin.Wallet.Interface;
@@ -83,13 +85,22 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
             if (factorFromRepo != null)
             {
                 var userFromRepo = await _dbMain.UserRepository.GetByIdAsync(factorFromRepo.UserId);
-
                 factorFromRepo.UserName = userFromRepo.Name;
-
                 _db.FactorRepository.Update(factorFromRepo);
                 await _db.SaveAsync();
+                //
+                var gatefromRepo = await _dbMain.GateRepository.GetByIdAsync(factorFromRepo.GateId);
+                //
+                var walletfromRepo = await _dbMain.WalletRepository.GetByIdAsync(factorFromRepo.EnterMoneyWalletId);
+                
+                var model = new FactorForReturnDto
+                {
+                    Factor = factorFromRepo,
+                    Gate = _mapper.Map<GateForReturnDto>(gatefromRepo),
+                    Wallet = _mapper.Map<WalletForReturnDto>(walletfromRepo),
+                };
 
-                return Ok(factorFromRepo);
+                return Ok(model);
             }
             else
             {
@@ -110,7 +121,8 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
                 {
                     if (factorFromRepo.Status)
                     {
-                        return NoContent();
+                        var walletForReturn = await _dbMain.WalletRepository.GetByIdAsync(factorFromRepo.EnterMoneyWalletId);
+                        return Ok(walletForReturn);
                     }
                     else
                     {
@@ -128,7 +140,8 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
                 {
                     if (!factorFromRepo.Status)
                     {
-                        return NoContent();
+                        var walletForReturn = await _dbMain.WalletRepository.GetByIdAsync(factorFromRepo.EnterMoneyWalletId);
+                        return Ok(walletForReturn);
                     }
                     else
                     {
@@ -143,7 +156,8 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
                 factorFromRepo.Status = changeStatusFactorDto.Status;
                 if (await _db.SaveAsync())
                 {
-                    return NoContent();
+                    var walletForReturn = await _dbMain.WalletRepository.GetByIdAsync(factorFromRepo.EnterMoneyWalletId);
+                    return Ok(walletForReturn);
                 }
                 else
                 {
