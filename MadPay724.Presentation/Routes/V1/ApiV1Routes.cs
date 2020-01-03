@@ -104,6 +104,8 @@ namespace MadPay724.Presentation.Routes.V1
             public const string GetFactor = BaseSitePanel + "/factors/{factorId}";
             //PATCH
             public const string StatusFactor = BaseSitePanel + "/factors/{factorId}/status";
+            //PATCH
+            public const string EditFactor = BaseSitePanel + "/factors/{factorId}/edit";
             //DELETE
             public const string DeleteFactor = BaseSitePanel + "/factors/{factorId}/delete";
 

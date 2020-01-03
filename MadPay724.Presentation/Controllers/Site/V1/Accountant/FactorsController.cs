@@ -23,14 +23,16 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
     public class FactorsController : ControllerBase
     {
         private readonly IUnitOfWork<Financial_MadPayDbContext> _db;
+        private readonly IUnitOfWork<Main_MadPayDbContext> _dbMain;
         private readonly IMapper _mapper;
         private readonly ILogger<FactorsController> _logger;
         private readonly IWalletService _walletService;
 
 
         public FactorsController(IUnitOfWork<Financial_MadPayDbContext> db, IMapper mapper,
-            ILogger<FactorsController> logger, IWalletService walletService)
+            ILogger<FactorsController> logger, IWalletService walletService, IUnitOfWork<Main_MadPayDbContext> dbMain)
         {
+            _dbMain = dbMain;
             _db = db;
             _mapper = mapper;
             _logger = logger;
@@ -57,7 +59,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
 
         [Authorize(Policy = "AccessAccounting")]
         [HttpGet(ApiV1Routes.Factors.GetWalletFactors)]
-        public async Task<IActionResult> GetWalletFactors(string walletId,[FromQuery]PaginationDto paginationDto)
+        public async Task<IActionResult> GetWalletFactors(string walletId, [FromQuery]PaginationDto paginationDto)
         {
 
             var factorsFromRepo = await _db.FactorRepository
@@ -80,6 +82,13 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
             var factorFromRepo = await _db.FactorRepository.GetByIdAsync(factorId);
             if (factorFromRepo != null)
             {
+                var userFromRepo = await _dbMain.UserRepository.GetByIdAsync(factorFromRepo.UserId);
+
+                factorFromRepo.UserName = userFromRepo.Name;
+
+                _db.FactorRepository.Update(factorFromRepo);
+                await _db.SaveAsync();
+
                 return Ok(factorFromRepo);
             }
             else
@@ -146,7 +155,28 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
                 return BadRequest("فاکتور با این شناسه یافت نشد");
             }
         }
-
+        [Authorize(Policy = "AccessAccounting")]
+        [HttpPatch(ApiV1Routes.Factors.EditFactor)]
+        public async Task<IActionResult> EditFactor(string factorId, EditFactorDto editFactorDto)
+        {
+            var factorFromRepo = await _db.FactorRepository.GetByIdAsync(factorId);
+            if (factorFromRepo != null)
+            {
+                factorFromRepo.RefBank = editFactorDto.RefBank;
+                if (await _db.SaveAsync())
+                {
+                    return NoContent();
+                }
+                else
+                {
+                    return BadRequest("خطا در ویرایش فاکتور");
+                }
+            }
+            else
+            {
+                return BadRequest("فاکتور با این شناسه یافت نشد");
+            }
+        }
         [Authorize(Policy = "RequireNoAccess")]
         [HttpDelete(ApiV1Routes.Factors.DeleteFactor)]
         public async Task<IActionResult> DeleteFactor(string factorId)
