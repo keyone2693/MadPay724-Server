@@ -4,6 +4,7 @@ using MadPay724.Data.Dtos.Common.Pagination;
 using MadPay724.Data.Models.FinancialDB.Accountant;
 using MadPay724.Data.Models.MainDB;
 using MadPay724.Data.Models.MainDB.Blog;
+using MadPay724.Data.Models.MainDB.UserModel;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -113,6 +114,57 @@ namespace MadPay724.Common.Helpers.Utilities.Extensions
                                 p.Gates.Any(s => s.WebsiteUrl.Contains(Filter));
 
                 return exp;
+            }
+
+        }
+        public static Expression<Func<Gate, bool>> ToGateExpression(this string Filter, bool isId, string id = "")
+        {
+            if (string.IsNullOrEmpty(Filter) || string.IsNullOrWhiteSpace(Filter))
+            {
+                if (isId)
+                {
+                    Expression<Func<Gate, bool>> exp = p => p.WalletId == id;
+                    return exp;
+                }
+                else
+                {
+                    return null;
+                }
+
+            }
+            else
+            {
+                if (isId)
+                {
+                    Expression<Func<Gate, bool>> exp = p => p.WalletId == id &&
+                                       (p.Id.Contains(Filter) ||
+                                       p.Ip.ToString().Contains(Filter) ||
+                                       p.WebsiteName.Contains(Filter) ||
+                                       p.WebsiteUrl.ToString().Contains(Filter) ||
+                                       p.PhoneNumber.ToString().Contains(Filter) ||
+                                       p.Text.ToString().Contains(Filter) ||
+                                       p.Grouping.ToString().Contains(Filter) ||
+                                       p.IconUrl.Contains(Filter) ||
+                                       p.WalletId.Contains(Filter));
+
+                    return exp;
+                }
+                else
+                {
+                    Expression<Func<Gate, bool>> exp =
+                                       p => p.Id.Contains(Filter) ||
+                                       p.Ip.ToString().Contains(Filter) ||
+                                       p.WebsiteName.Contains(Filter) ||
+                                       p.WebsiteUrl.ToString().Contains(Filter) ||
+                                       p.PhoneNumber.ToString().Contains(Filter) ||
+                                       p.Text.ToString().Contains(Filter) ||
+                                       p.Grouping.ToString().Contains(Filter) ||
+                                       p.IconUrl.Contains(Filter) ||
+                                       p.WalletId.Contains(Filter);
+
+                    return exp;
+                }
+
             }
 
         }
@@ -457,11 +509,11 @@ namespace MadPay724.Common.Helpers.Utilities.Extensions
         public static Expression<Func<Factor, bool>> ToFactorExpression(this FactorPaginationDto factorPaginationDto,
             SearchIdEnums searchIdType, string id = "")
         {
-            
+
             switch (searchIdType)
             {
                 case SearchIdEnums.None:
-                    Expression<Func<Factor, bool>> exp = p=> true ;
+                    Expression<Func<Factor, bool>> exp = p => true;
                     if (!string.IsNullOrEmpty(factorPaginationDto.Filter) && !string.IsNullOrWhiteSpace(factorPaginationDto.Filter))
                     {
                         Expression<Func<Factor, bool>> tempExp =
@@ -542,6 +594,29 @@ namespace MadPay724.Common.Helpers.Utilities.Extensions
                                         p.GateId.Contains(factorPaginationDto.Filter));
                         return expWallet;
                     }
+                case SearchIdEnums.Gate:
+                    if (string.IsNullOrEmpty(factorPaginationDto.Filter) || string.IsNullOrWhiteSpace(factorPaginationDto.Filter))
+                    {
+                        Expression<Func<Factor, bool>> expGate =
+                                        p => p.GateId == id;
+                        return expGate;
+                    }
+                    else
+                    {
+                        Expression<Func<Factor, bool>> expGate =
+                                        p => p.GateId == id &&
+                                        (p.Id.Contains(factorPaginationDto.Filter) ||
+                                        p.UserName.Contains(factorPaginationDto.Filter) ||
+                                        p.GiftCode.Contains(factorPaginationDto.Filter) ||
+                                        p.Price.ToString().Contains(factorPaginationDto.Filter) ||
+                                        p.EndPrice.ToString().Contains(factorPaginationDto.Filter) ||
+                                        p.RefBank.Contains(factorPaginationDto.Filter) ||
+                                        p.EnterMoneyWalletId.Contains(factorPaginationDto.Filter) ||
+                                        p.UserId.Contains(factorPaginationDto.Filter) ||
+                                        p.GateId.Contains(factorPaginationDto.Filter));
+                        return expGate;
+                    }
+
                 default:
                     return null;
             }

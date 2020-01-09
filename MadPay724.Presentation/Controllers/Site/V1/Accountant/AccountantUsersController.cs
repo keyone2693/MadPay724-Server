@@ -6,6 +6,7 @@ using MadPay724.Common.Helpers.Utilities.Extensions;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Common.Pagination;
 using MadPay724.Data.Dtos.Site.Panel.BankCards;
+using MadPay724.Data.Dtos.Site.Panel.Gate;
 using MadPay724.Data.Dtos.Site.Panel.Users;
 using MadPay724.Data.Dtos.Site.Panel.Wallet;
 using MadPay724.Presentation.Routes.V1;
@@ -159,6 +160,44 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
 
 
             return Ok(wallets);
+        }
+        [Authorize(Policy = "AccessAccounting")]
+        [HttpGet(ApiV1Routes.Accountant.GetWalletGates)]
+        public async Task<IActionResult> GetWalletGates(string walletId, [FromQuery]PaginationDto paginationDto)
+        {
+            var gatesFromRepo = await _db.GateRepository
+                 .GetAllPagedListAsync(
+                 paginationDto,
+                 paginationDto.Filter.ToGateExpression(true, walletId),
+                 paginationDto.SortHe.ToOrderBy(paginationDto.SortDir),
+                 "");
+
+            Response.AddPagination(gatesFromRepo.CurrentPage, gatesFromRepo.PageSize,
+                gatesFromRepo.TotalCount, gatesFromRepo.TotalPage);
+
+            var gates = _mapper.Map<List<GateForReturnDto>>(gatesFromRepo);
+
+
+            return Ok(gates);
+        }
+        [Authorize(Policy = "AccessAccounting")]
+        [HttpGet(ApiV1Routes.Accountant.GetGates)]
+        public async Task<IActionResult> GetGates([FromQuery]PaginationDto paginationDto)
+        {
+            var gatesFromRepo = await _db.GateRepository
+                 .GetAllPagedListAsync(
+                 paginationDto,
+                 paginationDto.Filter.ToGateExpression(false),
+                 paginationDto.SortHe.ToOrderBy(paginationDto.SortDir),
+                 "");
+
+            Response.AddPagination(gatesFromRepo.CurrentPage, gatesFromRepo.PageSize,
+                gatesFromRepo.TotalCount, gatesFromRepo.TotalPage);
+
+            var gates = _mapper.Map<List<GateForReturnDto>>(gatesFromRepo);
+
+
+            return Ok(gates);
         }
     }
 }

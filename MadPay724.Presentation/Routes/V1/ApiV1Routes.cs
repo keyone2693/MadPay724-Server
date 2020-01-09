@@ -57,6 +57,12 @@ namespace MadPay724.Presentation.Routes.V1
             public const string GetWallets = BaseSitePanel + "/inventories/allwallets";
             //api/v1/site/panel/Accountant
             //GET
+            public const string GetGates = BaseSitePanel + "/financial/allgates";
+            //api/v1/site/panel/Accountant
+            //GET
+            public const string GetWalletGates = BaseSitePanel + "/financial/wallets/{walletId}/gates";
+            //api/v1/site/panel/Accountant
+            //GET
             public const string GetBankCards = BaseSitePanel + "/inventories/allbankcards";
         }
 
@@ -100,6 +106,8 @@ namespace MadPay724.Presentation.Routes.V1
             
             //GET
             public const string GetWalletFactors = BaseSitePanel + "/wallets/{walletId}/factors";
+            //GET
+            public const string GetGateFactors = BaseSitePanel + "/gates/{gateId}/factors";
             //GET
             public const string GetFactor = BaseSitePanel + "/factors/{factorId}";
             //PATCH

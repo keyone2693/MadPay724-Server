@@ -89,7 +89,7 @@ namespace MadPay724.Presentation.Helpers
 
 
             CreateMap<Wallet, WalletForReturnDto>();
-            CreateMap<List<WalletForReturnDto>, List<BankCard>>();
+            CreateMap<List<WalletForReturnDto>, List<Wallet>>();
 
             CreateMap<TicketForCreateDto, Ticket> ();
 

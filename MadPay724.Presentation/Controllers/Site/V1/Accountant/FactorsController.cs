@@ -78,6 +78,24 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
         }
 
         [Authorize(Policy = "AccessAccounting")]
+        [HttpGet(ApiV1Routes.Factors.GetGateFactors)]
+        public async Task<IActionResult> GetGateFactors(string gateId, [FromQuery]FactorPaginationDto paginationDto)
+        {
+
+            var factorsFromRepo = await _db.FactorRepository
+                    .GetAllPagedListAsync(
+                    paginationDto,
+                    paginationDto.ToFactorExpression(SearchIdEnums.Gate, gateId),
+                    paginationDto.SortHe.ToOrderBy(paginationDto.SortDir),
+                    "");//,Factors
+
+            Response.AddPagination(factorsFromRepo.CurrentPage, factorsFromRepo.PageSize,
+                factorsFromRepo.TotalCount, factorsFromRepo.TotalPage);
+
+            return Ok(factorsFromRepo);
+        }
+
+        [Authorize(Policy = "AccessAccounting")]
         [HttpGet(ApiV1Routes.Factors.GetFactor, Name = "GetFactor")]
         public async Task<IActionResult> GetFactor(string factorId)
         {
