@@ -49,7 +49,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
             var factorsFromRepo = await _db.FactorRepository
                     .GetAllPagedListAsync(
                     factorPaginationDto,
-                    factorPaginationDto.Filter.ToFactorExpression(SearchIdEnums.None),
+                    factorPaginationDto.ToFactorExpression(SearchIdEnums.None),
                     factorPaginationDto.SortHe.ToOrderBy(factorPaginationDto.SortDir),
                     "");//,Factors
 
@@ -61,13 +61,13 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
 
         [Authorize(Policy = "AccessAccounting")]
         [HttpGet(ApiV1Routes.Factors.GetWalletFactors)]
-        public async Task<IActionResult> GetWalletFactors(string walletId, [FromQuery]PaginationDto paginationDto)
+        public async Task<IActionResult> GetWalletFactors(string walletId, [FromQuery]FactorPaginationDto paginationDto)
         {
 
             var factorsFromRepo = await _db.FactorRepository
                     .GetAllPagedListAsync(
                     paginationDto,
-                    paginationDto.Filter.ToFactorExpression(SearchIdEnums.Wallet, walletId),
+                    paginationDto.ToFactorExpression(SearchIdEnums.Wallet, walletId),
                     paginationDto.SortHe.ToOrderBy(paginationDto.SortDir),
                     "");//,Factors
 

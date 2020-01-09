@@ -4,6 +4,7 @@ using MadPay724.Data.Dtos.Common.Pagination;
 using MadPay724.Data.Models.FinancialDB.Accountant;
 using MadPay724.Data.Models.MainDB;
 using MadPay724.Data.Models.MainDB.Blog;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -456,14 +457,15 @@ namespace MadPay724.Common.Helpers.Utilities.Extensions
         public static Expression<Func<Factor, bool>> ToFactorExpression(this FactorPaginationDto factorPaginationDto,
             SearchIdEnums searchIdType, string id = "")
         {
-            Expression<Func<Factor, bool>> exp = null;
+            
             switch (searchIdType)
             {
                 case SearchIdEnums.None:
+                    Expression<Func<Factor, bool>> exp = p=> true ;
                     if (!string.IsNullOrEmpty(factorPaginationDto.Filter) && !string.IsNullOrWhiteSpace(factorPaginationDto.Filter))
                     {
                         Expression<Func<Factor, bool>> tempExp =
-                                        p => p.Id.Contains(factorPaginationDto.Filter) ||
+                                        (p => p.Id.Contains(factorPaginationDto.Filter) ||
                                         p.UserName.Contains(factorPaginationDto.Filter) ||
                                         p.GiftCode.Contains(factorPaginationDto.Filter) ||
                                         p.Price.ToString().Contains(factorPaginationDto.Filter) ||
@@ -471,7 +473,7 @@ namespace MadPay724.Common.Helpers.Utilities.Extensions
                                         p.RefBank.Contains(factorPaginationDto.Filter) ||
                                         p.EnterMoneyWalletId.Contains(factorPaginationDto.Filter) ||
                                         p.UserId.Contains(factorPaginationDto.Filter) ||
-                                        p.GateId.Contains(factorPaginationDto.Filter);
+                                        p.GateId.Contains(factorPaginationDto.Filter));
 
                         exp = CombineExpressions.CombiningExpressions<Factor>(exp, tempExp, ExpressionsTypeEnum.And);
                     }
@@ -507,20 +509,27 @@ namespace MadPay724.Common.Helpers.Utilities.Extensions
                                     p => p.Price >= factorPaginationDto.MinPrice && p.Price <= factorPaginationDto.MaxPrice;
                     exp = CombineExpressions.CombiningExpressions<Factor>(exp, priceExp, ExpressionsTypeEnum.And);
                     //
+                    var minDt = DateTimeOffset.FromUnixTimeMilliseconds(factorPaginationDto.MinDate);
+
+                    var maxDt = DateTimeOffset.FromUnixTimeMilliseconds(factorPaginationDto.MaxDate);
+
                     Expression<Func<Factor, bool>> datExp =
-                                    p => p.Price >= factorPaginationDto.MinPrice && p.Price <= factorPaginationDto.MaxPrice;
+                                    p => p.DateCreated >= minDt
+                                    && p.DateCreated <= maxDt;
                     exp = CombineExpressions.CombiningExpressions<Factor>(exp, datExp, ExpressionsTypeEnum.And);
+
+                    return exp;
 
                 case SearchIdEnums.Wallet:
                     if (string.IsNullOrEmpty(factorPaginationDto.Filter) || string.IsNullOrWhiteSpace(factorPaginationDto.Filter))
                     {
-                        Expression<Func<Factor, bool>> exp =
+                        Expression<Func<Factor, bool>> expWallet =
                                         p => p.EnterMoneyWalletId == id;
-                        return exp;
+                        return expWallet;
                     }
                     else
                     {
-                        Expression<Func<Factor, bool>> exp =
+                        Expression<Func<Factor, bool>> expWallet =
                                         p => p.EnterMoneyWalletId == id &&
                                         (p.Id.Contains(factorPaginationDto.Filter) ||
                                         p.UserName.Contains(factorPaginationDto.Filter) ||
@@ -531,7 +540,7 @@ namespace MadPay724.Common.Helpers.Utilities.Extensions
                                         p.EnterMoneyWalletId.Contains(factorPaginationDto.Filter) ||
                                         p.UserId.Contains(factorPaginationDto.Filter) ||
                                         p.GateId.Contains(factorPaginationDto.Filter));
-                        return exp;
+                        return expWallet;
                     }
                 default:
                     return null;

@@ -11,7 +11,7 @@ namespace MadPay724.Data.Dtos.Common.Pagination
         public int Bank { get; set; }
         public int MinPrice { get; set; }
         public int MaxPrice { get; set; }
-        public int MinDate { get; set; }
-        public int MaxDate { get; set; }
+        public long MinDate { get; set; }
+        public long MaxDate { get; set; }
     }
 }
