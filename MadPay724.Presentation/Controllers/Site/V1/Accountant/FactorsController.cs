@@ -43,14 +43,14 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
 
         [Authorize(Policy = "AccessAccounting")]
         [HttpGet(ApiV1Routes.Factors.GetFactors)]
-        public async Task<IActionResult> GetFactors([FromQuery]PaginationDto paginationDto)
+        public async Task<IActionResult> GetFactors([FromQuery]FactorPaginationDto factorPaginationDto)
         {
 
             var factorsFromRepo = await _db.FactorRepository
                     .GetAllPagedListAsync(
-                    paginationDto,
-                    paginationDto.Filter.ToFactorExpression(SearchIdEnums.None),
-                    paginationDto.SortHe.ToOrderBy(paginationDto.SortDir),
+                    factorPaginationDto,
+                    factorPaginationDto.Filter.ToFactorExpression(SearchIdEnums.None),
+                    factorPaginationDto.SortHe.ToOrderBy(factorPaginationDto.SortDir),
                     "");//,Factors
 
             Response.AddPagination(factorsFromRepo.CurrentPage, factorsFromRepo.PageSize,

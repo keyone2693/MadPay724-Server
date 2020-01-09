@@ -121,5 +121,20 @@ namespace MadPay724.Common.Helpers.Utilities.Extensions
             return age;
         }
 
+        public static DateTime ToAge(this int date)
+        {
+            var currentDate = DateTime.Now;
+            if(date > 365)
+            {
+                var tempDate = new DateTime(currentDate.Year, 0, 0);
+                return tempDate.AddDays((date - 365));
+            }
+            else
+            {
+                var tempDate = new DateTime(currentDate.Year -1, 0, 0);
+                return tempDate.AddDays((date));
+            }
+        }
+
     }
 }

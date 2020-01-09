@@ -17,6 +17,7 @@ namespace MadPay724.Data.Dtos.Common.Pagination
             set { pageSize = (value > Constants.MaxPageSize) ? Constants.MaxPageSize : value; }
         }
         public string Filter { get; set; }
+
         //SortHeader
         public string SortHe { get; set; }
         //SortDirection
