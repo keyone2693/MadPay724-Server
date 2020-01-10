@@ -138,7 +138,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
                 bankCardsFromRepo.TotalCount, bankCardsFromRepo.TotalPage);
 
             var bankCards = _mapper.Map<List<BankCardForUserDetailedDto>>(bankCardsFromRepo);
-            
+
 
             return Ok(bankCards);
         }
@@ -198,6 +198,61 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
 
 
             return Ok(gates);
+        }
+
+        [Authorize(Policy = "AccessAccounting")]
+        [HttpPatch(ApiV1Routes.Accountant.ChangeActiveGate)]
+        public async Task<IActionResult> ChangeActiveGate(string gateId, GateStatusDto gateStatusDto)
+        {
+            var gateFromRepo = await _db.GateRepository.GetByIdAsync(gateId);
+            if (gateFromRepo != null)
+            {
+                gateFromRepo.IsActive = gateStatusDto.Flag;
+                _db.GateRepository.Update(gateFromRepo);
+                if (await _db.SaveAsync())
+                    return NoContent();
+                else
+                    return BadRequest("خطا در ثبت اطلاعات");
+            }
+            {
+                return BadRequest("درگاهی وجود ندارد");
+            }
+        }
+        [Authorize(Policy = "AccessAccounting")]
+        [HttpPatch(ApiV1Routes.Accountant.ChangeDirectGate)]
+        public async Task<IActionResult> ChangeDirectGate(string gateId, GateStatusDto gateStatusDto)
+        {
+            var gateFromRepo = await _db.GateRepository.GetByIdAsync(gateId);
+            if (gateFromRepo != null)
+            {
+                gateFromRepo.IsDirect = gateStatusDto.Flag;
+                _db.GateRepository.Update(gateFromRepo);
+                if (await _db.SaveAsync())
+                    return NoContent();
+                else
+                    return BadRequest("خطا در ثبت اطلاعات");
+            }
+            {
+                return BadRequest("درگاهی وجود ندارد");
+            }
+        }
+        [Authorize(Policy = "AccessAccounting")]
+        [HttpPatch(ApiV1Routes.Accountant.ChangeIpGate)]
+        public async Task<IActionResult> ChangeIpGate(string gateId, GateStatusDto gateStatusDto)
+        {
+            var gateFromRepo = await _db.GateRepository.GetByIdAsync(gateId);
+            if (gateFromRepo != null)
+            {
+                gateFromRepo.IsIp = gateStatusDto.Flag;
+                _db.GateRepository.Update(gateFromRepo);
+                if (await _db.SaveAsync())
+                    return NoContent();
+                else
+                    return BadRequest("خطا در ثبت اطلاعات");
+            }
+            {
+                return BadRequest("درگاهی وجود ندارد");
+            }
         }
     }
 }

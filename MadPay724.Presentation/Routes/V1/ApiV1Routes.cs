@@ -37,31 +37,28 @@ namespace MadPay724.Presentation.Routes.V1
 
         public static class Accountant
         {
-            //api/v1/site/panel/Accountant
             //GET
             public const string GetInventories = BaseSitePanel + "/inventories";
-            //api/v1/site/panel/Accountant
             //GET
             public const string GetInventoryWallets = BaseSitePanel + "/inventories/wallets/{userId}";
-            //api/v1/site/panel/Accountant
             //GET
             public const string GetInventoryBankCard = BaseSitePanel + "/inventories/bankcards/{userId}";
-            //api/v1/site/panel/Accountant
             //PATCH
             public const string BlockInventoryWallet = BaseSitePanel + "/inventories/blockwallet/{walletId}";
-            //api/v1/site/panel/Accountant
             //PATCH
             public const string ApproveInventoryWallet = BaseSitePanel + "/inventories/approvebankcard/{bankcardId}";
-            //api/v1/site/panel/Accountant
+            //PATCH
+            public const string ChangeActiveGate = BaseSitePanel + "/financial/gates/{gateId}/activegate";
+            //PATCH
+            public const string ChangeDirectGate = BaseSitePanel + "/financial/gates/{gateId}/directgate";
+            //PATCH
+            public const string ChangeIpGate = BaseSitePanel + "/financial/gates/{gateId}/ipgate";
             //GET
             public const string GetWallets = BaseSitePanel + "/inventories/allwallets";
-            //api/v1/site/panel/Accountant
             //GET
             public const string GetGates = BaseSitePanel + "/financial/allgates";
-            //api/v1/site/panel/Accountant
             //GET
             public const string GetWalletGates = BaseSitePanel + "/financial/wallets/{walletId}/gates";
-            //api/v1/site/panel/Accountant
             //GET
             public const string GetBankCards = BaseSitePanel + "/inventories/allbankcards";
         }
