@@ -138,12 +138,12 @@ namespace MadPay724.Common.Helpers.Utilities.Extensions
                 {
                     Expression<Func<Gate, bool>> exp = p => p.WalletId == id &&
                                        (p.Id.Contains(Filter) ||
-                                       p.Ip.ToString().Contains(Filter) ||
+                                       p.Ip.Contains(Filter) ||
                                        p.WebsiteName.Contains(Filter) ||
-                                       p.WebsiteUrl.ToString().Contains(Filter) ||
-                                       p.PhoneNumber.ToString().Contains(Filter) ||
-                                       p.Text.ToString().Contains(Filter) ||
-                                       p.Grouping.ToString().Contains(Filter) ||
+                                       p.WebsiteUrl.Contains(Filter) ||
+                                       p.PhoneNumber.Contains(Filter) ||
+                                       p.Text.Contains(Filter) ||
+                                       p.Grouping.Contains(Filter) ||
                                        p.IconUrl.Contains(Filter) ||
                                        p.WalletId.Contains(Filter));
 
@@ -153,12 +153,12 @@ namespace MadPay724.Common.Helpers.Utilities.Extensions
                 {
                     Expression<Func<Gate, bool>> exp =
                                        p => p.Id.Contains(Filter) ||
-                                       p.Ip.ToString().Contains(Filter) ||
+                                       p.Ip.Contains(Filter) ||
                                        p.WebsiteName.Contains(Filter) ||
-                                       p.WebsiteUrl.ToString().Contains(Filter) ||
-                                       p.PhoneNumber.ToString().Contains(Filter) ||
-                                       p.Text.ToString().Contains(Filter) ||
-                                       p.Grouping.ToString().Contains(Filter) ||
+                                       p.WebsiteUrl.Contains(Filter) ||
+                                       p.PhoneNumber.Contains(Filter) ||
+                                       p.Text.Contains(Filter) ||
+                                       p.Grouping.Contains(Filter) ||
                                        p.IconUrl.Contains(Filter) ||
                                        p.WalletId.Contains(Filter);
 
