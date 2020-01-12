@@ -198,6 +198,24 @@ namespace MadPay724.Presentation
                 document.OperationProcessors.Add(
                     new AspNetCoreOperationSecurityScopeProcessor("JWT"));
             });
+            services.AddOpenApiDocument(document =>
+            {
+                document.DocumentName = "v1_Site_Panel_Admin";
+                document.ApiGroupNames = new[] { "v1_Site_Panel_Admin" };
+                document.PostProcess = d =>
+                {
+                    d.Info.Title = "MadPay724 Api Docs For Admin";
+                };
+                document.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
+                {
+                    Type = OpenApiSecuritySchemeType.ApiKey,
+                    Name = "Authorization",
+                    In = OpenApiSecurityApiKeyLocation.Header,
+                    Description = "Type into the textbox: Bearer {your JWT token}."
+                });
+                document.OperationProcessors.Add(
+                    new AspNetCoreOperationSecurityScopeProcessor("JWT"));
+            });
             services.AddCors();
                        
             services.AddAutoMapper(typeof(Startup));

@@ -3,24 +3,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using MadPay724.Common.Helpers.Utilities.Extensions;
-using MadPay724.Common.Helpers.Utilities.Pagination;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Common.Pagination;
 using MadPay724.Data.Dtos.Site.Panel.Roles;
 using MadPay724.Data.Dtos.Site.Panel.Users;
 using MadPay724.Presentation.Routes.V1;
 using MadPay724.Repo.Infrastructure;
-using MadPay724.Services.Site.Admin.User.Interface;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace MadPay724.Presentation.Controllers.Site.V1.Admin
 {
-    [ApiExplorerSettings(GroupName = "v1_Site_Panel")]
+    [ApiExplorerSettings(GroupName = "v1_Site_Panel_Admin")]
     [ApiController]
     public class UsersController : ControllerBase
     {
@@ -65,34 +61,6 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Admin
             }
 
             return Ok(users);
-        }
-
-        [Authorize(Policy = "RequireAdminRole")]
-        [HttpPost(ApiV1Routes.AdminUsers.EditRoles)]
-        public async Task<IActionResult> EditRoles(string userName,RoleEditDto roleEditDto)
-        {
-            var user = await _userManager.FindByNameAsync(userName);
-
-            var userRoles = await _userManager.GetRolesAsync(user);
-
-            var selectedRoles = roleEditDto.RoleNames;
-
-            selectedRoles ??= new string[] { };
-
-            var result = await _userManager.AddToRolesAsync(user, selectedRoles.Except(userRoles));
-            if (!result.Succeeded)
-            {
-                return BadRequest("خطا در اضافه کردن نقش ها");
-            }
-
-            result = await _userManager.RemoveFromRolesAsync(user, userRoles.Except(selectedRoles));
-            if (!result.Succeeded)
-            {
-                return BadRequest("خطا در پاک کردن نقش ها");
-            }
-
-            return Ok(await _userManager.GetRolesAsync(user));
-
         }
 
     }

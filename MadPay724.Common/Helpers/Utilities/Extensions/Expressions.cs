@@ -67,6 +67,28 @@ namespace MadPay724.Common.Helpers.Utilities.Extensions
             }
 
         }
+        public static Expression<Func<Document, bool>> ToDocumentExpression(this string Filter)
+        {
+            if (string.IsNullOrEmpty(Filter) || string.IsNullOrWhiteSpace(Filter))
+            {
+                return null;
+            }
+            else
+            {
+                Expression<Func<Document, bool>> exp =
+                                 p => p.Id.Contains(Filter) ||
+                                 p.Name.Contains(Filter) ||
+                                 p.NationalCode.Contains(Filter) ||
+                                 p.Message.Contains(Filter) ||
+                                 p.PicUrl.Contains(Filter) ||
+                                 p.FatherNameRegisterCode.Contains(Filter) ||
+                                 p.Address.Contains(Filter) ||
+                                 p.User.Name.Contains(Filter);
+
+                return exp;
+            }
+
+        }
         public static Expression<Func<User, bool>> ToUserExpression(this string Filter,
             bool isAdmin, string id = "")
         {
@@ -564,7 +586,28 @@ namespace MadPay724.Common.Helpers.Utilities.Extensions
                     exp = CombineExpressions.CombiningExpressions<Factor>(exp, datExp, ExpressionsTypeEnum.And);
 
                     return exp;
-
+                case SearchIdEnums.User:
+                    if (string.IsNullOrEmpty(factorPaginationDto.Filter) || string.IsNullOrWhiteSpace(factorPaginationDto.Filter))
+                    {
+                        Expression<Func<Factor, bool>> expUser =
+                                        p => p.UserId == id;
+                        return expUser;
+                    }
+                    else
+                    {
+                        Expression<Func<Factor, bool>> expUser =
+                                        p => p.UserId == id &&
+                                        (p.Id.Contains(factorPaginationDto.Filter) ||
+                                        p.UserName.Contains(factorPaginationDto.Filter) ||
+                                        p.GiftCode.Contains(factorPaginationDto.Filter) ||
+                                        p.Price.ToString().Contains(factorPaginationDto.Filter) ||
+                                        p.EndPrice.ToString().Contains(factorPaginationDto.Filter) ||
+                                        p.RefBank.Contains(factorPaginationDto.Filter) ||
+                                        p.EnterMoneyWalletId.Contains(factorPaginationDto.Filter) ||
+                                        p.UserId.Contains(factorPaginationDto.Filter) ||
+                                        p.GateId.Contains(factorPaginationDto.Filter));
+                        return expUser;
+                    }
                 case SearchIdEnums.Wallet:
                     if (string.IsNullOrEmpty(factorPaginationDto.Filter) || string.IsNullOrWhiteSpace(factorPaginationDto.Filter))
                     {

@@ -73,17 +73,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
             return Ok(gates);
         }
 
-        [Authorize(Policy = "AccessAccounting")]
-        [HttpGet(ApiV1Routes.AdminGates.GetGates)]
-        public async Task<IActionResult> GetUserGates(string userId)
-        {
-            var gatesFromRepo = await _db.GateRepository
-                 .GetManyAsync(p=>p.Wallet.UserId == userId,null,"");
 
-            var gates = _mapper.Map<List<GateForReturnDto>>(gatesFromRepo);
-
-            return Ok(gates);
-        }
 
         [Authorize(Policy = "AccessAccounting")]
         [HttpPatch(ApiV1Routes.Accountant.ChangeActiveGate)]

@@ -21,20 +21,70 @@ namespace MadPay724.Presentation.Routes.V1
         public const string BaseSiteApp =   Root + "/" + Version + "/" + Site + "/" + App;
 
         #region AdminRoutes
-
+        
         public static class AdminUsers
         {
-            //api/v1/site/panel/AdminUsers
             //GET
-            public const string GetUsers = BaseSitePanel + "/adminusers";
-            //api/v1/site/panel/AdminUsers
-            //Post
-            public const string EditRoles = BaseSitePanel + "/adminusers/editroles/{userName}";
+            public const string GetUsers = BaseSitePanel + "/admin/users";
+        }
+        public static class AdminRoles
+        {
+            //GET
+            public const string GetRoles = BaseSitePanel + "/admin/users/{userId}/roles";
+            //PUT
+            public const string EditRoles = BaseSitePanel + "/admin/editroles/{userName}";
         }
         public static class AdminGates
         {
             //GET
             public const string GetGates = BaseSitePanel + "/admin/users/{userId}/gates";
+        }
+        public static class AdminDocument
+        {
+            //GET
+            public const string GetDocuments = BaseSitePanel + "/admin/documents";
+            //GET
+            public const string GetUserDocuments = BaseSitePanel + "/admin/users/{userId}/documents";
+            //GET
+            public const string GetDocument = BaseSitePanel + "/admin/documents/{documentId}";
+        }
+        public static class AdminEasyPay
+        {
+            //GET
+            public const string GetEasyPays = BaseSitePanel + "/admin/easyPays";
+            //GET
+            public const string GetUserEasyPays = BaseSitePanel + "/admin/users/{userId}/easyPays";
+            //GET
+            public const string GetEasyPay = BaseSitePanel + "/admin/easyPays/{easypayId}";
+            //DELETE
+            public const string DeleteEasyPay = BaseSitePanel + "/admin/easyPays/{easypayId}";
+        }
+        public static class AdminTicket
+        {
+            //POST
+            public const string AddTicket = BaseSitePanel + "/admin/tickets/add";
+            //GET
+            public const string GetTickets = BaseSitePanel + "/admin/tickets";
+            //GET
+            public const string GetUserTickets = BaseSitePanel + "/admin/users/{userId}/tickets";
+            //GET
+            public const string GetTicket = BaseSitePanel + "/admin/tickets/{ticketId}";
+            //PATCH
+            public const string SetTicketClosed = BaseSitePanel + "/admin/tickets/{ticketId}";
+            //---------------------------------------------------------------------------------------------------------
+            //POST
+            public const string AddTicketContent = BaseSitePanel + "/admin/tickets/{ticketId}/ticketcontents";
+            //GET
+            public const string GetTicketContent = BaseSitePanel + "/admin/tickets/{ticketId}/ticketContents/{id}";
+            //GET
+            public const string GetTicketContents = BaseSitePanel + "/admin/tickets/{ticketId}/ticketcontents";
+        }
+
+        public static class AdminFactors
+        {
+            //GET
+            public const string GetUserFactors = BaseSitePanel + "/admin/users/{userId}/factors";
+
         }
 
         #endregion
