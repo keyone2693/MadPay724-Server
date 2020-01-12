@@ -31,6 +31,11 @@ namespace MadPay724.Presentation.Routes.V1
             //Post
             public const string EditRoles = BaseSitePanel + "/adminusers/editroles/{userName}";
         }
+        public static class AdminGates
+        {
+            //GET
+            public const string GetGates = BaseSitePanel + "/admin/users/{userId}/gates";
+        }
 
         #endregion
         #region AccountantRoutes
@@ -57,6 +62,7 @@ namespace MadPay724.Presentation.Routes.V1
             public const string GetWallets = BaseSitePanel + "/inventories/allwallets";
             //GET
             public const string GetGates = BaseSitePanel + "/financial/allgates";
+
             //GET
             public const string GetWalletGates = BaseSitePanel + "/financial/wallets/{walletId}/gates";
             //GET
@@ -325,7 +331,17 @@ namespace MadPay724.Presentation.Routes.V1
 
         }
         #endregion
+        #region FactorRoutes
+        public static class UsersFactors
+        {
 
+            //GET
+            public const string GetGateFactors = BaseSitePanel + "/users/{userId}/gates/{gateId}/factors";
+            //GET
+            public const string GetFactor = BaseSitePanel + "/users/{userId}/factors/{factorId}";
+
+        }
+        #endregion
 
         #region BlogRoutes
         public static class Blog

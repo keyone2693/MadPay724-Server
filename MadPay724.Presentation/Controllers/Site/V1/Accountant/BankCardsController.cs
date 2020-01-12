@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using MadPay724.Common.Helpers.Utilities.Extensions;
@@ -50,6 +51,18 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
 
 
             return Ok(bankCards);
+        }
+        [Authorize(Policy = "AccessAccounting")]
+        [HttpGet(ApiV1Routes.Accountant.GetInventoryBankCard)]
+        public async Task<IActionResult> GetUserBankCards(string userId)
+        {
+            var bankCardsFromRepo = await _db.BankCardRepository
+           .GetManyAsync(p => p.UserId == userId, s => s.OrderByDescending(x => x.Approve), "");
+
+
+            var bankcards = _mapper.Map<List<BankCardForUserDetailedDto>>(bankCardsFromRepo);
+
+            return Ok(bankcards);
         }
     }
 }

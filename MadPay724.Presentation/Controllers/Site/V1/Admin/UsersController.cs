@@ -2,7 +2,10 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using MadPay724.Common.Helpers.Utilities.Extensions;
+using MadPay724.Common.Helpers.Utilities.Pagination;
 using MadPay724.Data.DatabaseContext;
+using MadPay724.Data.Dtos.Common.Pagination;
 using MadPay724.Data.Dtos.Site.Panel.Roles;
 using MadPay724.Data.Dtos.Site.Panel.Users;
 using MadPay724.Presentation.Routes.V1;
@@ -19,19 +22,19 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Admin
 {
     [ApiExplorerSettings(GroupName = "v1_Site_Panel")]
     [ApiController]
-    public class AdminUsersController : ControllerBase
+    public class UsersController : ControllerBase
     {
         private readonly IUnitOfWork<Main_MadPayDbContext> _db;
         private readonly Main_MadPayDbContext _dbMad;
         private readonly IMapper _mapper;
-        private readonly ILogger<AdminUsersController> _logger;
+        private readonly ILogger<UsersController> _logger;
         private readonly UserManager<Data.Models.MainDB.User> _userManager;
 
 
 
-        public AdminUsersController(IUnitOfWork<Main_MadPayDbContext> dbContext, Main_MadPayDbContext dbMad
+        public UsersController(IUnitOfWork<Main_MadPayDbContext> dbContext, Main_MadPayDbContext dbMad
             ,IMapper mapper,
-            ILogger<AdminUsersController> logger, UserManager<Data.Models.MainDB.User> userManager)
+            ILogger<UsersController> logger, UserManager<Data.Models.MainDB.User> userManager)
         {
             _db = dbContext;
             _mapper = mapper;
@@ -43,22 +46,23 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Admin
         [Authorize(Policy = "RequireAdminRole")]
         [HttpGet(ApiV1Routes.AdminUsers.GetUsers)]
         [ResponseCache(Duration = 60)]
-        public async Task<IActionResult> GetUsers()
+        public async Task<IActionResult> GetUsers([FromQuery]PaginationDto paginationDto)
         {
-            var users =await (from user in _dbMad.Users
-                              orderby user.UserName
-                         select new
-                         {
-                             Id = user.Id,
-                             UserName = user.UserName,
-                             Roles = (from userRole in user.UserRoles
-                                      join role in _dbMad.Roles
-                                          on userRole.RoleId
-                                          equals role.Id
-                                      select role.Name)
-                         }).ToListAsync();
-            await _db.UserRepository.GetManyAsync(null, null, "Photos,BankCards");
-             var usersToReturn = _mapper.Map<IEnumerable<UserFroListDto>>(users);
+            var usersFromRepo = await _db.UserRepository.GetAllPagedListAsync(
+                 paginationDto,
+                 paginationDto.Filter.ToUserExpression(true),
+                 paginationDto.SortHe.ToOrderBy(paginationDto.SortDir),
+                 "");
+
+            Response.AddPagination(usersFromRepo.CurrentPage, usersFromRepo.PageSize,
+                usersFromRepo.TotalCount, usersFromRepo.TotalPage);
+
+            var users = new List<UserForAccountantDto>();
+
+            foreach (var item in usersFromRepo)
+            {
+                users.Add(_mapper.Map<UserForAccountantDto>(item));
+            }
 
             return Ok(users);
         }

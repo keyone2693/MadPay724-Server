@@ -84,7 +84,16 @@ namespace MadPay724.Common.Helpers.Utilities.Extensions
                                  p.Wallets.Any(s => s.Name.Contains(Filter)) ||
                                  p.Wallets.Any(s => s.Inventory.ToString().Contains(Filter)) ||
                                  p.Wallets.Any(s => s.InterMoney.ToString().Contains(Filter)) ||
-                                 p.Wallets.Any(s => s.ExitMoney.ToString().Contains(Filter));
+                                 p.Wallets.Any(s => s.ExitMoney.ToString().Contains(Filter)) ||
+                                 p.Wallets.Any(s => s.Gates.Any(r=>r.Grouping.Contains(Filter))) ||
+                                 p.Wallets.Any(s => s.Gates.Any(r=>r.PhoneNumber.Contains(Filter))) ||
+                                 p.Wallets.Any(s => s.Gates.Any(r=>r.WebsiteUrl.Contains(Filter))) ||
+                                 p.Wallets.Any(s => s.Gates.Any(r=>r.WebsiteName.Contains(Filter))) ||
+                                 p.BankCards.Any(s=>s.OwnerName.Contains(Filter)) ||
+                                 p.BankCards.Any(s => s.HesabNumber.Contains(Filter)) ||
+                                 p.BankCards.Any(s => s.BankName.Contains(Filter)) ||
+                                 p.BankCards.Any(s => s.CardNumber.Contains(Filter)) ||
+                                 p.BankCards.Any(s => s.Shaba.Contains(Filter));
 
                 return exp;
             }
@@ -117,41 +126,26 @@ namespace MadPay724.Common.Helpers.Utilities.Extensions
             }
 
         }
-        public static Expression<Func<Gate, bool>> ToGateExpression(this string Filter, bool isId, string id = "")
+        public static Expression<Func<Gate, bool>> ToGateExpression(this string Filter,
+           bool isId, string id = "")
         {
+            Expression<Func<Gate, bool>> exp = p => true;
+
+            if (isId)
+            {
+                Expression<Func<Gate, bool>> tempExp = p=> p.WalletId == id;
+                exp = CombineExpressions.CombiningExpressions<Gate>(exp, tempExp, ExpressionsTypeEnum.And);
+            }
+
             if (string.IsNullOrEmpty(Filter) || string.IsNullOrWhiteSpace(Filter))
             {
-                if (isId)
-                {
-                    Expression<Func<Gate, bool>> exp = p => p.WalletId == id;
+               
                     return exp;
-                }
-                else
-                {
-                    return null;
-                }
-
             }
             else
             {
-                if (isId)
-                {
-                    Expression<Func<Gate, bool>> exp = p => p.WalletId == id &&
-                                       (p.Id.Contains(Filter) ||
-                                       p.Ip.Contains(Filter) ||
-                                       p.WebsiteName.Contains(Filter) ||
-                                       p.WebsiteUrl.Contains(Filter) ||
-                                       p.PhoneNumber.Contains(Filter) ||
-                                       p.Text.Contains(Filter) ||
-                                       p.Grouping.Contains(Filter) ||
-                                       p.IconUrl.Contains(Filter) ||
-                                       p.WalletId.Contains(Filter));
 
-                    return exp;
-                }
-                else
-                {
-                    Expression<Func<Gate, bool>> exp =
+                    Expression<Func<Gate, bool>> tempExp =
                                        p => p.Id.Contains(Filter) ||
                                        p.Ip.Contains(Filter) ||
                                        p.WebsiteName.Contains(Filter) ||
@@ -162,9 +156,7 @@ namespace MadPay724.Common.Helpers.Utilities.Extensions
                                        p.IconUrl.Contains(Filter) ||
                                        p.WalletId.Contains(Filter);
 
-                    return exp;
-                }
-
+                return CombineExpressions.CombiningExpressions<Gate>(exp, tempExp, ExpressionsTypeEnum.And);
             }
 
         }
@@ -506,8 +498,9 @@ namespace MadPay724.Common.Helpers.Utilities.Extensions
             }
 
         }
-        public static Expression<Func<Factor, bool>> ToFactorExpression(this FactorPaginationDto factorPaginationDto,
-            SearchIdEnums searchIdType, string id = "")
+        public static Expression<Func<Factor, bool>> ToFactorExpression(
+            this FactorPaginationDto factorPaginationDto,
+            SearchIdEnums searchIdType, string id = "", string userId = "", bool isAdmin = true)
         {
 
             switch (searchIdType)
@@ -595,15 +588,22 @@ namespace MadPay724.Common.Helpers.Utilities.Extensions
                         return expWallet;
                     }
                 case SearchIdEnums.Gate:
+                    Expression<Func<Factor, bool>> expGate = p => true;
+                    if (!isAdmin)
+                    {
+                        Expression<Func<Factor, bool>> tempExp = p => p.UserId == userId;
+                        expGate = CombineExpressions.CombiningExpressions<Factor>(expGate, tempExp, ExpressionsTypeEnum.And);
+                    }
                     if (string.IsNullOrEmpty(factorPaginationDto.Filter) || string.IsNullOrWhiteSpace(factorPaginationDto.Filter))
                     {
-                        Expression<Func<Factor, bool>> expGate =
+
+                        Expression<Func<Factor, bool>> tempExp =
                                         p => p.GateId == id;
-                        return expGate;
+                        return CombineExpressions.CombiningExpressions<Factor>(expGate, tempExp, ExpressionsTypeEnum.And);
                     }
                     else
                     {
-                        Expression<Func<Factor, bool>> expGate =
+                        Expression<Func<Factor, bool>> tempExp =
                                         p => p.GateId == id &&
                                         (p.Id.Contains(factorPaginationDto.Filter) ||
                                         p.UserName.Contains(factorPaginationDto.Filter) ||
@@ -614,7 +614,8 @@ namespace MadPay724.Common.Helpers.Utilities.Extensions
                                         p.EnterMoneyWalletId.Contains(factorPaginationDto.Filter) ||
                                         p.UserId.Contains(factorPaginationDto.Filter) ||
                                         p.GateId.Contains(factorPaginationDto.Filter));
-                        return expGate;
+
+                        return CombineExpressions.CombiningExpressions<Factor>(expGate, tempExp, ExpressionsTypeEnum.And);
                     }
 
                 default:

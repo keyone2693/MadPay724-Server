@@ -134,8 +134,6 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
             }
         }
 
-    
-
-
+   
     }
 }
