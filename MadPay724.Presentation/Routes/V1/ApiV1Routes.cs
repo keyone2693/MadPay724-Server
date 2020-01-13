@@ -38,6 +38,12 @@ namespace MadPay724.Presentation.Routes.V1
         {
             //GET
             public const string GetGates = BaseSitePanel + "/admin/users/{userId}/gates";
+            //PATCH
+            public const string ChangeActiveGate = BaseSitePanel + "/admin/gates/{gateId}/activegate";
+            //PATCH
+            public const string ChangeDirectGate = BaseSitePanel + "/admin/gates/{gateId}/directgate";
+            //PATCH
+            public const string ChangeIpGate = BaseSitePanel + "/admin/gates/{gateId}/ipgate";
         }
         public static class AdminDocument
         {

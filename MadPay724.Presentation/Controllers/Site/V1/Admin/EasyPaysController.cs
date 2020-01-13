@@ -21,7 +21,6 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Admin
 {
     [ApiExplorerSettings(GroupName = "v1_Site_Panel_Admin")]
     [ApiController]
-    [ServiceFilter(typeof(DocumentApproveFilter))]
     public class EasyPaysController : ControllerBase
     {
         private readonly IUnitOfWork<Main_MadPayDbContext> _db;

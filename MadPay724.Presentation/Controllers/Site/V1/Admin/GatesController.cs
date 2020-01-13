@@ -17,7 +17,6 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Admin
 {
     [ApiExplorerSettings(GroupName = "v1_Site_Panel_Admin")]
     [ApiController]
-    [ServiceFilter(typeof(DocumentApproveFilter))]
     public class GatesController : ControllerBase
     {
         private readonly IUnitOfWork<Main_MadPayDbContext> _db;
@@ -48,6 +47,62 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Admin
             var gates = _mapper.Map<List<GateForReturnDto>>(gatesFromRepo);
 
             return Ok(gates);
+        }
+
+
+        [Authorize(Policy = "RequireAdminRole")]
+        [HttpPatch(ApiV1Routes.AdminGates.ChangeActiveGate)]
+        public async Task<IActionResult> ChangeActiveGate(string gateId, GateStatusDto gateStatusDto)
+        {
+            var gateFromRepo = await _db.GateRepository.GetByIdAsync(gateId);
+            if (gateFromRepo != null)
+            {
+                gateFromRepo.IsActive = gateStatusDto.Flag;
+                _db.GateRepository.Update(gateFromRepo);
+                if (await _db.SaveAsync())
+                    return NoContent();
+                else
+                    return BadRequest("خطا در ثبت اطلاعات");
+            }
+            {
+                return BadRequest("درگاهی وجود ندارد");
+            }
+        }
+        [Authorize(Policy = "RequireAdminRole")]
+        [HttpPatch(ApiV1Routes.AdminGates.ChangeDirectGate)]
+        public async Task<IActionResult> ChangeDirectGate(string gateId, GateStatusDto gateStatusDto)
+        {
+            var gateFromRepo = await _db.GateRepository.GetByIdAsync(gateId);
+            if (gateFromRepo != null)
+            {
+                gateFromRepo.IsDirect = gateStatusDto.Flag;
+                _db.GateRepository.Update(gateFromRepo);
+                if (await _db.SaveAsync())
+                    return NoContent();
+                else
+                    return BadRequest("خطا در ثبت اطلاعات");
+            }
+            {
+                return BadRequest("درگاهی وجود ندارد");
+            }
+        }
+        [Authorize(Policy = "RequireAdminRole")]
+        [HttpPatch(ApiV1Routes.AdminGates.ChangeIpGate)]
+        public async Task<IActionResult> ChangeIpGate(string gateId, GateStatusDto gateStatusDto)
+        {
+            var gateFromRepo = await _db.GateRepository.GetByIdAsync(gateId);
+            if (gateFromRepo != null)
+            {
+                gateFromRepo.IsIp = gateStatusDto.Flag;
+                _db.GateRepository.Update(gateFromRepo);
+                if (await _db.SaveAsync())
+                    return NoContent();
+                else
+                    return BadRequest("خطا در ثبت اطلاعات");
+            }
+            {
+                return BadRequest("درگاهی وجود ندارد");
+            }
         }
     }
 }
