@@ -48,7 +48,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Admin
                  paginationDto,
                  paginationDto.Filter.ToUserExpression(true),
                  paginationDto.SortHe.ToOrderBy(paginationDto.SortDir),
-                 "");
+                 "Wallets,Photos");
 
             Response.AddPagination(usersFromRepo.CurrentPage, usersFromRepo.PageSize,
                 usersFromRepo.TotalCount, usersFromRepo.TotalPage);

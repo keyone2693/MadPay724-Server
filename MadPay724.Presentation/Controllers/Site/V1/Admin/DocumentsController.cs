@@ -73,7 +73,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Admin
         }
 
         [Authorize(Policy = "RequireAdminRole")]
-        [HttpGet(ApiV1Routes.AdminDocument.GetDocument, Name = "GetDocument")]
+        [HttpGet(ApiV1Routes.AdminDocument.GetDocument)]
         public async Task<IActionResult> GetDocument(string documentId)
         {
             var documentFromRepo = await _db.DocumentRepository.GetByIdAsync(documentId);

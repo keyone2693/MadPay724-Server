@@ -54,7 +54,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Admin
         }
 
         [Authorize(Policy = "RequireAdminRole")]
-        [HttpGet(ApiV1Routes.AdminTicket.GetTicket, Name = "GetTicket")]
+        [HttpGet(ApiV1Routes.AdminTicket.GetTicket)]
         public async Task<IActionResult> GetTicket(string id, string userId)
         {
             var ticketFromRepo = (await _db.TicketRepository.GetManyAsync(p=>p.Id == id,null, "TicketContents"))
@@ -202,7 +202,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Admin
 
         //--------------------------------------------------------------------------------------------------------------------------------
         [Authorize(Policy = "RequireAdminRole")]
-        [HttpGet(ApiV1Routes.AdminTicket.GetTicketContent, Name = "GetTicketContent")]
+        [HttpGet(ApiV1Routes.AdminTicket.GetTicketContent)]
         public async Task<IActionResult> GetTicketContent(string userId, string ticketId, string id)
         {
             var ticketFromRepo = await _db.TicketRepository.GetByIdAsync(ticketId);
