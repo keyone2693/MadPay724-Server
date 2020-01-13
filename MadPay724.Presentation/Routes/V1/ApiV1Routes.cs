@@ -30,7 +30,7 @@ namespace MadPay724.Presentation.Routes.V1
         public static class AdminRoles
         {
             //GET
-            public const string GetRoles = BaseSitePanel + "/admin/users/{userId}/roles";
+            public const string GetUserRoles = BaseSitePanel + "/admin/users/{userId}/roles";
             //PUT
             public const string EditRoles = BaseSitePanel + "/admin/editroles/{userName}";
         }

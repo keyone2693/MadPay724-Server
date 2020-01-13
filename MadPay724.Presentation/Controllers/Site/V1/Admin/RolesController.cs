@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MadPay724.Data.DatabaseContext;
+using MadPay724.Data.Dtos.Site.Panel.Role;
 using MadPay724.Data.Dtos.Site.Panel.Roles;
 using MadPay724.Presentation.Routes.V1;
 using MadPay724.Repo.Infrastructure;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -34,7 +36,48 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Admin
             _userManager = userManager;
             _dbMad = dbMad;
         }
+        [Authorize(Policy = "RequireAdminRole")]
+        [HttpGet(ApiV1Routes.AdminRoles.GetUserRoles)]
+        public async Task<IActionResult> GetUserRoles(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
 
+            var userRoles = await _userManager.GetRolesAsync(user);
+
+
+            var roles = new List<RolesForReturnDto>();
+
+            foreach (var item in userRoles)
+            {
+                if (item == "Admin")
+                    roles.Add(new RolesForReturnDto { Value = "Admin", Has = true });
+                else
+                    roles.Add(new RolesForReturnDto { Value = "Admin", Has = false });
+                //
+                if (item == "Accountant")
+                    roles.Add(new RolesForReturnDto { Value = "Admin", Has = true });
+                else
+                    roles.Add(new RolesForReturnDto { Value = "Admin", Has = false });
+                //
+                if (item == "AdminBlog")
+                    roles.Add(new RolesForReturnDto { Value = "Admin", Has = true });
+                else
+                    roles.Add(new RolesForReturnDto { Value = "Admin", Has = false });
+                //
+                if (item == "Blog")
+                    roles.Add(new RolesForReturnDto { Value = "Admin", Has = true });
+                else
+                    roles.Add(new RolesForReturnDto { Value = "Admin", Has = false });
+                //
+                if (item == "User")
+                    roles.Add(new RolesForReturnDto { Value = "Admin", Has = true });
+                else
+                    roles.Add(new RolesForReturnDto { Value = "Admin", Has = false });
+            }
+
+            return Ok(roles);
+
+        }
         [Authorize(Policy = "RequireAdminRole")]
         [HttpPost(ApiV1Routes.AdminRoles.EditRoles)]
         public async Task<IActionResult> EditRoles(string userName, RoleEditDto roleEditDto)
