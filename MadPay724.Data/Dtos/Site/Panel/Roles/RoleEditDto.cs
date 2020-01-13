@@ -6,6 +6,7 @@ namespace MadPay724.Data.Dtos.Site.Panel.Roles
 {
   public class RoleEditDto
     {
-        public string[] RoleNames { get; set; }
+        public string Value { get; set; }
+        public bool Check { get; set; }
     }
 }

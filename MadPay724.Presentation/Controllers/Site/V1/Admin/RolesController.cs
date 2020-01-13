@@ -45,65 +45,79 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Admin
             var userRoles = await _userManager.GetRolesAsync(user);
 
 
-            var roles = new List<RolesForReturnDto>();
+            var roles = new List<RolesForReturnDto>
+            {
+                new RolesForReturnDto
+                {UserId = userId, Value = "Admin", Has = false},
+                new RolesForReturnDto
+                {UserId = userId, Value = "Accountant", Has = false},
+                new RolesForReturnDto
+                {UserId = userId, Value = "AdminBlog", Has = false},
+                new RolesForReturnDto
+                {UserId = userId, Value = "Blog", Has = false},
+                new RolesForReturnDto
+                {UserId = userId, Value = "User", Has = false}
+            };
+
+
+
 
             foreach (var item in userRoles)
             {
-                if (item == "Admin")
-                    roles.Add(new RolesForReturnDto { Value = "Admin", Has = true });
-                else
-                    roles.Add(new RolesForReturnDto { Value = "Admin", Has = false });
-                //
-                if (item == "Accountant")
-                    roles.Add(new RolesForReturnDto { Value = "Admin", Has = true });
-                else
-                    roles.Add(new RolesForReturnDto { Value = "Admin", Has = false });
-                //
-                if (item == "AdminBlog")
-                    roles.Add(new RolesForReturnDto { Value = "Admin", Has = true });
-                else
-                    roles.Add(new RolesForReturnDto { Value = "Admin", Has = false });
-                //
-                if (item == "Blog")
-                    roles.Add(new RolesForReturnDto { Value = "Admin", Has = true });
-                else
-                    roles.Add(new RolesForReturnDto { Value = "Admin", Has = false });
-                //
-                if (item == "User")
-                    roles.Add(new RolesForReturnDto { Value = "Admin", Has = true });
-                else
-                    roles.Add(new RolesForReturnDto { Value = "Admin", Has = false });
+                roles.Single(p => p.Value == item).Has = true;
             }
 
             return Ok(roles);
 
         }
         [Authorize(Policy = "RequireAdminRole")]
-        [HttpPost(ApiV1Routes.AdminRoles.EditRoles)]
-        public async Task<IActionResult> EditRoles(string userName, RoleEditDto roleEditDto)
+        [HttpPatch(ApiV1Routes.AdminRoles.ChangeRoles)]
+        public async Task<IActionResult> ChangeRoles(string userId, RoleEditDto roleEditDto)
         {
-            var user = await _userManager.FindByNameAsync(userName);
+            var user = await _userManager.FindByIdAsync(userId);
 
             var userRoles = await _userManager.GetRolesAsync(user);
 
-            var selectedRoles = roleEditDto.RoleNames;
-
-            selectedRoles ??= new string[] { };
-
-            var result = await _userManager.AddToRolesAsync(user, selectedRoles.Except(userRoles));
-            if (!result.Succeeded)
+            if(userRoles.Any(p=>p == roleEditDto.Value))
             {
-                return BadRequest("خطا در اضافه کردن نقش ها");
+                if (roleEditDto.Check)
+                {
+                    return NoContent();
+                }
+                else
+                {
+                    var result = await _userManager
+                         .RemoveFromRoleAsync(user, roleEditDto.Value);
+                    if (!result.Succeeded)
+                    {
+                        return BadRequest("خطا در پاک کردن نقش ");
+                    }
+                    else
+                    {
+                        return NoContent();
+                    }
+                }
             }
-
-            result = await _userManager.RemoveFromRolesAsync(user, userRoles.Except(selectedRoles));
-            if (!result.Succeeded)
+            else
             {
-                return BadRequest("خطا در پاک کردن نقش ها");
-            }
-
-            return Ok(await _userManager.GetRolesAsync(user));
-
+                if (!roleEditDto.Check)
+                {
+                    return NoContent();
+                }
+                else
+                {
+                    var result = await _userManager
+                        .AddToRoleAsync(user, roleEditDto.Value);
+                    if (!result.Succeeded)
+                    {
+                        return BadRequest("خطا در اضافه کردن نقش ");
+                    }
+                    else
+                    {
+                        return NoContent();
+                    }
+                }
+            }            
         }
     }
 }
