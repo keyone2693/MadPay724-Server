@@ -668,6 +668,86 @@ namespace MadPay724.Common.Helpers.Utilities.Extensions
 
         }
 
+        public static Expression<Func<Ticket, bool>> ToTicketExpression(
+    this TicketsPaginationDto ticketsPaginationDto,
+    SearchIdEnums searchIdType, string id = "")
+        {
+
+            switch (searchIdType)
+            {
+                case SearchIdEnums.None:
+                    Expression<Func<Ticket, bool>> exp = p => true;
+                    if (!string.IsNullOrEmpty(ticketsPaginationDto.Filter) && !string.IsNullOrWhiteSpace(ticketsPaginationDto.Filter))
+                    {
+                        Expression<Func<Ticket, bool>> tempExp =
+                                        (p => p.Id.Contains(ticketsPaginationDto.Filter) ||
+                                        p.Title.Contains(ticketsPaginationDto.Filter) ||
+                                        p.TicketContents.Any(s=>s.Text.Contains(ticketsPaginationDto.Filter)) ||
+                                        p.TicketContents.Any(s=>s.Id.Contains(ticketsPaginationDto.Filter)));
+
+                        exp = CombineExpressions.CombiningExpressions<Ticket>(exp, tempExp, ExpressionsTypeEnum.And);
+                    }
+                    //
+                    if (ticketsPaginationDto.Closed == 1)
+                    {
+                        Expression<Func<Ticket, bool>> tempExp =
+                                        p => p.Closed;
+                        exp = CombineExpressions.CombiningExpressions<Ticket>(exp, tempExp, ExpressionsTypeEnum.And);
+                    }
+                    if (ticketsPaginationDto.Closed == 2)
+                    {
+                        Expression<Func<Ticket, bool>> tempExp =
+                                        p => !p.Closed;
+                        exp = CombineExpressions.CombiningExpressions<Ticket>(exp, tempExp, ExpressionsTypeEnum.And);
+                    }
+                    //
+                    if (ticketsPaginationDto.Department > 0 )
+                    {
+                        Expression<Func<Ticket, bool>> tempExp =
+                                        p => p.Department == ticketsPaginationDto.Department;
+                        exp = CombineExpressions.CombiningExpressions<Ticket>(exp, tempExp, ExpressionsTypeEnum.And);
+                    }
+                    if (ticketsPaginationDto.Level > 0)
+                    {
+                        Expression<Func<Ticket, bool>> tempExp =
+                                        p => p.Level == ticketsPaginationDto.Level;
+                        exp = CombineExpressions.CombiningExpressions<Ticket>(exp, tempExp, ExpressionsTypeEnum.And);
+                    }
+                    //
+                    var minDt = DateTimeOffset.FromUnixTimeMilliseconds(ticketsPaginationDto.MinDate);
+
+                    var maxDt = DateTimeOffset.FromUnixTimeMilliseconds(ticketsPaginationDto.MaxDate);
+
+                    Expression<Func<Ticket, bool>> datExp =
+                                    p => p.DateCreated >= minDt
+                                    && p.DateCreated <= maxDt;
+                    exp = CombineExpressions.CombiningExpressions<Ticket>(exp, datExp, ExpressionsTypeEnum.And);
+
+                    return exp;
+                case SearchIdEnums.User:
+                    if (string.IsNullOrEmpty(ticketsPaginationDto.Filter) || string.IsNullOrWhiteSpace(ticketsPaginationDto.Filter))
+                    {
+                        Expression<Func<Ticket, bool>> expUser =
+                                        p => p.UserId == id;
+                        return expUser;
+                    }
+                    else
+                    {
+                        Expression<Func<Ticket, bool>> expUser =
+                                        p => p.UserId == id &&
+                                        ( p.Id.Contains(ticketsPaginationDto.Filter) ||
+                                        p.Title.Contains(ticketsPaginationDto.Filter) ||
+                                        p.TicketContents.Any(s => s.Text.Contains(ticketsPaginationDto.Filter)) ||
+                                        p.TicketContents.Any(s => s.Id.Contains(ticketsPaginationDto.Filter)));
+                        return expUser;
+                    }
+                default:
+                    return null;
+            }
+
+
+        }
+
 
 
 

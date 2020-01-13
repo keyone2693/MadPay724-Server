@@ -4,7 +4,10 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
+using MadPay724.Common.Enums;
+using MadPay724.Common.Helpers.Utilities.Extensions;
 using MadPay724.Data.DatabaseContext;
+using MadPay724.Data.Dtos.Common.Pagination;
 using MadPay724.Data.Dtos.Site.Panel.Ticket;
 using MadPay724.Data.Models.MainDB;
 using MadPay724.Presentation.Helpers.Filters;
@@ -39,158 +42,57 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Admin
             _env = env;
         }
 
-
         [Authorize(Policy = "RequireAdminRole")]
         [HttpGet(ApiV1Routes.AdminTicket.GetTickets)]
-        public async Task<IActionResult> GetTickets(string userId,int page = 0)
+        public async Task<IActionResult> GetTickets([FromQuery]TicketsPaginationDto ticketsPaginationDto)
         {
-            var ticketsFromRepo = (await _db.TicketRepository
-                .GetManyAsyncPaging(p => p.UserId == userId, s => s.OrderBy(x => x.Closed).ThenByDescending(x => x.DateModified), "",
-                10,0, page));
+            var ticketsFromRepo = await _db.TicketRepository
+               .GetAllPagedListAsync(
+               ticketsPaginationDto,
+               ticketsPaginationDto.ToTicketExpression(SearchIdEnums.None),
+               ticketsPaginationDto.SortHe.ToOrderBy(ticketsPaginationDto.SortDir),
+               "");//,tickets
 
-            // var tickets = _mapper.Map<List<TicketForReturnDto>>(ticketsFromRepo);
+            Response.AddPagination(ticketsFromRepo.CurrentPage, ticketsFromRepo.PageSize,
+                ticketsFromRepo.TotalCount, ticketsFromRepo.TotalPage);
 
             return Ok(ticketsFromRepo);
         }
 
         [Authorize(Policy = "RequireAdminRole")]
         [HttpGet(ApiV1Routes.AdminTicket.GetTicket)]
-        public async Task<IActionResult> GetTicket(string id, string userId)
+        public async Task<IActionResult> GetTicket(string id)
         {
-            var ticketFromRepo = (await _db.TicketRepository.GetManyAsync(p=>p.Id == id,null, "TicketContents"))
+            var ticketFromRepo = (await _db.TicketRepository.GetManyAsync(p => p.Id == id, null, "TicketContents"))
                 .SingleOrDefault();
             if (ticketFromRepo != null)
             {
-                if (ticketFromRepo.UserId == User.FindFirst(ClaimTypes.NameIdentifier).Value)
-                {
-                    ticketFromRepo.TicketContents.OrderByDescending(p => p.DateCreated);
-                    return Ok(ticketFromRepo);
-                }
-                else
-                {
-                    _logger.LogError($"کاربر   {userId} قصد دسترسی به تیکت دیگری را دارد");
-
-                    return BadRequest("شما اجازه دسترسی به تیکت کاربر دیگری را ندارید");
-                }
+                ticketFromRepo.TicketContents.OrderByDescending(p => p.DateCreated);
+                return Ok(ticketFromRepo);
             }
             else
             {
                 return BadRequest("تیکتی وجود ندارد");
             }
-
         }
 
-        [Authorize(Policy = "RequireAdminRole")]
-        [HttpPost(ApiV1Routes.AdminTicket.AddTicket)]
-        public async Task<IActionResult> AddTicket(string userId, [FromForm]TicketForCreateDto ticketForCreateDto)
-        {
-            var ticketFromRepo = await _db.TicketRepository
-                .GetAsync(p => p.Title == ticketForCreateDto.Title && p.UserId == userId);
-
-            if (ticketFromRepo == null)
-            {
-                var ticket = new Ticket()
-                {
-                    UserId = userId,
-                    Closed = false,
-                    IsAdminSide = false
-                };
-
-                _mapper.Map(ticketForCreateDto, ticket);
-
-                await _db.TicketRepository.InsertAsync(ticket);
-
-                if (await _db.SaveAsync())
-                {
-                    var ticketContent = new TicketContent()
-                    {
-                        TicketId = ticket.Id,
-                        IsAdminSide = false,
-                        Text = ticketForCreateDto.Text
-                    };
-                    if(ticketForCreateDto.File != null)
-                    {
-                        if (ticketForCreateDto.File.Length > 0)
-                        {
-                            var uploadRes = await _uploadService.UploadFileToLocal(
-                                ticketForCreateDto.File,
-                                userId,
-                                _env.WebRootPath,
-                                $"{Request.Scheme ?? ""}://{Request.Host.Value ?? ""}{Request.PathBase.Value ?? ""}",
-                                "Files\\TicketContent"
-                            );
-                            if (uploadRes.Status)
-                            {
-                                ticketContent.FileUrl = uploadRes.Url;
-                            }
-                            else
-                            {
-                                _db.TicketRepository.Delete(ticket.Id);
-                                await _db.SaveAsync();
-                                return BadRequest(uploadRes.Message);
-                            }
-                        }
-                        else
-                        {
-                            ticketContent.FileUrl = "";
-                        }
-                    }
-                    else
-                    {
-                        ticketContent.FileUrl = "";
-                    }
-
-                    await _db.TicketContentRepository.InsertAsync(ticketContent);
-
-                    if (await _db.SaveAsync())
-                    {
-                        return CreatedAtRoute("GetTicket", new { id = ticket.Id, userId = userId },
-                        ticket);
-                    }
-                    else
-                    {
-                        _db.TicketRepository.Delete(ticket.Id);
-                        await _db.SaveAsync();
-                        return BadRequest("خطا در ثبت اطلاعات ");
-                    }
-                }
-                else
-                {
-                    return BadRequest("خطا در ثبت اطلاعات ");
-
-                }
-            }
-            {
-                return BadRequest("این تیکت قبلا ثبت شده است");
-            }
-
-
-        }
 
         [Authorize(Policy = "RequireAdminRole")]
         [HttpPut(ApiV1Routes.AdminTicket.SetTicketClosed)]
-        public async Task<IActionResult> SetTicketClosed(string id, string userId, UpdateTicketClosed updateTicketClosed)
+        public async Task<IActionResult> SetTicketClosed(string id, UpdateTicketClosed updateTicketClosed)
         {
             var ticketFromRepo = (await _db.TicketRepository.GetByIdAsync(id));
             if (ticketFromRepo != null)
             {
-                if (ticketFromRepo.UserId == User.FindFirst(ClaimTypes.NameIdentifier).Value)
+                ticketFromRepo.Closed = updateTicketClosed.Closed;
+                _db.TicketRepository.Update(ticketFromRepo);
+                if (await _db.SaveAsync())
                 {
-                    ticketFromRepo.Closed = updateTicketClosed.Closed;
-                    _db.TicketRepository.Update(ticketFromRepo);
-                    if (await _db.SaveAsync())
-                    {
-                        return Ok();
-                    }
-                    else{
-                        return BadRequest("خطا در ثبت اطلاعات ");
-                    }
+                    return Ok();
                 }
                 else
                 {
-                    _logger.LogError($"کاربر   {userId} قصد دسترسی به تیکت دیگری را دارد");
-
-                    return BadRequest("شما اجازه دسترسی به تیکت کاربر دیگری را ندارید");
+                    return BadRequest("خطا در ثبت اطلاعات ");
                 }
             }
             else
@@ -203,16 +105,8 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Admin
         //--------------------------------------------------------------------------------------------------------------------------------
         [Authorize(Policy = "RequireAdminRole")]
         [HttpGet(ApiV1Routes.AdminTicket.GetTicketContent)]
-        public async Task<IActionResult> GetTicketContent(string userId, string ticketId, string id)
+        public async Task<IActionResult> GetTicketContent(string id)
         {
-            var ticketFromRepo = await _db.TicketRepository.GetByIdAsync(ticketId);
-            if (ticketFromRepo.UserId != User.FindFirst(ClaimTypes.NameIdentifier).Value)
-            {
-                _logger.LogError($"کاربر   {userId} قصد دسترسی به تیکت دیگری را دارد");
-
-                return BadRequest("شما اجازه دسترسی به تیکت کاربر دیگری را ندارید");
-            }
-
             var ticketContentFromRepo = await _db.TicketContentRepository.GetByIdAsync(id);
             if (ticketContentFromRepo != null)
             {
@@ -227,7 +121,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Admin
 
         [Authorize(Policy = "RequireAdminRole")]
         [HttpGet(ApiV1Routes.AdminTicket.GetTicketContents)]
-        public async Task<IActionResult> GetTicketContents(string id, string userId)
+        public async Task<IActionResult> GetTicketContents(string id)
         {
             var ticketFromRepo = await _db.TicketContentRepository.GetManyAsync(p => p.TicketId == id,
                 s => s.OrderByDescending(x => x.DateCreated), "");
@@ -241,7 +135,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Admin
             var ticketContent = new TicketContent()
             {
                 TicketId = id,
-                IsAdminSide = false,
+                IsAdminSide = true,
                 Text = ticketContentForCreateDto.Text
             };
             if (ticketContentForCreateDto.File != null)
@@ -273,7 +167,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Admin
             {
                 ticketContent.FileUrl = "";
             }
-           
+
 
             await _db.TicketContentRepository.InsertAsync(ticketContent);
 
