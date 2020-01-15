@@ -81,7 +81,7 @@ namespace MadPay724.Presentation.Routes.V1
             //POST
             public const string AddTicketContent = BaseSitePanel + "/admin/tickets/{ticketId}/ticketcontents";
             //GET
-            public const string GetTicketContent = BaseSitePanel + "/admin/tickets/{ticketId}/ticketContents/{id}";
+            public const string GetTicketContent = BaseSitePanel + "/admin/tickets/{ticketId}/ticketContents/{ticketContentId}";
             //GET
             public const string GetTicketContents = BaseSitePanel + "/admin/tickets/{ticketId}/ticketcontents";
         }

@@ -69,7 +69,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Admin
                 .SingleOrDefault();
             if (ticketFromRepo != null)
             {
-                ticketFromRepo.TicketContents.OrderByDescending(p => p.DateCreated);
+                ticketFromRepo.TicketContents = ticketFromRepo.TicketContents.OrderBy(p => p.DateCreated).ToList();
                 return Ok(ticketFromRepo);
             }
             else
@@ -81,9 +81,9 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Admin
 
         [Authorize(Policy = "RequireAdminRole")]
         [HttpPatch(ApiV1Routes.AdminTicket.SetTicketClosed)]
-        public async Task<IActionResult> SetTicketClosed(string id, UpdateTicketClosed updateTicketClosed)
+        public async Task<IActionResult> SetTicketClosed(string ticketId, UpdateTicketClosed updateTicketClosed)
         {
-            var ticketFromRepo = (await _db.TicketRepository.GetByIdAsync(id));
+            var ticketFromRepo = (await _db.TicketRepository.GetByIdAsync(ticketId));
             if (ticketFromRepo != null)
             {
                 ticketFromRepo.Closed = updateTicketClosed.Closed;
@@ -106,10 +106,10 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Admin
 
         //--------------------------------------------------------------------------------------------------------------------------------
         [Authorize(Policy = "RequireAdminRole")]
-        [HttpGet(ApiV1Routes.AdminTicket.GetTicketContent, Name = "GetTicketContent")]
-        public async Task<IActionResult> GetTicketContent(string ticketId)
+        [HttpGet(ApiV1Routes.AdminTicket.GetTicketContent, Name = "GetAdminTicketContent")]
+        public async Task<IActionResult> GetAdminTicketContent(string ticketContentId)
         {
-            var ticketContentFromRepo = await _db.TicketContentRepository.GetByIdAsync(ticketId);
+            var ticketContentFromRepo = await _db.TicketContentRepository.GetByIdAsync(ticketContentId);
             if (ticketContentFromRepo != null)
             {
                 return Ok(ticketContentFromRepo);
@@ -175,8 +175,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Admin
 
             if (await _db.SaveAsync())
             {
-                return CreatedAtRoute("GetTicketContent", new { ticketId },
-                    ticketContent);
+                return CreatedAtRoute("GetAdminTicketContent", new { ticketContentId = ticketContent.Id }, ticketContent);
             }
             else
             {

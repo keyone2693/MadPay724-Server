@@ -65,7 +65,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
             {
                 if (ticketFromRepo.UserId == User.FindFirst(ClaimTypes.NameIdentifier).Value)
                 {
-                    ticketFromRepo.TicketContents.OrderByDescending(p => p.DateCreated);
+                    ticketFromRepo.TicketContents = ticketFromRepo.TicketContents.OrderBy(p => p.DateCreated).ToList();
                     return Ok(ticketFromRepo);
                 }
                 else
