@@ -14,4 +14,4 @@ namespace MadPay724.Data.Dtos.Common.Pagination
         public long MaxDate { get; set; }
     }
 }
-}
+

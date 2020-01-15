@@ -1,9 +1,11 @@
 ﻿
+using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using MadPay724.Common.ErrorAndMessage;
+using MadPay724.Common.Helpers.Interface;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Site.Panel.Photos;
 using MadPay724.Presentation.Helpers.Filters;
@@ -18,7 +20,7 @@ using Microsoft.Extensions.Logging;
 namespace MadPay724.Presentation.Controllers.Site.V1.User
 {
     [ApiExplorerSettings(GroupName = "v1_Site_Panel")]
-   // [Route("api/v1/site/admin/users/{userId}/photos")]
+    // [Route("api/v1/site/admin/users/{userId}/photos")]
     [ApiController]
     public class PhotosController : ControllerBase
     {
@@ -27,15 +29,17 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
         private readonly IUploadService _uploadService;
         private readonly IWebHostEnvironment _env;
         private readonly ILogger<PhotosController> _logger;
+        private readonly IUtilities _utilities;
 
         public PhotosController(IUnitOfWork<Main_MadPayDbContext> dbContext, IMapper mapper, IUploadService uploadService,
-             IWebHostEnvironment env, ILogger<PhotosController> logger)
+             IWebHostEnvironment env, ILogger<PhotosController> logger, IUtilities utilities)
         {
             _env = env;
             _db = dbContext;
             _mapper = mapper;
             _uploadService = uploadService;
             _logger = logger;
+            _utilities = utilities;
         }
 
         [Authorize(Policy = "AccessProfile")]
@@ -84,14 +88,15 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
             var uplaodRes = await _uploadService.UploadFile(
                 photoForProfileDto.File,
                 userId,
-                _env.WebRootPath ,
-                $"{Request.Scheme ?? ""}://{Request.Host.Value ?? ""}{Request.PathBase.Value ?? ""}"
+                _env.WebRootPath,
+                $"{Request.Scheme ?? ""}://{Request.Host.Value ?? ""}{Request.PathBase.Value ?? ""}",
+                "Files\\Pic\\Profile\\" + DateTime.Now.Year + "\\" + DateTime.Now.Month + "\\" + DateTime.Now.Day
             );
 
             if (uplaodRes.Status)
             {
                 photoForProfileDto.Url = uplaodRes.Url;
-                if(uplaodRes.LocalUploaded)
+                if (uplaodRes.LocalUploaded)
                     photoForProfileDto.PublicId = "1";
                 else
                     photoForProfileDto.PublicId = uplaodRes.PublicId;
@@ -106,12 +111,18 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
                 }
                 if (oldphoto.PublicId == photoForProfileDto.PublicId && photoForProfileDto.Url.Split('/').Last() != oldphoto.Url.Split('/').Last())
                 {
-                    _uploadService.RemoveFileFromLocal(oldphoto.Url.Split('/').Last(), _env.WebRootPath, "Files\\Pic\\Profile");
+                    _uploadService.RemoveFileFromLocal(
+                        oldphoto.Url.Split('/').Last(),
+                        _env.WebRootPath,
+                        _utilities.FindLocalPathFromUrl(oldphoto.Url).Replace("wwwroot\\", ""));
                 }
 
                 if (oldphoto.PublicId == "1" && photoForProfileDto.PublicId != "1")
                 {
-                    _uploadService.RemoveFileFromLocal(oldphoto.Url.Split('/').Last(), _env.WebRootPath, "Files\\Pic\\Profile");
+                    _uploadService.RemoveFileFromLocal(
+                       oldphoto.Url.Split('/').Last(),
+                       _env.WebRootPath,
+                       _utilities.FindLocalPathFromUrl(oldphoto.Url).Replace("wwwroot\\", ""));
                 }
 
                 _mapper.Map(photoForProfileDto, oldphoto);
@@ -134,6 +145,6 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
             }
         }
 
-   
+
     }
 }

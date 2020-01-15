@@ -58,7 +58,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Blogger
             {
                 var uploadRes = await _uploadService.UploadFileToLocal(
                       UploadFiles,
-                      Guid.NewGuid().ToString(),
+                      Path.GetRandomFileName(),
                       _env.WebRootPath,
                       $"{Request.Scheme ?? ""}://{Request.Host.Value ?? ""}{Request.PathBase.Value ?? ""}",
                       "Files\\Blog\\" + DateTime.Now.Year + "\\" + DateTime.Now.Month + "\\" + DateTime.Now.Day
@@ -194,44 +194,33 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Blogger
                     Status = false,
                     IsSelected = false
                 };
-
-                var creatDir = _uploadService.CreateDirectory(_env.WebRootPath,
-                    "Files\\Blog\\" + DateTime.Now.Year + "\\" + DateTime.Now.Month + "\\" + DateTime.Now.Day);
-
-                if (creatDir.status)
+                var uploadRes = await _uploadService.UploadFileToLocal(
+                  blogForCreateDto.File,
+                      blogForCreate.Id,
+                      _env.WebRootPath,
+                      $"{Request.Scheme ?? ""}://{Request.Host.Value ?? ""}{Request.PathBase.Value ?? ""}",
+                      "Files\\Blog\\" + DateTime.Now.Year + "\\" + DateTime.Now.Month + "\\" + DateTime.Now.Day
+                  );
+                if (uploadRes.Status)
                 {
-                    var uploadRes = await _uploadService.UploadFileToLocal(
-                      blogForCreateDto.File,
-                          blogForCreate.Id,
-                          _env.WebRootPath,
-                          $"{Request.Scheme ?? ""}://{Request.Host.Value ?? ""}{Request.PathBase.Value ?? ""}",
-                          "Files\\Blog\\" + DateTime.Now.Year + "\\" + DateTime.Now.Month + "\\" + DateTime.Now.Day
-                      );
-                    if (uploadRes.Status)
+                    blogForCreate.PicAddress = uploadRes.Url;
+
+                    var blog = _mapper.Map(blogForCreateDto, blogForCreate);
+
+                    await _db.BlogRepository.InsertAsync(blog);
+
+                    if (await _db.SaveAsync())
                     {
-                        blogForCreate.PicAddress = uploadRes.Url;
+                        var blogForReturn = _mapper.Map<BlogForReturnDto>(blog);
 
-                        var blog = _mapper.Map(blogForCreateDto, blogForCreate);
-
-                        await _db.BlogRepository.InsertAsync(blog);
-
-                        if (await _db.SaveAsync())
-                        {
-                            var blogForReturn = _mapper.Map<BlogForReturnDto>(blog);
-
-                            return CreatedAtRoute("GetBlog", new { id = blog.Id, userId = userId }, blogForReturn);
-                        }
-                        else
-                            return BadRequest("خطا در ثبت اطلاعات");
+                        return CreatedAtRoute("GetBlog", new { id = blog.Id, userId = userId }, blogForReturn);
                     }
                     else
-                    {
-                        return BadRequest(uploadRes.Message);
-                    }
+                        return BadRequest("خطا در ثبت اطلاعات");
                 }
                 else
                 {
-                    return BadRequest(creatDir.message);
+                    return BadRequest(uploadRes.Message);
                 }
 
             }
@@ -263,41 +252,31 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Blogger
                       _utilities.FindLocalPathFromUrl(blogForUpdate.PicAddress).Replace("wwwroot\\", ""));
                     if (deleteRes.Status)
                     {
-                        var creatDir = _uploadService.CreateDirectory(_env.WebRootPath,
-                            "Files\\Blog\\" + DateTime.Now.Year + "\\" + DateTime.Now.Month + "\\" + DateTime.Now.Day);
-
-                        if (creatDir.status)
+                        var uploadRes = await _uploadService.UploadFileToLocal(
+                          blogForUpdateDto.File,
+                              id,
+                              _env.WebRootPath,
+                              $"{Request.Scheme ?? ""}://{Request.Host.Value ?? ""}{Request.PathBase.Value ?? ""}",
+                              "Files\\Blog\\" + DateTime.Now.Year + "\\" + DateTime.Now.Month + "\\" + DateTime.Now.Day
+                          );
+                        if (uploadRes.Status)
                         {
-                            var uploadRes = await _uploadService.UploadFileToLocal(
-                              blogForUpdateDto.File,
-                                  id,
-                                  _env.WebRootPath,
-                                  $"{Request.Scheme ?? ""}://{Request.Host.Value ?? ""}{Request.PathBase.Value ?? ""}",
-                                  "Files\\Blog\\" + DateTime.Now.Year + "\\" + DateTime.Now.Month + "\\" + DateTime.Now.Day
-                              );
-                            if (uploadRes.Status)
+                            blogForUpdate.PicAddress = uploadRes.Url;
+
+                            var blog = _mapper.Map(blogForUpdateDto, blogForUpdate);
+
+                            _db.BlogRepository.Update(blog);
+
+                            if (await _db.SaveAsync())
                             {
-                                blogForUpdate.PicAddress = uploadRes.Url;
-
-                                var blog = _mapper.Map(blogForUpdateDto, blogForUpdate);
-
-                                _db.BlogRepository.Update(blog);
-
-                                if (await _db.SaveAsync())
-                                {
-                                    return NoContent();
-                                }
-                                else
-                                    return BadRequest("خطا در ویرایش اطلاعات");
+                                return NoContent();
                             }
                             else
-                            {
-                                return BadRequest(uploadRes.Message);
-                            }
+                                return BadRequest("خطا در ویرایش اطلاعات");
                         }
                         else
                         {
-                            return BadRequest(creatDir.message);
+                            return BadRequest(uploadRes.Message);
                         }
                     }
                     else
@@ -371,8 +350,8 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Blogger
             var blogFromRepo = await _db.BlogRepository.GetByIdAsync(id);
             if (blogFromRepo != null)
             {
-
-                _uploadService.RemoveFileFromLocal(blogFromRepo.PicAddress.Split('/').Last(),
+                _uploadService.RemoveFileFromLocal(
+                    blogFromRepo.PicAddress.Split('/').Last(),
                     _env.WebRootPath,
                     _utilities.FindLocalPathFromUrl(blogFromRepo.PicAddress).Replace("wwwroot\\", ""));
 

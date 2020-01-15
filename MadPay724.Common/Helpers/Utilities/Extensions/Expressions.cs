@@ -701,6 +701,19 @@ namespace MadPay724.Common.Helpers.Utilities.Extensions
                         exp = CombineExpressions.CombiningExpressions<Ticket>(exp, tempExp, ExpressionsTypeEnum.And);
                     }
                     //
+                    if (ticketsPaginationDto.IsAdminSide == 1)
+                    {
+                        Expression<Func<Ticket, bool>> tempExp =
+                                        p => p.IsAdminSide;
+                        exp = CombineExpressions.CombiningExpressions<Ticket>(exp, tempExp, ExpressionsTypeEnum.And);
+                    }
+                    if (ticketsPaginationDto.IsAdminSide == 2)
+                    {
+                        Expression<Func<Ticket, bool>> tempExp =
+                                        p => !p.IsAdminSide;
+                        exp = CombineExpressions.CombiningExpressions<Ticket>(exp, tempExp, ExpressionsTypeEnum.And);
+                    }
+                    //
                     if (ticketsPaginationDto.Department > 0 )
                     {
                         Expression<Func<Ticket, bool>> tempExp =

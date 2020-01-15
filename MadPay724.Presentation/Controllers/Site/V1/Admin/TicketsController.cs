@@ -1,5 +1,7 @@
 ﻿
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -61,9 +63,9 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Admin
 
         [Authorize(Policy = "RequireAdminRole")]
         [HttpGet(ApiV1Routes.AdminTicket.GetTicket)]
-        public async Task<IActionResult> GetTicket(string id)
+        public async Task<IActionResult> GetTicket(string ticketId)
         {
-            var ticketFromRepo = (await _db.TicketRepository.GetManyAsync(p => p.Id == id, null, "TicketContents"))
+            var ticketFromRepo = (await _db.TicketRepository.GetManyAsync(p => p.Id == ticketId, null, "TicketContents"))
                 .SingleOrDefault();
             if (ticketFromRepo != null)
             {
@@ -78,7 +80,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Admin
 
 
         [Authorize(Policy = "RequireAdminRole")]
-        [HttpPut(ApiV1Routes.AdminTicket.SetTicketClosed)]
+        [HttpPatch(ApiV1Routes.AdminTicket.SetTicketClosed)]
         public async Task<IActionResult> SetTicketClosed(string id, UpdateTicketClosed updateTicketClosed)
         {
             var ticketFromRepo = (await _db.TicketRepository.GetByIdAsync(id));
@@ -104,10 +106,10 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Admin
 
         //--------------------------------------------------------------------------------------------------------------------------------
         [Authorize(Policy = "RequireAdminRole")]
-        [HttpGet(ApiV1Routes.AdminTicket.GetTicketContent)]
-        public async Task<IActionResult> GetTicketContent(string id)
+        [HttpGet(ApiV1Routes.AdminTicket.GetTicketContent, Name = "GetTicketContent")]
+        public async Task<IActionResult> GetTicketContent(string ticketId)
         {
-            var ticketContentFromRepo = await _db.TicketContentRepository.GetByIdAsync(id);
+            var ticketContentFromRepo = await _db.TicketContentRepository.GetByIdAsync(ticketId);
             if (ticketContentFromRepo != null)
             {
                 return Ok(ticketContentFromRepo);
@@ -121,20 +123,20 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Admin
 
         [Authorize(Policy = "RequireAdminRole")]
         [HttpGet(ApiV1Routes.AdminTicket.GetTicketContents)]
-        public async Task<IActionResult> GetTicketContents(string id)
+        public async Task<IActionResult> GetTicketContents(string ticketId)
         {
-            var ticketFromRepo = await _db.TicketContentRepository.GetManyAsync(p => p.TicketId == id,
+            var ticketFromRepo = await _db.TicketContentRepository.GetManyAsync(p => p.TicketId == ticketId,
                 s => s.OrderByDescending(x => x.DateCreated), "");
             return Ok(ticketFromRepo);
         }
 
         [Authorize(Policy = "RequireAdminRole")]
         [HttpPost(ApiV1Routes.AdminTicket.AddTicketContent)]
-        public async Task<IActionResult> AddTicketContent(string id, string userId, [FromForm]TicketContentForCreateDto ticketContentForCreateDto)
+        public async Task<IActionResult> AddTicketContent(string ticketId, [FromForm]TicketContentForCreateDto ticketContentForCreateDto)
         {
             var ticketContent = new TicketContent()
             {
-                TicketId = id,
+                TicketId = ticketId,
                 IsAdminSide = true,
                 Text = ticketContentForCreateDto.Text
             };
@@ -144,10 +146,10 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Admin
                 {
                     var uploadRes = await _uploadService.UploadFileToLocal(
                         ticketContentForCreateDto.File,
-                        userId,
+                        Path.GetRandomFileName(),
                         _env.WebRootPath,
                         $"{Request.Scheme ?? ""}://{Request.Host.Value ?? ""}{Request.PathBase.Value ?? ""}",
-                        "Files\\TicketContent"
+                        "Files\\TicketContent\\"+ DateTime.Now.Year + "\\" + DateTime.Now.Month + "\\" + DateTime.Now.Day
                     );
                     if (uploadRes.Status)
                     {
@@ -173,7 +175,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Admin
 
             if (await _db.SaveAsync())
             {
-                return CreatedAtRoute("GetTicketContent", new { userId = userId, ticketId = id, id = ticketContent.Id, },
+                return CreatedAtRoute("GetTicketContent", new { ticketId },
                     ticketContent);
             }
             else

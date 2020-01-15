@@ -54,7 +54,8 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
                     documentForCreateDto.File,
                         userId,
                         _env.WebRootPath,
-                        $"{Request.Scheme ?? ""}://{Request.Host.Value ?? ""}{Request.PathBase.Value ?? ""}"
+                        $"{Request.Scheme ?? ""}://{Request.Host.Value ?? ""}{Request.PathBase.Value ?? ""}",
+                        "Files\\Documents\\" + DateTime.Now.Year + "\\" + DateTime.Now.Month + "\\" + DateTime.Now.Day
                     );
                 if (uploadRes.Status)
                 {

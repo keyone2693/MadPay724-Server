@@ -34,11 +34,11 @@ namespace MadPay724.Services.Upload.Service
 
             _cloudinary = new Cloudinary(acc);
         }
-        public async Task<FileUploadedDto> UploadFile(IFormFile file, string userId, string WebRootPath, string UrlBegan)
+        public async Task<FileUploadedDto> UploadFile(IFormFile file, string userId, string WebRootPath, string UrlBegan, string Url)
         {
-            if(_setting.UploadLocal)
+            if (_setting.UploadLocal)
             {
-               return  await UploadFileToLocal(file, userId, WebRootPath, UrlBegan);
+                return await UploadFileToLocal(file, userId, WebRootPath, UrlBegan, Url);
             }
             else
             {
@@ -47,9 +47,8 @@ namespace MadPay724.Services.Upload.Service
         }
 
         public async Task<FileUploadedDto> UploadFileToLocal(IFormFile file, string userId,
-            string WebRootPath, string UrlBegan, string Url = "Files\\Pic\\Profile")
+            string WebRootPath, string UrlBegan, string Url)
         {
-
             if (file.Length > 0)
             {
                 try
@@ -59,6 +58,16 @@ namespace MadPay724.Services.Upload.Service
                     string fileNewName = string.Format("{0}{1}", userId, fileExtention);
                     string path = Path.Combine(WebRootPath, Url);
                     string fullPath = Path.Combine(path, fileNewName);
+
+                    var dirRes = CreateDirectory(WebRootPath, Url);
+                    if (!dirRes.status)
+                    {
+                        return new FileUploadedDto()
+                        {
+                            Status = false,
+                            Message = dirRes.message
+                        };
+                    }
 
                     using (var stream = new FileStream(fullPath, FileMode.Create))
                     {
@@ -72,7 +81,7 @@ namespace MadPay724.Services.Upload.Service
                         PublicId = "0",
                         Url = $"{UrlBegan}/{"wwwroot/" + Url.Split('\\').Aggregate("", (current, str) => current + (str + "/")) + fileNewName}"
                     };
-                    
+
                 }
                 catch (Exception ex)
                 {
@@ -186,7 +195,8 @@ namespace MadPay724.Services.Upload.Service
                     Message = "فایل با موفقیت حذف شد"
                 };
             }
-            else{
+            else
+            {
                 return new FileUploadedDto()
                 {
                     Status = true,
@@ -218,7 +228,7 @@ namespace MadPay724.Services.Upload.Service
                     message = ex.Message
                 };
             }
-            
+
         }
 
     }
