@@ -76,12 +76,42 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Admin
         [HttpGet(ApiV1Routes.AdminDocument.GetDocument)]
         public async Task<IActionResult> GetDocument(string documentId)
         {
+            var documentFromRepo = 
+                await _db.DocumentRepository.GetManyAsync(p=>p.Id == documentId,null,"User");
+            if (documentFromRepo.Any())
+            {
+                var document = _mapper.Map<DocumentForReturnDto>(documentFromRepo.Single());
+
+                return Ok(document);
+            }
+            else
+            {
+                return BadRequest("مدرکی وجود ندارد");
+            }
+
+        }
+
+
+        [Authorize(Policy = "RequireAdminRole")]
+        [HttpPut(ApiV1Routes.AdminDocument.UpdateDocument)]
+        public async Task<IActionResult> UpdateDocument(string documentId,DocumentForUpdateDto documentForUpdateDto)
+        {
             var documentFromRepo = await _db.DocumentRepository.GetByIdAsync(documentId);
             if (documentFromRepo != null)
             {
-                var document = _mapper.Map<DocumentForReturnDto>(documentFromRepo);
+                documentFromRepo.Message = documentForUpdateDto.Message;
+                documentFromRepo.Approve = documentForUpdateDto.Approve;
 
-                return Ok(document);
+                _db.DocumentRepository.Update(documentFromRepo);
+
+                if(await _db.SaveAsync())
+                {
+                    return NoContent();
+                }
+                else
+                {
+                    return BadRequest("خطا رد اپدیت");
+                }
             }
             else
             {

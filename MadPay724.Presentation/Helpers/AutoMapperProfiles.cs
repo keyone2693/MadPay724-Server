@@ -22,13 +22,13 @@ namespace MadPay724.Presentation.Helpers
 {
     public class AutoMapperProfiles : Profile
     {
-       public AutoMapperProfiles()
-       {
-           CreateMap<User, UserFroListDto>();
-           //    .ForMember(dest => dest.Self, opt =>
-           //        opt.MapFrom(src => 
-           //        Link.To(nameof(Controllers.Site.V1.User.UsersController.GetUser),new { id= src.Id})))
-           //    
+        public AutoMapperProfiles()
+        {
+            CreateMap<User, UserFroListDto>();
+            //    .ForMember(dest => dest.Self, opt =>
+            //        opt.MapFrom(src => 
+            //        Link.To(nameof(Controllers.Site.V1.User.UsersController.GetUser),new { id= src.Id})))
+            //    
 
 
             CreateMap<User, UserForDetailedDto>()
@@ -76,22 +76,29 @@ namespace MadPay724.Presentation.Helpers
             CreateMap<NotificationForUpdateDto, Notification>();
 
             CreateMap<BankCardForUpdateDto, BankCard>();
-            CreateMap<BankCard,BankCardForReturnDto>();
+            CreateMap<BankCard, BankCardForReturnDto>();
             CreateMap<List<BankCardForUserDetailedDto>, List<BankCard>>();
             //CreateMap<List<BankCardForUserDetailedDto>, List<PagedList<BankCard>>>();
             CreateMap<BankCardForUpdateDto, BankCard>();
 
             CreateMap<List<DocumentForReturnDto>, List<Document>>();
             CreateMap<DocumentForCreateDto, Document>();
-            CreateMap<Document, DocumentForReturnDto>();
+            CreateMap<Document, DocumentForReturnDto>()
+                .ForMember(dest => dest.UserId, opt =>
+                {
+                    opt.MapFrom(src => src.UserId);
+                }).ForMember(dest => dest.UserName, opt =>
+                {
+                    opt.MapFrom(src => src.User.Name);
+                });
 
-            
+
 
 
             CreateMap<Wallet, WalletForReturnDto>();
             CreateMap<List<WalletForReturnDto>, List<Wallet>>();
 
-            CreateMap<TicketForCreateDto, Ticket> ();
+            CreateMap<TicketForCreateDto, Ticket>();
 
             //CreateMap<TokenResponseDto, LoginResponseDto>();
 
@@ -124,7 +131,7 @@ namespace MadPay724.Presentation.Helpers
                });
             CreateMap<List<BlogForReturnDto>, List<Blog>>();
             CreateMap<BlogForCreateUpdateDto, Blog>();
-               
+
         }
     }
 }

@@ -19,5 +19,7 @@ namespace MadPay724.Data.Dtos.Site.Panel.Document
         public string Address { get; set; }
         public string PicUrl { get; set; }
 
+        public string UserId { get; set; }
+        public string UserName { get; set; }
     }
 }

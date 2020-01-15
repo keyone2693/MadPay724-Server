@@ -53,6 +53,8 @@ namespace MadPay724.Presentation.Routes.V1
             public const string GetUserDocuments = BaseSitePanel + "/admin/users/{userId}/documents";
             //GET
             public const string GetDocument = BaseSitePanel + "/admin/documents/{documentId}";
+            //PUT
+            public const string UpdateDocument = BaseSitePanel + "/admin/documents/{documentId}";
         }
         public static class AdminEasyPay
         {

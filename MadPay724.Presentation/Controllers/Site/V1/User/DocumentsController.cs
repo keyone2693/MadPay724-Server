@@ -63,7 +63,8 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
                     {
                         UserId = userId,
                         Approve = 0,
-                        PicUrl = uploadRes.Url
+                        PicUrl = uploadRes.Url,
+                        Message = "بدون پیغام"
                     };
                     var document = _mapper.Map(documentForCreateDto, documentForCreate);
 
