@@ -24,6 +24,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Common
     public class CommonController : ControllerBase
     {
         private readonly IUnitOfWork<Main_MadPayDbContext> _db;
+        private readonly IUnitOfWork<Financial_MadPayDbContext> _dbFinancial;
         private readonly IMapper _mapper;
         private readonly ILogger<CommonController> _logger;
         private readonly IUploadService _uploadService;
@@ -32,9 +33,10 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Common
 
         public CommonController(IUnitOfWork<Main_MadPayDbContext> dbContext, IMapper mapper,
             ILogger<CommonController> logger, IUploadService uploadService,
-            IWebHostEnvironment env, IUtilities utilities)
+            IWebHostEnvironment env, IUtilities utilities, IUnitOfWork<Financial_MadPayDbContext> dbFinancial)
         {
             _db = dbContext;
+            _dbFinancial = dbFinancial;
             _mapper = mapper;
             _logger = logger;
             _uploadService = uploadService;
@@ -47,29 +49,35 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Common
         [HttpGet(ApiV1Routes.Common.GetNotifications)]
         public async Task<IActionResult> GetNotifications(string id)
         {
-            var res = new NotificationsCountDto
-            {
-                UnverifiedBlogCount = 0,
-                UnClosedTicketCount = 0
-            };
+            var res = new NotificationsCountDto();
+
             if (User.HasClaim(ClaimTypes.Role, "Admin"))
             {
-                res.UnClosedTicketCount =
-                    await _db.TicketRepository.GetCountAsync(p => !p.Closed);
+                res.UnVerifiedDocuments = await _db.DocumentRepository.GetCountAsync(p => p.Approve != 1);
+                res.UnClosedTicketCount = await _db.TicketRepository.GetCountAsync(p => !p.Closed);
+                //
+                res.UnCheckedEntry = await _dbFinancial.EntryRepository.GetCountAsync(p => !p.IsApprove);
+                res.UnSpecifiedEntry = await _dbFinancial.EntryRepository.GetCountAsync(p => p.IsApprove && !p.IsReject && !p.IsPardakht);
+                res.UnVerifiedBankCardInPast7Days = await _db.BankCardRepository.GetCountAsync(p => !p.Approve && p.DateModified < DateTime.Now.AddDays(7));
+                res.UnVerifiedGateInPast7Days = await _db.GateRepository.GetCountAsync(p => !p.IsActive && p.DateModified < DateTime.Now.AddDays(7));
+                //
+                res.UnVerifiedBlogCount = await _db.BlogRepository.GetCountAsync(p => !p.Status);
+                
             }
             else if (User.HasClaim(ClaimTypes.Role, "Accountant"))
             {
-
+                res.UnCheckedEntry = await _dbFinancial.EntryRepository.GetCountAsync(p => !p.IsApprove);
+                res.UnSpecifiedEntry = await _dbFinancial.EntryRepository.GetCountAsync(p => p.IsApprove && !p.IsReject && !p.IsPardakht);
+                res.UnVerifiedBankCardInPast7Days = await _db.BankCardRepository.GetCountAsync(p => !p.Approve && p.DateModified < DateTime.Now.AddDays(7));
+                res.UnVerifiedGateInPast7Days = await _db.GateRepository.GetCountAsync(p => !p.IsActive && p.DateModified < DateTime.Now.AddDays(7));
             }
             else if (User.HasClaim(ClaimTypes.Role, "AdminBlog"))
             {
-                res.UnverifiedBlogCount = 
-                    await _db.BlogRepository.GetCountAsync(p => !p.Status);
+                res.UnVerifiedBlogCount = await _db.BlogRepository.GetCountAsync(p => !p.Status);
             }
             else if (User.HasClaim(ClaimTypes.Role, "User"))
             {
-                res.UnClosedTicketCount = 
-                    await _db.TicketRepository.GetCountAsync(p => p.UserId == id && !p.Closed);
+                res.UnClosedTicketCount = await _db.TicketRepository.GetCountAsync(p => p.UserId == id && !p.Closed);
             }
             return Ok(res);
         }
