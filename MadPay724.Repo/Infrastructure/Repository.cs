@@ -100,7 +100,7 @@ namespace MadPay724.Repo.Infrastructure
         public IEnumerable<TEntity> GetMany(
             Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            string includeEntity = "")
+            string includeEntity = "", int count = 0)
         {
             //return _dbSet.Where(where).FirstOrDefault();
 
@@ -122,7 +122,11 @@ namespace MadPay724.Repo.Infrastructure
             }
             else
             {
-                return query.ToList();
+                count = Math.Abs(count);
+                if (count == 0 )
+                    return query.ToList();
+                else
+                    return query.Take(count).ToList();
             }
 
         }
@@ -200,7 +204,7 @@ namespace MadPay724.Repo.Infrastructure
         public async Task<IEnumerable<TEntity>> GetManyAsync(
       Expression<Func<TEntity, bool>> filter = null,
       Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-      string includeEntity = "")
+      string includeEntity = "", int count = 0)
         {
             //return _dbSet.Where(where).FirstOrDefault();
 
@@ -222,7 +226,11 @@ namespace MadPay724.Repo.Infrastructure
             }
             else
             {
-                return await query.ToListAsync();
+                count = Math.Abs(count);
+                if (count == 0)
+                    return await query.ToListAsync();
+                else
+                    return await query.Take(count).ToListAsync();
             }
 
         }
@@ -236,6 +244,23 @@ namespace MadPay724.Repo.Infrastructure
                 query = query.Where(filter);
             }
             return await query.CountAsync();
+
+
+        }
+        public async Task<long> GetSumAsync(
+            Expression<Func<TEntity, bool>> filter = null,
+            Expression<Func<TEntity, long>> select = null)
+        {
+            IQueryable<TEntity> query = _dbSet;
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+            if (filter != null)
+            {
+                return 0;
+            }
+            return await query.SumAsync(select);
 
 
         }

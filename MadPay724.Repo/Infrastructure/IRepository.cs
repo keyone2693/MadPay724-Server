@@ -27,7 +27,7 @@ namespace MadPay724.Repo.Infrastructure
             string includeEntity);
         IEnumerable<TEntity> GetMany(Expression<Func<TEntity, bool>> filter,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy,
-            string includeEntity);
+            string includeEntity, int count = 0);
         TEntity Get(Expression<Func<TEntity, bool>> where);
         bool IsAny(Expression<Func<TEntity, bool>> filter);
         
@@ -44,13 +44,16 @@ namespace MadPay724.Repo.Infrastructure
         Task<IEnumerable<TEntity>> GetManyAsync(
             Expression<Func<TEntity, bool>> filter,
             Func<IQueryable<TEntity>,IOrderedQueryable<TEntity>> orderBy,
-            string includeEntity
+            string includeEntity, int count = 0
             );
 
         Task<long> GetCountAsync(
             Expression<Func<TEntity, bool>> filter
             );
-
+        Task<long> GetSumAsync(
+            Expression<Func<TEntity, bool>> filter,
+           Expression<Func<TEntity, long>> select
+           );
         Task<IEnumerable<TEntity>> GetManyAsyncPaging(
             Expression<Func<TEntity, bool>> filter,
 

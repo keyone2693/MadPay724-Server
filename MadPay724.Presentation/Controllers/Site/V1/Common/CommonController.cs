@@ -53,7 +53,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Common
 
             if (User.HasClaim(ClaimTypes.Role, "Admin"))
             {
-                res.UnVerifiedDocuments = await _db.DocumentRepository.GetCountAsync(p => p.Approve != 1);
+                res.UnVerifiedDocuments = await _db.DocumentRepository.GetCountAsync(p => p.Approve == 0);
                 res.UnClosedTicketCount = await _db.TicketRepository.GetCountAsync(p => !p.Closed);
                 //
                 res.UnCheckedEntry = await _dbFinancial.EntryRepository.GetCountAsync(p => !p.IsApprove);

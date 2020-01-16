@@ -442,9 +442,22 @@ namespace MadPay724.Presentation.Routes.V1
         #region CommonRoutes
         public static class Common
         {
-            //api/v1/site/panel/blogs/{id}
             //Get
             public const string GetNotifications = BaseSitePanel + "/users/{id}/common/getnotifications";
+
+        }
+        #endregion
+        #region DashboardRoutes
+        public static class Dashboard
+        {
+            //Get
+            public const string GetAdminDashboard = BaseSitePanel + "/admin/userId}/common/dashboard";
+            //Get
+            public const string GetAccountantDashboard = BaseSitePanel + "/accountant/common/dashboard";
+            //Get
+            public const string GetBlogDashboard = BaseSitePanel + "/blog/{userId}/common/dashboard";
+            //Get
+            public const string GetUserDashboard = BaseSitePanel + "/user/{userId}/common/dashboard";
 
         }
         #endregion
