@@ -1,9 +1,7 @@
 ﻿
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using MadPay724.Common.Enums;
@@ -12,7 +10,6 @@ using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Common.Pagination;
 using MadPay724.Data.Dtos.Site.Panel.Ticket;
 using MadPay724.Data.Models.MainDB;
-using MadPay724.Presentation.Helpers.Filters;
 using MadPay724.Presentation.Routes.V1;
 using MadPay724.Repo.Infrastructure;
 using MadPay724.Services.Upload.Interface;
@@ -87,6 +84,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Admin
             if (ticketFromRepo != null)
             {
                 ticketFromRepo.Closed = updateTicketClosed.Closed;
+                ticketFromRepo.DateModified = DateTime.Now;
                 _db.TicketRepository.Update(ticketFromRepo);
                 if (await _db.SaveAsync())
                 {
@@ -134,6 +132,13 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Admin
         [HttpPost(ApiV1Routes.AdminTicket.AddTicketContent)]
         public async Task<IActionResult> AddTicketContent(string ticketId, [FromForm]TicketContentForCreateDto ticketContentForCreateDto)
         {
+            var ticketFromRepo = (await _db.TicketRepository.GetByIdAsync(ticketId));
+            if (ticketFromRepo != null)
+            {
+                ticketFromRepo.DateModified = DateTime.Now;
+                _db.TicketRepository.Update(ticketFromRepo);
+                await _db.SaveAsync();
+            }
             var ticketContent = new TicketContent()
             {
                 TicketId = ticketId,
@@ -149,7 +154,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Admin
                         Path.GetRandomFileName(),
                         _env.WebRootPath,
                         $"{Request.Scheme ?? ""}://{Request.Host.Value ?? ""}{Request.PathBase.Value ?? ""}",
-                        "Files\\TicketContent\\"+ DateTime.Now.Year + "\\" + DateTime.Now.Month + "\\" + DateTime.Now.Day
+                        "Files\\TicketContent\\" + DateTime.Now.Year + "\\" + DateTime.Now.Month + "\\" + DateTime.Now.Day
                     );
                     if (uploadRes.Status)
                     {

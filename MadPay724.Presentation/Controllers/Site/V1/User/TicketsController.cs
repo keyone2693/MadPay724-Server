@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -243,6 +244,13 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
         [HttpPost(ApiV1Routes.Ticket.AddTicketContent)]
         public async Task<IActionResult> AddTicketContent(string id, string userId, [FromForm]TicketContentForCreateDto ticketContentForCreateDto)
         {
+            var ticketFromRepo = (await _db.TicketRepository.GetByIdAsync(id));
+            if (ticketFromRepo != null)
+            {
+                ticketFromRepo.DateModified = DateTime.Now;
+                _db.TicketRepository.Update(ticketFromRepo);
+                await _db.SaveAsync();
+            }
             var ticketContent = new TicketContent()
             {
                 TicketId = id,
