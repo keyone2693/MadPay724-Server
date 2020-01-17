@@ -137,7 +137,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Common
             };
             res.Last7Factors = await _dbFinancial.FactorRepository.GetManyAsync(p => p.UserId == userId, p => p.OrderBy(s => s.DateModified), "", 7);
             res.TotalSuccessEntry = await _dbFinancial.EntryRepository.GetSumAsync(p => p.UserId == userId && p.IsPardakht, p => p.Price);
-            res.Last10Entries = await _dbFinancial.EntryRepository.GetManyAsync(p => p.UserId == userId, p=>p.OrderBy(s=>s.DateModified), "", 10);
+            res.Last10Entries = await _dbFinancial.EntryRepository.GetManyAsync(p => p.UserId == userId, p => p.OrderBy(s => s.DateModified), "", 10);
 
             res.TotalFactorDaramad = await _dbFinancial.FactorRepository.GetSumAsync(p => p.UserId == userId && p.Status && p.Kind == 1, p => p.EndPrice);
 
@@ -204,14 +204,14 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Common
                .GetCountAsync(p => p.DateModified.Date == DateTime.Now.AddDays(-4).Date && !p.Status),
                 };
 
-                var blogs= await _db.BlogRepository.GetManyAsync(null, s => s.OrderBy(p => p.DateModified), "User,BlogGroup", 7);
+                var blogs = await _db.BlogRepository.GetManyAsync(null, s => s.OrderBy(p => p.DateModified), "User,BlogGroup", 7);
                 res.Last7Blogs = new List<BlogForReturnDto>();
                 foreach (var blog in blogs)
                 {
                     res.Last7Blogs.Add(_mapper.Map<BlogForReturnDto>(blog));
                 }
 
-                 
+
 
                 var users = await _db.UserRepository
                     .GetManyAsync(p => p.UserRoles.Any(s => s.Role.Name == "Blog"), p => p.OrderByDescending(s => s.Blogs.Count()), "Blogs", 12);
@@ -224,14 +224,14 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Common
                     {
                         Name = user.Name,
                         TotalBlog = user.Blogs.Count,
-                        ApprovedBlog = user.Blogs.Count(p=>p.Status),
-                        UnApprovedBlog = user.Blogs.Count(p=>!p.Status)
+                        ApprovedBlog = user.Blogs.Count(p => p.Status),
+                        UnApprovedBlog = user.Blogs.Count(p => !p.Status)
                     });
                 }
             }
             else // Blog
             {
-                res.TotalBlogCount = await _db.BlogRepository.GetCountAsync(p=>p.UserId == userId);
+                res.TotalBlogCount = await _db.BlogRepository.GetCountAsync(p => p.UserId == userId);
                 res.ApprovedBlogCount = await _db.BlogRepository.GetCountAsync(p => p.UserId == userId && p.Status);
                 res.UnApprovedBlogCount = await _db.BlogRepository.GetCountAsync(p => p.UserId == userId && !p.Status);
 
@@ -283,11 +283,243 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Common
                     res.Last7Blogs.Add(_mapper.Map<BlogForReturnDto>(blog));
                 }
 
-
                 res.Last12UserBlogInfo = new List<UserBlogInfoDto>();
 
             }
             return Ok(res);
         }
+
+        [Authorize(Policy = "RequireAccountantRole")]
+        [HttpGet(ApiV1Routes.Dashboard.GetAccountantDashboard)]
+        public async Task<IActionResult> GetAccountantDashboard(string userId)
+        {
+            var res = new AccountantDashboardDto();
+
+            res.TotalSuccessEntry = await _dbFinancial.EntryRepository.GetCountAsync(p => p.IsPardakht);
+            res.TotalSuccessEntryPrice = await _dbFinancial.EntryRepository.GetSumAsync(p => p.IsPardakht, p => p.Price);
+
+            res.TotalEntryApprove = await _dbFinancial.EntryRepository.GetCountAsync(p => p.IsApprove);
+            res.TotalEntryUnApprove = await _dbFinancial.EntryRepository.GetCountAsync(p => !p.IsApprove);
+            res.TotalEntryPardakht = await _dbFinancial.EntryRepository.GetCountAsync(p => p.IsPardakht);
+            res.TotalEntryUnPardakht = await _dbFinancial.EntryRepository.GetCountAsync(p => !p.IsPardakht);
+            res.TotalEntryReject = await _dbFinancial.EntryRepository.GetCountAsync(p => p.IsReject);
+            res.TotalEntryUnReject = await _dbFinancial.EntryRepository.GetCountAsync(p => !p.IsReject);
+
+            res.TotalFactor = await _dbFinancial.FactorRepository.GetCountAsync(p => p.Status && p.Kind == 1);
+            res.TotalFactorPrice = await _dbFinancial.FactorRepository.GetSumAsync(p => p.Status && p.Kind == 1, p => p.EndPrice);
+
+            res.TotalEasyPay = await _dbFinancial.FactorRepository.GetCountAsync(p => p.Status && p.Kind == 2);
+            res.TotalEasyPayPrice = await _dbFinancial.FactorRepository.GetSumAsync(p => p.Status && p.Kind == 2, p => p.EndPrice);
+
+            res.TotalSupport = await _dbFinancial.FactorRepository.GetCountAsync(p => p.Status && p.Kind == 3);
+            res.TotalSupportPrice = await _dbFinancial.FactorRepository.GetSumAsync(p => p.Status && p.Kind == 3, p => p.EndPrice);
+
+            res.TotalIncInventory = await _dbFinancial.FactorRepository.GetCountAsync(p => p.Status && p.Kind == 4);
+            res.TotalIncInventoryPrice = await _dbFinancial.FactorRepository.GetSumAsync(p => p.Status && p.Kind == 4, p => p.EndPrice);
+
+            res.TotalSuccessFactor = await _dbFinancial.FactorRepository.GetCountAsync(p => p.Status);
+            res.TotalSuccessFactorPrice = await _dbFinancial.FactorRepository.GetSumAsync(p => p.Status, p => p.EndPrice);
+
+            res.Factor12Months = new DaysForReturnDto
+            {
+                Day1 = await _dbFinancial.FactorRepository.GetSumAsync(p => p.DateModified.Year == DateTime.Now.Year &&
+                p.DateModified.Month == DateTime.Now.Month && p.Status, p => p.EndPrice),
+
+                Day2 = await _dbFinancial.FactorRepository.GetSumAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-1).Year &&
+                 p.DateModified.Month == DateTime.Now.AddMonths(-1).Month && p.Status, p => p.EndPrice),
+
+                Day3 = await _dbFinancial.FactorRepository.GetSumAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-2).Year &&
+                p.DateModified.Month == DateTime.Now.AddMonths(-2).Month && p.Status, p => p.EndPrice),
+
+                Day4 = await _dbFinancial.FactorRepository.GetSumAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-3).Year &&
+                p.DateModified.Month == DateTime.Now.AddMonths(-3).Month && p.Status, p => p.EndPrice),
+
+                Day5 = await _dbFinancial.FactorRepository.GetSumAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-4).Year
+                && p.DateModified.Month == DateTime.Now.AddMonths(-4).Month && p.Status, p => p.EndPrice),
+
+                Day6 = await _dbFinancial.FactorRepository.GetSumAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-5).Year
+               && p.DateModified.Month == DateTime.Now.AddMonths(-5).Month && p.Status, p => p.EndPrice),
+
+                Day7 = await _dbFinancial.FactorRepository.GetSumAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-6).Year
+               && p.DateModified.Month == DateTime.Now.AddMonths(-6).Month && p.Status, p => p.EndPrice),
+
+                Day8 = await _dbFinancial.FactorRepository.GetSumAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-7).Year
+               && p.DateModified.Month == DateTime.Now.AddMonths(-7).Month && p.Status, p => p.EndPrice),
+
+                Day9 = await _dbFinancial.FactorRepository.GetSumAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-8).Year
+             && p.DateModified.Month == DateTime.Now.AddMonths(-8).Month && p.Status, p => p.EndPrice),
+
+                Day10 = await _dbFinancial.FactorRepository.GetSumAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-9).Year
+           && p.DateModified.Month == DateTime.Now.AddMonths(-9).Month && p.Status, p => p.EndPrice),
+
+                Day11 = await _dbFinancial.FactorRepository.GetSumAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-10).Year
+         && p.DateModified.Month == DateTime.Now.AddMonths(-10).Month && p.Status, p => p.EndPrice),
+
+                Day12 = await _dbFinancial.FactorRepository.GetSumAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-11).Year
+       && p.DateModified.Month == DateTime.Now.AddMonths(-11).Month && p.Status, p => p.EndPrice),
+            };
+
+            res.Entry12Months = new DaysForReturnDto
+            {
+                Day1 = await _dbFinancial.EntryRepository.GetSumAsync(p => p.DateModified.Year == DateTime.Now.Year &&
+                p.DateModified.Month == DateTime.Now.Month && p.IsPardakht, p => p.Price),
+
+                Day2 = await _dbFinancial.EntryRepository.GetSumAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-1).Year &&
+                 p.DateModified.Month == DateTime.Now.AddMonths(-1).Month && p.IsPardakht, p => p.Price),
+
+                Day3 = await _dbFinancial.EntryRepository.GetSumAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-2).Year &&
+                p.DateModified.Month == DateTime.Now.AddMonths(-2).Month && p.IsPardakht, p => p.Price),
+
+                Day4 = await _dbFinancial.EntryRepository.GetSumAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-3).Year &&
+                p.DateModified.Month == DateTime.Now.AddMonths(-3).Month && p.IsPardakht, p => p.Price),
+
+                Day5 = await _dbFinancial.EntryRepository.GetSumAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-4).Year
+                && p.DateModified.Month == DateTime.Now.AddMonths(-4).Month && p.IsPardakht, p => p.Price),
+
+                Day6 = await _dbFinancial.EntryRepository.GetSumAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-5).Year
+               && p.DateModified.Month == DateTime.Now.AddMonths(-5).Month && p.IsPardakht, p => p.Price),
+
+                Day7 = await _dbFinancial.EntryRepository.GetSumAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-6).Year
+               && p.DateModified.Month == DateTime.Now.AddMonths(-6).Month && p.IsPardakht, p => p.Price),
+
+                Day8 = await _dbFinancial.EntryRepository.GetSumAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-7).Year
+               && p.DateModified.Month == DateTime.Now.AddMonths(-7).Month && p.IsPardakht, p => p.Price),
+
+                Day9 = await _dbFinancial.EntryRepository.GetSumAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-8).Year
+             && p.DateModified.Month == DateTime.Now.AddMonths(-8).Month && p.IsPardakht, p => p.Price),
+
+                Day10 = await _dbFinancial.EntryRepository.GetSumAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-9).Year
+           && p.DateModified.Month == DateTime.Now.AddMonths(-9).Month && p.IsPardakht, p => p.Price),
+
+                Day11 = await _dbFinancial.EntryRepository.GetSumAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-10).Year
+         && p.DateModified.Month == DateTime.Now.AddMonths(-10).Month && p.IsPardakht, p => p.Price),
+
+                Day12 = await _dbFinancial.EntryRepository.GetSumAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-11).Year
+       && p.DateModified.Month == DateTime.Now.AddMonths(-11).Month && p.IsPardakht, p => p.Price),
+            };
+
+            res.BankCard12Months = new DaysForReturnDto
+            {
+                Day1 = await _db.BankCardRepository.GetCountAsync(p => p.DateModified.Year == DateTime.Now.Year &&
+                p.DateModified.Month == DateTime.Now.Month),
+
+                Day2 = await _db.BankCardRepository.GetCountAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-1).Year &&
+                 p.DateModified.Month == DateTime.Now.AddMonths(-1).Month),
+
+                Day3 = await _db.BankCardRepository.GetCountAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-2).Year &&
+                p.DateModified.Month == DateTime.Now.AddMonths(-2).Month),
+
+                Day4 = await _db.BankCardRepository.GetCountAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-3).Year &&
+                p.DateModified.Month == DateTime.Now.AddMonths(-3).Month),
+
+                Day5 = await _db.BankCardRepository.GetCountAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-4).Year
+                && p.DateModified.Month == DateTime.Now.AddMonths(-4).Month),
+
+                Day6 = await _db.BankCardRepository.GetCountAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-5).Year
+               && p.DateModified.Month == DateTime.Now.AddMonths(-5).Month),
+
+                Day7 = await _db.BankCardRepository.GetCountAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-6).Year
+               && p.DateModified.Month == DateTime.Now.AddMonths(-6).Month),
+
+                Day8 = await _db.BankCardRepository.GetCountAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-7).Year
+               && p.DateModified.Month == DateTime.Now.AddMonths(-7).Month),
+
+                Day9 = await _db.BankCardRepository.GetCountAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-8).Year
+             && p.DateModified.Month == DateTime.Now.AddMonths(-8).Month),
+
+                Day10 = await _db.BankCardRepository.GetCountAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-9).Year
+           && p.DateModified.Month == DateTime.Now.AddMonths(-9).Month),
+
+                Day11 = await _db.BankCardRepository.GetCountAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-10).Year
+         && p.DateModified.Month == DateTime.Now.AddMonths(-10).Month),
+
+                Day12 = await _db.BankCardRepository.GetCountAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-11).Year
+       && p.DateModified.Month == DateTime.Now.AddMonths(-11).Month),
+            };
+
+            res.Gate12Months = new DaysForReturnDto
+            {
+                Day1 = await _db.GateRepository.GetCountAsync(p => p.DateModified.Year == DateTime.Now.Year &&
+                p.DateModified.Month == DateTime.Now.Month),
+
+                Day2 = await _db.GateRepository.GetCountAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-1).Year &&
+                 p.DateModified.Month == DateTime.Now.AddMonths(-1).Month),
+
+                Day3 = await _db.GateRepository.GetCountAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-2).Year &&
+                p.DateModified.Month == DateTime.Now.AddMonths(-2).Month),
+
+                Day4 = await _db.GateRepository.GetCountAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-3).Year &&
+                p.DateModified.Month == DateTime.Now.AddMonths(-3).Month),
+
+                Day5 = await _db.GateRepository.GetCountAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-4).Year
+                && p.DateModified.Month == DateTime.Now.AddMonths(-4).Month),
+
+                Day6 = await _db.GateRepository.GetCountAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-5).Year
+               && p.DateModified.Month == DateTime.Now.AddMonths(-5).Month),
+
+                Day7 = await _db.GateRepository.GetCountAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-6).Year
+               && p.DateModified.Month == DateTime.Now.AddMonths(-6).Month),
+
+                Day8 = await _db.GateRepository.GetCountAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-7).Year
+               && p.DateModified.Month == DateTime.Now.AddMonths(-7).Month),
+
+                Day9 = await _db.GateRepository.GetCountAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-8).Year
+             && p.DateModified.Month == DateTime.Now.AddMonths(-8).Month),
+
+                Day10 = await _db.GateRepository.GetCountAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-9).Year
+           && p.DateModified.Month == DateTime.Now.AddMonths(-9).Month),
+
+                Day11 = await _db.GateRepository.GetCountAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-10).Year
+         && p.DateModified.Month == DateTime.Now.AddMonths(-10).Month),
+
+                Day12 = await _db.GateRepository.GetCountAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-11).Year
+       && p.DateModified.Month == DateTime.Now.AddMonths(-11).Month),
+            };
+
+            res.Wallet12Months = new DaysForReturnDto
+            {
+                Day1 = await _db.WalletRepository.GetCountAsync(p => p.DateModified.Year == DateTime.Now.Year &&
+                p.DateModified.Month == DateTime.Now.Month),
+
+                Day2 = await _db.WalletRepository.GetCountAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-1).Year &&
+                 p.DateModified.Month == DateTime.Now.AddMonths(-1).Month),
+
+                Day3 = await _db.WalletRepository.GetCountAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-2).Year &&
+                p.DateModified.Month == DateTime.Now.AddMonths(-2).Month),
+
+                Day4 = await _db.WalletRepository.GetCountAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-3).Year &&
+                p.DateModified.Month == DateTime.Now.AddMonths(-3).Month),
+
+                Day5 = await _db.WalletRepository.GetCountAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-4).Year
+                && p.DateModified.Month == DateTime.Now.AddMonths(-4).Month),
+
+                Day6 = await _db.WalletRepository.GetCountAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-5).Year
+               && p.DateModified.Month == DateTime.Now.AddMonths(-5).Month),
+
+                Day7 = await _db.WalletRepository.GetCountAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-6).Year
+               && p.DateModified.Month == DateTime.Now.AddMonths(-6).Month),
+
+                Day8 = await _db.WalletRepository.GetCountAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-7).Year
+               && p.DateModified.Month == DateTime.Now.AddMonths(-7).Month),
+
+                Day9 = await _db.WalletRepository.GetCountAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-8).Year
+             && p.DateModified.Month == DateTime.Now.AddMonths(-8).Month),
+
+                Day10 = await _db.WalletRepository.GetCountAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-9).Year
+           && p.DateModified.Month == DateTime.Now.AddMonths(-9).Month),
+
+                Day11 = await _db.WalletRepository.GetCountAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-10).Year
+         && p.DateModified.Month == DateTime.Now.AddMonths(-10).Month),
+
+                Day12 = await _db.WalletRepository.GetCountAsync(p => p.DateModified.Year == DateTime.Now.AddMonths(-11).Year
+       && p.DateModified.Month == DateTime.Now.AddMonths(-11).Month),
+            };
+
+            res.Last7Factors = await _dbFinancial.FactorRepository.GetManyAsync(null, p => p.OrderBy(s => s.DateModified), "", 7);
+            res.Last7Entries = await _dbFinancial.EntryRepository.GetManyAsync(null, p => p.OrderBy(s => s.DateModified), "", 7);
+
+       
+            return Ok(res);
     }
+}
 }
