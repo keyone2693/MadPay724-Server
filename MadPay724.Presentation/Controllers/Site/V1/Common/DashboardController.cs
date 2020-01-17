@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MadPay724.Common.Helpers.Interface;
 using MadPay724.Data.DatabaseContext;
+using MadPay724.Data.Dtos.Site.Panel.Blog;
 using MadPay724.Data.Dtos.Site.Panel.Common;
 using MadPay724.Data.Dtos.Site.Panel.Users;
+using MadPay724.Data.Models.MainDB.Blog;
 using MadPay724.Presentation.Helpers.Filters;
 using MadPay724.Presentation.Routes.V1;
 using MadPay724.Repo.Infrastructure;
@@ -202,7 +204,14 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Common
                .GetCountAsync(p => p.DateModified.Date == DateTime.Now.AddDays(-4).Date && !p.Status),
                 };
 
-                res.Last7Blogs = await _db.BlogRepository.GetManyAsync(null, s => s.OrderBy(p => p.DateModified), "", 7);
+                var blogs= await _db.BlogRepository.GetManyAsync(null, s => s.OrderBy(p => p.DateModified), "User,BlogGroup", 7);
+                res.Last7Blogs = new List<BlogForReturnDto>();
+                foreach (var blog in blogs)
+                {
+                    res.Last7Blogs.Add(_mapper.Map<BlogForReturnDto>(blog));
+                }
+
+                 
 
                 var users = await _db.UserRepository
                     .GetManyAsync(p => p.UserRoles.Any(s => s.Role.Name == "Blog"), p => p.OrderByDescending(s => s.Blogs.Count()), "Blogs", 12);
@@ -266,7 +275,14 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Common
                .GetCountAsync(p => p.UserId == userId && p.DateModified.Date == DateTime.Now.AddDays(-4).Date && !p.Status),
                 };
 
-                res.Last7Blogs = await _db.BlogRepository.GetManyAsync(p=> p.UserId == userId, s => s.OrderBy(p => p.DateModified), "", 7);
+
+                var blogs = await _db.BlogRepository.GetManyAsync(p => p.UserId == userId, s => s.OrderBy(p => p.DateModified), "User,BlogGroup", 7);
+                res.Last7Blogs = new List<BlogForReturnDto>();
+                foreach (var blog in blogs)
+                {
+                    res.Last7Blogs.Add(_mapper.Map<BlogForReturnDto>(blog));
+                }
+
 
                 res.Last12UserBlogInfo = new List<UserBlogInfoDto>();
 

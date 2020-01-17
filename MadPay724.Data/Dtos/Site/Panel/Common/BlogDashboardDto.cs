@@ -1,4 +1,5 @@
-﻿using MadPay724.Data.Dtos.Site.Panel.Users;
+﻿using MadPay724.Data.Dtos.Site.Panel.Blog;
+using MadPay724.Data.Dtos.Site.Panel.Users;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,7 +18,7 @@ namespace MadPay724.Data.Dtos.Site.Panel.Common
         public DaysForReturnDto ApprovedBlog5Days { get; set; }
 
 
-        public IEnumerable<Models.MainDB.Blog.Blog> Last7Blogs { get; set; }
+        public List<BlogForReturnDto> Last7Blogs { get; set; }
 
         public List<UserBlogInfoDto> Last12UserBlogInfo { get; set; }
     }
