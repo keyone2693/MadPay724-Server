@@ -116,17 +116,17 @@ namespace MadPay724.Repo.Infrastructure
                 query = query.Include(includeentity);
             }
 
+            count = Math.Abs(count);
+            if (count > 0)
+                query = query.Take(count);
+
             if (orderBy != null)
             {
-                return orderBy(query).ToList();
+                return  orderBy(query).ToList();
             }
             else
             {
-                count = Math.Abs(count);
-                if (count == 0 )
-                    return query.ToList();
-                else
-                    return query.Take(count).ToList();
+                return query.ToList();
             }
 
         }
@@ -220,17 +220,17 @@ namespace MadPay724.Repo.Infrastructure
                 query = query.Include(includeentity);
             }
 
+            count = Math.Abs(count);
+            if (count > 0)
+                query = query.Take(count);
+
             if (orderBy != null)
             {
                 return await orderBy(query).ToListAsync();
             }
             else
             {
-                count = Math.Abs(count);
-                if (count == 0)
-                    return await query.ToListAsync();
-                else
-                    return await query.Take(count).ToListAsync();
+                return await query.ToListAsync();
             }
 
         }
