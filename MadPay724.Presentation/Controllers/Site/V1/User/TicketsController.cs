@@ -248,6 +248,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
             if (ticketFromRepo != null)
             {
                 ticketFromRepo.DateModified = DateTime.Now;
+                ticketFromRepo.IsAdminSide = false;
                 _db.TicketRepository.Update(ticketFromRepo);
                 await _db.SaveAsync();
             }

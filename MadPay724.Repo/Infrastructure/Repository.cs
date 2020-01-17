@@ -252,14 +252,15 @@ namespace MadPay724.Repo.Infrastructure
             Expression<Func<TEntity, long>> select = null)
         {
             IQueryable<TEntity> query = _dbSet;
+            if (select == null)
+            {
+                return 0;
+            }
             if (filter != null)
             {
                 query = query.Where(filter);
             }
-            if (filter != null)
-            {
-                return 0;
-            }
+            
             return await query.SumAsync(select);
 
 

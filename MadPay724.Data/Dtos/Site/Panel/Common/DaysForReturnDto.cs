@@ -16,5 +16,7 @@ namespace MadPay724.Data.Dtos.Site.Panel.Common
         public long Day8 { get; set; } = 0;
         public long Day9 { get; set; } = 0;
         public long Day10 { get; set; } = 0;
+        public long Day11 { get; set; } = 0;
+        public long Day12 { get; set; } = 0;
     }
 }
