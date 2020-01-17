@@ -451,7 +451,7 @@ namespace MadPay724.Presentation.Routes.V1
         public static class Dashboard
         {
             //Get
-            public const string GetAdminDashboard = BaseSitePanel + "/admin/userId}/common/dashboard";
+            public const string GetAdminDashboard = BaseSitePanel + "/admin/common/dashboard";
             //Get
             public const string GetAccountantDashboard = BaseSitePanel + "/accountant/common/dashboard";
             //Get

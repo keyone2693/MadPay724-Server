@@ -550,7 +550,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Common
     }
 
 
-        [Authorize(Policy = "RequireAccountantRole")]
+        [Authorize(Policy = "RequireAdminRole")]
         [HttpGet(ApiV1Routes.Dashboard.GetAdminDashboard)]
         public async Task<IActionResult> GetAdminDashboard()
         {
