@@ -20,13 +20,20 @@ namespace MadPay724.Data.Dtos.Site.Panel.Common
         public long TotalExitMoney { get; set; } = 0;
         public DaysForReturnDto ExitMoney5Days { get; set; }
 
-        public long TotalSuccessFactor { get; set; } = 0;
         public DaysForReturnDto Factor12Months { get; set; }
         public IEnumerable<Models.FinancialDB.Accountant.Factor> Last7Factors { get; set; }
 
 
         public long TotalSuccessEntry { get; set; } = 0;
         public IEnumerable<Models.FinancialDB.Accountant.Entry> Last10Entries { get; set; }
+
+        public long TotalFactorDaramad { get; set; } = 0;
+        public long TotalEasyPayDaramad { get; set; } = 0;
+        public long TotalSupportDaramad { get; set; } = 0;
+        public long TotalIncInventoryDaramad { get; set; } = 0;
+        public long TotalSuccessFactor { get; set; } = 0;
+
+
 
     }
 }

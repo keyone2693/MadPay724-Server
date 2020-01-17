@@ -93,7 +93,6 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Common
                 Day5 = await _dbFinancial.EntryRepository
                 .GetSumAsync(p => p.UserId == userId && p.DateModified.Date == DateTime.Now.AddDays(-4).Date && p.IsPardakht, p => p.Price),
             };
-            res.TotalSuccessFactor = await _dbFinancial.FactorRepository.GetSumAsync(p => p.UserId == userId && p.Status, p => p.EndPrice);
             res.Factor12Months = new DaysForReturnDto
             {
                 Day1 = await _dbFinancial.FactorRepository.GetSumAsync(p => p.UserId == userId && p.DateModified.Year == DateTime.Now.Year &&
@@ -136,7 +135,15 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Common
             res.TotalSuccessEntry = await _dbFinancial.EntryRepository.GetSumAsync(p => p.UserId == userId && p.IsPardakht, p => p.Price);
             res.Last10Entries = await _dbFinancial.EntryRepository.GetManyAsync(p => p.UserId == userId, null, "", 10);
 
+            res.TotalFactorDaramad = await _dbFinancial.FactorRepository.GetSumAsync(p => p.UserId == userId && p.Status && p.Kind == 1, p => p.EndPrice);
 
+            res.TotalEasyPayDaramad = await _dbFinancial.FactorRepository.GetSumAsync(p => p.UserId == userId && p.Status && p.Kind == 2, p => p.EndPrice);
+
+            res.TotalSupportDaramad = await _dbFinancial.FactorRepository.GetSumAsync(p => p.UserId == userId && p.Status && p.Kind == 3, p => p.EndPrice);
+
+            res.TotalIncInventoryDaramad = await _dbFinancial.FactorRepository.GetSumAsync(p => p.UserId == userId && p.Status && p.Kind == 4, p => p.EndPrice);
+
+            res.TotalSuccessFactor = await _dbFinancial.FactorRepository.GetSumAsync(p => p.UserId == userId && p.Status, p => p.EndPrice);
 
             return Ok(res);
         }
