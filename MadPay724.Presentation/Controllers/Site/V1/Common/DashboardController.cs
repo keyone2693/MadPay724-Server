@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using MadPay724.Common.Helpers.Interface;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Site.Panel.Common;
+using MadPay724.Data.Dtos.Site.Panel.Users;
 using MadPay724.Presentation.Helpers.Filters;
 using MadPay724.Presentation.Routes.V1;
 using MadPay724.Repo.Infrastructure;
@@ -42,7 +45,6 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Common
         }
         //------------------------------
         [Authorize(Policy = "RequireUserRole")]
-        [ServiceFilter(typeof(UserCheckIdFilter))]
         [HttpGet(ApiV1Routes.Dashboard.GetUserDashboard)]
         public async Task<IActionResult> GetUserDashboard(string userId)
         {
@@ -51,7 +53,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Common
             res.UnClosedTicketCount = await _db.TicketRepository.GetCountAsync(p => p.UserId == userId && !p.Closed);
             res.ClosedTicketCount = await _db.TicketRepository.GetCountAsync(p => p.UserId == userId && p.Closed);
             res.Last5Tickets = await _db.TicketRepository.GetManyAsync(p => p.UserId == userId, null, "TicketContents", 5);
-            res.TotalInventory = await _db.WalletRepository.GetSumAsync(p=> p.UserId == userId , p => p.Inventory);
+            res.TotalInventory = await _db.WalletRepository.GetSumAsync(p => p.UserId == userId, p => p.Inventory);
             res.Inventory5Days = new DaysForReturnDto
             {
                 Day1 = res.TotalInventory - await _dbFinancial.EntryRepository
@@ -98,8 +100,8 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Common
                 Day1 = await _dbFinancial.FactorRepository.GetSumAsync(p => p.UserId == userId && p.DateModified.Year == DateTime.Now.Year &&
                 p.DateModified.Month == DateTime.Now.Month && p.Status, p => p.EndPrice),
 
-                Day2 =await _dbFinancial.FactorRepository.GetSumAsync(p => p.UserId == userId && p.DateModified.Year == DateTime.Now.AddMonths(-1).Year &&
-                p.DateModified.Month == DateTime.Now.AddMonths(-1).Month && p.Status, p => p.EndPrice),
+                Day2 = await _dbFinancial.FactorRepository.GetSumAsync(p => p.UserId == userId && p.DateModified.Year == DateTime.Now.AddMonths(-1).Year &&
+                 p.DateModified.Month == DateTime.Now.AddMonths(-1).Month && p.Status, p => p.EndPrice),
 
                 Day3 = await _dbFinancial.FactorRepository.GetSumAsync(p => p.UserId == userId && p.DateModified.Year == DateTime.Now.AddMonths(-2).Year &&
                 p.DateModified.Month == DateTime.Now.AddMonths(-2).Month && p.Status, p => p.EndPrice),
@@ -107,7 +109,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Common
                 Day4 = await _dbFinancial.FactorRepository.GetSumAsync(p => p.UserId == userId && p.DateModified.Year == DateTime.Now.AddMonths(-3).Year &&
                 p.DateModified.Month == DateTime.Now.AddMonths(-3).Month && p.Status, p => p.EndPrice),
 
-                Day5 = await _dbFinancial.FactorRepository.GetSumAsync(p => p.UserId == userId && p.DateModified.Year == DateTime.Now.AddMonths(-4).Year 
+                Day5 = await _dbFinancial.FactorRepository.GetSumAsync(p => p.UserId == userId && p.DateModified.Year == DateTime.Now.AddMonths(-4).Year
                 && p.DateModified.Month == DateTime.Now.AddMonths(-4).Month && p.Status, p => p.EndPrice),
 
                 Day6 = await _dbFinancial.FactorRepository.GetSumAsync(p => p.UserId == userId && p.DateModified.Year == DateTime.Now.AddMonths(-5).Year
@@ -119,21 +121,21 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Common
                 Day8 = await _dbFinancial.FactorRepository.GetSumAsync(p => p.UserId == userId && p.DateModified.Year == DateTime.Now.AddMonths(-7).Year
                && p.DateModified.Month == DateTime.Now.AddMonths(-7).Month && p.Status, p => p.EndPrice),
 
-                  Day9 = await _dbFinancial.FactorRepository.GetSumAsync(p => p.UserId == userId && p.DateModified.Year == DateTime.Now.AddMonths(-8).Year
-               && p.DateModified.Month == DateTime.Now.AddMonths(-8).Month && p.Status, p => p.EndPrice),
+                Day9 = await _dbFinancial.FactorRepository.GetSumAsync(p => p.UserId == userId && p.DateModified.Year == DateTime.Now.AddMonths(-8).Year
+             && p.DateModified.Month == DateTime.Now.AddMonths(-8).Month && p.Status, p => p.EndPrice),
 
-                    Day10 = await _dbFinancial.FactorRepository.GetSumAsync(p => p.UserId == userId && p.DateModified.Year == DateTime.Now.AddMonths(-9).Year
-               && p.DateModified.Month == DateTime.Now.AddMonths(-9).Month && p.Status, p => p.EndPrice),
+                Day10 = await _dbFinancial.FactorRepository.GetSumAsync(p => p.UserId == userId && p.DateModified.Year == DateTime.Now.AddMonths(-9).Year
+           && p.DateModified.Month == DateTime.Now.AddMonths(-9).Month && p.Status, p => p.EndPrice),
 
-                      Day11 = await _dbFinancial.FactorRepository.GetSumAsync(p => p.UserId == userId && p.DateModified.Year == DateTime.Now.AddMonths(-10).Year
-               && p.DateModified.Month == DateTime.Now.AddMonths(-10).Month && p.Status, p => p.EndPrice),
+                Day11 = await _dbFinancial.FactorRepository.GetSumAsync(p => p.UserId == userId && p.DateModified.Year == DateTime.Now.AddMonths(-10).Year
+         && p.DateModified.Month == DateTime.Now.AddMonths(-10).Month && p.Status, p => p.EndPrice),
 
-                        Day12 = await _dbFinancial.FactorRepository.GetSumAsync(p => p.UserId == userId && p.DateModified.Year == DateTime.Now.AddMonths(-11).Year
-               && p.DateModified.Month == DateTime.Now.AddMonths(-11).Month && p.Status, p => p.EndPrice),
+                Day12 = await _dbFinancial.FactorRepository.GetSumAsync(p => p.UserId == userId && p.DateModified.Year == DateTime.Now.AddMonths(-11).Year
+       && p.DateModified.Month == DateTime.Now.AddMonths(-11).Month && p.Status, p => p.EndPrice),
             };
-            res.Last7Factors = await _dbFinancial.FactorRepository.GetManyAsync(p => p.UserId == userId, null, "", 7);
+            res.Last7Factors = await _dbFinancial.FactorRepository.GetManyAsync(p => p.UserId == userId, p => p.OrderBy(s => s.DateModified), "", 7);
             res.TotalSuccessEntry = await _dbFinancial.EntryRepository.GetSumAsync(p => p.UserId == userId && p.IsPardakht, p => p.Price);
-            res.Last10Entries = await _dbFinancial.EntryRepository.GetManyAsync(p => p.UserId == userId, null, "", 10);
+            res.Last10Entries = await _dbFinancial.EntryRepository.GetManyAsync(p => p.UserId == userId, p=>p.OrderBy(s=>s.DateModified), "", 10);
 
             res.TotalFactorDaramad = await _dbFinancial.FactorRepository.GetSumAsync(p => p.UserId == userId && p.Status && p.Kind == 1, p => p.EndPrice);
 
@@ -145,6 +147,130 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Common
 
             res.TotalSuccessFactor = await _dbFinancial.FactorRepository.GetSumAsync(p => p.UserId == userId && p.Status, p => p.EndPrice);
 
+            return Ok(res);
+        }
+
+        [Authorize(Policy = "AccessBloger")]
+        [HttpGet(ApiV1Routes.Dashboard.GetBlogDashboard)]
+        public async Task<IActionResult> GetBlogDashboard(string userId)
+        {
+            var res = new BlogDashboardDto();
+
+            if (User.HasClaim(ClaimTypes.Role, "AdminBlog"))
+            {
+                res.TotalBlogCount = await _db.BlogRepository.GetCountAsync(null);
+                res.ApprovedBlogCount = await _db.BlogRepository.GetCountAsync(p => p.Status);
+                res.UnApprovedBlogCount = await _db.BlogRepository.GetCountAsync(p => !p.Status);
+
+                res.TotalBlog5Days = new DaysForReturnDto
+                {
+                    Day1 = await _db.BlogRepository
+                .GetCountAsync(p => p.DateModified.Date == DateTime.Now.Date),
+                    Day2 = await _db.BlogRepository
+                .GetCountAsync(p => p.DateModified.Date == DateTime.Now.AddDays(-1).Date),
+                    Day3 = await _db.BlogRepository
+                .GetCountAsync(p => p.DateModified.Date == DateTime.Now.AddDays(-2).Date),
+                    Day4 = await _db.BlogRepository
+                .GetCountAsync(p => p.DateModified.Date == DateTime.Now.AddDays(-3).Date),
+                    Day5 = await _db.BlogRepository
+                .GetCountAsync(p => p.DateModified.Date == DateTime.Now.AddDays(-4).Date),
+                };
+                res.ApprovedBlog5Days = new DaysForReturnDto
+                {
+                    Day1 = await _db.BlogRepository
+                .GetCountAsync(p => p.DateModified.Date == DateTime.Now.Date && p.Status),
+                    Day2 = await _db.BlogRepository
+                .GetCountAsync(p => p.DateModified.Date == DateTime.Now.AddDays(-1).Date && p.Status),
+                    Day3 = await _db.BlogRepository
+                .GetCountAsync(p => p.DateModified.Date == DateTime.Now.AddDays(-2).Date && p.Status),
+                    Day4 = await _db.BlogRepository
+                .GetCountAsync(p => p.DateModified.Date == DateTime.Now.AddDays(-3).Date && p.Status),
+                    Day5 = await _db.BlogRepository
+                .GetCountAsync(p => p.DateModified.Date == DateTime.Now.AddDays(-4).Date && p.Status),
+                };
+                res.UnApprovedBlog5Days = new DaysForReturnDto
+                {
+                    Day1 = await _db.BlogRepository
+               .GetCountAsync(p => p.DateModified.Date == DateTime.Now.Date && !p.Status),
+                    Day2 = await _db.BlogRepository
+               .GetCountAsync(p => p.DateModified.Date == DateTime.Now.AddDays(-1).Date && !p.Status),
+                    Day3 = await _db.BlogRepository
+               .GetCountAsync(p => p.DateModified.Date == DateTime.Now.AddDays(-2).Date && !p.Status),
+                    Day4 = await _db.BlogRepository
+               .GetCountAsync(p => p.DateModified.Date == DateTime.Now.AddDays(-3).Date && !p.Status),
+                    Day5 = await _db.BlogRepository
+               .GetCountAsync(p => p.DateModified.Date == DateTime.Now.AddDays(-4).Date && !p.Status),
+                };
+
+                res.Last7Blogs = await _db.BlogRepository.GetManyAsync(null, s => s.OrderBy(p => p.DateModified), "", 7);
+
+                var users = await _db.UserRepository
+                    .GetManyAsync(p => p.UserRoles.Any(s => s.Role.Name == "Blog"), p => p.OrderByDescending(s => s.Blogs.Count()), "Blogs", 12);
+
+                res.Last12UserBlogInfo = new List<UserBlogInfoDto>();
+
+                foreach (var user in users)
+                {
+                    res.Last12UserBlogInfo.Add(new UserBlogInfoDto
+                    {
+                        Name = user.Name,
+                        TotalBlog = user.Blogs.Count,
+                        ApprovedBlog = user.Blogs.Count(p=>p.Status),
+                        UnApprovedBlog = user.Blogs.Count(p=>!p.Status)
+                    });
+                }
+            }
+            else // Blog
+            {
+                res.TotalBlogCount = await _db.BlogRepository.GetCountAsync(p=>p.UserId == userId);
+                res.ApprovedBlogCount = await _db.BlogRepository.GetCountAsync(p => p.UserId == userId && p.Status);
+                res.UnApprovedBlogCount = await _db.BlogRepository.GetCountAsync(p => p.UserId == userId && !p.Status);
+
+                res.TotalBlog5Days = new DaysForReturnDto
+                {
+                    Day1 = await _db.BlogRepository
+                .GetCountAsync(p => p.UserId == userId && p.DateModified.Date == DateTime.Now.Date),
+                    Day2 = await _db.BlogRepository
+                .GetCountAsync(p => p.UserId == userId && p.DateModified.Date == DateTime.Now.AddDays(-1).Date),
+                    Day3 = await _db.BlogRepository
+                .GetCountAsync(p => p.UserId == userId && p.DateModified.Date == DateTime.Now.AddDays(-2).Date),
+                    Day4 = await _db.BlogRepository
+                .GetCountAsync(p => p.UserId == userId && p.DateModified.Date == DateTime.Now.AddDays(-3).Date),
+                    Day5 = await _db.BlogRepository
+                .GetCountAsync(p => p.UserId == userId && p.DateModified.Date == DateTime.Now.AddDays(-4).Date),
+                };
+                res.ApprovedBlog5Days = new DaysForReturnDto
+                {
+                    Day1 = await _db.BlogRepository
+                .GetCountAsync(p => p.UserId == userId && p.DateModified.Date == DateTime.Now.Date && p.Status),
+                    Day2 = await _db.BlogRepository
+                .GetCountAsync(p => p.UserId == userId && p.DateModified.Date == DateTime.Now.AddDays(-1).Date && p.Status),
+                    Day3 = await _db.BlogRepository
+                .GetCountAsync(p => p.UserId == userId && p.DateModified.Date == DateTime.Now.AddDays(-2).Date && p.Status),
+                    Day4 = await _db.BlogRepository
+                .GetCountAsync(p => p.UserId == userId && p.DateModified.Date == DateTime.Now.AddDays(-3).Date && p.Status),
+                    Day5 = await _db.BlogRepository
+                .GetCountAsync(p => p.UserId == userId && p.DateModified.Date == DateTime.Now.AddDays(-4).Date && p.Status),
+                };
+                res.UnApprovedBlog5Days = new DaysForReturnDto
+                {
+                    Day1 = await _db.BlogRepository
+               .GetCountAsync(p => p.UserId == userId && p.DateModified.Date == DateTime.Now.Date && !p.Status),
+                    Day2 = await _db.BlogRepository
+               .GetCountAsync(p => p.UserId == userId && p.DateModified.Date == DateTime.Now.AddDays(-1).Date && !p.Status),
+                    Day3 = await _db.BlogRepository
+               .GetCountAsync(p => p.UserId == userId && p.DateModified.Date == DateTime.Now.AddDays(-2).Date && !p.Status),
+                    Day4 = await _db.BlogRepository
+               .GetCountAsync(p => p.UserId == userId && p.DateModified.Date == DateTime.Now.AddDays(-3).Date && !p.Status),
+                    Day5 = await _db.BlogRepository
+               .GetCountAsync(p => p.UserId == userId && p.DateModified.Date == DateTime.Now.AddDays(-4).Date && !p.Status),
+                };
+
+                res.Last7Blogs = await _db.BlogRepository.GetManyAsync(p=> p.UserId == userId, s => s.OrderBy(p => p.DateModified), "", 7);
+
+                res.Last12UserBlogInfo = new List<UserBlogInfoDto>();
+
+            }
             return Ok(res);
         }
     }
