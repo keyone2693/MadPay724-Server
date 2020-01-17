@@ -320,6 +320,33 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Common
             res.TotalSuccessFactor = await _dbFinancial.FactorRepository.GetCountAsync(p => p.Status);
             res.TotalSuccessFactorPrice = await _dbFinancial.FactorRepository.GetSumAsync(p => p.Status, p => p.EndPrice);
 
+
+            res.Entry5Days = new DaysForReturnDto
+            {
+                Day1 = await _dbFinancial.EntryRepository
+                .GetSumAsync(p => p.DateModified.Date == DateTime.Now.Date && p.IsPardakht, p => p.Price),
+                Day2 = await _dbFinancial.EntryRepository
+                .GetSumAsync(p => p.DateModified.Date == DateTime.Now.AddDays(-1).Date && p.IsPardakht, p => p.Price),
+                Day3 =  await _dbFinancial.EntryRepository
+                .GetSumAsync(p => p.DateModified.Date == DateTime.Now.AddDays(-2).Date && p.IsPardakht, p => p.Price),
+                Day4 =  await _dbFinancial.EntryRepository
+                .GetSumAsync(p => p.DateModified.Date == DateTime.Now.AddDays(-3).Date && p.IsPardakht, p => p.Price),
+                Day5 =  await _dbFinancial.EntryRepository
+                .GetSumAsync(p =>  p.DateModified.Date == DateTime.Now.AddDays(-4).Date && p.IsPardakht, p => p.Price),
+            };
+            res.Factor5Days = new DaysForReturnDto
+            {
+                Day1 = await _dbFinancial.FactorRepository
+                .GetSumAsync(p => p.DateModified.Date == DateTime.Now.Date && p.Status, p => p.EndPrice),
+                Day2 = await _dbFinancial.FactorRepository
+                .GetSumAsync(p => p.DateModified.Date == DateTime.Now.AddDays(-1).Date && p.Status, p => p.EndPrice),
+                Day3 = await _dbFinancial.FactorRepository
+                .GetSumAsync(p => p.DateModified.Date == DateTime.Now.AddDays(-2).Date && p.Status, p => p.EndPrice),
+                Day4 = await _dbFinancial.FactorRepository
+                .GetSumAsync(p => p.DateModified.Date == DateTime.Now.AddDays(-3).Date && p.Status, p => p.EndPrice),
+                Day5 = await _dbFinancial.FactorRepository
+                .GetSumAsync(p => p.DateModified.Date == DateTime.Now.AddDays(-4).Date && p.Status, p => p.EndPrice),
+            };
             res.Factor12Months = new DaysForReturnDto
             {
                 Day1 = await _dbFinancial.FactorRepository.GetSumAsync(p => p.DateModified.Year == DateTime.Now.Year &&

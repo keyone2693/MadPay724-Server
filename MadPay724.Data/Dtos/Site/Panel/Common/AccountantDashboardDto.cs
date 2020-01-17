@@ -22,6 +22,7 @@ namespace MadPay724.Data.Dtos.Site.Panel.Common
 
         public long TotalFactor{ get; set; } = 0;
         public long TotalFactorPrice { get; set; } = 0;
+
         public long TotalEasyPay { get; set; } = 0;
         public long TotalEasyPayPrice { get; set; } = 0;
         public long TotalSupport { get; set; } = 0;
@@ -31,6 +32,10 @@ namespace MadPay724.Data.Dtos.Site.Panel.Common
         public long TotalSuccessFactor { get; set; } = 0;
         public long TotalSuccessFactorPrice { get; set; } = 0;
 
+
+
+        public DaysForReturnDto Entry5Days { get; set; }
+        public DaysForReturnDto Factor5Days { get; set; }
 
         public DaysForReturnDto Factor12Months { get; set; }
         public DaysForReturnDto Entry12Months { get; set; }
