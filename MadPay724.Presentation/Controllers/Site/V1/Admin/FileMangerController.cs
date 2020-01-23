@@ -72,9 +72,9 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Admin
         }
 
         [Authorize(Policy = "RequireAdminRole")]
-        [HttpGet(ApiV1Routes.AdminFileManager.Upload)]
+        [HttpPost(ApiV1Routes.AdminFileManager.Upload)]
 
-        public async Task<IActionResult> Upload(string path,IList<IFormFile> uploadFiles,string action)
+        public async Task<IActionResult> Upload([FromForm]FileManagerDirectoryContent args, IList<IFormFile> uploadFiles)
         {
             //if(false)
             //{
@@ -83,15 +83,15 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Admin
             //    Response.StatusCode = 403;
             //    Response.HttpContext.Features.Get<IHttpResponseFeature>().ReasonPhrase = "";
             //}
-            FileManagerResponse uploadResponse = opration.Upload(path, uploadFiles, action, null);
+            FileManagerResponse uploadResponse = opration.Upload(args.Path, uploadFiles, args.Action, null);
             if (uploadResponse.Error == null)
                 return NoContent();
             else
-                return BadRequest();
+                return BadRequest(uploadResponse.Error.Message);
         }
-        [Authorize(Policy = "RequireAdminRole")]
-        [HttpGet(ApiV1Routes.AdminFileManager.Download)]
-        public async Task<IActionResult> Download(string downloadInput)
+         [AllowAnonymous]
+        [HttpPost(ApiV1Routes.AdminFileManager.Download)]
+        public async Task<IActionResult> Download([FromForm]string downloadInput)
         {
             FileManagerDirectoryContent args = JsonConvert.DeserializeObject<FileManagerDirectoryContent>(downloadInput);
 
