@@ -95,6 +95,19 @@ namespace MadPay724.Presentation.Routes.V1
 
         }
 
+        public static class AdminFileManager
+        {
+            //GET
+            public const string FileOperations = BaseSitePanel + "/admin/filemanager/operations";
+            //GET
+            public const string Download = BaseSitePanel + "/admin/filemanager/download";
+            //GET
+            public const string Upload = BaseSitePanel + "/admin/filemanager/upload";
+            //GET
+            public const string GetImage = BaseSitePanel + "/admin/filemanager/getimage";
+
+        }
+
         #endregion
         #region AccountantRoutes
 
