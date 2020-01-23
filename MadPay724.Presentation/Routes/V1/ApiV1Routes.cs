@@ -97,7 +97,7 @@ namespace MadPay724.Presentation.Routes.V1
 
         public static class AdminFileManager
         {
-            //GET
+            //POST
             public const string FileOperations = BaseSitePanel + "/admin/filemanager/operations";
             //GET
             public const string Download = BaseSitePanel + "/admin/filemanager/download";

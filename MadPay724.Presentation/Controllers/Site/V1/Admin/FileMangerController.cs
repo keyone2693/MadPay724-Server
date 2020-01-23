@@ -6,7 +6,9 @@ using MadPay724.Presentation.Routes.V1;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Syncfusion.EJ2.FileManager.Base;
 using Syncfusion.EJ2.FileManager.PhysicalFileProvider;
 
@@ -29,23 +31,23 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Admin
             opration.RootFolder(basePath + "\\" + this.root);
         }
         [Authorize(Policy = "RequireAdminRole")]
-        [HttpGet(ApiV1Routes.AdminFileManager.FileOperations)]
+        [HttpPost(ApiV1Routes.AdminFileManager.FileOperations)]
         public async Task<IActionResult> FileOperations([FromBody]FileManagerDirectoryContent args)
         {
-            if(args.Action == "delete" || args.Action == "rename")
-            {
-                if(string.IsNullOrEmpty(args.TargetPath) && string.IsNullOrEmpty(args.Path))
-                {
-                    FileManagerResponse response = new FileManagerResponse();
+            //if(args.Action == "delete" || args.Action == "rename")
+            //{
+            //    if(string.IsNullOrEmpty(args.TargetPath) && string.IsNullOrEmpty(args.Path))
+            //    {
+            //        FileManagerResponse response = new FileManagerResponse();
 
-                    response.Error = new ErrorDetails
-                    {
-                        Code = "401",
-                        Message = "عدم دسترسی به فولدر مورد نظر"
-                    };
-                    return Unauthorized(opration.ToCamelCase(response));
-                }
-            }
+            //        response.Error = new ErrorDetails
+            //        {
+            //            Code = "401",
+            //            Message = "عدم دسترسی به فولدر مورد نظر"
+            //        };
+            //        return Unauthorized(opration.ToCamelCase(response));
+            //    }
+            //}
             switch (args.Action)
             {
                 case "read":
@@ -69,5 +71,39 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Admin
             return Ok();
         }
 
+        [Authorize(Policy = "RequireAdminRole")]
+        [HttpGet(ApiV1Routes.AdminFileManager.Upload)]
+
+        public async Task<IActionResult> Upload(string path,IList<IFormFile> uploadFiles,string action)
+        {
+            //if(false)
+            //{
+            //    Response.Clear();
+            //    Response.ContentType = "application/json; charset-utf8";
+            //    Response.StatusCode = 403;
+            //    Response.HttpContext.Features.Get<IHttpResponseFeature>().ReasonPhrase = "";
+            //}
+            FileManagerResponse uploadResponse = opration.Upload(path, uploadFiles, action, null);
+            if (uploadResponse.Error == null)
+                return NoContent();
+            else
+                return BadRequest();
+        }
+        [Authorize(Policy = "RequireAdminRole")]
+        [HttpGet(ApiV1Routes.AdminFileManager.Download)]
+        public async Task<IActionResult> Download(string downloadInput)
+        {
+            FileManagerDirectoryContent args = JsonConvert.DeserializeObject<FileManagerDirectoryContent>(downloadInput);
+
+            return opration.Download(args.Path, args.Names);
+        }
+
+        [AllowAnonymous]
+        [HttpGet(ApiV1Routes.AdminFileManager.GetImage)]
+
+        public async Task<IActionResult> GetImage([FromQuery]FileManagerDirectoryContent args)
+        {
+            return opration.GetImage(args.Path, args.Id,true,null,null);
+        }
     }
 }
