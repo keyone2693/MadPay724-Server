@@ -1,7 +1,7 @@
 ﻿using MadPay724.Data.Models.MainDB;
 using System.Threading.Tasks;
 
-namespace MadPay724.Services.Site.Admin.Auth.Interface
+namespace MadPay724.Services.Site.Panel.Auth.Interface
 {
     public interface IAuthService
     {

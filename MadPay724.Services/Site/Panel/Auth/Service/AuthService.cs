@@ -1,13 +1,12 @@
-﻿using MadPay724.Common.Helpers;
-using MadPay724.Data.DatabaseContext;
+﻿using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Models.MainDB;
 using MadPay724.Repo.Infrastructure;
-using MadPay724.Services.Site.Admin.Auth.Interface;
+using MadPay724.Services.Site.Panel.Auth.Interface;
 using System.Linq;
 using System.Threading.Tasks;
 using MadPay724.Common.Helpers.Interface;
 
-namespace MadPay724.Services.Site.Admin.Auth.Service
+namespace MadPay724.Services.Site.Panel.Auth.Service
 {
     public class AuthService : IAuthService
     {

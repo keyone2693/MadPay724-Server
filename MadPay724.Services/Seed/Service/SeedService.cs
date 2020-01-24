@@ -7,7 +7,7 @@ using MadPay724.Common.Helpers.Interface;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Internal;
 using System.Linq;
-using MadPay724.Services.Site.Admin.Auth.Interface;
+using MadPay724.Services.Site.Panel.Auth.Interface;
 
 namespace MadPay724.Services.Seed.Service
 {

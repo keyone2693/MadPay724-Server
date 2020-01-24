@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Models.MainDB;
 using MadPay724.Repo.Infrastructure;
-using MadPay724.Services.Site.Admin.Auth.Interface;
+using MadPay724.Services.Site.Panel.Auth.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Linq;

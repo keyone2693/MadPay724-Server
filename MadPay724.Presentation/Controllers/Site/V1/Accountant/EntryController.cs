@@ -13,7 +13,7 @@ using MadPay724.Data.Models.FinancialDB.Accountant;
 using MadPay724.Presentation.Helpers.Filters;
 using MadPay724.Presentation.Routes.V1;
 using MadPay724.Repo.Infrastructure;
-using MadPay724.Services.Site.Admin.Wallet.Interface;
+using MadPay724.Services.Site.Panel.Wallet.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

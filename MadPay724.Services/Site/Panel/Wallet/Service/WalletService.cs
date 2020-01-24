@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿
 using System.Threading.Tasks;
 using MadPay724.Common.ErrorAndMessage;
 using MadPay724.Common.Helpers.Interface;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Repo.Infrastructure;
-using MadPay724.Services.Site.Admin.Wallet.Interface;
+using MadPay724.Services.Site.Panel.Wallet.Interface;
 
-namespace MadPay724.Services.Site.Admin.Wallet.Service
+namespace MadPay724.Services.Site.Panel.Wallet.Service
 {
     public class WalletService : IWalletService
     {

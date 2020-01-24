@@ -7,7 +7,7 @@ using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Common.Pagination;
 using MadPay724.Presentation.Routes.V1;
 using MadPay724.Repo.Infrastructure;
-using MadPay724.Services.Site.Admin.Wallet.Interface;
+using MadPay724.Services.Site.Panel.Wallet.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

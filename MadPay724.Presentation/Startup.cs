@@ -2,8 +2,8 @@ using System;
 using System.Linq;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Repo.Infrastructure;
-using MadPay724.Services.Site.Admin.Auth.Interface;
-using MadPay724.Services.Site.Admin.Auth.Service;
+using MadPay724.Services.Site.Panel.Auth.Interface;
+using MadPay724.Services.Site.Panel.Auth.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
@@ -26,16 +26,17 @@ using MadPay724.Services.Upload.Interface;
 using MadPay724.Services.Upload.Service;
 using MadPay724.Presentation.Helpers.Filters;
 using MadPay724.Services.Seed.Service;
-using MadPay724.Services.Site.Admin.User.Interface;
-using MadPay724.Services.Site.Admin.User.Service;
-using MadPay724.Services.Site.Admin.Wallet.Interface;
-using MadPay724.Services.Site.Admin.Wallet.Service;
+using MadPay724.Services.Site.Panel.User.Interface;
+using MadPay724.Services.Site.Panel.User.Service;
+using MadPay724.Services.Site.Panel.Wallet.Interface;
+using MadPay724.Services.Site.Panel.Wallet.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using MadPay724.Common.Helpers.Utilities.Extensions;
 using Microsoft.EntityFrameworkCore;
+using MadPay724.Services.Site.Panel.Common.Service;
 
 namespace MadPay724.Presentation
 {
@@ -216,12 +217,15 @@ namespace MadPay724.Presentation
                 document.OperationProcessors.Add(
                     new AspNetCoreOperationSecurityScopeProcessor("JWT"));
             });
-            services.AddCors();
-                       
+            services.AddCors(opt =>
+            opt.AddPolicy("CorsPolicy", builder =>
+           builder.WithOrigins("http://localhost:4200")
+                   .AllowAnyMethod()
+                   .AllowAnyHeader()));
+
+            services.AddSignalR();
             services.AddAutoMapper(typeof(Startup));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            //services.AddScoped<IUnitOfWork<Main_MadPayDbContext>, UnitOfWork<Main_MadPayDbContext>>();
-            //services.AddScoped<IUnitOfWork<Financial_MadPayDbContext>, UnitOfWork<Financial_MadPayDbContext>>();
             services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
 
 
@@ -243,18 +247,18 @@ namespace MadPay724.Presentation
                 opt.Password.RequireNonAlphanumeric = false;
                 opt.Password.RequireUppercase = false;
             });
-            builder = new IdentityBuilder(builder.UserType,typeof(Role),builder.Services);
+            builder = new IdentityBuilder(builder.UserType, typeof(Role), builder.Services);
             builder.AddEntityFrameworkStores<Main_MadPayDbContext>();
             builder.AddRoleValidator<RoleValidator<Role>>();
             builder.AddRoleManager<RoleManager<Role>>();
             builder.AddSignInManager<SignInManager<User>>();
             builder.AddUserManager<UserManager<User>>();
             builder.AddDefaultTokenProviders();
-           
+
             //services.Configure<TokenSetting>(Configuration.GetSection("TokenSetting"));
 
             var tokenSettingSection = Configuration.GetSection("TokenSetting");
-            var tokenSetting= tokenSettingSection.Get<TokenSetting>();
+            var tokenSetting = tokenSettingSection.Get<TokenSetting>();
             var key = Encoding.ASCII.GetBytes(tokenSetting.Secret);
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(opt =>
@@ -327,15 +331,11 @@ namespace MadPay724.Presentation
                 app.UseResponseCaching();
             }
 
-           
+
             //app.UseResponseCompression();
-            
+
             seeder.SeedUsers();
-            app.UseCors(p => 
-                p.WithOrigins("http://localhost:4200")
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    );
+            app.UseCors("CorsPolicy");
             //
             app.UseRouting();
             app.UseAuthentication();
@@ -351,7 +351,14 @@ namespace MadPay724.Presentation
             });
 
 
-            app.UseMvc();
+            //app.UseMvc();
+
+            //app.UseSignalR()
+
+            app.UseEndpoints(end =>
+            {
+                end.MapHub<ChatHubService>("/chat");
+            });
         }
     }
 }
