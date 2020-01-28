@@ -37,6 +37,7 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using MadPay724.Common.Helpers.Utilities.Extensions;
 using Microsoft.EntityFrameworkCore;
 using MadPay724.Services.Site.Panel.Common.Service;
+using MadPay724.Presentation.Routes.V1;
 
 namespace MadPay724.Presentation
 {
@@ -221,7 +222,8 @@ namespace MadPay724.Presentation
             opt.AddPolicy("CorsPolicy", builder =>
            builder.WithOrigins("http://localhost:4200")
                    .AllowAnyMethod()
-                   .AllowAnyHeader()));
+                   .AllowAnyHeader()
+                   .AllowCredentials()));
 
             services.AddSignalR();
             services.AddAutoMapper(typeof(Startup));
@@ -357,7 +359,8 @@ namespace MadPay724.Presentation
 
             app.UseEndpoints(end =>
             {
-                end.MapHub<ChatHubService>("/chat");
+                end.MapDefaultControllerRoute();
+                end.MapHub<ChatHubService>(ApiV1Routes.BaseSitePanel + "/chat");
             });
         }
     }

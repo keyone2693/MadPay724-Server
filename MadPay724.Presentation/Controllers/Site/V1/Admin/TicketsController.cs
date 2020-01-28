@@ -12,10 +12,12 @@ using MadPay724.Data.Dtos.Site.Panel.Ticket;
 using MadPay724.Data.Models.MainDB;
 using MadPay724.Presentation.Routes.V1;
 using MadPay724.Repo.Infrastructure;
+using MadPay724.Services.Site.Panel.Common.Service;
 using MadPay724.Services.Upload.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 
 namespace MadPay724.Presentation.Controllers.Site.V1.Admin
@@ -29,22 +31,28 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Admin
         private readonly ILogger<TicketsController> _logger;
         private readonly IUploadService _uploadService;
         private readonly IWebHostEnvironment _env;
+        private readonly IHubContext<ChatHubService> _hubContext;
 
         public TicketsController(IUnitOfWork<Main_MadPayDbContext> dbContext, IMapper mapper,
             ILogger<TicketsController> logger, IUploadService uploadService,
-            IWebHostEnvironment env)
+            IWebHostEnvironment env, IHubContext<ChatHubService> hubContext)
         {
             _db = dbContext;
             _mapper = mapper;
             _logger = logger;
             _uploadService = uploadService;
             _env = env;
+            _hubContext = hubContext;
         }
 
         [Authorize(Policy = "RequireAdminRole")]
         [HttpGet(ApiV1Routes.AdminTicket.GetTickets)]
         public async Task<IActionResult> GetTickets([FromQuery]TicketsPaginationDto ticketsPaginationDto)
         {
+
+            await _hubContext.Clients.All.SendAsync("Send", "Salab Khobi");
+
+
             var ticketsFromRepo = await _db.TicketRepository
                .GetAllPagedListAsync(
                ticketsPaginationDto,
