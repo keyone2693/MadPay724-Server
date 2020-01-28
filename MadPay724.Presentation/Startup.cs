@@ -38,6 +38,9 @@ using MadPay724.Common.Helpers.Utilities.Extensions;
 using Microsoft.EntityFrameworkCore;
 using MadPay724.Services.Site.Panel.Common.Service;
 using MadPay724.Presentation.Routes.V1;
+using MadPay724.Common.OnlineChat.Storage;
+using Microsoft.Extensions.Primitives;
+using System.Threading.Tasks;
 
 namespace MadPay724.Presentation
 {
@@ -227,6 +230,7 @@ namespace MadPay724.Presentation
 
             services.AddSignalR();
             services.AddAutoMapper(typeof(Startup));
+            services.AddSingleton<UserInfoInMemory>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
 
@@ -274,6 +278,19 @@ namespace MadPay724.Presentation
                         ValidateAudience = true,
                         ValidAudience = tokenSetting.Audience,
                         ClockSkew = TimeSpan.Zero
+                    };
+                    opt.Events = new JwtBearerEvents
+                    {
+                        OnMessageReceived = context =>
+                        {
+                            if (context.Request.Path.Value.StartsWith("chat")
+                            && context.Request.Query.TryGetValue("access_token", out StringValues token))
+                            {
+                                context.Token = token;
+                            }
+
+                            return Task.CompletedTask;
+                        }
                     };
                 });
             services.AddAuthorization(opt =>
