@@ -37,7 +37,7 @@ namespace MadPay724.Services.Site.Panel.Common.Service
 
                 var list = _userInfoInMemory.GetAllUsersExceptThis(_http.HttpContext.User.Identity.Name).ToList();
                 await Clients.AllExcept(new List<string> { _http.HttpContext.Connection.Id })
-                    .SendAsync("NeOnlineUser", _userInfoInMemory.GetUserInfo(_http.HttpContext.User.Identity.Name));
+                    .SendAsync("NewOnlineUser", _userInfoInMemory.GetUserInfo(_http.HttpContext.User.Identity.Name));
             }
             else
             {
