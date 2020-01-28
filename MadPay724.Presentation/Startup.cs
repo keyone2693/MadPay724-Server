@@ -296,6 +296,7 @@ namespace MadPay724.Presentation
             services.AddAuthorization(opt =>
             {
                 opt.AddPolicy("RequireNoAccess", policy => policy.RequireRole("NoAccess"));
+                opt.AddPolicy("AccessChat", policy => policy.RequireRole("Admin", "User"));
 
                 opt.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
 

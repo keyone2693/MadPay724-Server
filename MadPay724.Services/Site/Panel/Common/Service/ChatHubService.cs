@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MadPay724.Services.Site.Panel.Common.Service
 {
-    [Authorize(Policy = "RequireUserRole")]
+    [Authorize(Policy = "AccessChat")]
     public class ChatHubService : Hub
     {
         private readonly UserInfoInMemory _userInfoInMemory;
