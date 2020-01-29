@@ -53,7 +53,7 @@ namespace MadPay724.Services.Site.Panel.Common.Service
             var userInfoSender = _userInfoInMemory.GetUserInfo(Context.User.Identity.Name);
             var userInfoReciever = _userInfoInMemory.GetUserInfo(targetuserName);
 
-            return Clients.Client(userInfoReciever.ConnectionId).SendAsync("SendDirectMessage",message, userInfoSender);
+            return Clients.Client(userInfoReciever?.ConnectionId).SendAsync("SendDirectMessage",message, userInfoSender);
         }
     }
 }
