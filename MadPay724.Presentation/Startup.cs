@@ -77,7 +77,6 @@ namespace MadPay724.Presentation
                     config.ReturnHttpNotAcceptable = true;
                     config.SslPort = _httpsPort;
                     config.Filters.Add(typeof(RequireHttpsAttribute));
-                    //config.Filters.Add(typeof(LinkRewritingFilter));
                     var policy = new AuthorizationPolicyBuilder()
                         .RequireAuthenticatedUser()
                         .Build();
@@ -283,7 +282,7 @@ namespace MadPay724.Presentation
                     {
                         OnMessageReceived = context =>
                         {
-                            if (context.Request.Path.Value.StartsWith("chat")
+                            if (context.Request.Path.Value.StartsWith("/" + ApiV1Routes.BaseSitePanel + "/chat")
                             && context.Request.Query.TryGetValue("access_token", out StringValues token))
                             {
                                 context.Token = token;
