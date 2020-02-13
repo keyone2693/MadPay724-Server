@@ -23,8 +23,22 @@ namespace MadPay724.Services.Site.Panel.Common.Service
         public async Task Leave()
         {
             _userInfoInMemory.Remove(Context.User.Identity.Name);
-            await Clients.AllExcept(new List<string> { Context.ConnectionId })
+            
+
+
+            if (Context.User.Identity.Name == "admin@madpay724.com")
+            {
+                await Clients.AllExcept(new List<string> { Context.ConnectionId })
                 .SendAsync("UserLeft", Context.User.Identity.Name);
+            }
+            else
+            {
+                var adminUser = _userInfoInMemory.GetUserInfo("admin@madpay724.com");
+
+                await Clients.Client(adminUser.ConnectionId)
+                .SendAsync("UserLeft", Context.User.Identity.Name);
+            }
+
         }
         public async Task Join()
         {
