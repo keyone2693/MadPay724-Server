@@ -4,6 +4,7 @@ using MadPay724.Services.Site.Panel.Common.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -67,7 +68,7 @@ namespace MadPay724.Services.Site.Panel.Common.Service
             var userInfoSender = _userInfoInMemory.GetUserInfo(Context.User.Identity.Name);
             var userInfoReciever = _userInfoInMemory.GetUserInfo(targetuserName);
 
-            return Clients.Client(userInfoReciever?.ConnectionId).SendAsync("SendDirectMessage",message, userInfoSender);
+            return Clients.Client(userInfoReciever?.ConnectionId).SendAsync("SendDirectMessage",message, userInfoSender, DateTime.Now);
         }
     }
 }
