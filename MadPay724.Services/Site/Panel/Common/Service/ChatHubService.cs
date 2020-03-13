@@ -24,7 +24,7 @@ namespace MadPay724.Services.Site.Panel.Common.Service
         public async Task Leave()
         {
             _userInfoInMemory.Remove(Context.User.Identity.Name);
-            
+
 
 
             if (Context.User.Identity.Name == "admin@madpay724.com")
@@ -41,16 +41,23 @@ namespace MadPay724.Services.Site.Panel.Common.Service
             }
 
         }
+
+        public async Task LoadOnlineUsers()
+        {
+            await Clients.Client(Context.ConnectionId)
+                .SendAsync("OnlineUsers", _userInfoInMemory.GetAllUsersExceptThis(Context.User.Identity.Name));
+        }
         public async Task Join()
         {
             _userInfoInMemory.AddUpdate(Context.User.Identity.Name, Context.ConnectionId);
-            
-            if(Context.User.Identity.Name == "admin@madpay724.com")
+
+            if (Context.User.Identity.Name == "admin@madpay724.com")
             {
                 await Clients.AllExcept(new List<string> { Context.ConnectionId })
                     .SendAsync("NewOnlineUser", _userInfoInMemory.GetUserInfo(Context.User.Identity.Name));
             }
-            else {
+            else
+            {
                 var adminUser = _userInfoInMemory.GetUserInfo("admin@madpay724.com");
                 await Clients.Client(adminUser.ConnectionId)
                     .SendAsync("NewOnlineUser", _userInfoInMemory.GetUserInfo(Context.User.Identity.Name));
@@ -59,8 +66,8 @@ namespace MadPay724.Services.Site.Panel.Common.Service
             await Clients.Client(Context.ConnectionId)
                 .SendAsync("Joined", _userInfoInMemory.GetUserInfo(Context.User.Identity.Name));
 
-            //await Clients.Client(Context.ConnectionId)
-            //    .SendAsync("OnlineUsers", _userInfoInMemory.GetAllUsersExceptThis(Context.User.Identity.Name));
+            await Clients.Client(Context.ConnectionId)
+                .SendAsync("OnlineUsers", _userInfoInMemory.GetAllUsersExceptThis(Context.User.Identity.Name));
         }
 
         public Task SendDirectMessage(string message, string targetuserName)
@@ -68,7 +75,7 @@ namespace MadPay724.Services.Site.Panel.Common.Service
             var userInfoSender = _userInfoInMemory.GetUserInfo(Context.User.Identity.Name);
             var userInfoReciever = _userInfoInMemory.GetUserInfo(targetuserName);
 
-            return Clients.Client(userInfoReciever?.ConnectionId).SendAsync("SendDirectMessage",message, userInfoSender, DateTime.Now);
+            return Clients.Client(userInfoReciever?.ConnectionId).SendAsync("SendDirectMessage", message, userInfoSender, DateTime.Now);
         }
     }
 }
