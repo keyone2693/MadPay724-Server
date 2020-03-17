@@ -41,6 +41,8 @@ using MadPay724.Presentation.Routes.V1;
 using MadPay724.Common.OnlineChat.Storage;
 using Microsoft.Extensions.Primitives;
 using System.Threading.Tasks;
+using MadPay724.Data.Dtos.Common;
+using Newtonsoft.Json;
 
 namespace MadPay724.Presentation
 {
@@ -339,8 +341,14 @@ namespace MadPay724.Presentation
                         var error = context.Features.Get<IExceptionHandlerFeature>();
                         if (error != null)
                         {
-                            context.Response.AddAppError(error.Error.Message);
-                            await context.Response.WriteAsync(error.Error.Message);
+                            var model = JsonConvert.SerializeObject(new ApiReturn<string>
+                            {
+                                Status = false,
+                                Message = error.Error.Message,
+                                Result = null
+                            });
+                            context.Response.AddAppError(model);
+                            await context.Response.WriteAsync(model);
                         }
                     });
                 });
