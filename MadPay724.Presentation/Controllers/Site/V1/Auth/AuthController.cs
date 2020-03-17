@@ -20,6 +20,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
+using System.Net.Mime;
+using NSwag.Annotations;
 
 namespace MadPay724.Presentation.Controllers.Site.V1.Auth
 {
@@ -161,7 +164,9 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
 
 
         }
-        [HttpPost(ApiV1Routes.Auth.Login)]
+        [HttpPost(ApiV1Routes.Auth.Login)] 
+        [ProducesResponseType(typeof(LoginResponseDto) , StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string) , StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> Login(TokenRequestDto tokenRequestDto)
         {
             switch (tokenRequestDto.GrantType)
