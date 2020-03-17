@@ -65,15 +65,16 @@ namespace MadPay724.Presentation
         }
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddMadDbContext();
             services.AddMadInitialize(_httpsPort);
-            services.AddMadSwagger();
             services.AddSignalR();
             services.AddAutoMapper(typeof(Startup));
             services.AddMadDI();
             services.AddMadIdentityInit();
             services.AddMadAuth(Configuration);
+            services.AddMadApiVersioning();
+            services.AddMadSwagger();
+
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, SeedService seeder)
         {

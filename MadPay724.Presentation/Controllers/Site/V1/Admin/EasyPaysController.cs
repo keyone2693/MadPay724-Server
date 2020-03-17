@@ -19,6 +19,8 @@ using Microsoft.Extensions.Logging;
 
 namespace MadPay724.Presentation.Controllers.Site.V1.Admin
 {
+    [ApiVersion("1")]
+    [Route("api/v{v:apiVersion}")]
     [ApiExplorerSettings(GroupName = "v1_Site_Panel_Admin")]
     [ApiController]
     public class EasyPaysController : ControllerBase

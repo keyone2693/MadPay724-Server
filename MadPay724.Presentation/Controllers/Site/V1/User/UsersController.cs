@@ -22,6 +22,8 @@ using Newtonsoft.Json;
 
 namespace MadPay724.Presentation.Controllers.Site.V1.User
 {
+    [ApiVersion("1")]
+    [Route("api/v{v:apiVersion}")]
 
     [ApiExplorerSettings(GroupName = "v1_Site_Panel")]
     //[Route("api/v1/site/admin/[controller]")]

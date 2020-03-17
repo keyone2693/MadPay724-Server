@@ -20,11 +20,11 @@ namespace MadPay724.Presentation.Helpers.Configuration
         }
         public static void AddMadInitialize(this IServiceCollection services, int? httpsPort)
         {
-            services.AddMvc(config =>
+            services.AddMvcCore(config =>
             {
                 config.EnableEndpointRouting = false;
                 config.ReturnHttpNotAcceptable = true;
-                config.SslPort = httpsPort;
+                //config.SslPort = httpsPort;
                 config.Filters.Add(typeof(RequireHttpsAttribute));
                 var policy = new AuthorizationPolicyBuilder()
                     .RequireAuthenticatedUser()
@@ -35,7 +35,14 @@ namespace MadPay724.Presentation.Helpers.Configuration
                 //config.OutputFormatters.Add(new IonOutputFormatter(jsonFormatter));
                 //config.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());
                 //config.InputFormatters.Add(new XmlSerializerInputFormatter(config));
-            }).AddNewtonsoftJson(opt =>
+            })
+             .AddApiExplorer()
+             .AddFormatterMappings()
+             .AddDataAnnotations()
+             .AddCors(opt =>
+                opt.AddPolicy("CorsPolicy", builder =>
+                builder.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader().AllowCredentials())
+             ).AddNewtonsoftJson(opt =>
                 {
                     opt.SerializerSettings.ReferenceLoopHandling =
                     Newtonsoft.Json.ReferenceLoopHandling.Ignore;
@@ -59,12 +66,6 @@ namespace MadPay724.Presentation.Helpers.Configuration
             //    opt.ApiVersionSelector = new CurrentImplementationApiVersionSelector(opt);
             //});
 
-            services.AddCors(opt =>
-     opt.AddPolicy("CorsPolicy", builder =>
-    builder.WithOrigins("http://localhost:4200")
-            .AllowAnyMethod()
-            .AllowAnyHeader()
-            .AllowCredentials()));
         }
 
         public static void UseMadInitialize(this IApplicationBuilder app, SeedService seeder)

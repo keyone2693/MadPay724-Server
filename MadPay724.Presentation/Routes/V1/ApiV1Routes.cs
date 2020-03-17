@@ -7,9 +7,9 @@ namespace MadPay724.Presentation.Routes.V1
 {
     public static class ApiV1Routes
     {
-        public const string Root = "api";
+        //public const string Root = "api";
 
-        public const string Version = "v1";
+        //public const string Version = "v1";
 
         public const string Site = "site";
 
@@ -17,11 +17,21 @@ namespace MadPay724.Presentation.Routes.V1
 
         public const string App = "app";
 
-        public const string BaseSitePanel = Root + "/" + Version + "/" + Site + "/" + Panel;
-        public const string BaseSiteApp =   Root + "/" + Version + "/" + Site + "/" + App;
-
+        public const string BaseSitePanel = /*Root + "/" + Version + "/" +*/ Site + "/" + Panel;
+        public const string BaseSiteApp =  /* Root + "/" + Version + "/" +*/ Site + "/" + App;
+        #region AuthRoutes
+        public static class Auth
+        {
+            //api/v1/site/panel/auth/register
+            //GET
+            public const string Register = BaseSitePanel + "/auth/register";
+            //api/v1/site/panel/auth/login
+            //GET
+            public const string Login = BaseSitePanel + "/auth/login";
+        }
+        #endregion
         #region AdminRoutes
-        
+
         public static class AdminUsers
         {
             //GET
@@ -141,8 +151,7 @@ namespace MadPay724.Presentation.Routes.V1
         }
 
         #endregion
-
-# region EntryRoutes
+        # region EntryRoutes
         public static class Entry
         {
             //GET
@@ -171,7 +180,6 @@ namespace MadPay724.Presentation.Routes.V1
         }
 
         #endregion
-
         #region FactorRoutes
         public static class Factors
         {
@@ -212,7 +220,6 @@ namespace MadPay724.Presentation.Routes.V1
         }
 
         #endregion
-
         #region PhotosRoutes
         public static class Photos
         {
@@ -224,19 +231,6 @@ namespace MadPay724.Presentation.Routes.V1
             public const string ChangeUserPhoto = BaseSitePanel + "/users/{userId}/photos";
         }
         #endregion
-
-        #region AuthRoutes
-        public static class Auth
-        {
-            //api/v1/site/panel/auth/register
-            //GET
-            public const string Register = BaseSitePanel + "/auth/register";
-            //api/v1/site/panel/auth/login
-            //GET
-            public const string Login = BaseSitePanel + "/auth/login";
-        }
-        #endregion
-
         #region NotificationRoutes
         public static class Notification
         {
@@ -248,7 +242,6 @@ namespace MadPay724.Presentation.Routes.V1
             public const string GetUserNotify = BaseSitePanel + "/notifications/{userId}";
         }
         #endregion
-
         #region BankCardRoutes
         public static class BankCard
         {
@@ -270,7 +263,6 @@ namespace MadPay724.Presentation.Routes.V1
 
         }
         #endregion
-
         #region DocumentRoutes
         public static class Document
         {
@@ -286,7 +278,6 @@ namespace MadPay724.Presentation.Routes.V1
 
         }
         #endregion
-
         #region WalletRoutes
         public static class Wallet
         {
@@ -302,7 +293,6 @@ namespace MadPay724.Presentation.Routes.V1
 
         }
         #endregion
-
         #region TicketRoutes
         public static class Ticket
         {
@@ -332,7 +322,6 @@ namespace MadPay724.Presentation.Routes.V1
 
         }
         #endregion
-
         #region GateRoutes
         public static class Gate
         {
@@ -355,7 +344,6 @@ namespace MadPay724.Presentation.Routes.V1
 
         }
         #endregion
-
         #region EasyPayRoutes
         public static class EasyPay
         {
@@ -380,7 +368,6 @@ namespace MadPay724.Presentation.Routes.V1
 
         }
         #endregion
-
         #region BlogGroupRoutes
         public static class BlogGroup
         {
@@ -413,7 +400,6 @@ namespace MadPay724.Presentation.Routes.V1
 
         }
         #endregion
-
         #region BlogRoutes
         public static class Blog
         {
@@ -451,7 +437,6 @@ namespace MadPay724.Presentation.Routes.V1
 
         }
         #endregion
-
         #region CommonRoutes
         public static class Common
         {

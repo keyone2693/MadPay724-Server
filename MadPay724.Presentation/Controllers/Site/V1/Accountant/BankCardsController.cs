@@ -14,6 +14,8 @@ using Microsoft.Extensions.Logging;
 
 namespace MadPay724.Presentation.Controllers.Site.V1.Accountant
 {
+    [ApiVersion("1")]
+    [Route("api/v{v:apiVersion}")]
     [ApiExplorerSettings(GroupName = "v1_Site_Panel_Accountant")]
     [ApiController]
     public class BankCardsController : ControllerBase

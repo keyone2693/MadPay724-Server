@@ -26,9 +26,10 @@ using NSwag.Annotations;
 
 namespace MadPay724.Presentation.Controllers.Site.V1.Auth
 {
+    [ApiVersion("1")]
+    [Route("api/v{v:apiVersion}")]
     [AllowAnonymous]
     [ApiExplorerSettings(GroupName = "v1_Site_Panel")]
-    //[Route("api/v1/site/admin/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -142,7 +143,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
                     id = userToCreate.Id
                 }, userForReturn);
             }
-            else if(result.Errors.Any())
+            else if (result.Errors.Any())
             {
                 _logger.LogWarning(result.Errors.First().Description);
                 return BadRequest(new ReturnMessage()
@@ -158,15 +159,15 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
                 {
                     status = false,
                     title = "خطا",
-                    message ="خطای نامشخص"
+                    message = "خطای نامشخص"
                 });
             }
 
 
         }
-        [HttpPost(ApiV1Routes.Auth.Login)] 
-        [ProducesResponseType(typeof(LoginResponseDto) , StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(string) , StatusCodes.Status401Unauthorized)]
+        [HttpPost(ApiV1Routes.Auth.Login)]
+        [ProducesResponseType(typeof(LoginResponseDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> Login(TokenRequestDto tokenRequestDto)
         {
             switch (tokenRequestDto.GrantType)
@@ -176,7 +177,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
                     if (result.status)
                     {
                         var userForReturn = _mapper.Map<UserForDetailedDto>(result.user);
-                        
+
                         return Ok(new LoginResponseDto
                         {
                             token = result.token,

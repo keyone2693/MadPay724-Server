@@ -25,6 +25,8 @@ using MadPay724.Common.Helpers.Utilities.Extensions;
 
 namespace MadPay724.Presentation.Controllers.Site.V1.Blogger
 {
+    [ApiVersion("1")]
+    [Route("api/v{v:apiVersion}")]
     [ApiExplorerSettings(GroupName = "v1_Site_Panel_Blog")]
     [ApiController]
     public class BlogsController : ControllerBase
