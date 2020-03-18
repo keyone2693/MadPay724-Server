@@ -5,6 +5,9 @@ using MadPay724.Repo.Repositories.MainDB.Repo;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
+using System.Linq;
+using System.Reflection;
+using MadPay724.Common.Helpers.Utilities.Extensions;
 
 namespace MadPay724.Repo.Infrastructure
 {
@@ -245,7 +248,8 @@ namespace MadPay724.Repo.Infrastructure
         #region save
         public bool Save()
         {
-            if ( _db.SaveChanges() > 0)
+            _cleanStrings();
+            if (_db.SaveChanges() > 0)
                 return true;
             else
                 return false;
@@ -253,12 +257,42 @@ namespace MadPay724.Repo.Infrastructure
 
         public async Task<bool> SaveAsync()
         {
+            _cleanStrings();
             if (await _db.SaveChangesAsync() > 0)
                 return true;
             else
                 return false;
         }
+        private void _cleanStrings()
+        {
+            var changedEntities = _db.ChangeTracker.Entries()
+                .Where(p => p.State == EntityState.Added || p.State == EntityState.Modified);
+            foreach (var item in changedEntities)
+            {
+                if (item.Entity == null)
+                    continue;
 
+                var properties = item.Entity.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                    .Where(p => p.CanRead && p.CanWrite && p.PropertyType == typeof(string));
+
+                foreach (var property in properties)
+                {
+                    var propName = property.Name;
+                    var val = (string)property.GetValue(item.Entity, null);
+
+                    if (val.HasValue())
+                    {
+                        var newVal = val.CleanString();
+                        if (newVal == val)
+                            continue;
+                        property.SetValue(item.Entity, newVal, null);
+                    }
+                }
+            }
+            {
+
+            }
+        }
         #endregion
 
 
@@ -266,7 +300,7 @@ namespace MadPay724.Repo.Infrastructure
         private bool disposed = false;
 
 
-          
+
 
         protected virtual void Dispose(bool disposing)
         {
