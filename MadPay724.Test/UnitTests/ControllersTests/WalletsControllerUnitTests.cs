@@ -145,11 +145,11 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         public async Task GetWallets_Success()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
-            _mockRepo.Setup(x => x.WalletRepository.GetManyAsync(
-                    It.IsAny<Expression<Func<Wallet, bool>>>(),
-                    It.IsAny<Func<IQueryable<Wallet>, IOrderedQueryable<Wallet>>>(),
-                    It.IsAny<string>()))
-                .ReturnsAsync(new List<Wallet>());
+            //_mockRepo.Setup(x => x.WalletRepository.GetManyAsync(
+            //        It.IsAny<Expression<Func<Wallet, bool>>>(),
+            //        It.IsAny<Func<IQueryable<Wallet>, IOrderedQueryable<Wallet>>>(),
+            //        It.IsAny<string>()))
+            //    .ReturnsAsync(new List<Wallet>());
 
             _mockMapper.Setup(x => x.Map<List<WalletForReturnDto>>(It.IsAny<List<Wallet>>()))
                 .Returns(new List<WalletForReturnDto>());
@@ -180,8 +180,8 @@ namespace MadPay724.Test.UnitTests.ControllersTests
             _mockWalletService.Setup(x => x.CheckInventoryAsync(It.IsAny<int>(), It.IsAny<string>()))
                 .ReturnsAsync(true);
 
-            _mockWalletService.Setup(x => x.DecreaseInventoryAsync(It.IsAny<int>(), It.IsAny<string>()))
-                .ReturnsAsync(new ReturnMessage(){status = true});
+            //_mockWalletService.Setup(x => x.DecreaseInventoryAsync(It.IsAny<int>(), It.IsAny<string>()))
+            //    .ReturnsAsync(new ReturnMessage(){status = true});
 
             _mockRepo.Setup(x => x.WalletRepository.InsertAsync(It.IsAny<Wallet>()));
 
@@ -279,8 +279,8 @@ namespace MadPay724.Test.UnitTests.ControllersTests
             _mockWalletService.Setup(x => x.CheckInventoryAsync(It.IsAny<int>(), It.IsAny<string>()))
                 .ReturnsAsync(true);
 
-            _mockWalletService.Setup(x => x.DecreaseInventoryAsync(It.IsAny<int>(), It.IsAny<string>()))
-                .ReturnsAsync(new ReturnMessage() { status = false,message = ""});
+            //_mockWalletService.Setup(x => x.DecreaseInventoryAsync(It.IsAny<int>(), It.IsAny<string>()))
+            //    .ReturnsAsync(new ReturnMessage() { status = false,message = ""});
 
 
 

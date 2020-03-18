@@ -33,7 +33,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
             _mockRepo = new Mock<IUnitOfWork<Main_MadPayDbContext>>();
             _mockMapper = new Mock<IMapper>();
             _mockLogger = new Mock<ILogger<BankCardsController>>();
-            _controller = new BankCardsController(_mockRepo.Object, _mockMapper.Object, _mockLogger.Object);
+            //_controller = new BankCardsController(_mockRepo.Object, _mockMapper.Object, _mockLogger.Object);
         }
 
         #region GetBankCardTests
@@ -140,11 +140,11 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         public async Task GetBankCards_Success()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
-            _mockRepo.Setup(x => x.BankCardRepository.GetManyAsync(
-                    It.IsAny<Expression<Func<BankCard, bool>>>(),
-                    It.IsAny<Func<IQueryable<BankCard>, IOrderedQueryable<BankCard>>>(),
-                    It.IsAny<string>()))
-                .ReturnsAsync(new List<BankCard>());
+            //_mockRepo.Setup(x => x.BankCardRepository.GetManyAsync(
+            //        It.IsAny<Expression<Func<BankCard, bool>>>(),
+            //        It.IsAny<Func<IQueryable<BankCard>, IOrderedQueryable<BankCard>>>(),
+            //        It.IsAny<string>()))
+            //    .ReturnsAsync(new List<BankCard>());
 
             _mockMapper.Setup(x => x.Map<List<BankCardForUserDetailedDto>>(It.IsAny<List<BankCard>>()))
                 .Returns(new List<BankCardForUserDetailedDto>());

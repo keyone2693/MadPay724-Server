@@ -149,7 +149,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
 
                     if (await _db.SaveAsync())
                     {
-                        return CreatedAtRoute("GetTicket", new { id = ticket.Id, userId = userId },
+                        return CreatedAtRoute("GetTicket", new { v = HttpContext.GetRequestedApiVersion().ToString(), id = ticket.Id, userId = userId },
                         ticket);
                     }
                     else
@@ -295,7 +295,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
 
             if (await _db.SaveAsync())
             {
-                return CreatedAtRoute("GetTicketContent", new { userId = userId, ticketId = id, id = ticketContent.Id, },
+                return CreatedAtRoute("GetTicketContent", new { v = HttpContext.GetRequestedApiVersion().ToString(), userId = userId, ticketId = id, id = ticketContent.Id, },
                     ticketContent);
             }
             else

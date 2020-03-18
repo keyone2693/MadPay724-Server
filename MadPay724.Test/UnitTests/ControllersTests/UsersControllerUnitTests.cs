@@ -11,7 +11,7 @@ using MadPay724.Data.Dtos.Site.Panel.Users;
 using MadPay724.Data.Models.MainDB;
 using MadPay724.Presentation.Controllers.Site.V1.User;
 using MadPay724.Repo.Infrastructure;
-using MadPay724.Services.Site.Admin.User.Interface;
+using MadPay724.Services.Site.Panel.User.Interface;
 using MadPay724.Test.DataInput;
 using MadPay724.Test.IntegrationTests.Providers;
 using Microsoft.AspNetCore.Mvc;
@@ -48,11 +48,11 @@ namespace MadPay724.Test.UnitTests.ControllersTests
             //Arrange------------------------------------------------------------------------------------------------------------------------------
             var users = UnitTestsDataInput.Users;
             var userForDetailedDto = UnitTestsDataInput.userForDetailedDto;
-            _mockRepo.Setup(x => x.UserRepository
-                .GetManyAsync(
-                    It.IsAny<Expression<Func<User, bool>>>(),
-                    It.IsAny<Func<IQueryable<User>, IOrderedQueryable<User>>>(),
-                    It.IsAny<string>())).ReturnsAsync(() => users);
+            //_mockRepo.Setup(x => x.UserRepository
+            //    .GetManyAsync(
+            //        It.IsAny<Expression<Func<User, bool>>>(),
+            //        It.IsAny<Func<IQueryable<User>, IOrderedQueryable<User>>>(),
+            //        It.IsAny<string>())).ReturnsAsync(() => users);
             //
             _mockMapper.Setup(x => x.Map<UserForDetailedDto>(It.IsAny<User>()))
                 .Returns(userForDetailedDto);

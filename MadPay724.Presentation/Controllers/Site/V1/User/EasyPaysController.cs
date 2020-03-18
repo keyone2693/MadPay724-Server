@@ -144,7 +144,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
                 {
                     var easyPayForReturn = _mapper.Map<EasyPayForReturnDto>(easyPay);
 
-                    return CreatedAtRoute("GetEasyPay", new { id = easyPay.Id, userId = userId }, easyPayForReturn);
+                    return CreatedAtRoute("GetEasyPay", new { v = HttpContext.GetRequestedApiVersion().ToString(), id = easyPay.Id, userId = userId }, easyPayForReturn);
                 }
                 else
                     return BadRequest("خطا در ثبت اطلاعات");

@@ -134,7 +134,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
                 if (await _db.SaveAsync())
                 {
                     var photoForReturn = _mapper.Map<PhotoForReturnProfileDto>(oldphoto);
-                    return CreatedAtRoute("GetPhoto", routeValues: new { id = oldphoto.Id }, value: photoForReturn);
+                    return CreatedAtRoute("GetPhoto", routeValues: new { v = HttpContext.GetRequestedApiVersion().ToString(), id = oldphoto.Id }, value: photoForReturn);
                 }
                 else
                 {

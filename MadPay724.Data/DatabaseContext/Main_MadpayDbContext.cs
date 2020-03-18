@@ -61,6 +61,18 @@ namespace MadPay724.Data.DatabaseContext
                     .HasForeignKey(ur => ur.UserId)
                     .IsRequired();
             });
+
+            builder.Entity<Blog>()
+                .Property(x => x.Title)
+                .IsConcurrencyToken();
+
+
+            builder.Entity<Blog>()
+                .Property(x => x.Timestamp)
+                .ValueGeneratedOnAddOrUpdate()
+                .IsConcurrencyToken();
+                
+
         }
 
 

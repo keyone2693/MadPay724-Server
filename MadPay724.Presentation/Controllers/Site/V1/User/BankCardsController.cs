@@ -106,7 +106,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
                     {
                         var bankCardForReturn = _mapper.Map<BankCardForReturnDto>(bankCard);
 
-                        return CreatedAtRoute("GetBankCard", new { id = bankCard.Id, userId = userId }, bankCardForReturn);
+                        return CreatedAtRoute("GetBankCard", new { v = HttpContext.GetRequestedApiVersion().ToString(), id = bankCard.Id, userId = userId }, bankCardForReturn);
                     }
                     else
                         return BadRequest("خطا در ثبت اطلاعات");

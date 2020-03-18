@@ -197,7 +197,7 @@ namespace MadPay724.Test.DataInput
 
         public static readonly RoleEditDto roleEditDto = new RoleEditDto
         {
-            RoleNames = new[] { "User" }
+            //RoleNames = new[] { "User" }
         };
 
         public static readonly Setting settingForUpload = new Setting()

@@ -303,11 +303,11 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         public async Task GetDocuments_Success()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
-            _mockRepo.Setup(x => x.DocumentRepository.GetManyAsync(
-                    It.IsAny<Expression<Func<Document, bool>>>(),
-                    It.IsAny<Func<IQueryable<Document>, IOrderedQueryable<Document>>>(),
-                    It.IsAny<string>()))
-                .ReturnsAsync(new List<Document>());
+            //_mockRepo.Setup(x => x.DocumentRepository.GetManyAsync(
+            //        It.IsAny<Expression<Func<Document, bool>>>(),
+            //        It.IsAny<Func<IQueryable<Document>, IOrderedQueryable<Document>>>(),
+            //        It.IsAny<string>()))
+            //    .ReturnsAsync(new List<Document>());
 
             _mockMapper.Setup(x => x.Map<List<DocumentForReturnDto>>(It.IsAny<List<Document>>()))
                 .Returns(new List<DocumentForReturnDto>());

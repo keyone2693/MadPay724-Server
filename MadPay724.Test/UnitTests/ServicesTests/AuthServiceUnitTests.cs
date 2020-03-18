@@ -11,8 +11,8 @@ using MadPay724.Data.Dtos.Site.Panel.Users;
 using MadPay724.Data.Models.MainDB;
 using MadPay724.Presentation.Controllers.Site.V1.User;
 using MadPay724.Repo.Infrastructure;
-using MadPay724.Services.Site.Admin.Auth.Service;
-using MadPay724.Services.Site.Admin.User.Interface;
+using MadPay724.Services.Site.Panel.Auth.Service;
+using MadPay724.Services.Site.Panel.User.Interface;
 using MadPay724.Test.DataInput;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -40,11 +40,11 @@ namespace MadPay724.Test.Tests.ServicesUnitTests
         public async Task Login_Success()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
-            _mockRepo.Setup(x => x.UserRepository
-                .GetManyAsync(
-                    It.IsAny<Expression<Func<User, bool>>>(),
-                    It.IsAny<Func<IQueryable<User>, IOrderedQueryable<User>>>(),
-                    It.IsAny<string>())).ReturnsAsync(UnitTestsDataInput.Users);
+            //_mockRepo.Setup(x => x.UserRepository
+            //    .GetManyAsync(
+            //        It.IsAny<Expression<Func<User, bool>>>(),
+            //        It.IsAny<Func<IQueryable<User>, IOrderedQueryable<User>>>(),
+            //        It.IsAny<string>())).ReturnsAsync(UnitTestsDataInput.Users);
 
             _mockUtilities.Setup(x => x.VerifyPasswordHash(It.IsAny<string>(), It.IsAny<byte[]>(), It.IsAny<byte[]>()))
                 .Returns(true);
@@ -60,11 +60,11 @@ namespace MadPay724.Test.Tests.ServicesUnitTests
         public async Task Login_Fail_WrongUserName()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
-            _mockRepo.Setup(x => x.UserRepository
-                .GetManyAsync(
-                    It.IsAny<Expression<Func<User, bool>>>(),
-                    It.IsAny<Func<IQueryable<User>, IOrderedQueryable<User>>>(),
-                    It.IsAny<string>())).ReturnsAsync(Enumerable.Empty<User>());
+            //_mockRepo.Setup(x => x.UserRepository
+            //    .GetManyAsync(
+            //        It.IsAny<Expression<Func<User, bool>>>(),
+            //        It.IsAny<Func<IQueryable<User>, IOrderedQueryable<User>>>(),
+            //        It.IsAny<string>())).ReturnsAsync(Enumerable.Empty<User>());
 
             //Act----------------------------------------------------------------------------------------------------------------------------------
             var result = await _service.LoginAsync(It.IsAny<string>(), It.IsAny<string>());
@@ -76,11 +76,11 @@ namespace MadPay724.Test.Tests.ServicesUnitTests
         public async Task Login_Fail_WrongPassWord()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
-            _mockRepo.Setup(x => x.UserRepository
-                .GetManyAsync(
-                    It.IsAny<Expression<Func<User, bool>>>(),
-                    It.IsAny<Func<IQueryable<User>, IOrderedQueryable<User>>>(),
-                    It.IsAny<string>())).ReturnsAsync(UnitTestsDataInput.Users);
+            //_mockRepo.Setup(x => x.UserRepository
+            //    .GetManyAsync(
+            //        It.IsAny<Expression<Func<User, bool>>>(),
+            //        It.IsAny<Func<IQueryable<User>, IOrderedQueryable<User>>>(),
+            //        It.IsAny<string>())).ReturnsAsync(UnitTestsDataInput.Users);
 
             _mockUtilities.Setup(x => x.VerifyPasswordHash(It.IsAny<string>(), It.IsAny<byte[]>(), It.IsAny<byte[]>()))
                 .Returns(false);

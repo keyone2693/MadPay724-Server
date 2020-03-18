@@ -164,7 +164,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
                 {
                     var gateForReturn = _mapper.Map<GateForReturnDto>(gate);
 
-                    return CreatedAtRoute("GetGate", new { id = gate.Id, userId = userId }, gateForReturn);
+                    return CreatedAtRoute("GetGate", new { v = HttpContext.GetRequestedApiVersion().ToString(), id = gate.Id, userId = userId }, gateForReturn);
                 }
                 else
                     return BadRequest("خطا در ثبت اطلاعات");

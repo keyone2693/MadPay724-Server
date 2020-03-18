@@ -191,7 +191,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Admin
 
             if (await _db.SaveAsync())
             {
-                return CreatedAtRoute("GetAdminTicketContent", new { ticketContentId = ticketContent.Id }, ticketContent);
+                return CreatedAtRoute("GetAdminTicketContent", new { v = HttpContext.GetRequestedApiVersion().ToString(), ticketContentId = ticketContent.Id }, ticketContent);
             }
             else
             {

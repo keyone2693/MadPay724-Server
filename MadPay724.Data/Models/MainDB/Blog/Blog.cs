@@ -14,9 +14,21 @@ namespace MadPay724.Data.Models.MainDB.Blog
             DateCreated = DateTime.Now;
             DateModified = DateTime.Now;
         }
+
+
         [Required]
         [StringLength(500, MinimumLength = 0)]
+        [ConcurrencyCheck]
         public string Title { get; set; }
+        [Timestamp]
+        public byte[] Timestamp { get; set; }
+
+
+
+
+
+
+
         [Required]
         [StringLength(500, MinimumLength = 0)]
         public string Tags { get; set; }
@@ -34,7 +46,6 @@ namespace MadPay724.Data.Models.MainDB.Blog
         public bool IsSelected { get; set; }
         [Required]
         public int ViewCount { get; set; }
-
 
         [Required]
         public string UserId { get; set; }

@@ -76,7 +76,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
                     {
                         var documentForReturn = _mapper.Map<DocumentForReturnDto>(document);
 
-                        return CreatedAtRoute("GetDocument", new { id = document.Id, userId = userId }, documentForReturn);
+                        return CreatedAtRoute("GetDocument", new { v = HttpContext.GetRequestedApiVersion().ToString(), id = document.Id, userId = userId }, documentForReturn);
                     }
                     else
                         return BadRequest("خطا در ثبت اطلاعات");

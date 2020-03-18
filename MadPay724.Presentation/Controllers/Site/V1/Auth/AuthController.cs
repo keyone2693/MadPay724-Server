@@ -135,6 +135,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
                 return CreatedAtRoute("GetUser", new
                 {
                     controller = "Users",
+                    v = HttpContext.GetRequestedApiVersion().ToString(),
                     id = userToCreate.Id
                 }, userForReturn);
             }

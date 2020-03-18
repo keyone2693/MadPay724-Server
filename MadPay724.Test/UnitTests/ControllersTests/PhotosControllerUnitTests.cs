@@ -15,7 +15,7 @@ using MadPay724.Data.Dtos.Site.Panel.Users;
 using MadPay724.Data.Models.MainDB;
 using MadPay724.Presentation.Controllers.Site.V1.User;
 using MadPay724.Repo.Infrastructure;
-using MadPay724.Services.Site.Admin.User.Interface;
+using MadPay724.Services.Site.Panel.User.Interface;
 using MadPay724.Services.Upload.Interface;
 using MadPay724.Test.DataInput;
 using MadPay724.Test.IntegrationTests.Providers;
@@ -45,8 +45,8 @@ namespace MadPay724.Test.UnitTests.ControllersTests
             _mockWebHostEnvironment = new Mock<IWebHostEnvironment>();
             _mockUploadService = new Mock<IUploadService>();
             _mockLogger = new Mock<ILogger<PhotosController>>();
-            _controller = new PhotosController(_mockRepo.Object, _mockMapper.Object, _mockUploadService.Object,
-                _mockWebHostEnvironment.Object, _mockLogger.Object);
+            //_controller = new PhotosController(_mockRepo.Object, _mockMapper.Object, _mockUploadService.Object,
+            //    _mockWebHostEnvironment.Object, _mockLogger.Object);
 
         }
 
@@ -143,9 +143,9 @@ namespace MadPay724.Test.UnitTests.ControllersTests
 
             _mockRepo.Setup(x => x.SaveAsync()).ReturnsAsync(true);
 
-            _mockUploadService.Setup(x => x.UploadFile(It.IsAny<IFormFile>(),
-                    It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
-                .ReturnsAsync(UnitTestsDataInput.fileUploadedDto_Success);
+            //_mockUploadService.Setup(x => x.UploadFile(It.IsAny<IFormFile>(),
+            //        It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+            //    .ReturnsAsync(UnitTestsDataInput.fileUploadedDto_Success);
 
             _mockUploadService.Setup(x => x.RemoveFileFromCloudinary(It.IsAny<string>()))
                 .Returns(UnitTestsDataInput.fileUploadedDto_Success);
@@ -181,9 +181,9 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         public async Task ChangeUserPhoto_Fail_WorngFile()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
-            _mockUploadService.Setup(x => x.UploadFile(It.IsAny<IFormFile>(),
-                    It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
-                .ReturnsAsync(UnitTestsDataInput.fileUploadedDto_Fail_WrongFile);
+            //_mockUploadService.Setup(x => x.UploadFile(It.IsAny<IFormFile>(),
+            //        It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+            //    .ReturnsAsync(UnitTestsDataInput.fileUploadedDto_Fail_WrongFile);
             string expectedErrorMessage = "فایلی برای اپلود یافت نشد";
 
             _mockWebHostEnvironment.Setup(x => x.WebRootPath).Returns(It.IsAny<string>());

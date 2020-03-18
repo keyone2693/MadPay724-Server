@@ -84,7 +84,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Blogger
                 {
                     var blogGroupForReturn = _mapper.Map<BlogGroupForReturnDto>(blogGroup);
 
-                    return CreatedAtRoute("GetBlogGroup", new { id = blogGroup.Id, userId = userId }, blogGroupForReturn);
+                    return CreatedAtRoute("GetBlogGroup", new { v = HttpContext.GetRequestedApiVersion().ToString(), id = blogGroup.Id, userId = userId }, blogGroupForReturn);
                 }
                 else
                     return BadRequest("خطا در ثبت اطلاعات");

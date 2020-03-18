@@ -123,7 +123,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
                             {
                                 var walletForReturn = _mapper.Map<WalletForReturnDto>(wallet);
 
-                                return CreatedAtRoute("GetWallet", new { id = wallet.Id, userId = userId },
+                                return CreatedAtRoute("GetWallet", new { v = HttpContext.GetRequestedApiVersion().ToString(), id = wallet.Id, userId = userId },
                                     walletForReturn);
                             }
                             else

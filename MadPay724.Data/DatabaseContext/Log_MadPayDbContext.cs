@@ -7,6 +7,14 @@ namespace MadPay724.Data.DatabaseContext
 {
     public class Log_MadPayDbContext : DbContext
     {
+        public Log_MadPayDbContext()
+        {
+
+        }
+        public Log_MadPayDbContext(DbContextOptions<Log_MadPayDbContext> opt) : base(opt)
+        {
+
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionBuilder)
         {
             optionBuilder.UseSqlServer(@"Data Source=KEY1-LAB\MSSQLSERVER2016;Initial Catalog=Log_MadPay724db;Integrated Security=True;MultipleActiveResultSets=True;");

@@ -12,7 +12,7 @@ using MadPay724.Data.Dtos.Site.Panel.Users;
 using MadPay724.Data.Models.MainDB;
 using MadPay724.Presentation.Controllers.Site.V1.User;
 using MadPay724.Repo.Infrastructure;
-using MadPay724.Services.Site.Admin.User.Interface;
+using MadPay724.Services.Site.Panel.User.Interface;
 using MadPay724.Test.DataInput;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -46,11 +46,11 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         public async Task UpdateUserNotify_Success()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
-            _mockRepo.Setup(x => x.NotificationRepository.GetManyAsync(
-                It.IsAny<Expression<Func<Notification, bool>>>(),
-                It.IsAny<Func<IQueryable<Notification>, IOrderedQueryable<Notification>>>(),
-                It.IsAny<string>()))
-                .ReturnsAsync(UnitTestsDataInput.notify_Success);
+            //_mockRepo.Setup(x => x.NotificationRepository.GetManyAsync(
+            //    It.IsAny<Expression<Func<Notification, bool>>>(),
+            //    It.IsAny<Func<IQueryable<Notification>, IOrderedQueryable<Notification>>>(),
+            //    It.IsAny<string>()))
+            //    .ReturnsAsync(UnitTestsDataInput.notify_Success);
 
             _mockRepo.Setup(x => x.NotificationRepository.Update(It.IsAny<Notification>()));
 
@@ -72,11 +72,11 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         public async Task UpdateUserNotify_Success_CreateNotify()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
-            _mockRepo.Setup(x => x.NotificationRepository.GetManyAsync(
-                    It.IsAny<Expression<Func<Notification, bool>>>(),
-                    It.IsAny<Func<IQueryable<Notification>, IOrderedQueryable<Notification>>>(),
-                    It.IsAny<string>()))
-                .ReturnsAsync(new List<Notification>());
+            //_mockRepo.Setup(x => x.NotificationRepository.GetManyAsync(
+            //        It.IsAny<Expression<Func<Notification, bool>>>(),
+            //        It.IsAny<Func<IQueryable<Notification>, IOrderedQueryable<Notification>>>(),
+            //        It.IsAny<string>()))
+            //    .ReturnsAsync(new List<Notification>());
 
             _mockRepo.Setup(x => x.NotificationRepository.InsertAsync(It.IsAny<Notification>()));
 
@@ -98,11 +98,11 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         public async Task UpdateUserNotify_Fail()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
-            _mockRepo.Setup(x => x.NotificationRepository.GetManyAsync(
-                It.IsAny<Expression<Func<Notification, bool>>>(),
-                It.IsAny<Func<IQueryable<Notification>, IOrderedQueryable<Notification>>>(),
-                It.IsAny<string>()))
-                .ReturnsAsync(UnitTestsDataInput.notify_Success);
+            //_mockRepo.Setup(x => x.NotificationRepository.GetManyAsync(
+            //    It.IsAny<Expression<Func<Notification, bool>>>(),
+            //    It.IsAny<Func<IQueryable<Notification>, IOrderedQueryable<Notification>>>(),
+            //    It.IsAny<string>()))
+            //    .ReturnsAsync(UnitTestsDataInput.notify_Success);
 
             _mockRepo.Setup(x => x.NotificationRepository.Update(It.IsAny<Notification>()));
 
@@ -128,11 +128,11 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         public async Task UpdateUserNotify_Fail_CreateNotify()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
-            _mockRepo.Setup(x => x.NotificationRepository.GetManyAsync(
-                    It.IsAny<Expression<Func<Notification, bool>>>(),
-                    It.IsAny<Func<IQueryable<Notification>, IOrderedQueryable<Notification>>>(),
-                    It.IsAny<string>()))
-                .ReturnsAsync(new List<Notification>());
+            //_mockRepo.Setup(x => x.NotificationRepository.GetManyAsync(
+            //        It.IsAny<Expression<Func<Notification, bool>>>(),
+            //        It.IsAny<Func<IQueryable<Notification>, IOrderedQueryable<Notification>>>(),
+            //        It.IsAny<string>()))
+            //    .ReturnsAsync(new List<Notification>());
 
             _mockRepo.Setup(x => x.NotificationRepository.InsertAsync(It.IsAny<Notification>()));
 
@@ -161,11 +161,11 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         public async Task GetUserNotify_Success_Himself()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
-            _mockRepo.Setup(x => x.NotificationRepository.GetManyAsync(
-                It.IsAny<Expression<Func<Notification, bool>>>(),
-                It.IsAny<Func<IQueryable<Notification>, IOrderedQueryable<Notification>>>(),
-                It.IsAny<string>()))
-                .ReturnsAsync(UnitTestsDataInput.notify_Success);
+          //  _mockRepo.Setup(x => x.NotificationRepository.GetManyAsync(
+                //It.IsAny<Expression<Func<Notification, bool>>>(),
+                //It.IsAny<Func<IQueryable<Notification>, IOrderedQueryable<Notification>>>(),
+                //It.IsAny<string>()))
+                //.ReturnsAsync(UnitTestsDataInput.notify_Success);
 
 
             var claims = new[]
@@ -197,11 +197,11 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         public async Task UetUserNotify_Fail_AnOtherOne()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
-            _mockRepo.Setup(x => x.NotificationRepository.GetManyAsync(
-                    It.IsAny<Expression<Func<Notification, bool>>>(),
-                    It.IsAny<Func<IQueryable<Notification>, IOrderedQueryable<Notification>>>(),
-                    It.IsAny<string>()))
-                .ReturnsAsync(UnitTestsDataInput.notify_Success);
+            //_mockRepo.Setup(x => x.NotificationRepository.GetManyAsync(
+            //        It.IsAny<Expression<Func<Notification, bool>>>(),
+            //        It.IsAny<Func<IQueryable<Notification>, IOrderedQueryable<Notification>>>(),
+            //        It.IsAny<string>()))
+            //    .ReturnsAsync(UnitTestsDataInput.notify_Success);
 
             var claims = new[]
             {
@@ -234,11 +234,11 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         public async Task GetUserNotify_Fail_NoNotify()
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
-            _mockRepo.Setup(x => x.NotificationRepository.GetManyAsync(
-                    It.IsAny<Expression<Func<Notification, bool>>>(),
-                    It.IsAny<Func<IQueryable<Notification>, IOrderedQueryable<Notification>>>(),
-                    It.IsAny<string>()))
-                .ReturnsAsync(new List<Notification>());
+            //_mockRepo.Setup(x => x.NotificationRepository.GetManyAsync(
+            //        It.IsAny<Expression<Func<Notification, bool>>>(),
+            //        It.IsAny<Func<IQueryable<Notification>, IOrderedQueryable<Notification>>>(),
+            //        It.IsAny<string>()))
+            //    .ReturnsAsync(new List<Notification>());
 
             string expected = "اطلاعات اطلاع رسانی وجود ندارد";
 
