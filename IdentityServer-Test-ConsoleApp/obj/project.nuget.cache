@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "ZatmugN/czpahV83mzDyMkxiILPlpkXREDWw6aLx2hGb7iPManJMwC2rc9R8Nm/MqX9fmC1KEyKdGsUQrh4Zvw==",
+  "success": true,
+  "projectFilePath": "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\IdentityServer-Test-ConsoleApp\\IdentityServer-Test-ConsoleApp.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Key1-lab\\.nuget\\packages\\identitymodel\\3.10.10\\identitymodel.3.10.10.nupkg.sha512",
+    "C:\\Users\\Key1-lab\\.nuget\\packages\\newtonsoft.json\\11.0.1\\newtonsoft.json.11.0.1.nupkg.sha512",
+    "C:\\Users\\Key1-lab\\.nuget\\packages\\restsharp\\106.6.10\\restsharp.106.6.10.nupkg.sha512",
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\system.text.encodings.web\\4.5.0\\system.text.encodings.web.4.5.0.nupkg.sha512"
+  ],
+  "logs": []
+}

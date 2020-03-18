@@ -22,8 +22,6 @@ namespace MadPay724.Repo.Infrastructure
             _dbSet = _db.Set<TEntity>();
         }
         #endregion
-
-
         #region normal 
         public void Insert(TEntity entity)
         {
@@ -60,19 +58,18 @@ namespace MadPay724.Repo.Infrastructure
         }
         public IEnumerable<TEntity> GetAll()
         {
-            return _dbSet.AsQueryable();
+            return _dbSet.AsNoTracking().AsEnumerable();
         }
         public PagedList<TEntity> GetAllPagedList(PaginationDto paginationDto,
             Expression<Func<TEntity, bool>> filter = null,
             string orderBy = "",
             string includeEntity = "")
         {
-            IQueryable<TEntity> query;
+            IQueryable<TEntity> query = _dbSet.AsNoTracking();
             //filter
             if (filter != null)
-                query = _dbSet.Where(filter);
-            else
-                query = _dbSet.AsQueryable();
+                query = query.Where(filter);
+
             //include
             foreach (var includeentity in includeEntity.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
             {
@@ -104,7 +101,7 @@ namespace MadPay724.Repo.Infrastructure
         {
             //return _dbSet.Where(where).FirstOrDefault();
 
-            IQueryable<TEntity> query = _dbSet;
+            IQueryable<TEntity> query = _dbSet.AsNoTracking();
 
             if (filter != null)
             {
@@ -132,7 +129,7 @@ namespace MadPay724.Repo.Infrastructure
         }
         public TEntity Get(Expression<Func<TEntity, bool>> where)
         {
-            return _dbSet.Where(where).FirstOrDefault();
+            return _dbSet.AsNoTracking().Where(where).FirstOrDefault();
         }
 
        public bool IsAny(Expression<Func<TEntity, bool>> filter)
@@ -162,19 +159,18 @@ namespace MadPay724.Repo.Infrastructure
         }
         public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            return await _dbSet.ToListAsync();
+            return await _dbSet.AsNoTracking().ToListAsync();
         }
         public async Task<PagedList<TEntity>> GetAllPagedListAsync(PaginationDto paginationDto,
             Expression<Func<TEntity, bool>> filter = null,
             string orderBy = "",
             string includeEntity = "")
         {
-            IQueryable<TEntity> query;
+            IQueryable<TEntity> query = _dbSet.AsNoTracking();
             //filter
             if (filter != null)
-                query = _dbSet.Where(filter);
-            else
-                query = _dbSet.AsQueryable();
+                query = query.Where(filter);
+
             //include
             foreach (var includeentity in includeEntity.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
             {
@@ -208,7 +204,7 @@ namespace MadPay724.Repo.Infrastructure
         {
             //return _dbSet.Where(where).FirstOrDefault();
 
-            IQueryable<TEntity> query = _dbSet;
+            IQueryable<TEntity> query = _dbSet.AsNoTracking();
 
             if (filter != null)
             {
@@ -232,12 +228,11 @@ namespace MadPay724.Repo.Infrastructure
             {
                 return await query.ToListAsync();
             }
-
         }
         public async Task<long> GetCountAsync(
       Expression<Func<TEntity, bool>> filter = null)
         {
-            IQueryable<TEntity> query = _dbSet;
+            IQueryable<TEntity> query = _dbSet.AsNoTracking();
 
             if (filter != null)
             {
@@ -251,7 +246,7 @@ namespace MadPay724.Repo.Infrastructure
             Expression<Func<TEntity, bool>> filter = null,
             Expression<Func<TEntity, long>> select = null)
         {
-            IQueryable<TEntity> query = _dbSet;
+            IQueryable<TEntity> query = _dbSet.AsNoTracking();
             if (select == null)
             {
                 return 0;
@@ -267,7 +262,7 @@ namespace MadPay724.Repo.Infrastructure
         }
         public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> where)
         {
-            return await _dbSet.Where(where).FirstOrDefaultAsync();
+            return await _dbSet.AsNoTracking().Where(where).FirstOrDefaultAsync();
         }
 
         #endregion
@@ -296,7 +291,7 @@ namespace MadPay724.Repo.Infrastructure
             IOrderedQueryable<TEntity>> orderBy,
             string includeEntity, int count, int firstCount, int page)
         {
-            IQueryable<TEntity> query = _dbSet;
+            IQueryable<TEntity> query = _dbSet.AsNoTracking();
 
             if (filter != null)
             {

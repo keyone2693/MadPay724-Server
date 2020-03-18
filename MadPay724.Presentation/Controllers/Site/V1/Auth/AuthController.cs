@@ -17,12 +17,7 @@ using MadPay724.Data.Dtos.Site.Panel.Auth;
 using MadPay724.Presentation.Routes.V1;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
-using System.Net.Mime;
-using NSwag.Annotations;
 
 namespace MadPay724.Presentation.Controllers.Site.V1.Auth
 {
@@ -170,6 +165,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
         [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> Login(TokenRequestDto tokenRequestDto)
         {
+
             switch (tokenRequestDto.GrantType)
             {
                 case "password":
