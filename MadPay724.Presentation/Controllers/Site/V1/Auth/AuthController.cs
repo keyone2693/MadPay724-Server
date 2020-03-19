@@ -42,7 +42,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
         private readonly UserManager<Data.Models.MainDB.User> _userManager;
         //private readonly SignInManager<Data.Models.User> _signInManager;
         private readonly ISmsService _smsService;
-
+        private ApiReturn<string> errorModel;
 
 
         public AuthController(IUnitOfWork<Main_MadPayDbContext> dbContext, IAuthService authService,
@@ -57,11 +57,17 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
             _utilities = utilities;
             _userManager = userManager;
             _smsService = smsService;
+            errorModel = new ApiReturn<string>
+            {
+                Status = false,
+                Message = "",
+                Result = null
+            };
         }
 
         [HttpPost(ApiV1Routes.Auth.GetVerificationCode)]
-        [ProducesResponseType(typeof(LoginResponseDto), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiReturn<int>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiReturn<int>), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetVerificationCode(GetVerificationCodeDto getVerificationCodeDto)
         {
             var model = new ApiReturn<int>
@@ -148,116 +154,134 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
             }
         }
 
-
-
         [HttpPost(ApiV1Routes.Auth.Register)]
+        [ProducesResponseType(typeof(ApiReturn<UserForDetailedDto>), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ApiReturn<string>), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
         {
-            var userToCreate = new Data.Models.MainDB.User
+            var model = new ApiReturn<UserForDetailedDto>
             {
-                UserName = userForRegisterDto.UserName,
-                Name = userForRegisterDto.Name,
-                PhoneNumber = userForRegisterDto.UserName,
-                Address = "",
-                City = "",
-                Gender = true,
-                DateOfBirth = DateTime.Now,
-                IsActive = true,
-                Status = true,
+                Status = true
             };
 
-            var photoToCreate = new Photo
+            userForRegisterDto.UserName = userForRegisterDto.UserName.ToMobile();
+            var code = HttpContext.Session.GetString(userForRegisterDto.UserName + "-OTP");
+            if (string.IsNullOrEmpty(code))
             {
-                UserId = userToCreate.Id,
-                Url = string.Format("{0}://{1}{2}/{3}",
-                    Request.Scheme,
-                    Request.Host.Value ?? "",
-                    Request.PathBase.Value ?? "",
-                    "wwwroot/Files/Pic/profilepic.png"), //"https://res.cloudinary.com/keyone2693/image/upload/v1561717720/768px-Circle-icons-profile.svg.png",
-                Description = "Profile Pic",
-                Alt = "Profile Pic",
-                IsMain = true,
-                PublicId = "0"
-            };
-
-            var notifyToCreate = new Notification
-            {
-                UserId = userToCreate.Id,
-                EnterEmail = true,
-                EnterSms = false,
-                EnterTelegram = true,
-                ExitEmail = true,
-                ExitSms = false,
-                ExitTelegram = true,
-                LoginEmail = true,
-                LoginSms = false,
-                LoginTelegram = true,
-                TicketEmail = true,
-                TicketSms = false,
-                TicketTelegram = true
-            };
-
-            var walletMain = new Wallet
-            {
-                Name = "اصلی ماد پی",
-                IsMain = true,
-                IsSms = false,
-                Inventory = 0,
-                InterMoney = 0,
-                ExitMoney = 0,
-                OnExitMoney = 0
-
-            };
-            var walletSms = new Wallet
-            {
-                Name = "پیامک",
-                IsMain = false,
-                IsSms = true,
-                Inventory = 0,
-                InterMoney = 0,
-                ExitMoney = 0,
-                OnExitMoney = 0
-
-            };
-
-            var result = await _userManager.CreateAsync(userToCreate, userForRegisterDto.Password);
-
-            if (result.Succeeded)
-            {
-                await _authService.AddUserPreNeededAsync(photoToCreate, notifyToCreate, walletMain, walletSms);
-
-                var userForReturn = _mapper.Map<UserForDetailedDto>(userToCreate);
-
-                _logger.LogInformation($"{userForRegisterDto.Name} - {userForRegisterDto.UserName} ثبت نام کرده است");
-
-                return CreatedAtRoute("GetUser", new
-                {
-                    controller = "Users",
-                    v = HttpContext.GetRequestedApiVersion().ToString(),
-                    id = userToCreate.Id
-                }, userForReturn);
+                errorModel.Message = "کد فعالسازی صحیح نمباشد اقدام به ارسال دوباره ی کد بکنید";
+                return BadRequest(errorModel);
             }
-            else if (result.Errors.Any())
+            var codeRes = JsonConvert.DeserializeObject<VerificationCodeDto>(code);
+            if (codeRes.ExpirationDate < DateTime.Now)
             {
-                _logger.LogWarning(result.Errors.First().Description);
-                return BadRequest(new ReturnMessage()
+                HttpContext.Session.Remove(userForRegisterDto.UserName + "-OTP");
+                errorModel.Message = "کد فعالسازی منقضی شده است اقدام به ارسال دوباره ی کد بکنید";
+                return BadRequest(errorModel);
+            }
+            if (codeRes.Code == userForRegisterDto.Code)
+            {
+                var userToCreate = new Data.Models.MainDB.User
                 {
-                    status = false,
-                    title = "خطا",
-                    message = result.Errors.First().Description
-                });
+                    UserName = userForRegisterDto.UserName,
+                    Name = userForRegisterDto.Name,
+                    PhoneNumber = userForRegisterDto.UserName,
+                    Address = "",
+                    City = "",
+                    Gender = true,
+                    DateOfBirth = DateTime.Now,
+                    IsActive = true,
+                    Status = true,
+                    PhoneNumberConfirmed = true
+                };
+                var photoToCreate = new Photo
+                {
+                    UserId = userToCreate.Id,
+                    Url = string.Format("{0}://{1}{2}/{3}",
+                        Request.Scheme,
+                        Request.Host.Value ?? "",
+                        Request.PathBase.Value ?? "",
+                        "wwwroot/Files/Pic/profilepic.png"), //"https://res.cloudinary.com/keyone2693/image/upload/v1561717720/768px-Circle-icons-profile.svg.png",
+                    Description = "Profile Pic",
+                    Alt = "Profile Pic",
+                    IsMain = true,
+                    PublicId = "0"
+                };
+                var notifyToCreate = new Notification
+                {
+                    UserId = userToCreate.Id,
+                    EnterEmail = true,
+                    EnterSms = false,
+                    EnterTelegram = true,
+                    ExitEmail = true,
+                    ExitSms = false,
+                    ExitTelegram = true,
+                    LoginEmail = true,
+                    LoginSms = false,
+                    LoginTelegram = true,
+                    TicketEmail = true,
+                    TicketSms = false,
+                    TicketTelegram = true
+                };
+                var walletMain = new Wallet
+                {
+                    Name = "اصلی ماد پی",
+                    IsMain = true,
+                    IsSms = false,
+                    Inventory = 0,
+                    InterMoney = 0,
+                    ExitMoney = 0,
+                    OnExitMoney = 0
+
+                };
+                var walletSms = new Wallet
+                {
+                    Name = "پیامک",
+                    IsMain = false,
+                    IsSms = true,
+                    Inventory = 0,
+                    InterMoney = 0,
+                    ExitMoney = 0,
+                    OnExitMoney = 0
+
+                };
+
+                var result = await _userManager.CreateAsync(userToCreate, userForRegisterDto.Password);
+
+                if (result.Succeeded)
+                {
+                    await _authService.AddUserPreNeededAsync(photoToCreate, notifyToCreate, walletMain, walletSms);
+
+                    var userForReturn = _mapper.Map<UserForDetailedDto>(userToCreate);
+
+                    _logger.LogInformation($"{userForRegisterDto.Name} - {userForRegisterDto.UserName} ثبت نام کرده است");
+                    //
+                    model.Message = "ثبت نام شما با موفقیت انجام شد";
+                    model.Result = userForReturn;
+                    return CreatedAtRoute("GetUser", new
+                    {
+                        controller = "Users",
+                        v = HttpContext.GetRequestedApiVersion().ToString(),
+                        id = userToCreate.Id
+                    }, model);
+                }
+                else if (result.Errors.Any())
+                {
+                    _logger.LogWarning(result.Errors.First().Description);
+                    //
+                    errorModel.Message = result.Errors.First().Description;
+                    return BadRequest(errorModel);
+                }
+                else
+                {
+                    errorModel.Message = "خطای نامشخص";
+                    return BadRequest(errorModel);
+                }
             }
             else
             {
-                return BadRequest(new ReturnMessage()
-                {
-                    status = false,
-                    title = "خطا",
-                    message = "خطای نامشخص"
-                });
+                errorModel.Message = "کد فعالسازی صحیح نمباشد اقدام به ارسال دوباره ی کد بکنید";
+                return BadRequest(errorModel);
             }
-
-
         }
         [HttpPost(ApiV1Routes.Auth.Login)]
         [ProducesResponseType(typeof(LoginResponseDto), StatusCodes.Status200OK)]

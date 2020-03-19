@@ -15,5 +15,9 @@ namespace MadPay724.Data.Dtos.Site.Panel.Users
         public string Password { get; set; }
         [Required]
         public string Name { get; set; }
+        [Required]
+        [StringLength(5, MinimumLength = 5, ErrorMessage = "کد فعالسازی باید 5 رقمی باشد")]
+
+        public string Code { get; set; }
     }
 }
