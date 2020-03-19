@@ -82,7 +82,31 @@ namespace MadPay724.Common.Helpers.Utilities.Extensions
 
         #endregion
 
-
+        public static string ToMobile(this string number)
+        {
+            if (string.IsNullOrEmpty(number))
+            {
+                return null;
+            }
+            var str = number.Trim();
+            if (str.StartsWith("+98"))
+            {
+                str = str.Replace("+98", "0");
+            }
+            else if (str.StartsWith("98"))
+            {
+                str = str.Replace("98", "0");
+            }
+            if (!str.StartsWith("0"))
+            {
+                str ="0" + str;
+            }
+            if(str.Length == 11)
+            {
+                return str;
+            }
+            return null;
+        }
         public static string ToOrderBy(
             this string sortHe,
             string sortDir)

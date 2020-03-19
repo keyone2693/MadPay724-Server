@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "cxjXkQK/CpTPaqpayQx2JFFtx8ZXadayuYrLWODQiMY18TiXFQGn/1rlcyMSZ61wZzsB0EeLcjbHqLdtPR4gDw==",
+  "dgSpecHash": "exaLWXXwG9cgPMPF3xoEtTNn7SjQkN8Z+3zIKh8aC66SM4eMLFPC2zeruI2SnNt2iuoYlTGYlBVQQtQ8ry/lSw==",
   "success": true,
   "projectFilePath": "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Test\\MadPay724.Test.csproj",
   "expectedPackageFiles": [
@@ -164,6 +164,7 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\runtime.win-x64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\runtime.win-x86.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x86.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
+    "C:\\Users\\Key1-lab\\.nuget\\packages\\smsirrestfulnetcore\\1.1.4\\smsirrestfulnetcore.1.1.4.nupkg.sha512",
     "C:\\Users\\Key1-lab\\.nuget\\packages\\syncfusion.ej2.aspnet.core\\17.4.0.55\\syncfusion.ej2.aspnet.core.17.4.0.55.nupkg.sha512",
     "C:\\Users\\Key1-lab\\.nuget\\packages\\syncfusion.licensing\\17.4.0.55\\syncfusion.licensing.17.4.0.55.nupkg.sha512",
     "C:\\Users\\Key1-lab\\.nuget\\packages\\system.appcontext\\4.3.0\\system.appcontext.4.3.0.nupkg.sha512",

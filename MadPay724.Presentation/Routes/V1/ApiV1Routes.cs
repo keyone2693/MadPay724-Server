@@ -22,11 +22,11 @@ namespace MadPay724.Presentation.Routes.V1
         #region AuthRoutes
         public static class Auth
         {
-            //api/v1/site/panel/auth/register
-            //GET
+            //Post
+            public const string GetVerificationCode = BaseSitePanel + "/auth/code";
+            //Post
             public const string Register = BaseSitePanel + "/auth/register";
-            //api/v1/site/panel/auth/login
-            //GET
+            //Post
             public const string Login = BaseSitePanel + "/auth/login";
         }
         #endregion

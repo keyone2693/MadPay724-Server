@@ -18,6 +18,11 @@ using MadPay724.Presentation.Routes.V1;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
+using MadPay724.Data.Dtos.Common;
+using System.Collections.Generic;
+using Newtonsoft.Json;
+using MadPay724.Common.Helpers.Utilities.Extensions;
+using MadPay724.Services.Common;
 
 namespace MadPay724.Presentation.Controllers.Site.V1.Auth
 {
@@ -36,11 +41,13 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
         private readonly IUtilities _utilities;
         private readonly UserManager<Data.Models.MainDB.User> _userManager;
         //private readonly SignInManager<Data.Models.User> _signInManager;
+        private readonly ISmsService _smsService;
+
 
 
         public AuthController(IUnitOfWork<Main_MadPayDbContext> dbContext, IAuthService authService,
             IConfiguration config, IMapper mapper, ILogger<AuthController> logger, IUtilities utilities,
-            UserManager<Data.Models.MainDB.User> userManager)
+            UserManager<Data.Models.MainDB.User> userManager, ISmsService smsService)
         {
             _db = dbContext;
             _authService = authService;
@@ -49,7 +56,98 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
             _logger = logger;
             _utilities = utilities;
             _userManager = userManager;
+            _smsService = smsService;
         }
+
+        [HttpPost(ApiV1Routes.Auth.GetVerificationCode)]
+        [ProducesResponseType(typeof(LoginResponseDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> GetVerificationCode(GetVerificationCodeDto getVerificationCodeDto)
+        {
+            var model = new ApiReturn<int>
+            {
+                Result = 0
+            };
+
+            foreach (var key in HttpContext.Session.Keys)
+            {
+                var ses = HttpContext.Session.GetString(key);
+                if (!string.IsNullOrEmpty(ses))
+                {
+                    try
+                    {
+                        var sesRes = JsonConvert.DeserializeObject<VerificationCodeDto>(ses);
+                        if (sesRes != null)
+                        {
+                            if (sesRes.RemoveDate < DateTime.Now)
+                            {
+                                HttpContext.Session.Remove(key);
+                            }
+                        }
+                    }catch{}
+                }
+            }
+
+            var oldOTP = HttpContext.Session.GetString(getVerificationCodeDto.Mobile + "-OTP");
+            if (!string.IsNullOrEmpty(oldOTP))
+            {
+                var oldOTPRes = JsonConvert.DeserializeObject<VerificationCodeDto>(oldOTP);
+                if (oldOTPRes.ExpirationDate > DateTime.Now)
+                {
+                    var seconds = Math.Abs((DateTime.Now - oldOTPRes.ExpirationDate).Seconds);
+                    model.Status = false;
+                    model.Message = "لطفا " + seconds + " ثانیه دیگر دوباره امتحان کنید ";
+                    model.Result = seconds;
+                    return BadRequest(model);
+                }
+                else
+                {
+                    HttpContext.Session.Remove(getVerificationCodeDto.Mobile + "-OTP");
+                }
+            }
+            //
+            getVerificationCodeDto.Mobile = getVerificationCodeDto.Mobile.ToMobile();
+            if (getVerificationCodeDto.Mobile == null)
+            {
+                model.Status = false;
+                model.Message = "شماره موبایل صحیح نمیباشد مثال : 09121234567";
+                return BadRequest(model);
+            }
+            //
+            var user = await _db.UserRepository.GetAsync(p => p.UserName == getVerificationCodeDto.Mobile);
+            if (user == null)
+            {
+                var randomOTP = new Random().Next(10000, 99999);
+                if (_smsService.SendVerificationCode(randomOTP.ToString(), getVerificationCodeDto.Mobile))
+                {
+                    var vc = new VerificationCodeDto
+                    {
+                        Code = randomOTP.ToString(),
+                        ExpirationDate = DateTime.Now.AddSeconds(60),
+                        RemoveDate = DateTime.Now.AddMinutes(2)
+                    };
+                    HttpContext.Session.SetString(getVerificationCodeDto.Mobile + "-OTP", JsonConvert.SerializeObject(vc));
+
+                    model.Status = true;
+                    model.Message = "کد فعال سازی با موفقیت ارسال شد";
+                    model.Result = (int)(vc.ExpirationDate - DateTime.Now).TotalSeconds;
+                    return Ok(model);
+                }
+                else
+                {
+                    model.Status = false;
+                    model.Message = "خطا در ارسال کد فعال سازی";
+                    return BadRequest(model);
+                }
+            }
+            else
+            {
+                model.Status = false;
+                model.Message = "کاربری با این شماره موبایل از قبل وجود دارد";
+                return BadRequest(model);
+            }
+        }
+
 
 
         [HttpPost(ApiV1Routes.Auth.Register)]
@@ -59,7 +157,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
             {
                 UserName = userForRegisterDto.UserName,
                 Name = userForRegisterDto.Name,
-                PhoneNumber = userForRegisterDto.PhoneNumber,
+                PhoneNumber = userForRegisterDto.UserName,
                 Address = "",
                 City = "",
                 Gender = true,
@@ -166,7 +264,6 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
         [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> Login(TokenRequestDto tokenRequestDto)
         {
-
             switch (tokenRequestDto.GrantType)
             {
                 case "password":

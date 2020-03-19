@@ -2499,6 +2499,15 @@
           }
         }
       },
+      "SmsIrRestfulNetCore/1.1.4": {
+        "type": "package",
+        "compile": {
+          "lib/netcoreapp2.0/SmsIrRestfulNetCore.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp2.0/SmsIrRestfulNetCore.dll": {}
+        }
+      },
       "Syncfusion.EJ2.AspNet.Core/17.4.0.55": {
         "type": "package",
         "dependencies": {
@@ -4371,7 +4380,8 @@
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "3.1.2",
           "Microsoft.AspNetCore.SignalR": "1.1.0",
           "Microsoft.Extensions.Hosting.Abstractions": "3.1.2",
-          "Newtonsoft.Json": "12.0.3"
+          "Newtonsoft.Json": "12.0.3",
+          "SmsIrRestfulNetCore": "1.1.4"
         },
         "compile": {
           "bin/placeholder/MadPay724.Services.dll": {}
@@ -7637,6 +7647,26 @@
         "runtimes/win-x86/native/sni.dll",
         "useSharedDesignerContext.txt",
         "version.txt"
+      ]
+    },
+    "SmsIrRestfulNetCore/1.1.4": {
+      "sha512": "yZVm87oKasXdVl1BYucfj66ZPtFDcMR7Wc7Kf9Zgbw7ylMR2bCBuKD1dEawYBVQLwTZmFjjnTZQCSEw+nZ5CNw==",
+      "type": "package",
+      "path": "smsirrestfulnetcore/1.1.4",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "SmsIrRestfulNetCore.deps.json",
+        "SmsIrRestfulNetCore.dll",
+        "SmsIrRestfulNetCore.pdb",
+        "content/SmsIrRestfulNetCore.deps.json",
+        "content/SmsIrRestfulNetCore.dll",
+        "content/SmsIrRestfulNetCore.pdb",
+        "lib/netcoreapp2.0/SmsIrRestfulNetCore.deps.json",
+        "lib/netcoreapp2.0/SmsIrRestfulNetCore.dll",
+        "lib/netcoreapp2.0/SmsIrRestfulNetCore.pdb",
+        "smsirrestfulnetcore.1.1.4.nupkg.sha512",
+        "smsirrestfulnetcore.nuspec"
       ]
     },
     "Syncfusion.EJ2.AspNet.Core/17.4.0.55": {
