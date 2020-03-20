@@ -14,7 +14,7 @@ namespace MadPay724.Data.Dtos.Common.Token
         [Description("...")]
         public string ClientId { get; set; }
         [Required]
-        [EmailAddress(ErrorMessage = "ایمیل وارد شده صحیح نمیباشد")]
+        [Phone(ErrorMessage = "شماره وارد شده صحیح نمیباشد")]
         [Description("نام کاربری که ایمیل میباشد")]
         public string UserName { get; set; }
         [Description("رفرش توکن مورد نیاز برای بارگزاری مجدد توکن")]

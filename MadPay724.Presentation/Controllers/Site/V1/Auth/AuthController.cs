@@ -84,7 +84,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
             var OtpId = getVerificationCodeDto.Mobile + "-OTP";
 
             var verfyCodes = await _db.VerificationCodeRepository.GetAllAsync();
-            foreach (var vc in verfyCodes.ToList())
+            foreach (var vc in verfyCodes.Where(p=> p.RemoveDate < DateTime.Now))
             {
                 if (vc.RemoveDate < DateTime.Now)
                 {
@@ -225,6 +225,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
                 };
                 var walletMain = new Wallet
                 {
+                    UserId = userToCreate.Id,
                     Name = "اصلی ماد پی",
                     IsMain = true,
                     IsSms = false,
@@ -236,6 +237,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
                 };
                 var walletSms = new Wallet
                 {
+                    UserId = userToCreate.Id,
                     Name = "پیامک",
                     IsMain = false,
                     IsSms = true,
@@ -251,6 +253,9 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
                 if (result.Succeeded)
                 {
                     await _authService.AddUserPreNeededAsync(photoToCreate, notifyToCreate, walletMain, walletSms);
+
+                    var creaatedUser = await _userManager.FindByNameAsync(userToCreate.UserName);
+                    await  _userManager.AddToRolesAsync(creaatedUser, new[] { "User"});
 
                     var userForReturn = _mapper.Map<UserForDetailedDto>(userToCreate);
 
