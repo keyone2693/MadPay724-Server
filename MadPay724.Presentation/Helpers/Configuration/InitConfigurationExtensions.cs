@@ -41,7 +41,7 @@ namespace MadPay724.Presentation.Helpers.Configuration
              .AddDataAnnotations()
              .AddCors(opt =>
                 opt.AddPolicy("CorsPolicy", builder =>
-                builder.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader().AllowCredentials())
+                builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader())
              ).AddNewtonsoftJson(opt =>
                 {
                     opt.SerializerSettings.ReferenceLoopHandling =
@@ -65,7 +65,6 @@ namespace MadPay724.Presentation.Helpers.Configuration
             //    opt.DefaultApiVersion = new ApiVersion(1,0);
             //    opt.ApiVersionSelector = new CurrentImplementationApiVersionSelector(opt);
             //});
-
         }
 
         public static void UseMadInitialize(this IApplicationBuilder app, SeedService seeder)

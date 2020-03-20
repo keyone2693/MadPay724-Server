@@ -271,3 +271,4 @@ D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\obj\Debug\netco
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\obj\Debug\netcoreapp3.1\MadPay724.Test.dll
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\obj\Debug\netcoreapp3.1\MadPay724.Test.pdb
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\obj\Debug\netcoreapp3.1\MadPay724.Test.genruntimeconfig.cache
+D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\bin\Debug\netcoreapp3.1\SmsIrRestfulNetCore.dll

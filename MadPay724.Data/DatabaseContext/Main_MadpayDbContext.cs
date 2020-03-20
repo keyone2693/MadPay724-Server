@@ -41,8 +41,9 @@ namespace MadPay724.Data.DatabaseContext
         public DbSet<EasyPay> EasyPays { get; set; }
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<BlogGroup> BlogGroups { get; set; }
+        public DbSet<VerificationCode> VerificationCodes { get; set; }
 
-
+        
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

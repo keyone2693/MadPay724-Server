@@ -25,6 +25,7 @@ namespace MadPay724.Repo.Infrastructure
         IBlogGroupRepository BlogGroupRepository { get; }
         IEntryRepository EntryRepository { get; }
         IFactorRepository FactorRepository { get; }
+        IVerificationCodeRepository VerificationCodeRepository { get; }
         bool Save();
         Task<bool> SaveAsync();
 

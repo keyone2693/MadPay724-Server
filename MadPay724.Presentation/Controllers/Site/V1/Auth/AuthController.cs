@@ -74,44 +74,6 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
             {
                 Result = 0
             };
-
-            foreach (var key in HttpContext.Session.Keys)
-            {
-                var ses = HttpContext.Session.GetString(key);
-                if (!string.IsNullOrEmpty(ses))
-                {
-                    try
-                    {
-                        var sesRes = JsonConvert.DeserializeObject<VerificationCodeDto>(ses);
-                        if (sesRes != null)
-                        {
-                            if (sesRes.RemoveDate < DateTime.Now)
-                            {
-                                HttpContext.Session.Remove(key);
-                            }
-                        }
-                    }catch{}
-                }
-            }
-
-            var oldOTP = HttpContext.Session.GetString(getVerificationCodeDto.Mobile + "-OTP");
-            if (!string.IsNullOrEmpty(oldOTP))
-            {
-                var oldOTPRes = JsonConvert.DeserializeObject<VerificationCodeDto>(oldOTP);
-                if (oldOTPRes.ExpirationDate > DateTime.Now)
-                {
-                    var seconds = Math.Abs((DateTime.Now - oldOTPRes.ExpirationDate).Seconds);
-                    model.Status = false;
-                    model.Message = "لطفا " + seconds + " ثانیه دیگر دوباره امتحان کنید ";
-                    model.Result = seconds;
-                    return BadRequest(model);
-                }
-                else
-                {
-                    HttpContext.Session.Remove(getVerificationCodeDto.Mobile + "-OTP");
-                }
-            }
-            //
             getVerificationCodeDto.Mobile = getVerificationCodeDto.Mobile.ToMobile();
             if (getVerificationCodeDto.Mobile == null)
             {
@@ -119,20 +81,52 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
                 model.Message = "شماره موبایل صحیح نمیباشد مثال : 09121234567";
                 return BadRequest(model);
             }
+            var OtpId = getVerificationCodeDto.Mobile + "-OTP";
+
+            var verfyCodes = await _db.VerificationCodeRepository.GetAllAsync();
+            foreach (var vc in verfyCodes.ToList())
+            {
+                if (vc.RemoveDate < DateTime.Now)
+                {
+                    _db.VerificationCodeRepository.Delete(vc.Id);
+                }
+                await _db.SaveAsync();
+            }
+
+            var oldOTP = verfyCodes.SingleOrDefault(p=>p.Id == OtpId);
+            if (oldOTP != null)
+            {
+                if (oldOTP.ExpirationDate > DateTime.Now)
+                {
+                    var seconds = Math.Abs((DateTime.Now - oldOTP.ExpirationDate).Seconds);
+                    model.Status = false;
+                    model.Message = "لطفا " + seconds + " ثانیه دیگر دوباره امتحان کنید ";
+                    model.Result = seconds;
+                    return BadRequest(model);
+                }
+                else
+                {
+                    _db.VerificationCodeRepository.Delete(OtpId);
+                    await _db.SaveAsync();
+                }
+            }
             //
             var user = await _db.UserRepository.GetAsync(p => p.UserName == getVerificationCodeDto.Mobile);
             if (user == null)
             {
                 var randomOTP = new Random().Next(10000, 99999);
-                if (_smsService.SendVerificationCode(randomOTP.ToString(), getVerificationCodeDto.Mobile))
+                if (_smsService.SendVerificationCode(getVerificationCodeDto.Mobile, randomOTP.ToString()))
                 {
-                    var vc = new VerificationCodeDto
+                    var vc = new VerificationCode
                     {
                         Code = randomOTP.ToString(),
                         ExpirationDate = DateTime.Now.AddSeconds(60),
                         RemoveDate = DateTime.Now.AddMinutes(2)
                     };
-                    HttpContext.Session.SetString(getVerificationCodeDto.Mobile + "-OTP", JsonConvert.SerializeObject(vc));
+                    vc.Id = OtpId;
+                    //
+                    await _db.VerificationCodeRepository.InsertAsync(vc);
+                    await _db.SaveAsync();
 
                     model.Status = true;
                     model.Message = "کد فعال سازی با موفقیت ارسال شد";
@@ -163,22 +157,29 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
             {
                 Status = true
             };
-
             userForRegisterDto.UserName = userForRegisterDto.UserName.ToMobile();
-            var code = HttpContext.Session.GetString(userForRegisterDto.UserName + "-OTP");
-            if (string.IsNullOrEmpty(code))
+            if (userForRegisterDto.UserName == null)
+            {
+                model.Status = false;
+                model.Message = "شماره موبایل صحیح نمیباشد مثال : 09121234567";
+                return BadRequest(model);
+            }
+            var OtpId = userForRegisterDto.UserName + "-OTP";
+            //
+            var code = await _db.VerificationCodeRepository.GetByIdAsync(OtpId);
+            if (code == null)
             {
                 errorModel.Message = "کد فعالسازی صحیح نمباشد اقدام به ارسال دوباره ی کد بکنید";
                 return BadRequest(errorModel);
             }
-            var codeRes = JsonConvert.DeserializeObject<VerificationCodeDto>(code);
-            if (codeRes.ExpirationDate < DateTime.Now)
+            if (code.ExpirationDate < DateTime.Now)
             {
-                HttpContext.Session.Remove(userForRegisterDto.UserName + "-OTP");
+                _db.VerificationCodeRepository.Delete(OtpId);
+                await _db.SaveAsync();
                 errorModel.Message = "کد فعالسازی منقضی شده است اقدام به ارسال دوباره ی کد بکنید";
                 return BadRequest(errorModel);
             }
-            if (codeRes.Code == userForRegisterDto.Code)
+            if (code.Code == userForRegisterDto.Code)
             {
                 var userToCreate = new Data.Models.MainDB.User
                 {

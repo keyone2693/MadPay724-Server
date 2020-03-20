@@ -226,24 +226,21 @@ namespace MadPay724.Test.DataInput
         {
             UserName = "asasas@b545ma.com",
             Password = "password",
-            Name = "کیوان",
-            PhoneNumber = "15486523"
+            Name = "کیوان"
         };
 
         public static readonly UserForRegisterDto userForRegisterDto_Fail_Exist = new UserForRegisterDto()
         {
             UserName = "kathybrown@barkarama.com",
             Password = "password",
-            Name = "کیوان",
-            PhoneNumber = "15486523"
+            Name = "کیوان"
         };
 
         public static readonly UserForRegisterDto userForRegisterDto_Fail_ModelState = new UserForRegisterDto()
         {
             UserName = string.Empty,
             Password = string.Empty,
-            Name = string.Empty,
-            PhoneNumber = string.Empty
+            Name = string.Empty
         };
 
         public static readonly TokenRequestDto useForLoginDto_Success_password = new TokenRequestDto()

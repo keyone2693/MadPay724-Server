@@ -64,8 +64,8 @@ namespace MadPay724.Test.UnitTests.ControllersTests
 
             _mockUtilities = new Mock<IUtilities>();
 
-            _controller = new AuthController(_mockRepo.Object, _mockAuthService.Object, _mockConfig.Object, _mockMapper.Object,
-                _mockLogger.Object, _mockUtilities.Object, _mockUserManager.Object);
+            //_controller = new AuthController(_mockRepo.Object, _mockAuthService.Object, _mockConfig.Object, _mockMapper.Object,
+            //    _mockLogger.Object, _mockUtilities.Object, _mockUserManager.Object);
 
         }
         #region loginTests

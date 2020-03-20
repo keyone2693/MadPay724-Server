@@ -217,6 +217,18 @@ namespace MadPay724.Repo.Infrastructure
                 return blogGroupRepository;
             }
         }
+        private IVerificationCodeRepository verificationCodeRepository;
+        public IVerificationCodeRepository VerificationCodeRepository
+        {
+            get
+            {
+                if (verificationCodeRepository == null)
+                {
+                    verificationCodeRepository = new VerificationCodeRepository(_db);
+                }
+                return verificationCodeRepository;
+            }
+        }
         #endregion
 
         #region privateFinancialrepository
