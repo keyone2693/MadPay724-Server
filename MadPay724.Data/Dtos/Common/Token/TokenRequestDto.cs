@@ -23,5 +23,7 @@ namespace MadPay724.Data.Dtos.Common.Token
         public string Password { get; set; }
         [Description("در صورت true بودن به مدت 20 دقیقه فعال میباشد")]
         public bool IsRemember { get; set; } = false;
+        [Required]
+        public string Provider { get; set; } = "MADPAY";
     }
 }

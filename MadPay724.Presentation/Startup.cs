@@ -50,7 +50,7 @@ namespace MadPay724.Presentation
             app.UseEndpoints(end =>
             {
                 end.MapDefaultControllerRoute();
-                end.MapHub<ChatHubService>(ApiV1Routes.BaseSitePanel + "/chat");
+                end.MapHub<ChatHubService>(ApiV1Routes.BaseChatPanel + "/chat");
             });
         }
     }

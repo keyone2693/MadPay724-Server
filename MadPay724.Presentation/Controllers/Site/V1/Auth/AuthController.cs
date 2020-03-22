@@ -432,7 +432,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
                     if (result.status)
                     {
                         var userForReturn = _mapper.Map<UserForDetailedDto>(result.user);
-
+                        userForReturn.Provider = tokenRequestDto.Provider;
                         return Ok(new LoginResponseDto
                         {
                             token = result.token,
@@ -450,7 +450,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
                     if (socialresult.status)
                     {
                         var userForReturn = _mapper.Map<UserForDetailedDto>(socialresult.user);
-
+                        userForReturn.Provider = tokenRequestDto.Provider;
                         return Ok(new LoginResponseDto
                         {
                             token = socialresult.token,

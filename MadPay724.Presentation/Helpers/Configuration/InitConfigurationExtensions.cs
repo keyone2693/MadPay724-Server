@@ -40,9 +40,12 @@ namespace MadPay724.Presentation.Helpers.Configuration
              .AddFormatterMappings()
              .AddDataAnnotations()
              .AddCors(opt =>
-                opt.AddPolicy("CorsPolicy", builder =>
-                builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader())
-             ).AddNewtonsoftJson(opt =>
+                                 opt.AddPolicy("CorsPolicy", builder =>
+                                builder.WithOrigins("http://localhost:4200")
+                                        .AllowAnyMethod()
+                                        .AllowAnyHeader()
+                                        .AllowCredentials()))
+             .AddNewtonsoftJson(opt =>
                 {
                     opt.SerializerSettings.ReferenceLoopHandling =
                     Newtonsoft.Json.ReferenceLoopHandling.Ignore;

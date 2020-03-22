@@ -7,16 +7,11 @@ namespace MadPay724.Presentation.Routes.V1
 {
     public static class ApiV1Routes
     {
-        //public const string Root = "api";
-
-        //public const string Version = "v1";
-
         public const string Site = "site";
-
         public const string Panel = "panel";
-
         public const string App = "app";
 
+        public const string BaseChatPanel = "api/v1/" + Site + "/" + Panel;
         public const string BaseSitePanel = /*Root + "/" + Version + "/" +*/ Site + "/" + Panel;
         public const string BaseSiteApp =  /* Root + "/" + Version + "/" +*/ Site + "/" + App;
         #region AuthRoutes

@@ -35,9 +35,12 @@ namespace MadPay724.Services.Site.Panel.Common.Service
             else
             {
                 var adminUser = _userInfoInMemory.GetUserInfo("admin@madpay724.com");
-
-                await Clients.Client(adminUser.ConnectionId)
-                .SendAsync("UserLeft", Context.User.Identity.Name);
+                if (adminUser != null)
+                {
+                    await Clients.Client(adminUser.ConnectionId)
+              .SendAsync("UserLeft", Context.User.Identity.Name);
+                }
+              
             }
 
         }
@@ -59,8 +62,12 @@ namespace MadPay724.Services.Site.Panel.Common.Service
             else
             {
                 var adminUser = _userInfoInMemory.GetUserInfo("admin@madpay724.com");
-                await Clients.Client(adminUser.ConnectionId)
+                if(adminUser != null)
+                {
+                    await Clients.Client(adminUser.ConnectionId)
                     .SendAsync("NewOnlineUser", _userInfoInMemory.GetUserInfo(Context.User.Identity.Name));
+                }
+                
             }
 
             await Clients.Client(Context.ConnectionId)

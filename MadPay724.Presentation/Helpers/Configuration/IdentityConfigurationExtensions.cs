@@ -1,21 +1,7 @@
-﻿using MadPay724.Repo.Infrastructure;
-using MadPay724.Services.Site.Panel.Auth.Interface;
-using MadPay724.Services.Site.Panel.Auth.Service;
-using Microsoft.AspNetCore.Http;
+﻿
 using Microsoft.Extensions.DependencyInjection;
-using MadPay724.Common.Helpers.Utilities;
-using MadPay724.Common.Helpers.Interface;
 using MadPay724.Data.Models.MainDB;
-using MadPay724.Services.Upload.Interface;
-using MadPay724.Services.Upload.Service;
-using MadPay724.Presentation.Helpers.Filters;
-using MadPay724.Services.Seed.Service;
-using MadPay724.Services.Site.Panel.User.Interface;
-using MadPay724.Services.Site.Panel.User.Service;
-using MadPay724.Services.Site.Panel.Wallet.Interface;
-using MadPay724.Services.Site.Panel.Wallet.Service;
 using Microsoft.AspNetCore.Identity;
-using MadPay724.Common.OnlineChat.Storage;
 using MadPay724.Data.DatabaseContext;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -74,7 +60,7 @@ namespace MadPay724.Presentation.Helpers.Configuration
                     {
                         OnMessageReceived = context =>
                         {
-                            if (context.Request.Path.Value.StartsWith("/" + ApiV1Routes.BaseSitePanel + "/chat")
+                            if (context.Request.Path.Value.StartsWith("/" + ApiV1Routes.BaseChatPanel + "/chat")
                             && context.Request.Query.TryGetValue("access_token", out StringValues token))
                             {
                                 context.Token = token;

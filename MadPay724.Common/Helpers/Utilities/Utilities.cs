@@ -256,7 +256,6 @@ namespace MadPay724.Common.Helpers.Utilities
             }
 
             var user = await _userManager.FindByIdAsync(refreshToken.UserId);
-
             if (user == null)
             {
                 return new TokenResponseDto()
