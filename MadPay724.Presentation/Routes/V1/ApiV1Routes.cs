@@ -27,6 +27,8 @@ namespace MadPay724.Presentation.Routes.V1
             //Post
             public const string Register = BaseSitePanel + "/auth/register";
             //Post
+            public const string RegisterWithSocial = BaseSitePanel + "/auth/register/social";
+            //Post
             public const string Login = BaseSitePanel + "/auth/login";
         }
         #endregion

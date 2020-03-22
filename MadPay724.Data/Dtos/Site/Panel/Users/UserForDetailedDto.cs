@@ -16,5 +16,6 @@ namespace MadPay724.Data.Dtos.Site.Panel.Users
         public DateTime LastActive { get; set; }
         public string City { get; set; }
         public string PhotoUrl { get; set; }
+        public bool IsRegisterBefore { get; set; } = false;
     }
 }

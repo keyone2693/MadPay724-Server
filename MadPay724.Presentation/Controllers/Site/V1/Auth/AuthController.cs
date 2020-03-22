@@ -84,7 +84,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
             var OtpId = getVerificationCodeDto.Mobile + "-OTP";
 
             var verfyCodes = await _db.VerificationCodeRepository.GetAllAsync();
-            foreach (var vc in verfyCodes.Where(p=> p.RemoveDate < DateTime.Now))
+            foreach (var vc in verfyCodes.Where(p => p.RemoveDate < DateTime.Now))
             {
                 if (vc.RemoveDate < DateTime.Now)
                 {
@@ -93,7 +93,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
                 await _db.SaveAsync();
             }
 
-            var oldOTP = verfyCodes.SingleOrDefault(p=>p.Id == OtpId);
+            var oldOTP = verfyCodes.SingleOrDefault(p => p.Id == OtpId);
             if (oldOTP != null)
             {
                 if (oldOTP.ExpirationDate > DateTime.Now)
@@ -255,7 +255,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
                     await _authService.AddUserPreNeededAsync(photoToCreate, notifyToCreate, walletMain, walletSms);
 
                     var creaatedUser = await _userManager.FindByNameAsync(userToCreate.UserName);
-                    await  _userManager.AddToRolesAsync(creaatedUser, new[] { "User"});
+                    await _userManager.AddToRolesAsync(creaatedUser, new[] { "User" });
 
                     var userForReturn = _mapper.Map<UserForDetailedDto>(userToCreate);
 
@@ -289,6 +289,136 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
                 return BadRequest(errorModel);
             }
         }
+        [HttpPost(ApiV1Routes.Auth.RegisterWithSocial)]
+        [ProducesResponseType(typeof(ApiReturn<UserForDetailedDto>), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ApiReturn<string>), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> RegisterWithSocial(UserForRegisterWithSocialDto userForRegisterWithSocialDto)
+        {
+            var model = new ApiReturn<UserForDetailedDto>
+            {
+                Status = true
+            };
+
+            var user = await _db.UserRepository.GetByIdAsync(userForRegisterWithSocialDto.UserId);
+            if (user != null)
+            {
+                var oldphoto = await _db.PhotoRepository.GetAsync(p => p.UserId == userForRegisterWithSocialDto.UserId && p.IsMain);
+                oldphoto.Url = userForRegisterWithSocialDto.PhotoUrl;
+                _db.PhotoRepository.Update(oldphoto);
+                await _db.SaveAsync();
+
+                model.Message = "ورود شما با موفقیت انجام شد";
+                model.Result = _mapper.Map<UserForDetailedDto>(user);
+                model.Result.IsRegisterBefore = true;
+                return CreatedAtRoute("GetUser", new
+                {
+                    controller = "Users",
+                    v = HttpContext.GetRequestedApiVersion().ToString(),
+                    id = userForRegisterWithSocialDto.UserId
+                }, model);
+            }
+            else
+            {
+                var userToCreate = new Data.Models.MainDB.User
+                {
+                    UserName = userForRegisterWithSocialDto.Email,
+                    Name = userForRegisterWithSocialDto.Name,
+                    PhoneNumber = "0000",
+                    Address = "",
+                    City = "",
+                    Gender = true,
+                    DateOfBirth = DateTime.Now,
+                    IsActive = true,
+                    Status = true,
+                    PhoneNumberConfirmed = true
+                };
+                userToCreate.Id = userForRegisterWithSocialDto.UserId;
+                var photoToCreate = new Photo
+                {
+                    UserId = userForRegisterWithSocialDto.UserId,
+                    Url = userForRegisterWithSocialDto.PhotoUrl,
+                    Description = "Profile Pic",
+                    Alt = "Profile Pic",
+                    IsMain = true,
+                    PublicId = "2"
+                };
+                var notifyToCreate = new Notification
+                {
+                    UserId = userForRegisterWithSocialDto.UserId,
+                    EnterEmail = true,
+                    EnterSms = false,
+                    EnterTelegram = true,
+                    ExitEmail = true,
+                    ExitSms = false,
+                    ExitTelegram = true,
+                    LoginEmail = true,
+                    LoginSms = false,
+                    LoginTelegram = true,
+                    TicketEmail = true,
+                    TicketSms = false,
+                    TicketTelegram = true
+                };
+                var walletMain = new Wallet
+                {
+                    UserId = userForRegisterWithSocialDto.UserId,
+                    Name = "اصلی ماد پی",
+                    IsMain = true,
+                    IsSms = false,
+                    Inventory = 0,
+                    InterMoney = 0,
+                    ExitMoney = 0,
+                    OnExitMoney = 0
+
+                };
+                var walletSms = new Wallet
+                {
+                    UserId = userForRegisterWithSocialDto.UserId,
+                    Name = "پیامک",
+                    IsMain = false,
+                    IsSms = true,
+                    Inventory = 0,
+                    InterMoney = 0,
+                    ExitMoney = 0,
+                    OnExitMoney = 0
+
+                };
+
+                var result = await _userManager.CreateAsync(userToCreate, userForRegisterWithSocialDto.Email);
+                if (result.Succeeded)
+                {
+                    await _authService.AddUserPreNeededAsync(photoToCreate, notifyToCreate, walletMain, walletSms);
+                    var creaatedUser = await _userManager.FindByNameAsync(userToCreate.UserName);
+                    await _userManager.AddToRolesAsync(creaatedUser, new[] { "User" });
+                    var userForReturn = _mapper.Map<UserForDetailedDto>(userToCreate);
+                    userForReturn.IsRegisterBefore = false;
+                    _logger.LogInformation($"{userForRegisterWithSocialDto.Name} - {userForRegisterWithSocialDto.Email} ثبت نام کرده است");
+                    //
+                    model.Message = "ورود شما با موفقیت انجام شد";
+                    model.Result = userForReturn;
+                    return CreatedAtRoute("GetUser", new
+                    {
+                        controller = "Users",
+                        v = HttpContext.GetRequestedApiVersion().ToString(),
+                        id = userToCreate.Id
+                    }, model);
+                }
+                else if (result.Errors.Any())
+                {
+                    _logger.LogWarning(result.Errors.First().Description);
+                    //
+                    errorModel.Message = result.Errors.First().Description;
+                    return BadRequest(errorModel);
+                }
+                else
+                {
+                    errorModel.Message = "خطای نامشخص";
+                    return BadRequest(errorModel);
+                }
+            }
+
+
+        }
+
         [HttpPost(ApiV1Routes.Auth.Login)]
         [ProducesResponseType(typeof(LoginResponseDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status401Unauthorized)]

@@ -104,27 +104,28 @@ namespace MadPay724.Presentation.Controllers.Site.V1.User
                     photoForProfileDto.PublicId = uplaodRes.PublicId;
 
 
-
                 var oldphoto = await _db.PhotoRepository.GetAsync(p => p.UserId == userId && p.IsMain);
 
-                if (oldphoto.PublicId != null && oldphoto.PublicId != "0" && oldphoto.PublicId != "1")
+                if (oldphoto.PublicId != "2")
                 {
-                    _uploadService.RemoveFileFromCloudinary(oldphoto.PublicId);
-                }
-                if (oldphoto.PublicId == photoForProfileDto.PublicId && photoForProfileDto.Url.Split('/').Last() != oldphoto.Url.Split('/').Last())
-                {
-                    _uploadService.RemoveFileFromLocal(
-                        oldphoto.Url.Split('/').Last(),
-                        _env.WebRootPath,
-                        _utilities.FindLocalPathFromUrl(oldphoto.Url).Replace("wwwroot\\", ""));
-                }
-
-                if (oldphoto.PublicId == "1" && photoForProfileDto.PublicId != "1")
-                {
-                    _uploadService.RemoveFileFromLocal(
-                       oldphoto.Url.Split('/').Last(),
-                       _env.WebRootPath,
-                       _utilities.FindLocalPathFromUrl(oldphoto.Url).Replace("wwwroot\\", ""));
+                    if (oldphoto.PublicId != null && oldphoto.PublicId != "0" && oldphoto.PublicId != "1")
+                    {
+                        _uploadService.RemoveFileFromCloudinary(oldphoto.PublicId);
+                    }
+                    if (oldphoto.PublicId == photoForProfileDto.PublicId && photoForProfileDto.Url.Split('/').Last() != oldphoto.Url.Split('/').Last())
+                    {
+                        _uploadService.RemoveFileFromLocal(
+                            oldphoto.Url.Split('/').Last(),
+                            _env.WebRootPath,
+                            _utilities.FindLocalPathFromUrl(oldphoto.Url).Replace("wwwroot\\", ""));
+                    }
+                    if (oldphoto.PublicId == "1" && photoForProfileDto.PublicId != "1")
+                    {
+                        _uploadService.RemoveFileFromLocal(
+                           oldphoto.Url.Split('/').Last(),
+                           _env.WebRootPath,
+                           _utilities.FindLocalPathFromUrl(oldphoto.Url).Replace("wwwroot\\", ""));
+                    }
                 }
 
                 _mapper.Map(photoForProfileDto, oldphoto);
