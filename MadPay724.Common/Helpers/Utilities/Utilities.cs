@@ -69,47 +69,93 @@ namespace MadPay724.Common.Helpers.Utilities
         }
         #region tokenCreateNew
 
-        public async Task<TokenResponseDto> GenerateNewTokenAsync(TokenRequestDto tokenRequestDto)
+        public async Task<TokenResponseDto> GenerateNewTokenAsync(TokenRequestDto tokenRequestDto, bool needPassword)
         {
-            var user = await _db.Users.Include(p => p.Photos)
-                .SingleOrDefaultAsync(p => p.UserName == tokenRequestDto.UserName);
-                
-            if (user != null && await _userManager.CheckPasswordAsync(user, tokenRequestDto.Password))
+            if (needPassword)
             {
-                //create new token
-                var newRefreshToken = CreateRefreshToken(_tokenSetting.ClientId, user.Id, tokenRequestDto.IsRemember);
-                //remove older tokens
-                var oldRefreshToken = await _db.Tokens.Where(p => p.UserId == user.Id).ToListAsync();
+                var user = await _db.Users.Include(p => p.Photos)
+                                .SingleOrDefaultAsync(p => p.UserName == tokenRequestDto.UserName);
 
-                if (oldRefreshToken.Any())
+                if (user != null && await _userManager.CheckPasswordAsync(user, tokenRequestDto.Password))
                 {
-                    foreach (var ort in oldRefreshToken)
+                    //create new token
+                    var newRefreshToken = CreateRefreshToken(_tokenSetting.ClientId, user.Id, tokenRequestDto.IsRemember);
+                    //remove older tokens
+                    var oldRefreshToken = await _db.Tokens.Where(p => p.UserId == user.Id).ToListAsync();
+
+                    if (oldRefreshToken.Any())
                     {
-                        _db.Tokens.Remove(ort);
+                        foreach (var ort in oldRefreshToken)
+                        {
+                            _db.Tokens.Remove(ort);
+                        }
                     }
+                    //add new refresh token to db
+                    _db.Tokens.Add(newRefreshToken);
+
+                    await _db.SaveChangesAsync();
+
+                    var accessToken = await CreateAccessTokenAsync(user, newRefreshToken.Value);
+
+                    return new TokenResponseDto()
+                    {
+                        token = accessToken.token,
+                        refresh_token = accessToken.refresh_token,
+                        status = true,
+                        user = user
+                    };
                 }
-                //add new refresh token to db
-                _db.Tokens.Add(newRefreshToken);
-
-                await _db.SaveChangesAsync();
-
-                var accessToken = await CreateAccessTokenAsync(user, newRefreshToken.Value);
-
-                return new TokenResponseDto()
+                else
                 {
-                    token = accessToken.token,
-                    refresh_token = accessToken.refresh_token,
-                    status = true,
-                    user = user
-                };
+                    return new TokenResponseDto()
+                    {
+                        status = false,
+                        message = "کاربری با این یوزر و پس وجود ندارد"
+                    };
+                }
             }
             else
             {
-                return new TokenResponseDto()
+                var user = await _db.Users.Include(p => p.Photos)
+                .SingleOrDefaultAsync(p => p.UserName == tokenRequestDto.UserName);
+
+                if (user != null)
                 {
-                    status = false,
-                    message = "کاربری با این یوزر و پس وجود ندارد"
-                };
+                    //create new token
+                    var newRefreshToken = CreateRefreshToken(_tokenSetting.ClientId, user.Id, tokenRequestDto.IsRemember);
+                    //remove older tokens
+                    var oldRefreshToken = await _db.Tokens.Where(p => p.UserId == user.Id).ToListAsync();
+
+                    if (oldRefreshToken.Any())
+                    {
+                        foreach (var ort in oldRefreshToken)
+                        {
+                            _db.Tokens.Remove(ort);
+                        }
+                    }
+                    //add new refresh token to db
+                    _db.Tokens.Add(newRefreshToken);
+
+                    await _db.SaveChangesAsync();
+
+                    var accessToken = await CreateAccessTokenAsync(user, newRefreshToken.Value);
+
+                    return new TokenResponseDto()
+                    {
+                        token = accessToken.token,
+                        refresh_token = accessToken.refresh_token,
+                        status = true,
+                        user = user
+                    };
+                }
+                else
+                {
+                    return new TokenResponseDto()
+                    {
+                        status = false,
+                        message = "کاربری با این یوزر و پس وجود ندارد"
+                    };
+                }
             }
         }
 

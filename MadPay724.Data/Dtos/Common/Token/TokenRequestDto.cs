@@ -10,12 +10,12 @@ namespace MadPay724.Data.Dtos.Common.Token
     {
         [Required]
         [Description("این پارامتر میتواند مقدار password و یا refresh_token را داشته باشد ")]
-        public string GrantType { get; set; } //password || refresh_token
+        public string GrantType { get; set; } //password || refresh_token || social
         [Description("...")]
         public string ClientId { get; set; }
         [Required]
-        [Phone(ErrorMessage = "شماره وارد شده صحیح نمیباشد")]
-        [Description("نام کاربری که ایمیل میباشد")]
+       // [Phone(ErrorMessage = "شماره وارد شده صحیح نمیباشد")]
+        [Description("نام کاربری که ایمیل یا شماره موبایل میباشد")]
         public string UserName { get; set; }
         [Description("رفرش توکن مورد نیاز برای بارگزاری مجدد توکن")]
         public string RefreshToken { get; set; }

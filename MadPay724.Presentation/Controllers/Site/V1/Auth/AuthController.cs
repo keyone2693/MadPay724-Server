@@ -426,8 +426,9 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
         {
             switch (tokenRequestDto.GrantType)
             {
+                
                 case "password":
-                    var result = await _utilities.GenerateNewTokenAsync(tokenRequestDto);
+                    var result = await _utilities.GenerateNewTokenAsync(tokenRequestDto,true);
                     if (result.status)
                     {
                         var userForReturn = _mapper.Map<UserForDetailedDto>(result.user);
@@ -442,6 +443,24 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Auth
                     else
                     {
                         _logger.LogWarning($"{tokenRequestDto.UserName} درخواست لاگین ناموفق داشته است" + "---" + result.message);
+                        return Unauthorized("1x111keyvanx11");
+                    }
+                case "social":
+                    var socialresult = await _utilities.GenerateNewTokenAsync(tokenRequestDto,false);
+                    if (socialresult.status)
+                    {
+                        var userForReturn = _mapper.Map<UserForDetailedDto>(socialresult.user);
+
+                        return Ok(new LoginResponseDto
+                        {
+                            token = socialresult.token,
+                            refresh_token = socialresult.refresh_token,
+                            user = userForReturn
+                        });
+                    }
+                    else
+                    {
+                        _logger.LogWarning($"{tokenRequestDto.UserName} درخواست لاگین ناموفق داشته است" + "---" + socialresult.message);
                         return Unauthorized("1x111keyvanx11");
                     }
                 case "refresh_token":

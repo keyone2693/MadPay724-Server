@@ -14,7 +14,7 @@ namespace MadPay724.Common.Helpers.Interface
         void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt);
 
         bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt);
-        Task<TokenResponseDto> GenerateNewTokenAsync(TokenRequestDto tokenRequestDto);
+        Task<TokenResponseDto> GenerateNewTokenAsync(TokenRequestDto tokenRequestDto,bool needPassword);
         Task<TokenResponseDto> CreateAccessTokenAsync(User user, string refreshToken);
         Token CreateRefreshToken(string clientId, string userId, bool isRemember);
 
