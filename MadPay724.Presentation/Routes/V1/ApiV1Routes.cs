@@ -1,19 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
+﻿
 namespace MadPay724.Presentation.Routes.V1
 {
     public static class ApiV1Routes
     {
         public const string Site = "site";
         public const string Panel = "panel";
-        public const string App = "app";
 
+        #region Chat
         public const string BaseChatPanel = "api/v1/" + Site + "/" + Panel;
-        public const string BaseSitePanel = /*Root + "/" + Version + "/" +*/ Site + "/" + Panel;
-        public const string BaseSiteApp =  /* Root + "/" + Version + "/" +*/ Site + "/" + App;
+        #endregion
+        #region Site
+        public const string BaseSite = Site;
+        #region Home
+        public static class Home
+        {
+            //Get
+            public const string GetHomeData = BaseSite + "/home/data";
+        }
+        #endregion
+        #endregion
+        #region Panel
+        public const string BaseSitePanel = Site + "/" + Panel;
         #region AuthRoutes
         public static class Auth
         {
@@ -182,7 +189,7 @@ namespace MadPay724.Presentation.Routes.V1
         {
             //GET
             public const string GetFactors = BaseSitePanel + "/factors";
-            
+
             //GET
             public const string GetWalletFactors = BaseSitePanel + "/wallets/{walletId}/factors";
             //GET
@@ -337,7 +344,7 @@ namespace MadPay724.Presentation.Routes.V1
             //api/v1/site/panel/users/{userId}/gates/{id}/active
             //PUT
             public const string ActiveDirectGate = BaseSitePanel + "/users/{userId}/gates/{id}/active";
-            
+
 
         }
         #endregion
@@ -455,6 +462,7 @@ namespace MadPay724.Presentation.Routes.V1
             public const string GetUserDashboard = BaseSitePanel + "/user/{userId}/common/dashboard";
 
         }
+        #endregion
         #endregion
     }
 }

@@ -13,8 +13,8 @@ using MadPay724.Data.Dtos.Common.Token;
 using MadPay724.Data.Dtos.Site.Panel.Auth;
 using MadPay724.Data.Dtos.Site.Panel.Users;
 using MadPay724.Data.Models.MainDB;
-using MadPay724.Presentation.Controllers.Site.V1.Auth;
-using MadPay724.Presentation.Controllers.Site.V1.User;
+using MadPay724.Presentation.Controllers.Site.V1.Panel.Auth;
+using MadPay724.Presentation.Controllers.Site.V1.Panel.User;
 using MadPay724.Repo.Infrastructure;
 using MadPay724.Services.Site.Panel.Auth.Interface;
 using MadPay724.Services.Site.Panel.User.Interface;
@@ -74,8 +74,8 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
 
-            _mockUtilities.Setup(x => x.GenerateNewTokenAsync(It.IsAny<TokenRequestDto>()))
-                .ReturnsAsync(new TokenResponseDto() {status = true});
+            //_mockUtilities.Setup(x => x.GenerateNewTokenAsync(It.IsAny<TokenRequestDto>()))
+            //    .ReturnsAsync(new TokenResponseDto() {status = true});
             //_mockUserManager.Setup(x => x.FindByNameAsync(It.IsAny<string>()))
             //    .ReturnsAsync(UnitTestsDataInput.Users.First());
 
@@ -121,8 +121,8 @@ namespace MadPay724.Test.UnitTests.ControllersTests
         {
             //Arrange------------------------------------------------------------------------------------------------------------------------------
 
-            _mockUtilities.Setup(x => x.GenerateNewTokenAsync(It.IsAny<TokenRequestDto>()))
-                .ReturnsAsync(new TokenResponseDto() { status = false, message = "کاربری با این یوزر و پس وجود ندارد" });
+            //_mockUtilities.Setup(x => x.GenerateNewTokenAsync(It.IsAny<TokenRequestDto>()))
+            //    .ReturnsAsync(new TokenResponseDto() { status = false, message = "کاربری با این یوزر و پس وجود ندارد" });
             string expected = "1x111keyvanx11";
 
 

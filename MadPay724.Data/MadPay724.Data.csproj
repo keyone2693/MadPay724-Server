@@ -32,7 +32,6 @@
 
   <ItemGroup>
     <Folder Include="Dtos\Api\" />
-    <Folder Include="Dtos\Site\App\" />
     <Folder Include="Migrations\FinancialMigrations\" />
     <Folder Include="Migrations\LogDbMigrations\" />
   </ItemGroup>
