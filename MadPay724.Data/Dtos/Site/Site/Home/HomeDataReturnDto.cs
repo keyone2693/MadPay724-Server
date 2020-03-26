@@ -1,7 +1,6 @@
-﻿using MadPay724.Data.Models.MainDB.Blog;
-using System;
+﻿using MadPay724.Data.Dtos.Site.Panel.Blog;
+
 using System.Collections.Generic;
-using System.Text;
 
 namespace MadPay724.Data.Dtos.Site.Site.Home
 {
@@ -10,6 +9,6 @@ namespace MadPay724.Data.Dtos.Site.Site.Home
         public List<CustomerDto> Customers { get; set; }
         public ServiceStatDto ServiceStat { get; set; }
         public IEnumerable<FeedBackDto> FeedBacks { get; set; }
-        public IEnumerable<Blog> LastBlogs { get; set; }
+        public IEnumerable<BlogForReturnDto> LastBlogs { get; set; }
     }
 }

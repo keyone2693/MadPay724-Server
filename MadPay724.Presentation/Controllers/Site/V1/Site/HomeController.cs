@@ -7,6 +7,7 @@ using AutoMapper;
 using MadPay724.Common.Helpers.Interface;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Common;
+using MadPay724.Data.Dtos.Site.Panel.Blog;
 using MadPay724.Data.Dtos.Site.Site.Home;
 using MadPay724.Presentation.Routes.V1;
 using MadPay724.Repo.Infrastructure;
@@ -79,8 +80,21 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Site
                     });
                 }
             }
-            model.Result.LastBlogs = await _db.BlogRepository
-                .GetManyAsync(p => p.Status, s => s.OrderByDescending(x => x.DateModified), "");
+
+            var blogsFromRepo = await _db.BlogRepository
+               .GetManyAsync(p => p.Status, s => s.OrderByDescending(x => x.DateModified), "");
+
+            var blogs = new List<BlogForReturnDto>();
+
+            foreach (var item in blogsFromRepo)
+            {
+                blogs.Add(_mapper.Map<BlogForReturnDto>(item));
+            }
+
+
+
+
+            model.Result.LastBlogs = blogs;
 
             model.Status = true;
             model.Message = "اطلاعات با موفقیت بارگزاری شد";
