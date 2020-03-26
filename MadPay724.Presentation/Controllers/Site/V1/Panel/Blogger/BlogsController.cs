@@ -266,7 +266,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Panel.Blogger
                             blogForUpdate.PicAddress = uploadRes.Url;
 
                             var blog = _mapper.Map(blogForUpdateDto, blogForUpdate);
-
+                            blog.DateModified = DateTime.Now;
                             _db.BlogRepository.Update(blog);
 
                             if (await _db.SaveAsync())

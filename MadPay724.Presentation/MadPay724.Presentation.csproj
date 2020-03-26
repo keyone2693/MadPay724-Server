@@ -5,13 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="wwwroot\Files\NewFolder\**" />
-    <Content Remove="wwwroot\Files\NewFolder\**" />
-    <EmbeddedResource Remove="wwwroot\Files\NewFolder\**" />
-    <None Remove="wwwroot\Files\NewFolder\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Remove="wwwroot\Files\Json\Seed\UserSeedData.json" />
   </ItemGroup>
 

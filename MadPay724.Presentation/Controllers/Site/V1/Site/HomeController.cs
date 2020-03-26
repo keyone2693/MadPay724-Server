@@ -1,23 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using MadPay724.Common.Helpers.Interface;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Common;
+using MadPay724.Data.Dtos.Site.Site.Home;
 using MadPay724.Presentation.Routes.V1;
 using MadPay724.Repo.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace MadPay724.Presentation.Controllers.Site.V1.Site
 {
     [ApiVersion("1")]
     [Route("api/v{v:apiVersion}")]
-    [ApiExplorerSettings(GroupName = "v1_Site_Panel_Accountant")]
+    [ApiExplorerSettings(GroupName = "v1_Site_Home")]
     [ApiController]
+    [AllowAnonymous]
     public class HomeController : ControllerBase
     {
         private readonly IUnitOfWork<Main_MadPayDbContext> _db;
@@ -44,24 +49,42 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Site
         }
 
         [HttpPost(ApiV1Routes.Home.GetHomeData)]
-        [ProducesResponseType(typeof(ApiReturn<int>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ApiReturn<int>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiReturn<HomeDataReturnDto>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetHomeData()
         {
-            var model = new ApiReturn<int>
+            var model = new ApiReturn<HomeDataReturnDto>
             {
-                Result = 0
+                Result = new HomeDataReturnDto()
             };
-            if ()
-            {
 
-            }
-            else
+            var feedBackJson = System.IO.File.ReadAllText("wwwroot/Files/Json/Home/FeedBack.json");
+            model.Result.FeedBacks = JsonConvert.DeserializeObject<List<FeedBackDto>>(feedBackJson);
+
+            var serviceStatJson = System.IO.File.ReadAllText("wwwroot/Files/Json/Home/ServiceStat.json"); ;
+            model.Result.ServiceStat = JsonConvert.DeserializeObject<ServiceStatDto>(serviceStatJson);
+
+            model.Result.Customers = new List<CustomerDto>();
+            var dir = new DirectoryInfo("wwwroot/Files/CustomerImg");
+
+            if (dir.Exists)
             {
-                model.Status = false;
-                model.Message = "";
-                return BadRequest(model);
+                var files = dir.GetFiles().ToList().Take(5);
+                foreach (var file in files)
+                {
+                    model.Result.Customers.Add(new CustomerDto
+                    {
+                        Name = "...",
+                        Url = $"{Request.Scheme ?? ""}://{Request.Host.Value ?? ""}{Request.PathBase.Value ?? ""}" +
+                        "/wwwroot/Files/CustomerImg/" + Path.GetFileName(file.FullName),
+                    });
+                }
             }
+            model.Result.LastBlogs = await _db.BlogRepository
+                .GetManyAsync(p => p.Status, s => s.OrderByDescending(x => x.DateModified), "");
+
+            model.Status = true;
+            model.Message = "اطلاعات با موفقیت بارگزاری شد";
+            return Ok(model);
         }
     }
 }
