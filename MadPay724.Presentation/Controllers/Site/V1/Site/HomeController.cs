@@ -49,7 +49,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Site
             };
         }
 
-        [HttpPost(ApiV1Routes.Home.GetHomeData)]
+        [HttpGet(ApiV1Routes.Home.GetHomeData)]
         [ProducesResponseType(typeof(ApiReturn<HomeDataReturnDto>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetHomeData()
         {
@@ -82,7 +82,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Site
             }
 
             var blogsFromRepo = await _db.BlogRepository
-               .GetManyAsync(p => p.Status, s => s.OrderByDescending(x => x.DateModified), "");
+               .GetManyAsync(p => p.Status, s => s.OrderByDescending(x => x.DateModified), "User,BlogGroup");
 
             var blogs = new List<BlogForReturnDto>();
 
