@@ -40,6 +40,8 @@ namespace MadPay724.Presentation
             services.AddMadApiVersioning();
             services.AddMadSwagger();
 
+         
+
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, SeedService seeder)
         {
@@ -47,6 +49,7 @@ namespace MadPay724.Presentation
             app.UseMadInitialize(seeder);
             app.UseMadAuth();
             app.UseMadSwagger();
+
             app.UseEndpoints(end =>
             {
                 end.MapDefaultControllerRoute();

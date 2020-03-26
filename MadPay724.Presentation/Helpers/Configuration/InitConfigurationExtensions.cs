@@ -1,4 +1,5 @@
-﻿using MadPay724.Data.DatabaseContext;
+﻿using ImageResizer.AspNetCore.Helpers;
+using MadPay724.Data.DatabaseContext;
 using MadPay724.Services.Seed.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -68,6 +69,7 @@ namespace MadPay724.Presentation.Helpers.Configuration
             //    opt.DefaultApiVersion = new ApiVersion(1,0);
             //    opt.ApiVersionSelector = new CurrentImplementationApiVersionSelector(opt);
             //});
+            services.AddImageResizer();
         }
 
         public static void UseMadInitialize(this IApplicationBuilder app, SeedService seeder)
@@ -75,6 +77,7 @@ namespace MadPay724.Presentation.Helpers.Configuration
             //app.UseResponseCompression();
             seeder.SeedUsers();
             app.UseRouting();
+            app.UseImageResizer();
 
             app.UseStaticFiles(new StaticFileOptions()
             {
