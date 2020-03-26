@@ -6,11 +6,10 @@ using System.Text;
 
 namespace MadPay724.Data.Models.MainDB.Blog
 {
-   public class Blog : BaseEntity<string>
+   public class Blog : BaseEntity<long>
     {
         public Blog()
         {
-            Id = Guid.NewGuid().ToString();
             DateCreated = DateTime.Now;
             DateModified = DateTime.Now;
         }
@@ -20,14 +19,6 @@ namespace MadPay724.Data.Models.MainDB.Blog
         [StringLength(500, MinimumLength = 0)]
         [ConcurrencyCheck]
         public string Title { get; set; }
-        [Timestamp]
-        public byte[] Timestamp { get; set; }
-
-
-
-
-
-
 
         [Required]
         [StringLength(500, MinimumLength = 0)]

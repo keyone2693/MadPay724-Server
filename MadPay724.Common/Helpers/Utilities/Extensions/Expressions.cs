@@ -16,8 +16,33 @@ namespace MadPay724.Common.Helpers.Utilities.Extensions
 {
     public static class Expressions
     {
+        public static Expression<Func<Blog, bool>> ToBlogExpressionForSite(this string Filter)
+        {
+            if (string.IsNullOrEmpty(Filter) || string.IsNullOrWhiteSpace(Filter))
+            {
+                Expression<Func<Blog, bool>> exp = p => p.Status;
+                return exp;
+            }
+            else
+            {
+                Expression<Func<Blog, bool>> exp;
+                exp =
+                            p => p.Status && (p.Id.ToString().Contains(Filter) ||
+                            p.DateModified.ToString().Contains(Filter) ||
+                            p.PicAddress.Contains(Filter) ||
+                            p.SummerText.Contains(Filter) ||
+                            p.Tags.Contains(Filter) ||
+                            p.Text.Contains(Filter) ||
+                            p.Title.Contains(Filter) ||
+                            p.BlogGroup.Name.Contains(Filter));
+
+                return exp;
+            }
+
+        }
+
         public static Expression<Func<Blog, bool>> ToBlogExpression(this string Filter,
-    bool isAdmin, string id = "")
+bool isAdmin, string id = "")
         {
             if (string.IsNullOrEmpty(Filter) || string.IsNullOrWhiteSpace(Filter))
             {
@@ -38,7 +63,7 @@ namespace MadPay724.Common.Helpers.Utilities.Extensions
                 if (isAdmin)
                 {
                     exp =
-                                p => p.Id.Contains(Filter) ||
+                                p => p.Id.ToString().Contains(Filter) ||
                                 p.DateModified.ToString().Contains(Filter) ||
                                 p.PicAddress.Contains(Filter) ||
                                 p.SummerText.Contains(Filter) ||
@@ -51,7 +76,7 @@ namespace MadPay724.Common.Helpers.Utilities.Extensions
                 {
                     exp =
 
-                               p => (p.Id.Contains(Filter) ||
+                               p => (p.Id.ToString().Contains(Filter) ||
                                p.DateModified.ToString().Contains(Filter) ||
                                p.PicAddress.Contains(Filter) ||
                                p.SummerText.Contains(Filter) ||
@@ -107,11 +132,11 @@ namespace MadPay724.Common.Helpers.Utilities.Extensions
                                  p.Wallets.Any(s => s.Inventory.ToString().Contains(Filter)) ||
                                  p.Wallets.Any(s => s.InterMoney.ToString().Contains(Filter)) ||
                                  p.Wallets.Any(s => s.ExitMoney.ToString().Contains(Filter)) ||
-                                 p.Wallets.Any(s => s.Gates.Any(r=>r.Grouping.Contains(Filter))) ||
-                                 p.Wallets.Any(s => s.Gates.Any(r=>r.PhoneNumber.Contains(Filter))) ||
-                                 p.Wallets.Any(s => s.Gates.Any(r=>r.WebsiteUrl.Contains(Filter))) ||
-                                 p.Wallets.Any(s => s.Gates.Any(r=>r.WebsiteName.Contains(Filter))) ||
-                                 p.BankCards.Any(s=>s.OwnerName.Contains(Filter)) ||
+                                 p.Wallets.Any(s => s.Gates.Any(r => r.Grouping.Contains(Filter))) ||
+                                 p.Wallets.Any(s => s.Gates.Any(r => r.PhoneNumber.Contains(Filter))) ||
+                                 p.Wallets.Any(s => s.Gates.Any(r => r.WebsiteUrl.Contains(Filter))) ||
+                                 p.Wallets.Any(s => s.Gates.Any(r => r.WebsiteName.Contains(Filter))) ||
+                                 p.BankCards.Any(s => s.OwnerName.Contains(Filter)) ||
                                  p.BankCards.Any(s => s.HesabNumber.Contains(Filter)) ||
                                  p.BankCards.Any(s => s.BankName.Contains(Filter)) ||
                                  p.BankCards.Any(s => s.CardNumber.Contains(Filter)) ||
@@ -155,28 +180,28 @@ namespace MadPay724.Common.Helpers.Utilities.Extensions
 
             if (isId)
             {
-                Expression<Func<Gate, bool>> tempExp = p=> p.WalletId == id;
+                Expression<Func<Gate, bool>> tempExp = p => p.WalletId == id;
                 exp = CombineExpressions.CombiningExpressions<Gate>(exp, tempExp, ExpressionsTypeEnum.And);
             }
 
             if (string.IsNullOrEmpty(Filter) || string.IsNullOrWhiteSpace(Filter))
             {
-               
-                    return exp;
+
+                return exp;
             }
             else
             {
 
-                    Expression<Func<Gate, bool>> tempExp =
-                                       p => p.Id.Contains(Filter) ||
-                                       p.Ip.Contains(Filter) ||
-                                       p.WebsiteName.Contains(Filter) ||
-                                       p.WebsiteUrl.Contains(Filter) ||
-                                       p.PhoneNumber.Contains(Filter) ||
-                                       p.Text.Contains(Filter) ||
-                                       p.Grouping.Contains(Filter) ||
-                                       p.IconUrl.Contains(Filter) ||
-                                       p.WalletId.Contains(Filter);
+                Expression<Func<Gate, bool>> tempExp =
+                                   p => p.Id.Contains(Filter) ||
+                                   p.Ip.Contains(Filter) ||
+                                   p.WebsiteName.Contains(Filter) ||
+                                   p.WebsiteUrl.Contains(Filter) ||
+                                   p.PhoneNumber.Contains(Filter) ||
+                                   p.Text.Contains(Filter) ||
+                                   p.Grouping.Contains(Filter) ||
+                                   p.IconUrl.Contains(Filter) ||
+                                   p.WalletId.Contains(Filter);
 
                 return CombineExpressions.CombiningExpressions<Gate>(exp, tempExp, ExpressionsTypeEnum.And);
             }
@@ -682,8 +707,8 @@ namespace MadPay724.Common.Helpers.Utilities.Extensions
                         Expression<Func<Ticket, bool>> tempExp =
                                         (p => p.Id.Contains(ticketsPaginationDto.Filter) ||
                                         p.Title.Contains(ticketsPaginationDto.Filter) ||
-                                        p.TicketContents.Any(s=>s.Text.Contains(ticketsPaginationDto.Filter)) ||
-                                        p.TicketContents.Any(s=>s.Id.Contains(ticketsPaginationDto.Filter)));
+                                        p.TicketContents.Any(s => s.Text.Contains(ticketsPaginationDto.Filter)) ||
+                                        p.TicketContents.Any(s => s.Id.Contains(ticketsPaginationDto.Filter)));
 
                         exp = CombineExpressions.CombiningExpressions<Ticket>(exp, tempExp, ExpressionsTypeEnum.And);
                     }
@@ -714,7 +739,7 @@ namespace MadPay724.Common.Helpers.Utilities.Extensions
                         exp = CombineExpressions.CombiningExpressions<Ticket>(exp, tempExp, ExpressionsTypeEnum.And);
                     }
                     //
-                    if (ticketsPaginationDto.Department > 0 )
+                    if (ticketsPaginationDto.Department > 0)
                     {
                         Expression<Func<Ticket, bool>> tempExp =
                                         p => p.Department == ticketsPaginationDto.Department;
@@ -748,7 +773,7 @@ namespace MadPay724.Common.Helpers.Utilities.Extensions
                     {
                         Expression<Func<Ticket, bool>> expUser =
                                         p => p.UserId == id &&
-                                        ( p.Id.Contains(ticketsPaginationDto.Filter) ||
+                                        (p.Id.Contains(ticketsPaginationDto.Filter) ||
                                         p.Title.Contains(ticketsPaginationDto.Filter) ||
                                         p.TicketContents.Any(s => s.Text.Contains(ticketsPaginationDto.Filter)) ||
                                         p.TicketContents.Any(s => s.Id.Contains(ticketsPaginationDto.Filter)));

@@ -64,14 +64,8 @@ namespace MadPay724.Data.DatabaseContext
             });
 
             builder.Entity<Blog>()
-                .Property(x => x.Title)
-                .IsConcurrencyToken();
-
-
-            builder.Entity<Blog>()
-                .Property(x => x.Timestamp)
-                .ValueGeneratedOnAddOrUpdate()
-                .IsConcurrencyToken();
+                .Property(x => x.Id)
+                .ValueGeneratedOnAdd();
                 
 
         }

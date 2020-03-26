@@ -18,6 +18,15 @@ namespace MadPay724.Presentation.Routes.V1
             public const string GetHomeData = BaseSite + "/home/data";
         }
         #endregion
+        #region Home
+        public static class SiteBlog
+        {
+            //GET
+            public const string GetBlogs = BaseSite + "/blogs";
+            //GET
+            public const string GetBlog = BaseSite + "/blogs/{blogId}";
+        }
+        #endregion
         #endregion
         #region Panel
         public const string BaseSitePanel = Site + "/" + Panel;

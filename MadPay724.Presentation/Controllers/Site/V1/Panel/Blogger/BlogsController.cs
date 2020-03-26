@@ -198,7 +198,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Panel.Blogger
                 };
                 var uploadRes = await _uploadService.UploadFileToLocal(
                   blogForCreateDto.File,
-                      blogForCreate.Id,
+                      blogForCreate.Id.ToString(),
                       _env.WebRootPath,
                       $"{Request.Scheme ?? ""}://{Request.Host.Value ?? ""}{Request.PathBase.Value ?? ""}",
                       "Files\\Blog\\" + DateTime.Now.Year + "\\" + DateTime.Now.Month + "\\" + DateTime.Now.Day
@@ -235,7 +235,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Panel.Blogger
         [Authorize(Policy = "AccessBlog")]
         [ServiceFilter(typeof(IsBloggerHimselfFilter))]
         [HttpPut(ApiV1Routes.Blog.UpdateBlog)]
-        public async Task<IActionResult> UpdateBlog(string id, string userId, [FromForm]BlogForCreateUpdateDto blogForUpdateDto)
+        public async Task<IActionResult> UpdateBlog(long id, string userId, [FromForm]BlogForCreateUpdateDto blogForUpdateDto)
         {
             blogForUpdateDto.Title = blogForUpdateDto.Title.Trim();
 
@@ -256,7 +256,7 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Panel.Blogger
                     {
                         var uploadRes = await _uploadService.UploadFileToLocal(
                           blogForUpdateDto.File,
-                              id,
+                              id.ToString(),
                               _env.WebRootPath,
                               $"{Request.Scheme ?? ""}://{Request.Host.Value ?? ""}{Request.PathBase.Value ?? ""}",
                               "Files\\Blog\\" + DateTime.Now.Year + "\\" + DateTime.Now.Month + "\\" + DateTime.Now.Day

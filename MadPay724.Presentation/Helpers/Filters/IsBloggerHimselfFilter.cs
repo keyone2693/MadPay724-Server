@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Linq;
 using System.Net;
 using System.Security.Claims;
@@ -24,7 +25,7 @@ namespace MadPay724.Presentation.Helpers.Filters
         }
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            var blogId = context.RouteData.Values["id"].ToString();
+            var blogId =Convert.ToInt64(context.RouteData.Values["id"]);
 
             var blogFromRepo =_db.BlogRepository
                 .GetMany(p => p.Id == blogId, null, "User").FirstOrDefault();

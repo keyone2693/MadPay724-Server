@@ -14,6 +14,8 @@
     <Compile Remove="Migrations\MadpayMigrations\20190725134612_init2.Designer.cs" />
     <Compile Remove="Migrations\MadpayMigrations\20190725150711_init.cs" />
     <Compile Remove="Migrations\MadpayMigrations\20190725150711_init.Designer.cs" />
+    <Compile Remove="Migrations\MadpayMigrations\20200326135543_updateBlog.cs" />
+    <Compile Remove="Migrations\MadpayMigrations\20200326135543_updateBlog.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
