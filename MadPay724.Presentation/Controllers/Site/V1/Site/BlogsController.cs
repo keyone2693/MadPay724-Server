@@ -99,32 +99,67 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Site
 
         }
         [HttpGet(ApiV1Routes.SiteBlog.GetBlog)]
-        [ProducesResponseType(typeof(ApiReturn<BlogsReturnDto>), StatusCodes.Status200OK)]
-
+        [ProducesResponseType(typeof(ApiReturn<BlogReturnDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiReturn<string>), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetBlog(long blogId)
         {
-            var model = new ApiReturn<BlogsReturnDto>
+            var model = new ApiReturn<BlogReturnDto>
             {
-                Result = new BlogsReturnDto()
+                Result = new BlogReturnDto()
             };
-            var blogFromRepo = await _db.BlogRepository.GetByIdAsync(blogId);
+
+
+            var blogFromRepo = (await _db.BlogRepository
+              .GetManyAsync( P=>P.Status && P.Id == blogId ,null,"User,BlogGroup")).SingleOrDefault();
 
             if (blogFromRepo != null)
             {
+                //Blog
+                model.Result.Blog = _mapper.Map<BlogForReturnDto>(blogFromRepo);
+                //Related
+                var titleList = blogFromRepo.Title.Split(' ').ToList();
+                var relatedList = new List<Blog>();
+
+                foreach (var blog in titleList.SelectMany(
+                    str =>  _db.BlogRepository
+                    .GetMany(p=>p.Status && p.Title.Contains(str), s => s.OrderByDescending(x => x.DateModified), "User,BlogGroup"))
+                    .Where(blog => relatedList.All(q=>q.Title != blog.Title)))
+                {
+                    relatedList.Add(blog);
+                }
+               
+                var rb = (relatedList.Select(item => _mapper.Map<BlogForReturnDto>(item))).Take(6).ToList();
+                //LeftBlog
+                model.Result.LeftBlog = model.Result.RelatedBlogs[0];
+                //RightBlog
+                model.Result.RightBlog = model.Result.RelatedBlogs[1];
+                //RelatedBlog
+                model.Result.RelatedBlogs = rb.Where(p => p.Id != model.Result.LeftBlog.Id && p.Id != model.Result.RightBlog.Id).ToList();
+                //MostViewed
+                var mostVieweBlogsFromRepo = await _db.BlogRepository
+                 .GetManyAsync(p => p.Status,
+                 s => s.OrderByDescending(x => x.ViewCount), "User,BlogGroup", 5);
+                model.Result.MostViewed = (mostVieweBlogsFromRepo.Select(item => _mapper.Map<BlogForReturnDto>(item))).ToList();
+                //MostCommented
+                var mostCommentedBlogsFromRepo = await _db.BlogRepository
+                    .GetManyAsync(p => p.Status,
+                    s => s.OrderBy(x => x.ViewCount), "User,BlogGroup", 5);
+                model.Result.MostCommented = (mostCommentedBlogsFromRepo.Select(item => _mapper.Map<BlogForReturnDto>(item))).ToList();
+                //BlogGroups
+                var blogGroupFromRepo = await _db.BlogGroupRepository.GetAllAsync();
+                model.Result.BlogGroups = _mapper.Map<List<BlogGroupForReturnDto>>(blogGroupFromRepo);
 
                 blogFromRepo.ViewCount += 1;
-
                 _db.BlogRepository.Update(blogFromRepo);
                 await _db.SaveAsync();
 
-
-                var blog = _mapper.Map<BlogForReturnDto>(blogFromRepo);
-
-                return Ok(blog);
+                return Ok(model);
             }
             else
             {
-                return BadRequest("بلاگ وجود ندارد");
+                errorModel.Status = false;
+                errorModel.Message = "بلاگ وجود ندارد";
+                return BadRequest(errorModel);
             }
 
         }
