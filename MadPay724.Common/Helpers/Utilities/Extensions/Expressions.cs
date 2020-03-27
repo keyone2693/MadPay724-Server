@@ -34,7 +34,8 @@ namespace MadPay724.Common.Helpers.Utilities.Extensions
                             p.Tags.Contains(Filter) ||
                             p.Text.Contains(Filter) ||
                             p.Title.Contains(Filter) ||
-                            p.BlogGroup.Name.Contains(Filter));
+                            p.BlogGroup.Name.Contains(Filter)||
+                            p.User.Name.Contains(Filter));
 
                 return exp;
             }
