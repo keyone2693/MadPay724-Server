@@ -72,9 +72,10 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Site
             var blogsFromRepo = await _db.BlogRepository
                 .GetAllPagedListAsync(
                 paginationDto,
-                paginationDto.Filter.ToBlogExpressionForSite(),
+                paginationDto.Filter.ToBlogExpressionForSite(paginationDto.SortHe, paginationDto.SortDir),
                 "DateModified,desc",
                 "User,BlogGroup");
+
             Response.AddPagination(blogsFromRepo.CurrentPage, blogsFromRepo.PageSize,
                 blogsFromRepo.TotalCount, blogsFromRepo.TotalPage);
             model.Result.Blogs = (blogsFromRepo.Select(item => _mapper.Map<BlogForReturnDto>(item))).ToList();

@@ -16,28 +16,118 @@ namespace MadPay724.Common.Helpers.Utilities.Extensions
 {
     public static class Expressions
     {
-        public static Expression<Func<Blog, bool>> ToBlogExpressionForSite(this string Filter)
+        public static Expression<Func<Blog, bool>> ToBlogExpressionForSite(this string Filter, string yearStr, string monthStr)
         {
+            var year = 0;
+            var month = 0;
+            if (!string.IsNullOrEmpty(yearStr) && !string.IsNullOrWhiteSpace(yearStr))
+            {
+                year = int.Parse(yearStr);
+            }
+            if (!string.IsNullOrEmpty(monthStr) || !string.IsNullOrWhiteSpace(monthStr))
+            {
+                month = int.Parse(monthStr);
+            }
+
             if (string.IsNullOrEmpty(Filter) || string.IsNullOrWhiteSpace(Filter))
             {
-                Expression<Func<Blog, bool>> exp = p => p.Status;
-                return exp;
+                if (year == 0 && month != 0)
+                {
+                    Expression<Func<Blog, bool>> exp;
+                    exp =
+                                p => p.Status &&
+                                (p.DateModified.Month == month);
+                    return exp;
+                }
+                else if (year != 0 && month == 0)
+                {
+                    Expression<Func<Blog, bool>> exp;
+                    exp =
+                                p => p.Status &&
+                                (p.DateModified.Year == year);
+                    return exp;
+                }
+                else if (year != 0 && month != 0)
+                {
+                    Expression<Func<Blog, bool>> exp;
+                    exp =
+                                p => p.Status &&
+                                p.DateModified.Year == year && p.DateModified.Month == month;
+                    return exp;
+                }
+                else
+                {
+                    Expression<Func<Blog, bool>> exp = p => p.Status;
+                    return exp;
+                }
+
             }
             else
             {
-                Expression<Func<Blog, bool>> exp;
-                exp =
-                            p => p.Status && (p.Id.ToString().Contains(Filter) ||
-                            p.DateModified.ToString().Contains(Filter) ||
-                            p.PicAddress.Contains(Filter) ||
-                            p.SummerText.Contains(Filter) ||
-                            p.Tags.Contains(Filter) ||
-                            p.Text.Contains(Filter) ||
-                            p.Title.Contains(Filter) ||
-                            p.BlogGroup.Name.Contains(Filter)||
-                            p.User.Name.Contains(Filter));
+                if (year == 0 && month != 0)
+                {
+                    Expression<Func<Blog, bool>> exp;
+                    exp =
+                                p => p.Status && p.DateModified.Month == month && 
+                                (p.Id.ToString().Contains(Filter) ||
+                                p.PicAddress.Contains(Filter) ||
+                                p.SummerText.Contains(Filter) ||
+                                p.Tags.Contains(Filter) ||
+                                p.Text.Contains(Filter) ||
+                                p.Title.Contains(Filter) ||
+                                p.BlogGroup.Name.Contains(Filter) ||
+                                p.User.Name.Contains(Filter));
+                    return exp;
+                }
+                else if (year != 0 && month == 0)
+                {
+                    Expression<Func<Blog, bool>> exp;
+                    exp =
+                                p => p.Status && p.DateModified.Year == year &&
+                                (p.Id.ToString().Contains(Filter) ||
+                                p.PicAddress.Contains(Filter) ||
+                                p.SummerText.Contains(Filter) ||
+                                p.Tags.Contains(Filter) ||
+                                p.Text.Contains(Filter) ||
+                                p.Title.Contains(Filter) ||
+                                p.BlogGroup.Name.Contains(Filter) ||
+                                p.User.Name.Contains(Filter));
+                    return exp;
+                }
+                else if (year != 0 && month != 0)
+                {
+                    Expression<Func<Blog, bool>> exp;
+                    exp =
+                                p => p.Status &&
+                                p.DateModified.Year == year &&
+                                p.DateModified.Month == month &&
+                                (p.Id.ToString().Contains(Filter) ||
+                                p.DateModified.Year == year ||
+                                p.PicAddress.Contains(Filter) ||
+                                p.SummerText.Contains(Filter) ||
+                                p.Tags.Contains(Filter) ||
+                                p.Text.Contains(Filter) ||
+                                p.Title.Contains(Filter) ||
+                                p.BlogGroup.Name.Contains(Filter) ||
+                                p.User.Name.Contains(Filter));
+                    return exp;
+                }
+                else
+                {
+                    Expression<Func<Blog, bool>> exp;
+                    exp =
+                                p => p.Status && (p.Id.ToString().Contains(Filter) ||
+                                p.PicAddress.Contains(Filter) ||
+                                p.SummerText.Contains(Filter) ||
+                                p.Tags.Contains(Filter) ||
+                                p.Text.Contains(Filter) ||
+                                p.Title.Contains(Filter) ||
+                                p.BlogGroup.Name.Contains(Filter) ||
+                                p.User.Name.Contains(Filter));
 
-                return exp;
+                    return exp;
+                }
+
             }
 
         }
