@@ -120,21 +120,31 @@ namespace MadPay724.Presentation.Controllers.Site.V1.Site
                 var titleList = blogFromRepo.Title.Split(' ').ToList();
                 var relatedList = new List<Blog>();
 
-                foreach (var blog in titleList.SelectMany(
-                    str =>  _db.BlogRepository
-                    .GetMany(p=>p.Status && p.Title.Contains(str), s => s.OrderByDescending(x => x.DateModified), "User,BlogGroup"))
-                    .Where(blog => relatedList.All(q=>q.Title != blog.Title)))
+                foreach (var str in titleList)
                 {
-                    relatedList.Add(blog);
+                    var srch = await _db.BlogRepository
+                    .GetManyAsync(p => p.Status && p.Id != blogFromRepo.Id && 
+                    (p.Title.Contains(str) || p.SummerText.Contains(str)),
+                    s => s.OrderByDescending(x => x.DateModified), "User,BlogGroup");
+
+                    relatedList.AddRange(srch.Take(2));
                 }
-               
-                var rb = (relatedList.Select(item => _mapper.Map<BlogForReturnDto>(item))).Take(6).ToList();
+
+                model.Result.RelatedBlogs = (relatedList.Select(item => _mapper.Map<BlogForReturnDto>(item))).Take(3).ToList();
                 //LeftBlog
-                model.Result.LeftBlog = model.Result.RelatedBlogs[0];
+                var leftBlog = (await _db.BlogRepository
+              .GetManyAsync(P => P.Status && P.Id < blogId, null, "User,BlogGroup",1)).SingleOrDefault();
+                if (leftBlog != null)
+                    model.Result.LeftBlog = _mapper.Map<BlogForReturnDto>(leftBlog);
+                else
+                    model.Result.LeftBlog = null;
                 //RightBlog
-                model.Result.RightBlog = model.Result.RelatedBlogs[1];
-                //RelatedBlog
-                model.Result.RelatedBlogs = rb.Where(p => p.Id != model.Result.LeftBlog.Id && p.Id != model.Result.RightBlog.Id).ToList();
+                var rightBlog = (await _db.BlogRepository
+            .GetManyAsync(P => P.Status && P.Id > blogId, null, "User,BlogGroup", 1)).SingleOrDefault();
+                if (rightBlog != null)
+                    model.Result.RightBlog = _mapper.Map<BlogForReturnDto>(rightBlog);
+                else
+                    model.Result.RightBlog = null;
                 //MostViewed
                 var mostVieweBlogsFromRepo = await _db.BlogRepository
                  .GetManyAsync(p => p.Status,
