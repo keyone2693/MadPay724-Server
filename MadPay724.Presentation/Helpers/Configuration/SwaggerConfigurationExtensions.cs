@@ -12,6 +12,16 @@ namespace MadPay724.Presentation.Helpers.Configuration
         {
             services.AddOpenApiDocument(document =>
             {
+                document.DocumentName = "v1_Site_Layout";
+                document.ApiGroupNames = new[] { "v1_Site_Layout" };
+                document.PostProcess = d =>
+                {
+                    d.Info.Title = "MadPay724 Api Docs For Site Layout";
+                };
+            });
+            //
+            services.AddOpenApiDocument(document =>
+            {
                 document.DocumentName = "v1_Site_Home";
                 document.ApiGroupNames = new[] { "v1_Site_Home" };
                 document.PostProcess = d =>

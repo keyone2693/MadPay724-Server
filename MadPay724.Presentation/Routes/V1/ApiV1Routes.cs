@@ -11,6 +11,14 @@ namespace MadPay724.Presentation.Routes.V1
         #endregion
         #region Site
         public const string BaseSite = Site;
+
+        #region Layout
+        public static class Layout
+        {
+            //Get
+            public const string GetSidebarData = BaseSite + "/layout/sidebar/data";
+        }
+        #endregion
         #region Home
         public static class Home
         {
