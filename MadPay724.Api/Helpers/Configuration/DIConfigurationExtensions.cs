@@ -34,8 +34,6 @@ namespace MadPay724.Api.Helpers.Configuration
             services.AddScoped<IUtilities, Utilities>();
             services.AddScoped<ISmsService, SmsService>();
             //
-            services.AddScoped<UserCheckIdFilter>();
-            services.AddScoped<IsBloggerHimselfFilter>();
             services.AddScoped<DocumentApproveFilter>();
 
             //services.AddScoped<TokenSetting>();

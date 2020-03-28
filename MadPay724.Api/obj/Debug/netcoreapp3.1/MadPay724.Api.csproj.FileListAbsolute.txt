@@ -96,3 +96,6 @@ D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcor
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.dll
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\obj\Debug\netcoreapp3.1\MadPay724.Api.csproj.CoreCompileInputs.cache
+D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\obj\Debug\netcoreapp3.1\MadPay724.Api.MvcApplicationPartsAssemblyInfo.cs
+D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\obj\Debug\netcoreapp3.1\MadPay724.Api.MvcApplicationPartsAssemblyInfo.cache
