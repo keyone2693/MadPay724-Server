@@ -10,7 +10,7 @@ using MadPay724.Common.ErrorAndMessage;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Site.Panel.Wallet;
 using MadPay724.Data.Models.MainDB;
-using MadPay724.Presentation.Controllers.Site.V1.Panel.User;
+using MadPay724.Presentation.Controllers.V1.Panel.User;
 using MadPay724.Repo.Infrastructure;
 using MadPay724.Services.Site.Panel.Wallet.Interface;
 using MadPay724.Services.Site.Panel.Wallet.Service;

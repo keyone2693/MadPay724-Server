@@ -11,7 +11,7 @@ using MadPay724.Common.ErrorAndMessage;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Site.Panel.Ticket;
 using MadPay724.Data.Models.MainDB;
-using MadPay724.Presentation.Controllers.Site.V1.Panel.User;
+using MadPay724.Presentation.Controllers.V1.Panel.User;
 using MadPay724.Repo.Infrastructure;
 using MadPay724.Services.Upload.Interface;
 using MadPay724.Test.DataInput;

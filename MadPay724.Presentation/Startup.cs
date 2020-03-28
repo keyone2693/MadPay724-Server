@@ -7,7 +7,7 @@ using Microsoft.Extensions.Hosting;
 using AutoMapper;
 using MadPay724.Services.Seed.Service;
 using MadPay724.Services.Site.Panel.Common.Service;
-using MadPay724.Presentation.Routes.V1;
+using MadPay724.Common.Routes.V1.Site;
 using MadPay724.Presentation.Helpers.Configuration;
 
 namespace MadPay724.Presentation
@@ -53,7 +53,7 @@ namespace MadPay724.Presentation
             app.UseEndpoints(end =>
             {
                 end.MapDefaultControllerRoute();
-                end.MapHub<ChatHubService>(ApiV1Routes.BaseChatPanel + "/chat");
+                end.MapHub<ChatHubService>(SiteV1Routes.BaseChatPanel + "/chat");
             });
         }
     }

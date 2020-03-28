@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using MadPay724.Common.Helpers.AppSetting;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using MadPay724.Presentation.Routes.V1;
+using MadPay724.Common.Routes.V1.Site;
 using Microsoft.Extensions.Primitives;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
@@ -56,45 +56,11 @@ namespace MadPay724.Presentation.Helpers.Configuration
                         ValidAudience = tokenSetting.Audience,
                         ClockSkew = TimeSpan.Zero
                     };
-                    opt.Events = new JwtBearerEvents
-                    {
-                        OnMessageReceived = context =>
-                        {
-                            if (context.Request.Path.Value.StartsWith("/" + ApiV1Routes.BaseChatPanel + "/chat")
-                            && context.Request.Query.TryGetValue("access_token", out StringValues token))
-                            {
-                                context.Token = token;
-                            }
-
-                            return Task.CompletedTask;
-                        }
-                    };
                 });
             services.AddAuthorization(opt =>
             {
                 opt.AddPolicy("RequireNoAccess", policy => policy.RequireRole("NoAccess"));
-                opt.AddPolicy("AccessChat", policy => policy.RequireRole("Admin", "User"));
-
-                opt.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
-
-                opt.AddPolicy("AccessBlog", policy => policy.RequireRole("Admin", "Blog", "AdminBlog"));
-
-                opt.AddPolicy("AccessBloger", policy => policy.RequireRole("Blog", "AdminBlog"));
-
-                opt.AddPolicy("AccessAdminBlog", policy => policy.RequireRole("Admin", "AdminBlog"));
-                opt.AddPolicy("AccessAccounting", policy => policy.RequireRole("Admin", "Accountant"));
-
-                opt.AddPolicy("AccessNotify", policy => policy.RequireRole("Admin", "Accountant", "AdminBlog", "User"));
-
-                opt.AddPolicy("AccessProfile", policy => policy.RequireRole("Admin", "User", "AdminBlog", "Blog", "Accountant"));
-
                 opt.AddPolicy("RequireUserRole", policy => policy.RequireRole("User"));
-                opt.AddPolicy("RequireBlogsRole", policy => policy.RequireRole("Blog"));
-                opt.AddPolicy("RequireAccountantRole", policy => policy.RequireRole("Accountant"));
-
-
-
-
             });
 
         }

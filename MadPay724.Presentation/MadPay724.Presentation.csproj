@@ -39,7 +39,6 @@
   </ItemGroup>
   
   <ItemGroup>
-    <Folder Include="Controllers\Api\" />
     <Folder Include="wwwroot\Files\Gate\" />
     <Folder Include="wwwroot\Files\TicketContent\" />
     <Folder Include="wwwroot\Files\Pic\Profile\" />

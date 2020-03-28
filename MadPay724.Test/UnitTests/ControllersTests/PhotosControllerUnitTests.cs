@@ -13,7 +13,7 @@ using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Site.Panel.Photos;
 using MadPay724.Data.Dtos.Site.Panel.Users;
 using MadPay724.Data.Models.MainDB;
-using MadPay724.Presentation.Controllers.Site.V1.Panel.User;
+using MadPay724.Presentation.Controllers.V1.Panel.User;
 using MadPay724.Repo.Infrastructure;
 using MadPay724.Services.Site.Panel.User.Interface;
 using MadPay724.Services.Upload.Interface;

@@ -8,7 +8,7 @@ using AutoMapper;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Site.Panel.Users;
 using MadPay724.Data.Models.MainDB;
-using MadPay724.Presentation.Controllers.Site.V1.Panel.Admin;
+using MadPay724.Presentation.Controllers.V1.Panel.Admin;
 using MadPay724.Repo.Infrastructure;
 using MadPay724.Test.DataInput;
 using MadPay724.Test.UnitTests.Providers;
