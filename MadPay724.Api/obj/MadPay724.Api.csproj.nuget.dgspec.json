@@ -69,6 +69,10 @@
               "target": "Package",
               "version": "[4.1.1, )"
             },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[3.1.1, )"
+            },
             "NSwag.AspNetCore": {
               "target": "Package",
               "version": "[13.3.0, )"

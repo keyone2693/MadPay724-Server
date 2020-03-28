@@ -12,11 +12,11 @@ namespace MadPay724.Api.Helpers.Configuration
         {
             services.AddOpenApiDocument(document =>
             {
-                document.DocumentName = "v1_Api_";
-                document.ApiGroupNames = new[] { "v1_Api_" };
+                document.DocumentName = "v1_Api_Pay";
+                document.ApiGroupNames = new[] { "v1_Api_Pay" };
                 document.PostProcess = d =>
                 {
-                    d.Info.Title = "MadPay724 Api Docs For Users";
+                    d.Info.Title = "MadPay724 Api Docs For Payment Section";
                 };
                 document.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
                 {

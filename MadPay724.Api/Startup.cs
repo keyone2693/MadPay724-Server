@@ -6,9 +6,25 @@ using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using MadPay724.Data.Dtos.Common;
+using System.Linq;
 
 namespace MadPay724.Api
 {
+    public static class ali
+    {
+        public static string tostrarr(this string[] str)
+        {
+            var lst = str.ToList();
+            var ssss = "";
+            foreach (var item in lst)
+            {
+                ssss += item + " ,";
+            }
+            return ssss.TrimEnd(',');
+        }
+    }
     public class Startup
     {
         public IConfiguration Configuration { get; }
@@ -37,7 +53,7 @@ namespace MadPay724.Api
             services.AddMadApiVersioning();
             services.AddMadSwagger();
 
-
+           
 
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

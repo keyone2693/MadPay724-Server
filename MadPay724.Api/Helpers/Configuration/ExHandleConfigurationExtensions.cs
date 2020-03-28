@@ -1,4 +1,5 @@
 ﻿using MadPay724.Common.Helpers.Utilities.Extensions;
+using MadPay724.Data.Dtos.Api;
 using MadPay724.Data.Dtos.Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
@@ -30,10 +31,10 @@ namespace MadPay724.Api.Helpers.Configuration
                         var error = context.Features.Get<IExceptionHandlerFeature>();
                         if (error != null)
                         {
-                            var model = JsonConvert.SerializeObject(new ApiReturn<string>
+                            var model = JsonConvert.SerializeObject(new GateApiReturn<string>
                             {
                                 Status = false,
-                                Message = error.Error.Message,
+                                Message = new string[] {error.Error.Message},
                                 Result = null
                             });
                             context.Response.AddAppError(model);

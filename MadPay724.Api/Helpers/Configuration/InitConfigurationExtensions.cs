@@ -1,5 +1,6 @@
 ﻿using ImageResizer.AspNetCore.Helpers;
 using MadPay724.Data.DatabaseContext;
+using MadPay724.Data.Dtos.Api;
 using MadPay724.Services.Seed.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -8,6 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MadPay724.Api.Helpers.Configuration
 {
@@ -51,7 +54,30 @@ namespace MadPay724.Api.Helpers.Configuration
                     opt.SerializerSettings.ReferenceLoopHandling =
                     Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 });
-
+            //Custom ModelState Error
+            services.Configure<ApiBehaviorOptions>(opt =>
+            {
+                opt.InvalidModelStateResponseFactory = context =>
+                {
+                    var strErrorList = new List<string>();
+                    var msErrors = context.ModelState.Where(p => p.Value.Errors.Count > 0);
+                    foreach (var msError in msErrors)
+                    {
+                        foreach (var error in msError.Value.Errors)
+                        {
+                            strErrorList.Add(error.ErrorMessage);
+                        }
+                    }
+                    var errorModel = new GateApiReturn<string>
+                    {
+                        Status = false,
+                        Message = strErrorList.ToArray(),
+                        Result = null
+                    };
+                    return new BadRequestObjectResult(errorModel);
+                };
+            });
+            //
             services.AddResponseCaching();
             services.AddHsts(opt =>
             {
