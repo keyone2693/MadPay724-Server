@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using MadPay724.Common.Helpers.Interface;
 
 namespace MadPay724.Presentation.Controllers.V1.Panel.User
 {
@@ -34,9 +35,10 @@ namespace MadPay724.Presentation.Controllers.V1.Panel.User
         private readonly IUploadService _uploadService;
         private readonly IWalletService _walletService;
         private readonly IWebHostEnvironment _env;
+        private readonly IUtilities _utilities;
         public GatesController(IUnitOfWork<Main_MadPayDbContext> dbContext, IMapper mapper,
             ILogger<GatesController> logger, IUploadService uploadService,
-            IWebHostEnvironment env, IWalletService walletService)
+            IWebHostEnvironment env, IWalletService walletService, IUtilities utilities)
         {
             _db = dbContext;
             _mapper = mapper;
@@ -44,6 +46,7 @@ namespace MadPay724.Presentation.Controllers.V1.Panel.User
             _uploadService = uploadService;
             _env = env;
             _walletService = walletService;
+            _utilities = utilities;
         }
 
 
@@ -117,7 +120,8 @@ namespace MadPay724.Presentation.Controllers.V1.Panel.User
                 {
                     WalletId = gateForCreateDto.WalletId,
                     IsDirect = false,
-                    IsActive = false
+                    IsActive = false,
+                    Ip =await _utilities.GetDomainIpAsync(gateForCreateDto.WebsiteUrl)
                 };
                 if (gateForCreateDto.File != null)
                 {
@@ -211,6 +215,9 @@ namespace MadPay724.Presentation.Controllers.V1.Panel.User
                     }
                 }
                 var gate = _mapper.Map(gateForUpdateDto, gateFromRepo);
+                //
+                gate.Ip = await _utilities.GetDomainIpAsync(gate.WebsiteUrl);
+
                 _db.GateRepository.Update(gate);
 
                 if (await _db.SaveAsync())

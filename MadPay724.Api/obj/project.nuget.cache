@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "ru4/vapKi4f7J8N43G5jvGnEwMjwu6Ej3gSwhwwJci7LkmR5ybRkFmiMhuAajmwUc7mhDXu/4RTPAq1a1185+g==",
+  "dgSpecHash": "REBPT9EQ1rUjj+YBILo1sjzfTfBzHOh7BzRo1gDEKQBikGeo+azOABZo7uSAaEw+MlPiDaDVgRaFTOFmhQSZBQ==",
   "success": true,
   "projectFilePath": "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Api\\MadPay724.Api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Key1-lab\\.nuget\\packages\\automapper\\9.0.0\\automapper.9.0.0.nupkg.sha512",
     "C:\\Users\\Key1-lab\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\7.0.0\\automapper.extensions.microsoft.dependencyinjection.7.0.0.nupkg.sha512",
     "C:\\Users\\Key1-lab\\.nuget\\packages\\cloudinarydotnet\\1.10.0\\cloudinarydotnet.1.10.0.nupkg.sha512",
+    "C:\\Users\\Key1-lab\\.nuget\\packages\\dnsclient\\1.3.0\\dnsclient.1.3.0.nupkg.sha512",
     "C:\\Users\\Key1-lab\\.nuget\\packages\\imageresizer.aspnetcore\\1.8.6\\imageresizer.aspnetcore.1.8.6.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.aspnetcore.authentication\\2.2.0\\microsoft.aspnetcore.authentication.2.2.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.aspnetcore.authentication.abstractions\\2.2.0\\microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",

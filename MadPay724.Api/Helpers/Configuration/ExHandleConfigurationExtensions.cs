@@ -34,7 +34,7 @@ namespace MadPay724.Api.Helpers.Configuration
                             var model = JsonConvert.SerializeObject(new GateApiReturn<string>
                             {
                                 Status = false,
-                                Message = new string[] {error.Error.Message},
+                                Messages = new string[] {error.Error.Message},
                                 Result = null
                             });
                             context.Response.AddAppError(model);

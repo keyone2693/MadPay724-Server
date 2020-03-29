@@ -61,6 +61,15 @@
           "lib/netstandard1.3/CloudinaryDotNet.dll": {}
         }
       },
+      "DnsClient/1.3.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/DnsClient.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.1/DnsClient.dll": {}
+        }
+      },
       "IdentityModel/4.1.1": {
         "type": "package",
         "dependencies": {
@@ -4405,6 +4414,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
+          "DnsClient": "1.3.0",
           "MadPay724.Data": "1.0.0",
           "Microsoft.AspNetCore.Http": "2.2.2",
           "Microsoft.AspNetCore.Mvc.Formatters.Json": "2.2.0",
@@ -4594,6 +4604,28 @@
         "lib/netstandard1.3/CloudinaryDotNet.deps.json",
         "lib/netstandard1.3/CloudinaryDotNet.dll",
         "lib/netstandard1.3/CloudinaryDotNet.xml"
+      ]
+    },
+    "DnsClient/1.3.0": {
+      "sha512": "zfsF+gLrnFnkI1aVpkr4QN3LVa7SkwT4QxVZN817FEQ53XZuYxPJUyEgdPe77cm+pod2fFaYG66Gj5bo9DYJJg==",
+      "type": "package",
+      "path": "dnsclient/1.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "dnsclient.1.3.0.nupkg.sha512",
+        "dnsclient.nuspec",
+        "icon.png",
+        "lib/net45/DnsClient.dll",
+        "lib/net45/DnsClient.xml",
+        "lib/net471/DnsClient.dll",
+        "lib/net471/DnsClient.xml",
+        "lib/netstandard1.3/DnsClient.dll",
+        "lib/netstandard1.3/DnsClient.xml",
+        "lib/netstandard2.0/DnsClient.dll",
+        "lib/netstandard2.0/DnsClient.xml",
+        "lib/netstandard2.1/DnsClient.dll",
+        "lib/netstandard2.1/DnsClient.xml"
       ]
     },
     "IdentityModel/4.1.1": {

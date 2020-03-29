@@ -215,5 +215,10 @@ namespace MadPay724.Common.Helpers.Utilities.Extensions
             return ignoreWhiteSpace ? !string.IsNullOrWhiteSpace(value) : !string.IsNullOrEmpty(value);
         }
 
+        public static string[] Clear(this string[] array)
+        {
+            Array.Clear(array, 0, array.Length);
+            return array;
+        }
     }
 }

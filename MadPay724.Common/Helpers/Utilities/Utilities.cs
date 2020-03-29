@@ -7,6 +7,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using DnsClient;
 using MadPay724.Common.Helpers.AppSetting;
 using MadPay724.Common.Helpers.Interface;
 using MadPay724.Data.DatabaseContext;
@@ -30,8 +31,9 @@ namespace MadPay724.Common.Helpers.Utilities
         private readonly TokenSetting _tokenSetting;
         private readonly Main_MadPayDbContext _db;
         private readonly IHttpContextAccessor _http;
+        private readonly ILookupClient _lookupClient;
         public Utilities(Main_MadPayDbContext dbContext, IConfiguration config, UserManager<User> userManager,
-            IHttpContextAccessor http)
+            IHttpContextAccessor http, ILookupClient lookupClient)
         {
             _db = dbContext;
             _config = config;
@@ -39,6 +41,7 @@ namespace MadPay724.Common.Helpers.Utilities
             _tokenSetting = tokenSettingSection.Get<TokenSetting>();
             _http = http;
             _userManager = userManager;
+            _lookupClient = lookupClient;
         }
         public string FindLocalPathFromUrl(string url)
         {
@@ -67,6 +70,22 @@ namespace MadPay724.Common.Helpers.Utilities
                 return false;
                 }
         }
+
+
+        #region Common
+        public  async Task<string> GetDomainIpAsync(string domain)
+        {
+            domain = domain.Replace("https://", "").Replace("http://", "").Replace("www.", "").TrimEnd('/');
+
+            var result = await _lookupClient.QueryAsync(domain, QueryType.A);
+
+            var record = result.Answers.ARecords().FirstOrDefault();
+            return record != null ? record.Address.ToString() : "";
+
+        }
+        #endregion
+
+
         #region tokenCreateNew
 
         public async Task<TokenResponseDto> GenerateNewTokenAsync(TokenRequestDto tokenRequestDto, bool needPassword)
@@ -349,6 +368,7 @@ namespace MadPay724.Common.Helpers.Utilities
             }
             return cipherText;
         }
+
 
 
         #endregion

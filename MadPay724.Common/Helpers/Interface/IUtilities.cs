@@ -11,6 +11,8 @@ namespace MadPay724.Common.Helpers.Interface
 {
     public interface IUtilities
     {
+        Task<string> GetDomainIpAsync(string domain);
+
         void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt);
 
         bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt);
@@ -22,5 +24,7 @@ namespace MadPay724.Common.Helpers.Interface
 
         string FindLocalPathFromUrl(string url);
         bool IsFile(IFormFile file);
+
+
     }
 }

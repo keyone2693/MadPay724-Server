@@ -1,4 +1,5 @@
-﻿using MadPay724.Common.Helpers.Interface;
+﻿using DnsClient;
+using MadPay724.Common.Helpers.Interface;
 using MadPay724.Common.Helpers.Utilities;
 using MadPay724.Common.OnlineChat.Storage;
 using MadPay724.Presentation.Helpers.Filters;
@@ -36,6 +37,8 @@ namespace MadPay724.Presentation.Helpers.Configuration
             services.AddScoped<IWalletService, WalletService>();
             services.AddScoped<IUtilities, Utilities>();
             services.AddScoped<ISmsService, SmsService>();
+            //
+            services.AddSingleton<ILookupClient>();
             //
             services.AddScoped<UserCheckIdFilter>();
             services.AddScoped<IsBloggerHimselfFilter>();

@@ -71,7 +71,7 @@ namespace MadPay724.Api.Helpers.Configuration
                     var errorModel = new GateApiReturn<string>
                     {
                         Status = false,
-                        Message = strErrorList.ToArray(),
+                        Messages = strErrorList.ToArray(),
                         Result = null
                     };
                     return new BadRequestObjectResult(errorModel);

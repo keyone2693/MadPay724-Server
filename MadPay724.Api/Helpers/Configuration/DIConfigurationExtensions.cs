@@ -15,6 +15,7 @@ using MadPay724.Services.Upload.Interface;
 using MadPay724.Services.Upload.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using DnsClient;
 
 namespace MadPay724.Api.Helpers.Configuration
 {
@@ -33,6 +34,8 @@ namespace MadPay724.Api.Helpers.Configuration
             services.AddScoped<IWalletService, WalletService>();
             services.AddScoped<IUtilities, Utilities>();
             services.AddScoped<ISmsService, SmsService>();
+            //
+            services.AddSingleton<ILookupClient>();
             //
             services.AddScoped<DocumentApproveFilter>();
 

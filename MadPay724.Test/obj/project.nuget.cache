@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "L71v+iGpD2Pk8yPMJ4K1fHlvq4vQpeDVGFAGNt3B4aa85cJrTNnDF7Gel9mFDwMoyesh24b/HBO3Z0JvyfyfRg==",
+  "dgSpecHash": "j9z4NLpcG0J4xEr/ci57hFpkZv2MNLgKHVvAcfXzhISapEqtBb+xaXdMQHpaQ6d6be1b86NaNr96IAeNRiU84Q==",
   "success": true,
   "projectFilePath": "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Test\\MadPay724.Test.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "C:\\Users\\Key1-lab\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\7.0.0\\automapper.extensions.microsoft.dependencyinjection.7.0.0.nupkg.sha512",
     "C:\\Users\\Key1-lab\\.nuget\\packages\\castle.core\\4.4.0\\castle.core.4.4.0.nupkg.sha512",
     "C:\\Users\\Key1-lab\\.nuget\\packages\\cloudinarydotnet\\1.10.0\\cloudinarydotnet.1.10.0.nupkg.sha512",
+    "C:\\Users\\Key1-lab\\.nuget\\packages\\dnsclient\\1.3.0\\dnsclient.1.3.0.nupkg.sha512",
     "C:\\Users\\Key1-lab\\.nuget\\packages\\identitymodel\\4.1.1\\identitymodel.4.1.1.nupkg.sha512",
     "C:\\Users\\Key1-lab\\.nuget\\packages\\imageresizer.aspnetcore\\1.8.6\\imageresizer.aspnetcore.1.8.6.nupkg.sha512",
     "C:\\Users\\Key1-lab\\.nuget\\packages\\microsoft.aspnet.mvc\\5.2.7\\microsoft.aspnet.mvc.5.2.7.nupkg.sha512",
