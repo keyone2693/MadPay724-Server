@@ -35,7 +35,7 @@ namespace MadPay724.Api.Helpers.Configuration
             services.AddScoped<IUtilities, Utilities>();
             services.AddScoped<ISmsService, SmsService>();
             //
-            services.AddSingleton<ILookupClient>();
+            services.AddSingleton<ILookupClient, LookupClient>();
             //
             services.AddScoped<DocumentApproveFilter>();
 

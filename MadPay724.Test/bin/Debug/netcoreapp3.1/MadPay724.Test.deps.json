@@ -77,6 +77,14 @@
           }
         }
       },
+      "DnsClient/1.3.0": {
+        "runtime": {
+          "lib/netstandard2.1/DnsClient.dll": {
+            "assemblyVersion": "1.3.0.0",
+            "fileVersion": "1.3.0.0"
+          }
+        }
+      },
       "IdentityModel/4.1.1": {
         "dependencies": {
           "Newtonsoft.Json": "12.0.3",
@@ -3114,6 +3122,7 @@
       },
       "MadPay724.Common/1.0.0": {
         "dependencies": {
+          "DnsClient": "1.3.0",
           "MadPay724.Data": "1.0.0",
           "Microsoft.AspNetCore.Http": "2.2.2",
           "Microsoft.AspNetCore.Mvc.Formatters.Json": "2.2.0",
@@ -3225,6 +3234,13 @@
       "sha512": "sha512-y4C2BkacylKVAzXFFUBpLOTkevGJgxAYMxGbAghj4wJmlf8F7BG2m9Dg9+SOR6xKcMOXbu2kRw2/UdqP9GSbvA==",
       "path": "cloudinarydotnet/1.10.0",
       "hashPath": "cloudinarydotnet.1.10.0.nupkg.sha512"
+    },
+    "DnsClient/1.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-zfsF+gLrnFnkI1aVpkr4QN3LVa7SkwT4QxVZN817FEQ53XZuYxPJUyEgdPe77cm+pod2fFaYG66Gj5bo9DYJJg==",
+      "path": "dnsclient/1.3.0",
+      "hashPath": "dnsclient.1.3.0.nupkg.sha512"
     },
     "IdentityModel/4.1.1": {
       "type": "package",

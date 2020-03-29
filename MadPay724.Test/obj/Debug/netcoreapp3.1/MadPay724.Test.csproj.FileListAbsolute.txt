@@ -284,3 +284,4 @@ D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\bin\Debug\netco
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\bin\Debug\netcoreapp3.1\runtimes\tizen-x86\native\libSkiaSharp.so
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\bin\Debug\netcoreapp3.1\runtimes\win-x64\native\libSkiaSharp.dll
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\libSkiaSharp.dll
+D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Test\bin\Debug\netcoreapp3.1\DnsClient.dll

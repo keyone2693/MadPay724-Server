@@ -38,7 +38,7 @@ namespace MadPay724.Presentation.Helpers.Configuration
             services.AddScoped<IUtilities, Utilities>();
             services.AddScoped<ISmsService, SmsService>();
             //
-            services.AddSingleton<ILookupClient>();
+            services.AddSingleton<ILookupClient, LookupClient>();
             //
             services.AddScoped<UserCheckIdFilter>();
             services.AddScoped<IsBloggerHimselfFilter>();

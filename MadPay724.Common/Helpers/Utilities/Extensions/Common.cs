@@ -217,6 +217,8 @@ namespace MadPay724.Common.Helpers.Utilities.Extensions
 
         public static string[] Clear(this string[] array)
         {
+            if (array == null)
+                return array;
             Array.Clear(array, 0, array.Length);
             return array;
         }

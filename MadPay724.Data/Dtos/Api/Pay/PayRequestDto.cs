@@ -17,10 +17,14 @@ namespace MadPay724.Data.Dtos.Api.Pay
         [Description("مبلغ تراکنش به صورت ریالی و بزرگتر یا مساوی 1000")]
         public int Amount { get; set; }
 
-        [Required(ErrorMessage = "فیلد url برگشتی نمیتواند خالی باشد")]
-        [StringLength(1000, ErrorMessage = "فیلد url باید بین 1 تا 1000 کاراکتر باشد", MinimumLength = 1)]
+        [Required(ErrorMessage = "فیلد آدرس برگشتی نمیتواند خالی باشد")]
+        [Url(ErrorMessage = "ادرس مورد نظر برای ریدایرکت معتبر نمیباشد")]
         [Description("آدرس بازگشتی به صورت urlencode ، که باید با آدرس درگاه پرداخت تایید شده در madpay724.ir بر روی یک دامنه باشد")]
-        public string Redirect { get; set; }
+        public string RedirectUrl { get; set; }
+
+        [StringLength(50, ErrorMessage = "فیلد نام کاربر باید کمتر از 50 کاراکتر باشد")]
+        [Description("نام کاربر (اختیاری)")]
+        public string UserName { get; set; } = "";
 
         [StringLength(20, ErrorMessage = "فیلد موبایل باید کمتر از 20 کاراکتر باشد")]
         [Description("شماره موبایل (اختیاری) (جهت نمایش کارت های خریدار به ایشان و نمایش درگاه موبایلی)")]

@@ -18,7 +18,7 @@ namespace MadPay724.Test.UnitTests.MethodTest
         public UtilitiesTests()
         {
             _config = new Mock<IConfiguration>();
-            _utilities = new Utilities(null, null, null, null);
+            _utilities = new Utilities(null, null, null, null, null);
         }
         [Fact]
         public async Task FindLocalPathFromUrl_Success()
