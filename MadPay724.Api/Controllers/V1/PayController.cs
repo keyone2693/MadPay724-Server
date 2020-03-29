@@ -66,6 +66,14 @@ namespace MadPay724.Api.Controllers.V1
                 errorModel.Messages = new string[] { "Api درگاه معتبر نمیباشد" };
                 return BadRequest(errorModel);
             }
+            var userDocuments = await _db.DocumentRepository
+                .GetManyAsync(p => p.Approve == 1 && p.UserId == gateFromRepo.Wallet.UserId, null, "");
+            if (!userDocuments.Any())
+            {
+                errorModel.Messages.Clear();
+                errorModel.Messages = new string[] { "مدارک کاربر صاحب درگاه تکمیل نمیباشد" };
+                return BadRequest(errorModel);
+            }
             if (!gateFromRepo.IsActive)
             {
                 errorModel.Messages.Clear();
@@ -115,8 +123,8 @@ namespace MadPay724.Api.Controllers.V1
                 model.Messages.Clear();
                 model.Messages = new string[] { "بدون خطا" };
                 model.Result.Token = factorToCreate.Id;
-                model.Result.RedirectUrl = $"{Request.Scheme ?? ""}://{Request.Host.Value ?? ""}{Request.PathBase.Value ?? ""}" +
-                        "/pg/bank/pay/" + factorToCreate.Id;
+                model.Result.RedirectUrl = $"{Request.Scheme ?? ""}://pay.{Request.Host.Value ?? ""}{Request.PathBase.Value ?? ""}" +
+                        "/bank/pay/" + factorToCreate.Id;
                 return Ok(model);
             }
             else

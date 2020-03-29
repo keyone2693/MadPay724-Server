@@ -1,0 +1,17 @@
+﻿@model MadPay724.Data.Dtos.Api.GateApiReturn<MadPay724.Data.Models.FinancialDB.Accountant.Factor>
+@{
+    ViewData["Title"] = "Pay";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@if (Model.Status)
+{
+    <h1>@Model.Result.UserName</h1>
+
+}
+else
+{
+    <h1>@Model.Messages.First()</h1>
+}
+
