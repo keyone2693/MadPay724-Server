@@ -949,6 +949,18 @@
           "lib/netstandard2.0/_._": {}
         }
       },
+      "Microsoft.EntityFrameworkCore.InMemory/3.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "3.1.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.EntityFrameworkCore.InMemory.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.EntityFrameworkCore.InMemory.dll": {}
+        }
+      },
       "Microsoft.EntityFrameworkCore.Relational/3.1.3": {
         "type": "package",
         "dependencies": {
@@ -1540,6 +1552,65 @@
         },
         "runtime": {
           "lib/netstandard1.6/NuGet.Frameworks.dll": {}
+        }
+      },
+      "Parbad/3.3.2": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "11.0.1"
+        },
+        "compile": {
+          "lib/netcoreapp3.0/Parbad.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.0/Parbad.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
+      "Parbad.AspNetCore/1.0.4": {
+        "type": "package",
+        "dependencies": {
+          "Parbad": "3.3.0"
+        },
+        "compile": {
+          "lib/netcoreapp3.0/Parbad.AspNetCore.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.0/Parbad.AspNetCore.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
+      "Parbad.Gateway.ZarinPal/1.0.3": {
+        "type": "package",
+        "dependencies": {
+          "Parbad": "3.3.0"
+        },
+        "compile": {
+          "lib/netcoreapp3.0/Parbad.Gateway.ZarinPal.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.0/Parbad.Gateway.ZarinPal.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
+      "Parbad.Storage.EntityFrameworkCore/1.0.3": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.InMemory": "3.1.0",
+          "Microsoft.EntityFrameworkCore.SqlServer": "3.1.0",
+          "Parbad": "3.2.2"
+        },
+        "compile": {
+          "lib/netstandard2.0/Parbad.Storage.EntityFrameworkCore.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Parbad.Storage.EntityFrameworkCore.dll": {}
         }
       },
       "PersianDate/3.5.5": {
@@ -4477,6 +4548,20 @@
         "microsoft.entityframeworkcore.analyzers.nuspec"
       ]
     },
+    "Microsoft.EntityFrameworkCore.InMemory/3.1.0": {
+      "sha512": "IMinH4BdgJaom5klQVjllAeT4w6Ke7WrE1CBvos5D+usNJIZW8fD1L+BG4VrGf9s8zvF9gB5JU8DHZL6ndOgaw==",
+      "type": "package",
+      "path": "microsoft.entityframeworkcore.inmemory/3.1.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.0/Microsoft.EntityFrameworkCore.InMemory.dll",
+        "lib/netstandard2.0/Microsoft.EntityFrameworkCore.InMemory.xml",
+        "microsoft.entityframeworkcore.inmemory.3.1.0.nupkg.sha512",
+        "microsoft.entityframeworkcore.inmemory.nuspec",
+        "packageIcon.png"
+      ]
+    },
     "Microsoft.EntityFrameworkCore.Relational/3.1.3": {
       "sha512": "uL8nPKSGtWkqi613tGj2fbFGskm4k6KKE7rRcWFEQx0tbrOyMiowL4gErFLa0izmoSE1uWhEdqxq1iE1C3yCmw==",
       "type": "package",
@@ -5563,6 +5648,68 @@
         "lib/netstandard1.6/NuGet.Frameworks.xml",
         "nuget.frameworks.4.7.0.nupkg.sha512",
         "nuget.frameworks.nuspec"
+      ]
+    },
+    "Parbad/3.3.2": {
+      "sha512": "yOGPg4Wr1IQJsrCD0K2ZJU7bIV/SRRIrsas/b8jY1HFHATv87NEI4/2j2W5aI4rvdhIezukUWaSex8kFmi2L1w==",
+      "type": "package",
+      "path": "parbad/3.3.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "icon.png",
+        "lib/netcoreapp3.0/Parbad.dll",
+        "lib/netcoreapp3.0/Parbad.xml",
+        "lib/netstandard2.0/Parbad.dll",
+        "lib/netstandard2.0/Parbad.xml",
+        "parbad.3.3.2.nupkg.sha512",
+        "parbad.nuspec",
+        "readme.txt"
+      ]
+    },
+    "Parbad.AspNetCore/1.0.4": {
+      "sha512": "oFvWASufO08kNyGP3+sAD1kgSg1mbXc08H6CjxrNhWR+SAVugCPVC9ZWd6T0cBeckdFKsKFsYg5JLegVxTC2mg==",
+      "type": "package",
+      "path": "parbad.aspnetcore/1.0.4",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netcoreapp3.0/Parbad.AspNetCore.dll",
+        "lib/netcoreapp3.0/Parbad.AspNetCore.xml",
+        "lib/netstandard2.0/Parbad.AspNetCore.dll",
+        "lib/netstandard2.0/Parbad.AspNetCore.xml",
+        "parbad.aspnetcore.1.0.4.nupkg.sha512",
+        "parbad.aspnetcore.nuspec",
+        "readme.txt"
+      ]
+    },
+    "Parbad.Gateway.ZarinPal/1.0.3": {
+      "sha512": "lothsF1Z2rsyvR4MiQC90HCPJWmoEfk0Cdg6sC0Bf8WuCEa0V+7thcNH4ezeyhWn85xENZezKOO7QqybiMUZag==",
+      "type": "package",
+      "path": "parbad.gateway.zarinpal/1.0.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netcoreapp3.0/Parbad.Gateway.ZarinPal.dll",
+        "lib/netcoreapp3.0/Parbad.Gateway.ZarinPal.xml",
+        "lib/netstandard2.0/Parbad.Gateway.ZarinPal.dll",
+        "lib/netstandard2.0/Parbad.Gateway.ZarinPal.xml",
+        "parbad.gateway.zarinpal.1.0.3.nupkg.sha512",
+        "parbad.gateway.zarinpal.nuspec",
+        "readme.txt"
+      ]
+    },
+    "Parbad.Storage.EntityFrameworkCore/1.0.3": {
+      "sha512": "k0ZB5UhRTIROjZ5g5+q1FSqw0FmYwlY8tvxf4FLF24SAdwlSDWmcYqe3aX9iqPX+f+ycdq0TFd0EnuDvk0AS3g==",
+      "type": "package",
+      "path": "parbad.storage.entityframeworkcore/1.0.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.0/Parbad.Storage.EntityFrameworkCore.dll",
+        "lib/netstandard2.0/Parbad.Storage.EntityFrameworkCore.xml",
+        "parbad.storage.entityframeworkcore.1.0.3.nupkg.sha512",
+        "parbad.storage.entityframeworkcore.nuspec"
       ]
     },
     "PersianDate/3.5.5": {
@@ -10257,7 +10404,11 @@
       "AutoMapper.Extensions.Microsoft.DependencyInjection >= 7.0.0",
       "MadPay724.Services >= 1.0.0",
       "Microsoft.AspNetCore.Mvc.NewtonsoftJson >= 3.1.3",
-      "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 3.1.1"
+      "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 3.1.1",
+      "Parbad >= 3.3.2",
+      "Parbad.AspNetCore >= 1.0.4",
+      "Parbad.Gateway.ZarinPal >= 1.0.3",
+      "Parbad.Storage.EntityFrameworkCore >= 1.0.3"
     ]
   },
   "packageFolders": {
@@ -10320,6 +10471,22 @@
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
             "target": "Package",
             "version": "[3.1.1, )"
+          },
+          "Parbad": {
+            "target": "Package",
+            "version": "[3.3.2, )"
+          },
+          "Parbad.AspNetCore": {
+            "target": "Package",
+            "version": "[1.0.4, )"
+          },
+          "Parbad.Gateway.ZarinPal": {
+            "target": "Package",
+            "version": "[1.0.3, )"
+          },
+          "Parbad.Storage.EntityFrameworkCore": {
+            "target": "Package",
+            "version": "[1.0.3, )"
           }
         },
         "imports": [

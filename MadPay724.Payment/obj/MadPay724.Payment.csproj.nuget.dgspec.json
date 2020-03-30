@@ -247,6 +247,22 @@
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[3.1.1, )"
+            },
+            "Parbad": {
+              "target": "Package",
+              "version": "[3.3.2, )"
+            },
+            "Parbad.AspNetCore": {
+              "target": "Package",
+              "version": "[1.0.4, )"
+            },
+            "Parbad.Gateway.ZarinPal": {
+              "target": "Package",
+              "version": "[1.0.3, )"
+            },
+            "Parbad.Storage.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[1.0.3, )"
             }
           },
           "imports": [

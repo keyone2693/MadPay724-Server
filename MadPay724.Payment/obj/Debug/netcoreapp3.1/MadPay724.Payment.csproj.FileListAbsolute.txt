@@ -82,9 +82,6 @@ D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Payment\obj\Debug\ne
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Payment\obj\Debug\netcoreapp3.1\MadPay724.Payment.csproj.CopyComplete
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Payment\obj\Debug\netcoreapp3.1\staticwebassets\MadPay724.Payment.StaticWebAssets.Manifest.cache
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Payment\obj\Debug\netcoreapp3.1\staticwebassets\MadPay724.Payment.StaticWebAssets.xml
-D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Payment\obj\Debug\netcoreapp3.1\MadPay724.Payment.csproj.CoreCompileInputs.cache
-D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Payment\obj\Debug\netcoreapp3.1\MadPay724.Payment.MvcApplicationPartsAssemblyInfo.cs
-D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Payment\obj\Debug\netcoreapp3.1\MadPay724.Payment.MvcApplicationPartsAssemblyInfo.cache
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Payment\obj\Debug\netcoreapp3.1\MadPay724.Payment.RazorAssemblyInfo.cache
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Payment\obj\Debug\netcoreapp3.1\MadPay724.Payment.RazorAssemblyInfo.cs
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Payment\obj\Debug\netcoreapp3.1\MadPay724.Payment.TagHelpers.input.cache
@@ -176,3 +173,7 @@ D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Payment\obj\Debug\ne
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Payment\obj\Debug\netcoreapp3.1\MadPay724.Payment.pdb
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Payment\obj\Debug\netcoreapp3.1\MadPay724.Payment.genruntimeconfig.cache
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Payment\obj\Debug\netcoreapp3.1\Razor\Views\Bank\Pay.cshtml.g.cs
+D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Payment\bin\Debug\netcoreapp3.1\Parbad.dll
+D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Payment\bin\Debug\netcoreapp3.1\Parbad.AspNetCore.dll
+D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Payment\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.InMemory.dll
+D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Payment\bin\Debug\netcoreapp3.1\Parbad.Storage.EntityFrameworkCore.dll
