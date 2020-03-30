@@ -29,10 +29,7 @@ namespace MadPay724.Payment.Helpers.Configuration
 
             app.UseRouting();
 
-            app.UseStaticFiles(new StaticFileOptions()
-            {
-                RequestPath = new PathString("/wwwroot")
-            });
+            app.UseStaticFiles();
         }
 
         public static void UseMadInitializeInProd(this IApplicationBuilder app)
