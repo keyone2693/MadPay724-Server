@@ -59,6 +59,12 @@ namespace MadPay724.Data.Models.FinancialDB.Accountant
         public string RefBank { get; set; }
 
 
+        [Required]
+        public bool IsAlreadyVerified { get; set; }
+        [Required]
+        public string GatewayName { get; set; }
+        [Required]
+        public string Message { get; set; }
 
 
         [Required]

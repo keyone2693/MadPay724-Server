@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Parbad;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MadPay724.Payment.Controllers
@@ -123,7 +124,6 @@ namespace MadPay724.Payment.Controllers
 
         }
 
-
         [HttpGet]
         public async Task<IActionResult> MadPay(string token)
         {
@@ -173,8 +173,8 @@ namespace MadPay724.Payment.Controllers
                 .SetAmount(factorFromRepo.EndPrice)
                 .SetCallbackUrl(callbackUrl)
                 .UseParbadVirtual();
-                    //.UseZarinPal("پرداخت از سایت مادپی");
-                });
+                //.UseZarinPal("پرداخت از سایت مادپی");
+            });
             if (result.IsSucceed)
             {
                 factorFromRepo.RefBank = result.TrackingNumber.ToString();
@@ -206,7 +206,34 @@ namespace MadPay724.Payment.Controllers
         }
         public async Task<IActionResult> Verify()
         {
-            return View();
+            var invoice = await _onlinePayment.FetchAsync();
+
+            var factorFromRepo = (await _dbFinancial.FactorRepository
+    .GetManyAsync(p => p.RefBank == invoice.TrackingNumber.ToString(), null, "")).SingleOrDefault();
+
+            if (invoice.Status == PaymentFetchResultStatus.AlreadyProcessed)
+            {
+                factorFromRepo.IsAlreadyVerified = true;
+                factorFromRepo.DateModified = DateTime.Now;
+                factorFromRepo.Message = "این تراکنش قبلا برررسی شده است";
+                factorFromRepo.GatewayName = invoice.GatewayName;
+
+                _dbFinancial.FactorRepository.Update(factorFromRepo);
+                await _dbFinancial.SaveAsync();
+
+            }
+            else
+            {
+                factorFromRepo.IsAlreadyVerified = invoice.IsAlreadyVerified;
+                factorFromRepo.DateModified = DateTime.Now;
+                factorFromRepo.Message = "پرداخت با موفقیت انجام شد اما توسط کاربر تایید نشده است";
+                factorFromRepo.GatewayName = invoice.GatewayName;
+
+                _dbFinancial.FactorRepository.Update(factorFromRepo);
+                await _dbFinancial.SaveAsync();
+            }
+
+            return Redirect(factorFromRepo.RedirectUrl + "?token=" + factorFromRepo.Id);
         }
     }
 }

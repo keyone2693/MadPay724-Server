@@ -3,8 +3,8 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:9788",
-      "sslPort": 44342
+      "applicationUrl": "http://localhost:53438",
+      "sslPort": 44387
     }
   },
   "$schema": "http://json.schemastore.org/launchsettings.json",
@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "MadPay724.Presentation": {
+    "MadPay724.Api": {
       "commandName": "Project",
       "launchUrl": "api/values",
       "environmentVariables": {

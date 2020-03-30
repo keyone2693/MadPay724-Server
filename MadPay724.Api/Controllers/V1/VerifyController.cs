@@ -23,19 +23,19 @@ namespace MadPay724.Api.Controllers.V1
     [ApiExplorerSettings(GroupName = "v1_Api_Pay")]
     [ApiController]
     [AllowAnonymous]
-    public class PayController : ControllerBase
+    public class VerifyController : ControllerBase
     {
         private readonly IUnitOfWork<Main_MadPayDbContext> _db;
         private readonly IUnitOfWork<Financial_MadPayDbContext> _dbFinancial;
         private readonly IMapper _mapper;
-        private readonly ILogger<PayController> _logger;
+        private readonly ILogger<VerifyController> _logger;
         private readonly IUtilities _utilities;
         private GateApiReturn<string> errorModel;
 
-        public PayController(IUnitOfWork<Main_MadPayDbContext> dbContext,
+        public VerifyController(IUnitOfWork<Main_MadPayDbContext> dbContext,
             IUnitOfWork<Financial_MadPayDbContext> dbFinancial,
             IMapper mapper,
-            ILogger<PayController> logger, IUtilities utilities)
+            ILogger<VerifyController> logger, IUtilities utilities)
         {
             _db = dbContext;
             _dbFinancial = dbFinancial;
@@ -48,10 +48,10 @@ namespace MadPay724.Api.Controllers.V1
                 Result = null
             };
         }
-        [HttpPost(ApiV1Routes.Pay.PaySend)]
+        [HttpPost(ApiV1Routes.Verify.VerifySend)]
         [ProducesResponseType(typeof(GateApiReturn<PayResponseDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(GateApiReturn<string>), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> PaySend(PayRequestDto payRequestDto)
+        public async Task<IActionResult> VerifySend(string token)
         {
             var model = new GateApiReturn<PayResponseDto>
             {
