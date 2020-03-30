@@ -21,7 +21,6 @@ namespace MadPay724.Api.Helpers.Configuration
             }
             else
             {
-
                 app.UseExceptionHandler(builder =>
                 {
                     builder.Run(async context =>
