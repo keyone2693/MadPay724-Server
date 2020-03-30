@@ -35,6 +35,9 @@ namespace MadPay724.Payment
             {
                 endpoints.MapControllerRoute(
                       name: "default",
+                    pattern: "{controller=home}/{action=index}");
+                endpoints.MapControllerRoute(
+                      name: "pay",
                     pattern: "{controller=bank}/{action=pay}/{token?}");
             });
         }

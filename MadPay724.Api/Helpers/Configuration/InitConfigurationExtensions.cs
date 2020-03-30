@@ -104,10 +104,7 @@ namespace MadPay724.Api.Helpers.Configuration
             app.UseRouting();
             app.UseImageResizer();
 
-            app.UseStaticFiles(new StaticFileOptions()
-            {
-                RequestPath = new PathString("/wwwroot")
-            });
+            app.UseStaticFiles();
         }
 
         public static void UseMadInitializeInProd(this IApplicationBuilder app)
