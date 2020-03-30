@@ -8,9 +8,27 @@ namespace MadPay724.Api.Helpers.Configuration
 {
     public static class ParbadConfigurationExtensions
     {
-        public static void AddMadParbad(this IServiceCollection services)
+        public static void AddMadParbad(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddParbad()
+                .ConfigureGateways(gateWayes =>
+                {
+                    gateWayes
+                    .AddMellat()
+                    .WithAccounts(accs =>
+                    {
+                        accs.AddFromConfiguration(configuration.GetSection("MellatBank"));
+                    });
+                    gateWayes
+                    .AddZarinPal()
+                    .WithAccounts(accs =>
+                    {
+                        accs.AddFromConfiguration(configuration.GetSection("ZarinPalBank"));
+                    });
+                    gateWayes
+                    .AddParbadVirtual()
+                    .WithOptions(bld => bld.GatewayPath = "/MadpayGateWay");
+                })
                 .ConfigureHttpContext(bld => bld.UseDefaultAspNetCore())
                 .ConfigureStorage(bld =>
                 {
@@ -26,6 +44,8 @@ namespace MadPay724.Api.Helpers.Configuration
 
         public static void UseMadParbad(this IApplicationBuilder app)
         {
+            app.UseParbadVirtualGateway();
+
         }
     }
 }

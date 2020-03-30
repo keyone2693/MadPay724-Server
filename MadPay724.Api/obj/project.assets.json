@@ -1836,6 +1836,21 @@
           "Microsoft.AspNetCore.App"
         ]
       },
+      "Parbad.Gateway.ZarinPal/1.0.3": {
+        "type": "package",
+        "dependencies": {
+          "Parbad": "3.3.0"
+        },
+        "compile": {
+          "lib/netcoreapp3.0/Parbad.Gateway.ZarinPal.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.0/Parbad.Gateway.ZarinPal.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
       "Parbad.Storage.EntityFrameworkCore/1.0.3": {
         "type": "package",
         "dependencies": {
@@ -6345,6 +6360,22 @@
         "lib/netstandard2.0/Parbad.AspNetCore.xml",
         "parbad.aspnetcore.1.0.4.nupkg.sha512",
         "parbad.aspnetcore.nuspec",
+        "readme.txt"
+      ]
+    },
+    "Parbad.Gateway.ZarinPal/1.0.3": {
+      "sha512": "lothsF1Z2rsyvR4MiQC90HCPJWmoEfk0Cdg6sC0Bf8WuCEa0V+7thcNH4ezeyhWn85xENZezKOO7QqybiMUZag==",
+      "type": "package",
+      "path": "parbad.gateway.zarinpal/1.0.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netcoreapp3.0/Parbad.Gateway.ZarinPal.dll",
+        "lib/netcoreapp3.0/Parbad.Gateway.ZarinPal.xml",
+        "lib/netstandard2.0/Parbad.Gateway.ZarinPal.dll",
+        "lib/netstandard2.0/Parbad.Gateway.ZarinPal.xml",
+        "parbad.gateway.zarinpal.1.0.3.nupkg.sha512",
+        "parbad.gateway.zarinpal.nuspec",
         "readme.txt"
       ]
     },
@@ -11530,6 +11561,7 @@
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 3.1.1",
       "NSwag.AspNetCore >= 13.3.0",
       "Parbad.AspNetCore >= 1.0.4",
+      "Parbad.Gateway.ZarinPal >= 1.0.3",
       "Parbad.Storage.EntityFrameworkCore >= 1.0.3"
     ]
   },
@@ -11613,6 +11645,10 @@
           "Parbad.AspNetCore": {
             "target": "Package",
             "version": "[1.0.4, )"
+          },
+          "Parbad.Gateway.ZarinPal": {
+            "target": "Package",
+            "version": "[1.0.3, )"
           },
           "Parbad.Storage.EntityFrameworkCore": {
             "target": "Package",

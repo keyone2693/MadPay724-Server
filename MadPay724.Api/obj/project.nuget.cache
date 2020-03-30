@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "T4XXIUAZMLeuexhWxqUMqQ0nMWzEWgCSZzqtUl7On6o5snlVA/Nu+0yVPa5hD88YqVYvRFi2Usp9WhBJGBmC8w==",
+  "dgSpecHash": "tAclXwAakYSG/jjbu5Tzd4xFBX9gE8f9605J+R0Tim3y/WS9hSraWSsMa1Y3H2MMcNaLrvqIOkBJP03stiDV/Q==",
   "success": true,
   "projectFilePath": "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Api\\MadPay724.Api.csproj",
   "expectedPackageFiles": [
@@ -125,6 +125,7 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\nuget.frameworks\\4.7.0\\nuget.frameworks.4.7.0.nupkg.sha512",
     "C:\\Users\\Key1-lab\\.nuget\\packages\\parbad\\3.3.0\\parbad.3.3.0.nupkg.sha512",
     "C:\\Users\\Key1-lab\\.nuget\\packages\\parbad.aspnetcore\\1.0.4\\parbad.aspnetcore.1.0.4.nupkg.sha512",
+    "C:\\Users\\Key1-lab\\.nuget\\packages\\parbad.gateway.zarinpal\\1.0.3\\parbad.gateway.zarinpal.1.0.3.nupkg.sha512",
     "C:\\Users\\Key1-lab\\.nuget\\packages\\parbad.storage.entityframeworkcore\\1.0.3\\parbad.storage.entityframeworkcore.1.0.3.nupkg.sha512",
     "C:\\Users\\Key1-lab\\.nuget\\packages\\persiandate\\3.5.5\\persiandate.3.5.5.nupkg.sha512",
     "C:\\Users\\Key1-lab\\.nuget\\packages\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",

@@ -81,6 +81,10 @@
               "target": "Package",
               "version": "[1.0.4, )"
             },
+            "Parbad.Gateway.ZarinPal": {
+              "target": "Package",
+              "version": "[1.0.3, )"
+            },
             "Parbad.Storage.EntityFrameworkCore": {
               "target": "Package",
               "version": "[1.0.3, )"

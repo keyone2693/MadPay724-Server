@@ -12,19 +12,6 @@ using System.Linq;
 
 namespace MadPay724.Api
 {
-    public static class ali
-    {
-        public static string tostrarr(this string[] str)
-        {
-            var lst = str.ToList();
-            var ssss = "";
-            foreach (var item in lst)
-            {
-                ssss += item + " ,";
-            }
-            return ssss.TrimEnd(',');
-        }
-    }
     public class Startup
     {
         public IConfiguration Configuration { get; }
@@ -52,7 +39,7 @@ namespace MadPay724.Api
             services.AddMadAuth(Configuration);
             services.AddMadApiVersioning();
             services.AddMadSwagger();
-            services.AddMadParbad();
+            services.AddMadParbad(Configuration);
 
 
 

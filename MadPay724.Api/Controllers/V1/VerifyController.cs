@@ -9,6 +9,7 @@ using MadPay724.Data.Dtos.Api.Pay;
 using MadPay724.Data.Dtos.Api.Verify;
 using MadPay724.Data.Models.FinancialDB.Accountant;
 using MadPay724.Repo.Infrastructure;
+using MadPay724.Services.Site.Panel.Wallet.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -33,12 +34,13 @@ namespace MadPay724.Api.Controllers.V1
         private readonly ILogger<VerifyController> _logger;
         private readonly IUtilities _utilities;
         private readonly IOnlinePayment _onlinePayment;
+        private readonly IWalletService _walletService;
         private GateApiReturn<string> errorModel;
 
         public VerifyController(IUnitOfWork<Main_MadPayDbContext> dbContext,
             IUnitOfWork<Financial_MadPayDbContext> dbFinancial,
             IMapper mapper,ILogger<VerifyController> logger,
-            IUtilities utilities, IOnlinePayment onlinePayment)
+            IUtilities utilities, IOnlinePayment onlinePayment, IWalletService walletService)
         {
             _db = dbContext;
             _dbFinancial = dbFinancial;
@@ -46,6 +48,7 @@ namespace MadPay724.Api.Controllers.V1
             _logger = logger;
             _utilities = utilities;
             _onlinePayment = onlinePayment;
+            _walletService = walletService;
             errorModel = new GateApiReturn<string>
             {
                 Status = false,
@@ -127,6 +130,9 @@ namespace MadPay724.Api.Controllers.V1
                 factorFromRepo.Message = "تراکنش با موفقیت انجام شد";
                 _dbFinancial.FactorRepository.Update(factorFromRepo);
                 await _dbFinancial.SaveAsync();
+
+                await _walletService
+                    .IncreaseInventoryAsync(factorFromRepo.EndPrice, factorFromRepo.EnterMoneyWalletId,true);
 
                 model.Messages.Clear();
                 model.Messages = new string[] { "تراکنش با موفقیت انجام شد" };

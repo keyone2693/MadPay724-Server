@@ -667,32 +667,32 @@ li, ul {
         filter: blur(4px)
     }
 
-    #application div.container > .cancel {
-        position: absolute;
-        width: 24px;
-        height: 24px;
-        background-color: #fff;
-        border-radius: 24px;
-        bottom: -50px;
-        right: 50%;
-        -webkit-transform: translateX(50%);
-        transform: translateX(50%);
-        cursor: pointer;
-        overflow: hidden;
-        -webkit-box-shadow: 0 22px 65px 0 rgba(0,0,0,.15);
-        box-shadow: 0 22px 65px 0 rgba(0,0,0,.15)
-    }
+.mpcancel {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background-color: #fff;
+    border-radius: 24px;
+    bottom: -50px;
+    right: 50%;
+    -webkit-transform: translateX(50%);
+    transform: translateX(50%);
+    cursor: pointer;
+    overflow: hidden;
+    -webkit-box-shadow: 0 22px 65px 0 rgba(0,0,0,.15);
+    box-shadow: 0 22px 65px 0 rgba(0,0,0,.15)
+}
 
-    #application div.container > span.cancel {
-        bottom: -80px;
-        background: none;
-        color: #fff;
-        border-radius: unset;
-        width: auto;
-        font-size: 14px;
-        -webkit-box-shadow: none;
-        box-shadow: none
-    }
+span.mpcancel {
+    bottom: -80px;
+    background: none;
+    color: #fff;
+    border-radius: unset;
+    width: auto;
+    font-size: 14px;
+    -webkit-box-shadow: none;
+    box-shadow: none
+}
 
 #application div.main-error {
     position: absolute;
@@ -1015,7 +1015,7 @@ li, ul {
     right: 4.5px;
 }
 
-#application .icons.cancel:after {
+#application .icons.mpcancel:after {
     width: 18px;
     height: 18px;
     background-position: -4px -63px;
@@ -1053,8 +1053,8 @@ li, ul {
         line-height: 24px;
         text-align: center;
         font-weight: 900;
-
-        padding-top:20px
+        height: 35px;
+        padding-top: 10px;
     }
 
         #application .payment_actions p.transaction_amount_mobile, #application .payment_type p.transaction_amount_mobile {

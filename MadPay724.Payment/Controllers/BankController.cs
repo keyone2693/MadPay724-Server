@@ -204,12 +204,24 @@ namespace MadPay724.Payment.Controllers
             }
 
         }
-        public async Task<IActionResult> Verify()
+        public async Task<IActionResult> Verify(string token = null)
         {
+            if (!string.IsNullOrEmpty(token))
+            {
+                var factor = await _dbFinancial.FactorRepository.GetByIdAsync(token);
+                factor.IsAlreadyVerified = false;
+                factor.DateModified = DateTime.Now;
+                factor.Message = "کاربر پرداخت را کنسل کرده است";
+
+                _dbFinancial.FactorRepository.Update(factor);
+                await _dbFinancial.SaveAsync();
+                return Redirect(factor.RedirectUrl + "?token=" + factor.Id);
+            }
+
             var invoice = await _onlinePayment.FetchAsync();
 
             var factorFromRepo = (await _dbFinancial.FactorRepository
-    .GetManyAsync(p => p.RefBank == invoice.TrackingNumber.ToString(), null, "")).SingleOrDefault();
+                .GetManyAsync(p => p.RefBank == invoice.TrackingNumber.ToString(), null, "")).SingleOrDefault();
 
             if (invoice.Status == PaymentFetchResultStatus.AlreadyProcessed)
             {

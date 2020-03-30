@@ -118,6 +118,9 @@
             <!---->
         </div>
     </div>
+    <a href="@Url.Action("Verify","Bank", new { token = Model.Result.Factor.Id})" class="">
+        <div class="mpcancel icons"></div><span class="mpcancel">انصراف از پرداخت</span>
+    </a>
 }
 else
 {
@@ -148,7 +151,7 @@ else
                     <div>
                         <div>
                             <p class="inline-description" style="font-size: 20px;
-border-right: 4px solid red;text-align: center;border-left: 4px solid red;margin-top: 36px;
+border-right: 4px solid red;text-align: center;border-left: 4px solid red;margin-top: 22px;
     font-weight: 900;">
                                 توکن ارسالی معتبر نمیباشد
                             </p>
@@ -158,6 +161,7 @@ border-right: 4px solid red;text-align: center;border-left: 4px solid red;margin
                 <!---->
             </div>
         </div>
+
     }
     else
     {
@@ -206,9 +210,10 @@ border-right: 4px solid red;text-align: center;border-left: 4px solid red;margin
                 <!---->
             </div>
         </div>
+        <a href="@Url.Action("Verify","Bank", new { token = Model.Result.Factor.Id})" class="">
+            <div class="mpcancel icons"></div><span class="mpcancel">انصراف از پرداخت</span>
+        </a>
     }
 
 }
-<a href="@Url.Action("Verify","Bank")">
-    <div class="cancel icons"></div><span class="cancel">انصراف از پرداخت</span>
-</a>
+
