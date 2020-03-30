@@ -9,6 +9,7 @@ using MadPay724.Repo.Infrastructure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Parbad;
 using System;
 using System.Threading.Tasks;
 
@@ -21,17 +22,19 @@ namespace MadPay724.Payment.Controllers
         private readonly IUnitOfWork<Financial_MadPayDbContext> _dbFinancial;
         private readonly IMapper _mapper;
         private readonly ILogger<BankController> _logger;
+        private readonly IOnlinePayment _onlinePayment;
         private GateApiReturn<BankPayDto> model;
 
         public BankController(IUnitOfWork<Main_MadPayDbContext> dbContext,
             IUnitOfWork<Financial_MadPayDbContext> dbFinancial,
             IMapper mapper,
-            ILogger<BankController> logger)
+            ILogger<BankController> logger, IOnlinePayment onlinePayment)
         {
             _db = dbContext;
             _dbFinancial = dbFinancial;
             _mapper = mapper;
             _logger = logger;
+            _onlinePayment = onlinePayment;
             model = new GateApiReturn<BankPayDto>
             {
                 Result = new BankPayDto()
@@ -51,13 +54,15 @@ namespace MadPay724.Payment.Controllers
                 model.Result = null;
                 return View(model);
             }
+            //
+            model.Result.Factor = factorFromRepo;
+            model.Result.Gate = await _db.GateRepository.GetByIdAsync(factorFromRepo.GateId);
+            //
             if (factorFromRepo.DateCreated.AddMinutes(10) < DateTime.Now)
             {
                 model.Status = false;
                 model.Messages.Clear();
                 model.Messages = new string[] { "زمان تکمیل عملیات پرداخت تمام شده است" };
-                model.Result.Factor = factorFromRepo;
-                model.Result.Gate = await _db.GateRepository.GetByIdAsync(factorFromRepo.GateId);
                 return View(model);
             }
             if (factorFromRepo.Status)
@@ -65,25 +70,143 @@ namespace MadPay724.Payment.Controllers
                 model.Status = false;
                 model.Messages.Clear();
                 model.Messages = new string[] { "پرداخت قبلا به صورت موفق انجام شده است" };
-                model.Result.Factor = factorFromRepo;
-                model.Result.Gate = await _db.GateRepository.GetByIdAsync(factorFromRepo.GateId);
                 return View(model);
             }
 
-            model.Result.Gate = await _db.GateRepository.GetByIdAsync(factorFromRepo.GateId);
-
             if (model.Result.Gate.IsDirect)
             {
-                return Redirect("");
+                var callbackUrl = Url.Action("Verify", "Bank", null, Request.Scheme);
+                var result = await _onlinePayment.RequestAsync(invoice =>
+                {
+                    invoice
+                    .UseAutoIncrementTrackingNumber()
+                    .SetAmount(factorFromRepo.EndPrice)
+                    .SetCallbackUrl(callbackUrl)
+                    .UseParbadVirtual();
+                    //.UseZarinPal("پرداخت از سایت مادپی");
+                });
+                if (result.IsSucceed)
+                {
+                    factorFromRepo.RefBank = result.TrackingNumber.ToString();
+                    factorFromRepo.DateModified = DateTime.Now;
+
+                    _dbFinancial.FactorRepository.Update(factorFromRepo);
+
+                    if (await _dbFinancial.SaveAsync())
+                    {
+                        await result.GatewayTransporter.TransportAsync();
+                        return new EmptyResult();
+                    }
+                    else
+                    {
+                        model.Status = false;
+                        model.Messages.Clear();
+                        model.Messages = new string[] { "خطا در ثبت " };
+                        return View(model);
+                    }
+                }
+                else
+                {
+                    model.Status = false;
+                    model.Messages.Clear();
+                    model.Messages = new string[] { result.Message };
+
+                    return View(model);
+                }
             }
             else
             {
                 model.Status = true;
                 model.Messages.Clear();
-                model.Result.Factor = factorFromRepo;
                 return View(model);
             }
 
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> MadPay(string token)
+        {
+
+            var factorFromRepo = await _dbFinancial.FactorRepository.GetByIdAsync(token);
+
+            if (factorFromRepo == null)
+            {
+                model.Status = false;
+                model.Messages.Clear();
+                model.Messages = new string[] { "token-error" };
+                model.Result = null;
+                return View("Pay", model);
+            }
+            //
+            model.Result.Factor = factorFromRepo;
+            model.Result.Gate = await _db.GateRepository.GetByIdAsync(factorFromRepo.GateId);
+            //
+            if (factorFromRepo.DateCreated.AddMinutes(10) < DateTime.Now)
+            {
+                model.Status = false;
+                model.Messages.Clear();
+                model.Messages = new string[] { "زمان تکمیل عملیات پرداخت تمام شده است" };
+                return View("Pay", model);
+            }
+            if (factorFromRepo.Status)
+            {
+                model.Status = false;
+                model.Messages.Clear();
+                model.Messages = new string[] { "پرداخت قبلا به صورت موفق انجام شده است" };
+                return View("Pay", model);
+            }
+
+
+            if (!model.Result.Gate.IsDirect)
+            {
+                model.Status = true;
+                model.Messages.Clear();
+                return View("Pay", model);
+            }
+
+            var callbackUrl = Url.Action("Verify", "Bank", null, Request.Scheme);
+            var result = await _onlinePayment.RequestAsync(invoice =>
+            {
+                invoice
+                .UseAutoIncrementTrackingNumber()
+                .SetAmount(factorFromRepo.EndPrice)
+                .SetCallbackUrl(callbackUrl)
+                .UseParbadVirtual();
+                    //.UseZarinPal("پرداخت از سایت مادپی");
+                });
+            if (result.IsSucceed)
+            {
+                factorFromRepo.RefBank = result.TrackingNumber.ToString();
+                factorFromRepo.DateModified = DateTime.Now;
+
+                _dbFinancial.FactorRepository.Update(factorFromRepo);
+
+                if (await _dbFinancial.SaveAsync())
+                {
+                    await result.GatewayTransporter.TransportAsync();
+                    return new EmptyResult();
+                }
+                else
+                {
+                    model.Status = false;
+                    model.Messages.Clear();
+                    model.Messages = new string[] { "خطا در ثبت " };
+                    return View("Pay", model);
+                }
+            }
+            else
+            {
+                model.Status = false;
+                model.Messages.Clear();
+                model.Messages = new string[] { result.Message };
+                return View("Pay", model);
+            }
+
+        }
+        public async Task<IActionResult> Verify()
+        {
+            return View();
         }
     }
 }

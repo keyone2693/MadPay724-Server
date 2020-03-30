@@ -31,6 +31,7 @@
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "3.1.1",
           "Parbad": "3.3.2",
           "Parbad.AspNetCore": "1.0.4",
+          "Parbad.Gateway.ZarinPal": "1.0.3",
           "Parbad.Storage.EntityFrameworkCore": "1.0.3",
           "Microsoft.AspNetCore.Antiforgery": "3.1.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions.Reference": "3.1.0.0",
@@ -1675,6 +1676,20 @@
         },
         "compile": {
           "lib/netcoreapp3.0/Parbad.AspNetCore.dll": {}
+        }
+      },
+      "Parbad.Gateway.ZarinPal/1.0.3": {
+        "dependencies": {
+          "Parbad": "3.3.2"
+        },
+        "runtime": {
+          "lib/netcoreapp3.0/Parbad.Gateway.ZarinPal.dll": {
+            "assemblyVersion": "1.0.3.0",
+            "fileVersion": "1.0.3.0"
+          }
+        },
+        "compile": {
+          "lib/netcoreapp3.0/Parbad.Gateway.ZarinPal.dll": {}
         }
       },
       "Parbad.Storage.EntityFrameworkCore/1.0.3": {
@@ -5172,6 +5187,13 @@
       "sha512": "sha512-oFvWASufO08kNyGP3+sAD1kgSg1mbXc08H6CjxrNhWR+SAVugCPVC9ZWd6T0cBeckdFKsKFsYg5JLegVxTC2mg==",
       "path": "parbad.aspnetcore/1.0.4",
       "hashPath": "parbad.aspnetcore.1.0.4.nupkg.sha512"
+    },
+    "Parbad.Gateway.ZarinPal/1.0.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-lothsF1Z2rsyvR4MiQC90HCPJWmoEfk0Cdg6sC0Bf8WuCEa0V+7thcNH4ezeyhWn85xENZezKOO7QqybiMUZag==",
+      "path": "parbad.gateway.zarinpal/1.0.3",
+      "hashPath": "parbad.gateway.zarinpal.1.0.3.nupkg.sha512"
     },
     "Parbad.Storage.EntityFrameworkCore/1.0.3": {
       "type": "package",

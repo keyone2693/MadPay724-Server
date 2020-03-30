@@ -177,3 +177,8 @@ D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Payment\bin\Debug\ne
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Payment\bin\Debug\netcoreapp3.1\Parbad.AspNetCore.dll
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Payment\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.InMemory.dll
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Payment\bin\Debug\netcoreapp3.1\Parbad.Storage.EntityFrameworkCore.dll
+D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Payment\bin\Debug\netcoreapp3.1\Parbad.Gateway.ZarinPal.dll
+D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Payment\obj\Debug\netcoreapp3.1\MadPay724.Payment.csproj.CoreCompileInputs.cache
+D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Payment\obj\Debug\netcoreapp3.1\MadPay724.Payment.MvcApplicationPartsAssemblyInfo.cs
+D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Payment\obj\Debug\netcoreapp3.1\MadPay724.Payment.MvcApplicationPartsAssemblyInfo.cache
+D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Payment\obj\Debug\netcoreapp3.1\Razor\Views\Bank\Verify.cshtml.g.cs
