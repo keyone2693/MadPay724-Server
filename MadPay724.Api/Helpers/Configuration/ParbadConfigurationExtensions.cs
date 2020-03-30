@@ -8,7 +8,7 @@ namespace MadPay724.Api.Helpers.Configuration
 {
     public static class ParbadConfigurationExtensions
     {
-        public static void AddMadParbad(this IServiceCollection services, IConfiguration configuration)
+        public static void AddMadParbad(this IServiceCollection services)
         {
             services.AddParbad()
                 .ConfigureHttpContext(bld => bld.UseDefaultAspNetCore())
@@ -26,7 +26,6 @@ namespace MadPay724.Api.Helpers.Configuration
 
         public static void UseMadParbad(this IApplicationBuilder app)
         {
-            app.UseParbadVirtualGateway();
         }
     }
 }

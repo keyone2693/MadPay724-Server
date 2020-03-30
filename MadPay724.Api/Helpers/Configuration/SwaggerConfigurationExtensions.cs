@@ -18,15 +18,24 @@ namespace MadPay724.Api.Helpers.Configuration
                 {
                     d.Info.Title = "MadPay724 Api Docs For Payment Section";
                 };
-                document.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
+            });
+            services.AddOpenApiDocument(document =>
+            {
+                document.DocumentName = "v1_Api_Verify";
+                document.ApiGroupNames = new[] { "v1_Api_Verify" };
+                document.PostProcess = d =>
                 {
-                    Type = OpenApiSecuritySchemeType.ApiKey,
-                    Name = "Authorization",
-                    In = OpenApiSecurityApiKeyLocation.Header,
-                    Description = "Type into the textbox: Bearer {your JWT token}."
-                });
-                document.OperationProcessors.Add(
-                    new AspNetCoreOperationSecurityScopeProcessor("JWT"));
+                    d.Info.Title = "MadPay724 Api Docs For Verify Section";
+                };
+            });
+            services.AddOpenApiDocument(document =>
+            {
+                document.DocumentName = "v1_Api_Refund";
+                document.ApiGroupNames = new[] { "v1_Api_Refund" };
+                document.PostProcess = d =>
+                {
+                    d.Info.Title = "MadPay724 Api Docs For Refund Section";
+                };
             });
         }
 

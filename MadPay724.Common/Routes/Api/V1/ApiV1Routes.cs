@@ -19,5 +19,12 @@ namespace MadPay724.Common.Routes.V1.Api
             public const string VerifySend = BaseApi + "/verify";
         }
         #endregion
+        #region Refund
+        public static class Refund
+        {
+            //Post
+            public const string RefundSend = BaseApi + "/refund";
+        }
+        #endregion
     }
 }

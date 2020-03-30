@@ -1,13 +1,10 @@
 ﻿using AutoMapper;
-using MadPay724.Common.Enums;
 using MadPay724.Common.Helpers.Interface;
 using MadPay724.Common.Helpers.Utilities.Extensions;
 using MadPay724.Common.Routes.V1.Api;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Api;
-using MadPay724.Data.Dtos.Api.Pay;
-using MadPay724.Data.Dtos.Api.Verify;
-using MadPay724.Data.Models.FinancialDB.Accountant;
+using MadPay724.Data.Dtos.Api.Refund;
 using MadPay724.Repo.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -20,24 +17,25 @@ using System.Threading.Tasks;
 
 namespace MadPay724.Api.Controllers.V1
 {
+
     [ApiVersion("1")]
     [Route("v{v:apiVersion}")]
-    [ApiExplorerSettings(GroupName = "v1_Api_Verify")]
+    [ApiExplorerSettings(GroupName = "v1_Api_Refund")]
     [ApiController]
     [AllowAnonymous]
-    public class VerifyController : ControllerBase
+    public class RefundController : ControllerBase
     {
         private readonly IUnitOfWork<Main_MadPayDbContext> _db;
         private readonly IUnitOfWork<Financial_MadPayDbContext> _dbFinancial;
         private readonly IMapper _mapper;
-        private readonly ILogger<VerifyController> _logger;
+        private readonly ILogger<RefundController> _logger;
         private readonly IUtilities _utilities;
         private readonly IOnlinePayment _onlinePayment;
         private GateApiReturn<string> errorModel;
 
-        public VerifyController(IUnitOfWork<Main_MadPayDbContext> dbContext,
+        public RefundController(IUnitOfWork<Main_MadPayDbContext> dbContext,
             IUnitOfWork<Financial_MadPayDbContext> dbFinancial,
-            IMapper mapper,ILogger<VerifyController> logger,
+            IMapper mapper, ILogger<RefundController> logger,
             IUtilities utilities, IOnlinePayment onlinePayment)
         {
             _db = dbContext;
@@ -52,18 +50,18 @@ namespace MadPay724.Api.Controllers.V1
                 Result = null
             };
         }
-        [HttpPost(ApiV1Routes.Verify.VerifySend)]
-        [ProducesResponseType(typeof(GateApiReturn<VerifyResponseDto>), StatusCodes.Status200OK)]
+        [HttpPost(ApiV1Routes.Refund.RefundSend)]
+        [ProducesResponseType(typeof(GateApiReturn<RefundResponseDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(GateApiReturn<string>), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> VerifySend(VerifyRequestDto verifyRequestDto)
+        public async Task<IActionResult> RefundSend(RefundRequestDto refundRequestDto)
         {
-            
-            var model = new GateApiReturn<VerifyResponseDto>
+
+            var model = new GateApiReturn<RefundResponseDto>
             {
                 Status = true
             };
             //Error
-            var factorFromRepo = await _dbFinancial.FactorRepository.GetByIdAsync(verifyRequestDto.Token);
+            var factorFromRepo = await _dbFinancial.FactorRepository.GetByIdAsync(refundRequestDto.Token);
             if (factorFromRepo == null)
             {
                 errorModel.Messages.Clear();
@@ -73,7 +71,7 @@ namespace MadPay724.Api.Controllers.V1
             if (factorFromRepo.DateModified.AddMinutes(20) < DateTime.Now)
             {
                 errorModel.Messages.Clear();
-                errorModel.Messages = new string[] { "زمان تایید تراکنش شما گذشته است" };
+                errorModel.Messages = new string[] { "زمان استرداد تراکنش شما گذشته است" };
                 return BadRequest(errorModel);
             }
             if (factorFromRepo.IsAlreadyVerified)
@@ -82,7 +80,7 @@ namespace MadPay724.Api.Controllers.V1
                 errorModel.Messages = new string[] { "این تراکنش قبلا بررسی شده است" };
                 return BadRequest(errorModel);
             }
-            var gateFromRepo = (await _db.GateRepository.GetManyAsync(p => p.Id == verifyRequestDto.Api, null, "Wallet")).SingleOrDefault();
+            var gateFromRepo = (await _db.GateRepository.GetManyAsync(p => p.Id == refundRequestDto.Api, null, "Wallet")).SingleOrDefault();
             if (gateFromRepo == null)
             {
                 errorModel.Messages.Clear();
@@ -116,25 +114,25 @@ namespace MadPay724.Api.Controllers.V1
             }
 
 
-            //Verify
+            //Refund
             var trackingNumber = Convert.ToInt64(factorFromRepo.RefBank);
-            var verifyResult = await _onlinePayment.VerifyAsync(trackingNumber);
-            if (verifyResult.IsSucceed)
+            var refundResult = await _onlinePayment.RefundCompletelyAsync(trackingNumber);
+            if (refundResult.IsSucceed)
             {
-                factorFromRepo.Status = true;
+                factorFromRepo.Status = false;
                 factorFromRepo.IsAlreadyVerified = true;
                 factorFromRepo.DateModified = DateTime.Now;
-                factorFromRepo.Message = "تراکنش با موفقیت انجام شد";
+                factorFromRepo.Message = "تراکنش انجام شده و مبلغ استرداد شده است";
                 _dbFinancial.FactorRepository.Update(factorFromRepo);
                 await _dbFinancial.SaveAsync();
 
                 model.Messages.Clear();
-                model.Messages = new string[] { "تراکنش با موفقیت انجام شد" };
-                model.Result =new VerifyResponseDto
+                model.Messages = new string[] { "مبلغ تراکنش استرداد شد" };
+                model.Result = new RefundResponseDto
                 {
                     Amount = factorFromRepo.EndPrice,
                     FactorNumber = factorFromRepo.FactorNumber,
-                    RefBank = "MPC-"+ factorFromRepo.RefBank,
+                    RefBank = "MPC-" + factorFromRepo.RefBank,
                     Mobile = factorFromRepo.Mobile,
                     Email = factorFromRepo.Email,
                     Description = factorFromRepo.Description,
@@ -146,13 +144,13 @@ namespace MadPay724.Api.Controllers.V1
             {
                 factorFromRepo.IsAlreadyVerified = true;
                 factorFromRepo.DateModified = DateTime.Now;
-                factorFromRepo.Message = verifyResult.Message;
+                factorFromRepo.Message = refundResult.Message;
                 _dbFinancial.FactorRepository.Update(factorFromRepo);
                 await _dbFinancial.SaveAsync();
 
 
                 errorModel.Messages.Clear();
-                errorModel.Messages = new string[] { verifyResult.Message };
+                errorModel.Messages = new string[] { refundResult.Message };
                 return BadRequest(errorModel);
             }
         }
