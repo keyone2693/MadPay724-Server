@@ -52,8 +52,9 @@ namespace MadPay724.Api
             services.AddMadAuth(Configuration);
             services.AddMadApiVersioning();
             services.AddMadSwagger();
+            services.AddMadParbad();
 
-           
+
 
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -62,7 +63,7 @@ namespace MadPay724.Api
             app.UseMadInitialize();
             app.UseMadAuth();
             app.UseMadSwagger();
-
+            app.UseMadParbad();
             app.UseEndpoints(end =>
             {
                 end.MapDefaultControllerRoute();

@@ -96,9 +96,6 @@ D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcor
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.dll
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
-D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\obj\Debug\netcoreapp3.1\MadPay724.Api.csproj.CoreCompileInputs.cache
-D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\obj\Debug\netcoreapp3.1\MadPay724.Api.MvcApplicationPartsAssemblyInfo.cs
-D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\obj\Debug\netcoreapp3.1\MadPay724.Api.MvcApplicationPartsAssemblyInfo.cache
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\MadPay724.Api.deps.json
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\MadPay724.Api.runtimeconfig.json
@@ -181,3 +178,5 @@ D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\obj\Debug\netcor
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\obj\Debug\netcoreapp3.1\MadPay724.Api.pdb
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\obj\Debug\netcoreapp3.1\MadPay724.Api.genruntimeconfig.cache
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\DnsClient.dll
+D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\Parbad.dll
+D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\Parbad.AspNetCore.dll

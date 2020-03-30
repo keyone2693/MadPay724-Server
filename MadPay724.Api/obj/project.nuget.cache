@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "REBPT9EQ1rUjj+YBILo1sjzfTfBzHOh7BzRo1gDEKQBikGeo+azOABZo7uSAaEw+MlPiDaDVgRaFTOFmhQSZBQ==",
+  "dgSpecHash": "T4XXIUAZMLeuexhWxqUMqQ0nMWzEWgCSZzqtUl7On6o5snlVA/Nu+0yVPa5hD88YqVYvRFi2Usp9WhBJGBmC8w==",
   "success": true,
   "projectFilePath": "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Api\\MadPay724.Api.csproj",
   "expectedPackageFiles": [
@@ -66,6 +66,7 @@
     "C:\\Users\\Key1-lab\\.nuget\\packages\\microsoft.entityframeworkcore\\3.1.3\\microsoft.entityframeworkcore.3.1.3.nupkg.sha512",
     "C:\\Users\\Key1-lab\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\3.1.3\\microsoft.entityframeworkcore.abstractions.3.1.3.nupkg.sha512",
     "C:\\Users\\Key1-lab\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\3.1.3\\microsoft.entityframeworkcore.analyzers.3.1.3.nupkg.sha512",
+    "C:\\Users\\Key1-lab\\.nuget\\packages\\microsoft.entityframeworkcore.inmemory\\3.1.0\\microsoft.entityframeworkcore.inmemory.3.1.0.nupkg.sha512",
     "C:\\Users\\Key1-lab\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\3.1.3\\microsoft.entityframeworkcore.relational.3.1.3.nupkg.sha512",
     "C:\\Users\\Key1-lab\\.nuget\\packages\\microsoft.entityframeworkcore.sqlserver\\3.1.3\\microsoft.entityframeworkcore.sqlserver.3.1.3.nupkg.sha512",
     "C:\\Users\\Key1-lab\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
@@ -122,6 +123,9 @@
     "C:\\Users\\Key1-lab\\.nuget\\packages\\nswag.generation\\13.3.0\\nswag.generation.13.3.0.nupkg.sha512",
     "C:\\Users\\Key1-lab\\.nuget\\packages\\nswag.generation.aspnetcore\\13.3.0\\nswag.generation.aspnetcore.13.3.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\nuget.frameworks\\4.7.0\\nuget.frameworks.4.7.0.nupkg.sha512",
+    "C:\\Users\\Key1-lab\\.nuget\\packages\\parbad\\3.3.0\\parbad.3.3.0.nupkg.sha512",
+    "C:\\Users\\Key1-lab\\.nuget\\packages\\parbad.aspnetcore\\1.0.4\\parbad.aspnetcore.1.0.4.nupkg.sha512",
+    "C:\\Users\\Key1-lab\\.nuget\\packages\\parbad.storage.entityframeworkcore\\1.0.3\\parbad.storage.entityframeworkcore.1.0.3.nupkg.sha512",
     "C:\\Users\\Key1-lab\\.nuget\\packages\\persiandate\\3.5.5\\persiandate.3.5.5.nupkg.sha512",
     "C:\\Users\\Key1-lab\\.nuget\\packages\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
     "C:\\Users\\Key1-lab\\.nuget\\packages\\runtime.fedora.23-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.fedora.23-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",

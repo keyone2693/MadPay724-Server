@@ -76,6 +76,14 @@
             "NSwag.AspNetCore": {
               "target": "Package",
               "version": "[13.3.0, )"
+            },
+            "Parbad.AspNetCore": {
+              "target": "Package",
+              "version": "[1.0.4, )"
+            },
+            "Parbad.Storage.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[1.0.3, )"
             }
           },
           "imports": [

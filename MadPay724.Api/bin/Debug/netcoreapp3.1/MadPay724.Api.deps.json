@@ -33,6 +33,7 @@
           "Microsoft.AspNetCore.Mvc.Versioning": "4.1.1",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "3.1.1",
           "NSwag.AspNetCore": "13.3.0",
+          "Parbad.AspNetCore": "1.0.4",
           "Microsoft.AspNetCore.Antiforgery": "3.1.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions.Reference": "3.1.0.0",
           "Microsoft.AspNetCore.Authentication.Cookies.Reference": "3.1.0.0",
@@ -1852,6 +1853,34 @@
         },
         "compile": {
           "lib/netstandard1.6/NuGet.Frameworks.dll": {}
+        }
+      },
+      "Parbad/3.3.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "12.0.3"
+        },
+        "runtime": {
+          "lib/netcoreapp3.0/Parbad.dll": {
+            "assemblyVersion": "3.3.0.0",
+            "fileVersion": "3.3.0.0"
+          }
+        },
+        "compile": {
+          "lib/netcoreapp3.0/Parbad.dll": {}
+        }
+      },
+      "Parbad.AspNetCore/1.0.4": {
+        "dependencies": {
+          "Parbad": "3.3.0"
+        },
+        "runtime": {
+          "lib/netcoreapp3.0/Parbad.AspNetCore.dll": {
+            "assemblyVersion": "1.0.4.0",
+            "fileVersion": "1.0.4.0"
+          }
+        },
+        "compile": {
+          "lib/netcoreapp3.0/Parbad.AspNetCore.dll": {}
         }
       },
       "PersianDate/3.5.5": {
@@ -5516,6 +5545,20 @@
       "sha512": "sha512-qbXaB76XYUVLocLBs8Z9TS/ERGK2wm797feO+0JEPFvT7o7MRadOR77mqaSD4J1k8G+DlZQyq+MlkCuxrkr3ag==",
       "path": "nuget.frameworks/4.7.0",
       "hashPath": "nuget.frameworks.4.7.0.nupkg.sha512"
+    },
+    "Parbad/3.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-apHKsGueBqdeiBMeFCZbKqil7WGBOnc3GQoNvqNgFEIzmXrFrVP8j8i0cMm49/lbxQUVh94Ifyqf+QddfAgdCg==",
+      "path": "parbad/3.3.0",
+      "hashPath": "parbad.3.3.0.nupkg.sha512"
+    },
+    "Parbad.AspNetCore/1.0.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-oFvWASufO08kNyGP3+sAD1kgSg1mbXc08H6CjxrNhWR+SAVugCPVC9ZWd6T0cBeckdFKsKFsYg5JLegVxTC2mg==",
+      "path": "parbad.aspnetcore/1.0.4",
+      "hashPath": "parbad.aspnetcore.1.0.4.nupkg.sha512"
     },
     "PersianDate/3.5.5": {
       "type": "package",
