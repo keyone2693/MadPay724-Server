@@ -13,6 +13,10 @@ using MadPay724.Services.Site.Panel.Wallet.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using MadPay724.Data.Models.FinancialDB.Accountant;
+using MadPay724.Common.Enums;
+using MadPay724.Data.Dtos.Api.Pay;
+using MadPay724.Data.Dtos.Common;
 
 namespace MadPay724.Presentation.Controllers.V1.Panel.User
 {
@@ -27,14 +31,23 @@ namespace MadPay724.Presentation.Controllers.V1.Panel.User
         private readonly IMapper _mapper;
         private readonly ILogger<WalletsController> _logger;
         private readonly IWalletService _walletService;
+        private readonly IUnitOfWork<Financial_MadPayDbContext> _dbFinancial;
+        private ApiReturn<string> errorModel;
 
         public WalletsController(IUnitOfWork<Main_MadPayDbContext> dbContext, IMapper mapper,
-            ILogger<WalletsController> logger, IWalletService walletService)
+            ILogger<WalletsController> logger, IWalletService walletService,
+            IUnitOfWork<Financial_MadPayDbContext> dbFinancial)
         {
             _db = dbContext;
             _mapper = mapper;
             _logger = logger;
             _walletService = walletService;
+            _dbFinancial = dbFinancial;
+            errorModel = new ApiReturn<string>
+            {
+                Status = false,
+                Result = null
+            };
         }
 
 
@@ -155,5 +168,76 @@ namespace MadPay724.Presentation.Controllers.V1.Panel.User
 
 
         }
+
+
+        [Authorize(Policy = "RequireUserRole")]
+        [ServiceFilter(typeof(UserCheckIdFilter))]
+        [HttpPost(SiteV1Routes.Wallet.GetBankGate)]
+        public async Task<IActionResult> GetBankGate(string userId,string walletId, GetBankGateDto getBankGateDto)
+        {
+            var model = new ApiReturn<string>
+            {
+                Status = true
+            };
+
+            var walletFromRepo = await _db.WalletRepository.GetByIdAsync(walletId);
+            if (walletFromRepo != null)
+            {
+                if (walletFromRepo.UserId == User.FindFirst(ClaimTypes.NameIdentifier).Value)
+                {
+                    var factorToCreate = new Factor()
+                    {
+                        UserId = userId,
+                        GateId = "0",
+                        EnterMoneyWalletId = walletId,
+                        UserName = "",
+                        Mobile = "",
+                        Email = "",
+                        FactorNumber = "",
+                        Description = "افزایش موجودی کیف پول",
+                        ValidCardNumber = "",
+                        RedirectUrl = "",
+                        Status = false,
+                        Kind = (int)FactorTypeEnums.IncInventory,
+                        Bank = (int)BankEnums.ZarinPal,
+                        GiftCode = "",
+                        IsGifted = false,
+                        Price = getBankGateDto.Price,
+                        EndPrice = getBankGateDto.Price,
+                        RefBank = "پرداختی انجام نشده است",
+                        IsAlreadyVerified = false,
+                        GatewayName = "non",
+                        Message = "خطای نامشخص"
+                    };
+
+                    await _dbFinancial.FactorRepository.InsertAsync(factorToCreate);
+
+                    if (await _dbFinancial.SaveAsync())
+                    {
+                        model.Message =  "بدون خطا";
+                        model.Result = $"{Request.Scheme ?? ""}://{Request.Host.Value ?? ""}{Request.PathBase.Value ?? ""}" +
+                                "/bank/pay/" + factorToCreate.Id;
+                        return Ok(model);
+                    }
+                    else
+                    {
+                        errorModel.Message = "خطا در ثبت فاکتور";
+                        return BadRequest(errorModel);
+                    }
+                }
+                else
+                {
+                    _logger.LogError($"کاربر   {RouteData.Values["userId"]} قصد دسترسی به کیف پول دیگری را دارد");
+
+                    return BadRequest("شما اجازه دسترسی به کیف پول کاربر دیگری را ندارید");
+                }
+            }
+            else
+            {
+                return BadRequest("کیف پولی وجود ندارد");
+            }
+
+        }
+        
     }
 }

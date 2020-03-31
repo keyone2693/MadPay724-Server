@@ -32,6 +32,32 @@ namespace MadPay724.Common.Helpers.Utilities.Extensions
             response.Headers.Add("Access-Control-Expose-Headers", "Pagination");
 
         }
+        public static short ToBank(this string BankName)
+        {
+            switch (BankName)
+            {
+                case "Saman":
+                    return 1;
+                case "Mellat":
+                    return 2;
+                case "Parsian":
+                    return 3;
+                case "Pasargad":
+                    return 4;
+                case "Iran Kish":
+                    return 5;
+                case "Melli":
+                    return 6;
+                case "Asan Pardakht":
+                    return 7;
+                case "ZarinPal":
+                    return 8;
+                case "Virtual":
+                    return 9;
+                default:
+                    return 9;
+            }
+        }
         public static string ToPrice(this object dec)
         {
             if (dec == null)

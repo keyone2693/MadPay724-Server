@@ -90,6 +90,7 @@ namespace MadPay724.Payment.Controllers
                 {
                     factorFromRepo.RefBank = result.TrackingNumber.ToString();
                     factorFromRepo.DateModified = DateTime.Now;
+                    factorFromRepo.Bank = result.GatewayName.ToBank();
 
                     _dbFinancial.FactorRepository.Update(factorFromRepo);
 
@@ -179,7 +180,7 @@ namespace MadPay724.Payment.Controllers
             {
                 factorFromRepo.RefBank = result.TrackingNumber.ToString();
                 factorFromRepo.DateModified = DateTime.Now;
-
+                factorFromRepo.Bank = result.GatewayName.ToBank();
                 _dbFinancial.FactorRepository.Update(factorFromRepo);
 
                 if (await _dbFinancial.SaveAsync())

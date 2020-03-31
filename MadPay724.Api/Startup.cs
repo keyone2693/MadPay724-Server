@@ -53,7 +53,7 @@ namespace MadPay724.Api
             app.UseMadParbad();
             app.UseEndpoints(end =>
             {
-                end.MapDefaultControllerRoute();
+                end.MapControllers();
             });
         }
     }

@@ -693,9 +693,9 @@ bool isAdmin, string id = "")
                     exp = CombineExpressions.CombiningExpressions<Factor>(exp, priceExp, ExpressionsTypeEnum.And);
                     //
                     var minDt = DateTimeOffset.FromUnixTimeMilliseconds(factorPaginationDto.MinDate);
-
+                    minDt = new DateTime(minDt.Year, minDt.Month, minDt.Day, 0, 0, 0);
                     var maxDt = DateTimeOffset.FromUnixTimeMilliseconds(factorPaginationDto.MaxDate);
-
+                    maxDt = new DateTime(maxDt.Year, maxDt.Month, maxDt.Day, 23, 59, 0);
                     Expression<Func<Factor, bool>> datExp =
                                     p => p.DateCreated >= minDt
                                     && p.DateCreated <= maxDt;
@@ -844,8 +844,13 @@ bool isAdmin, string id = "")
                     }
                     //
                     var minDt = DateTimeOffset.FromUnixTimeMilliseconds(ticketsPaginationDto.MinDate);
+                    minDt = new DateTime(minDt.Year, minDt.Month, minDt.Day, 0, 0, 0);
 
                     var maxDt = DateTimeOffset.FromUnixTimeMilliseconds(ticketsPaginationDto.MaxDate);
+                    maxDt = new DateTime(maxDt.Year, maxDt.Month, maxDt.Day, 12, 0, 0);
+
+
+
 
                     Expression<Func<Ticket, bool>> datExp =
                                     p => p.DateCreated >= minDt

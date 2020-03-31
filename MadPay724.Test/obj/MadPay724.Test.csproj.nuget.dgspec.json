@@ -302,6 +302,18 @@
               "target": "Package",
               "version": "[12.0.3, )"
             },
+            "Parbad.AspNetCore": {
+              "target": "Package",
+              "version": "[1.0.4, )"
+            },
+            "Parbad.Gateway.ZarinPal": {
+              "target": "Package",
+              "version": "[1.0.3, )"
+            },
+            "Parbad.Storage.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[1.0.3, )"
+            },
             "PersianDate": {
               "target": "Package",
               "version": "[3.5.5, )"

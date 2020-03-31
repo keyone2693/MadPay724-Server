@@ -126,7 +126,7 @@ namespace MadPay724.Api.Controllers.V1
                 model.Messages.Clear();
                 model.Messages = new string[] { "بدون خطا" };
                 model.Result.Token = factorToCreate.Id;
-                model.Result.RedirectUrl = $"{Request.Scheme ?? ""}://pay.{Request.Host.Value ?? ""}{Request.PathBase.Value ?? ""}" +
+                model.Result.RedirectUrl = $"{Request.Scheme ?? ""}://{Request.Host.Value.Replace("api." , "pay.") ?? ""}{Request.PathBase.Value ?? ""}" +
                         "/bank/pay/" + factorToCreate.Id;
                 return Ok(model);
             }

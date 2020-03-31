@@ -26,19 +26,12 @@ namespace MadPay724.Api.Helpers.Configuration
         {
             services.AddMvcCore(config =>
             {
-                config.EnableEndpointRouting = false;
                 config.ReturnHttpNotAcceptable = true;
-                //config.SslPort = httpsPort;
                 config.Filters.Add(typeof(RequireHttpsAttribute));
                 var policy = new AuthorizationPolicyBuilder()
                     .RequireAuthenticatedUser()
                     .Build();
                 config.Filters.Add(new AuthorizeFilter(policy));
-                //var jsonFormatter = config.OutputFormatters.OfType<JsonOutputFormatter>().Single();
-                //config.OutputFormatters.Remove(jsonFormatter);
-                //config.OutputFormatters.Add(new IonOutputFormatter(jsonFormatter));
-                //config.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());
-                //config.InputFormatters.Add(new XmlSerializerInputFormatter(config));
             })
              .AddApiExplorer()
              .AddFormatterMappings()

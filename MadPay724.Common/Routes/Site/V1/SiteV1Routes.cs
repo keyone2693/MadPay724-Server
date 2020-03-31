@@ -311,6 +311,9 @@ namespace MadPay724.Common.Routes.V1.Site
             //api/v1/site/panel/users/{userId}/documents/{id}
             //GET
             public const string GetWallet = BaseSitePanel + "/users/{userId}/wallets/{id}";
+            //api/v1/site/panel/users/{userId}/documents/{id}
+            //GET
+            public const string GetBankGate = BaseSitePanel + "/users/{userId}/wallets/{walletId}/incinventory";
 
         }
         #endregion

@@ -39,8 +39,8 @@ namespace MadPay724.Presentation
             services.AddMadAuth(Configuration);
             services.AddMadApiVersioning();
             services.AddMadSwagger();
+            services.AddMadParbad(Configuration);
 
-         
 
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, SeedService seeder)
@@ -49,10 +49,14 @@ namespace MadPay724.Presentation
             app.UseMadInitialize(seeder);
             app.UseMadAuth();
             app.UseMadSwagger();
+            app.UseMadParbad();
 
             app.UseEndpoints(end =>
             {
-                end.MapDefaultControllerRoute();
+                end.MapControllers();
+                end.MapControllerRoute(
+                     name: "default",
+                   pattern: "{controller=home}/{action=index}");
                 end.MapHub<ChatHubService>(SiteV1Routes.BaseChatPanel + "/chat");
             });
         }
