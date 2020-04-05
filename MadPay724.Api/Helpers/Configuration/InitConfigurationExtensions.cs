@@ -36,7 +36,8 @@ namespace MadPay724.Api.Helpers.Configuration
              .AddApiExplorer()
              .AddFormatterMappings()
              .AddDataAnnotations()
-             .AddCors(opt => {
+             .AddCors(opt =>
+             {
                  opt.AddPolicy("CorsPolicy", builder =>
                 builder.WithOrigins("http://localhost:4200")
                         .AllowAnyMethod()
@@ -48,6 +49,7 @@ namespace MadPay724.Api.Helpers.Configuration
                     opt.SerializerSettings.ReferenceLoopHandling =
                     Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 });
+
             //Custom ModelState Error
             services.Configure<ApiBehaviorOptions>(opt =>
             {

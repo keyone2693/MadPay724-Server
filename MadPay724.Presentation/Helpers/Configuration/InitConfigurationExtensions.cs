@@ -34,7 +34,8 @@ namespace MadPay724.Presentation.Helpers.Configuration
              .AddApiExplorer()
              .AddFormatterMappings()
              .AddDataAnnotations()
-             .AddCors(opt => {
+             .AddCors(opt =>
+             {
                  opt.AddPolicy("CorsPolicy", builder =>
                 builder.WithOrigins("http://localhost:4200")
                         .AllowAnyMethod()
@@ -46,7 +47,7 @@ namespace MadPay724.Presentation.Helpers.Configuration
                     opt.SerializerSettings.ReferenceLoopHandling =
                     Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 });
-
+            //
             services.AddResponseCaching();
             services.AddHsts(opt =>
             {
