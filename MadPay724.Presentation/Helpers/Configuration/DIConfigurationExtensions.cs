@@ -1,4 +1,5 @@
 ﻿using DnsClient;
+using Ganss.XSS;
 using MadPay724.Common.Helpers.Interface;
 using MadPay724.Common.Helpers.Utilities;
 using MadPay724.Common.OnlineChat.Storage;

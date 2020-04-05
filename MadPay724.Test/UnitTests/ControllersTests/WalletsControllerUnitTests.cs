@@ -38,7 +38,7 @@ namespace MadPay724.Test.UnitTests.ControllersTests
             _mockMapper = new Mock<IMapper>();
             _mockLogger = new Mock<ILogger<WalletsController>>();
             _mockWalletService = new Mock<IWalletService>();
-            _controller = new WalletsController(_mockRepo.Object, _mockMapper.Object, _mockLogger.Object, _mockWalletService.Object);
+            _controller = new WalletsController(_mockRepo.Object, _mockMapper.Object, _mockLogger.Object, _mockWalletService.Object,null);
         }
 
         #region GetWalletTests

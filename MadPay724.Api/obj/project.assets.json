@@ -2,6 +2,30 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v3.1": {
+      "AngleSharp/0.14.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Text.Encoding.CodePages": "4.5.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/AngleSharp.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/AngleSharp.dll": {}
+        }
+      },
+      "AngleSharp.Css/0.13.0": {
+        "type": "package",
+        "dependencies": {
+          "AngleSharp": "0.13.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/AngleSharp.Css.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/AngleSharp.Css.dll": {}
+        }
+      },
       "AutoMapper/9.0.0": {
         "type": "package",
         "dependencies": {
@@ -47,6 +71,20 @@
         },
         "runtime": {
           "lib/netstandard2.1/DnsClient.dll": {}
+        }
+      },
+      "HtmlSanitizer/5.0.304": {
+        "type": "package",
+        "dependencies": {
+          "AngleSharp": "[0.14.0]",
+          "AngleSharp.Css": "[0.13.0]",
+          "System.Text.Encoding.CodePages": "4.7.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/HtmlSanitizer.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/HtmlSanitizer.dll": {}
         }
       },
       "ImageResizer.AspNetCore/1.8.6": {
@@ -3527,11 +3565,10 @@
           "ref/netstandard1.3/System.Text.Encoding.dll": {}
         }
       },
-      "System.Text.Encoding.CodePages/4.5.1": {
+      "System.Text.Encoding.CodePages/4.7.0": {
         "type": "package",
         "dependencies": {
-          "Microsoft.NETCore.Platforms": "2.1.2",
-          "System.Runtime.CompilerServices.Unsafe": "4.5.2"
+          "Microsoft.NETCore.Platforms": "3.1.0"
         },
         "compile": {
           "lib/netstandard2.0/System.Text.Encoding.CodePages.dll": {}
@@ -3821,6 +3858,7 @@
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
           "DnsClient": "1.3.0",
+          "HtmlSanitizer": "5.0.304",
           "MadPay724.Data": "1.0.0",
           "Microsoft.AspNetCore.Http": "2.2.2",
           "Microsoft.AspNetCore.Mvc.Formatters.Json": "2.2.0",
@@ -3900,6 +3938,44 @@
     }
   },
   "libraries": {
+    "AngleSharp/0.14.0": {
+      "sha512": "34w9I7nyszfEYBY8g7T3B0AtWlOivNh+QoWc3KECRwbmcNyqWmb4huihtmpH2Ds7rIRRHMMPv9yfPBxxjBn03g==",
+      "type": "package",
+      "path": "anglesharp/0.14.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "anglesharp.0.14.0.nupkg.sha512",
+        "anglesharp.nuspec",
+        "lib/net46/AngleSharp.dll",
+        "lib/net46/AngleSharp.xml",
+        "lib/net461/AngleSharp.dll",
+        "lib/net461/AngleSharp.xml",
+        "lib/net472/AngleSharp.dll",
+        "lib/net472/AngleSharp.xml",
+        "lib/netstandard1.3/AngleSharp.dll",
+        "lib/netstandard1.3/AngleSharp.xml",
+        "lib/netstandard2.0/AngleSharp.dll",
+        "lib/netstandard2.0/AngleSharp.xml"
+      ]
+    },
+    "AngleSharp.Css/0.13.0": {
+      "sha512": "dx/RayhtYKNVOz6t2UB0SF4BUfvWpPedjrL7KKMJ3aJI4oDNbbBAXD7/JVrIBM1G3fJw6O5jfdIiTxigPXY/3w==",
+      "type": "package",
+      "path": "anglesharp.css/0.13.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "anglesharp.css.0.13.0.nupkg.sha512",
+        "anglesharp.css.nuspec",
+        "lib/net46/AngleSharp.Css.dll",
+        "lib/net46/AngleSharp.Css.xml",
+        "lib/netstandard1.3/AngleSharp.Css.dll",
+        "lib/netstandard1.3/AngleSharp.Css.xml",
+        "lib/netstandard2.0/AngleSharp.Css.dll",
+        "lib/netstandard2.0/AngleSharp.Css.xml"
+      ]
+    },
     "AutoMapper/9.0.0": {
       "sha512": "xCqvoxT4HIrNY/xlXG9W+BA/awdrhWvMTKTK/igkGSRbhOhpl3Q8O8Gxlhzjc9JsYqE7sS6AxgyuUUvZ6R5/Bw==",
       "type": "package",
@@ -3972,6 +4048,21 @@
         "lib/netstandard2.0/DnsClient.xml",
         "lib/netstandard2.1/DnsClient.dll",
         "lib/netstandard2.1/DnsClient.xml"
+      ]
+    },
+    "HtmlSanitizer/5.0.304": {
+      "sha512": "cP92765H+hBcrwj84DkQ2/0npHuIdkPsIxnyqD7B1IjtSCGG+FLPG+ydt5+XRf2ttdNa2XISXu8AHShbnjzzJQ==",
+      "type": "package",
+      "path": "htmlsanitizer/5.0.304",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "htmlsanitizer.5.0.304.nupkg.sha512",
+        "htmlsanitizer.nuspec",
+        "lib/net46/HtmlSanitizer.dll",
+        "lib/net46/HtmlSanitizer.xml",
+        "lib/netstandard2.0/HtmlSanitizer.dll",
+        "lib/netstandard2.0/HtmlSanitizer.xml"
       ]
     },
     "ImageResizer.AspNetCore/1.8.6": {
@@ -10468,10 +10559,10 @@
         "system.text.encoding.nuspec"
       ]
     },
-    "System.Text.Encoding.CodePages/4.5.1": {
-      "sha512": "4J2JQXbftjPMppIHJ7IC+VXQ9XfEagN92vZZNoG12i+zReYlim5dMoXFC1Zzg7tsnKDM7JPo5bYfFK4Jheq44w==",
+    "System.Text.Encoding.CodePages/4.7.0": {
+      "sha512": "aeu4FlaUTemuT1qOd1MyU4T516QR4Fy+9yDbwWMPHOHy7U8FD6SgTzdZFO7gHcfAPHtECqInbwklVvUK4RHcNg==",
       "type": "package",
-      "path": "system.text.encoding.codepages/4.5.1",
+      "path": "system.text.encoding.codepages/4.7.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -10481,8 +10572,10 @@
         "lib/MonoTouch10/_._",
         "lib/net46/System.Text.Encoding.CodePages.dll",
         "lib/net461/System.Text.Encoding.CodePages.dll",
+        "lib/net461/System.Text.Encoding.CodePages.xml",
         "lib/netstandard1.3/System.Text.Encoding.CodePages.dll",
         "lib/netstandard2.0/System.Text.Encoding.CodePages.dll",
+        "lib/netstandard2.0/System.Text.Encoding.CodePages.xml",
         "lib/xamarinios10/_._",
         "lib/xamarinmac20/_._",
         "lib/xamarintvos10/_._",
@@ -10494,10 +10587,13 @@
         "ref/xamarintvos10/_._",
         "ref/xamarinwatchos10/_._",
         "runtimes/win/lib/net461/System.Text.Encoding.CodePages.dll",
+        "runtimes/win/lib/net461/System.Text.Encoding.CodePages.xml",
         "runtimes/win/lib/netcoreapp2.0/System.Text.Encoding.CodePages.dll",
+        "runtimes/win/lib/netcoreapp2.0/System.Text.Encoding.CodePages.xml",
         "runtimes/win/lib/netstandard1.3/System.Text.Encoding.CodePages.dll",
         "runtimes/win/lib/netstandard2.0/System.Text.Encoding.CodePages.dll",
-        "system.text.encoding.codepages.4.5.1.nupkg.sha512",
+        "runtimes/win/lib/netstandard2.0/System.Text.Encoding.CodePages.xml",
+        "system.text.encoding.codepages.4.7.0.nupkg.sha512",
         "system.text.encoding.codepages.nuspec",
         "useSharedDesignerContext.txt",
         "version.txt"

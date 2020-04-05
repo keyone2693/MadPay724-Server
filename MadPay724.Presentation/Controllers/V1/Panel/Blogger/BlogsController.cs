@@ -190,6 +190,9 @@ namespace MadPay724.Presentation.Controllers.V1.Panel.Blogger
 
             if (blogFromRepo == null)
             {
+
+                blogForCreateDto.Text = _utilities.RemoveHtmlXss(blogForCreateDto.Text);
+
                 var blogForCreate = new Blog()
                 {
                     UserId = userId,

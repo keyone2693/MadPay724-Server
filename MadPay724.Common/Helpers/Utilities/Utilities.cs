@@ -8,6 +8,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using DnsClient;
+using Ganss.XSS;
 using MadPay724.Common.Helpers.AppSetting;
 using MadPay724.Common.Helpers.Interface;
 using MadPay724.Data.DatabaseContext;
@@ -73,6 +74,17 @@ namespace MadPay724.Common.Helpers.Utilities
 
 
         #region Common
+        public string RemoveHtmlXss(string html)
+        {
+            if (string.IsNullOrEmpty(html))
+                return "";
+
+            var _htmlSanitizer = new HtmlSanitizer();
+
+            return _htmlSanitizer.Sanitize(html, null);
+
+
+        }
         public  async Task<string> GetDomainIpAsync(string domain)
         {
             domain = domain.Replace("https://", "").Replace("http://", "").Replace("www.", "").TrimEnd('/');

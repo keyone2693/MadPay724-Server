@@ -48,7 +48,6 @@ namespace MadPay724.Presentation.Controllers.V1.Site
                 Result = null
             };
         }
-        [ValidateAntiForgeryToken]
         [HttpGet(SiteV1Routes.Home.GetHomeData)]
         [ProducesResponseType(typeof(ApiReturn<HomeDataReturnDto>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetHomeData()

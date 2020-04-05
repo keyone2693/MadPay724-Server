@@ -11,6 +11,7 @@ namespace MadPay724.Common.Helpers.Interface
 {
     public interface IUtilities
     {
+        string RemoveHtmlXss(string html);
         Task<string> GetDomainIpAsync(string domain);
 
         void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt);

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
+using Ganss.XSS;
 using MadPay724.Common.Helpers.Utilities.Pagination;
 using MadPay724.Data.Dtos.Common;
 using Microsoft.AspNetCore.Http;
@@ -105,6 +106,15 @@ namespace MadPay724.Common.Helpers.Utilities.Extensions
             {
                 return Temp;
             }
+        }
+
+        public static string RemoveHtmlXss(this string html)
+        {
+            if (string.IsNullOrEmpty(html))
+                return "";
+
+            var _htmlSanitizer = new HtmlSanitizer();
+            return _htmlSanitizer.Sanitize(html, null);
         }
 
         #region encrypt_decrypt
