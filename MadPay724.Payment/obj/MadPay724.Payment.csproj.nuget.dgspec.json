@@ -252,6 +252,10 @@
               "target": "Package",
               "version": "[3.1.1, )"
             },
+            "NWebsec.AspNetCore.Middleware": {
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
             "Parbad": {
               "target": "Package",
               "version": "[3.3.2, )"

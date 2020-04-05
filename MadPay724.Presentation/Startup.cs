@@ -51,6 +51,7 @@ namespace MadPay724.Presentation
             app.UseMadSwagger();
             app.UseMadParbad();
 
+                
             app.UseEndpoints(end =>
             {
                 end.MapControllers();

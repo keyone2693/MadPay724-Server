@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "fBbdIIJ9272jGFWHjUfZ45BLp8tGoUimfRBHNXD2R1nTg9wVZR/1z+WiFNETxqgnKrCjrsSOm+HTTeEau77ATw==",
+  "dgSpecHash": "QoHFslhiY7VpQSZcEYYjPctIrmeome1th6zXV33jCXFP3+TsjZq/YKl6Ub9a1CGYRQdk5YlUIjPQQHIxH54NpQ==",
   "success": true,
   "projectFilePath": "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Payment\\MadPay724.Payment.csproj",
   "expectedPackageFiles": [
@@ -109,6 +109,8 @@
     "C:\\Users\\Key1-lab\\.nuget\\packages\\nlog.extensions.logging\\1.6.0\\nlog.extensions.logging.1.6.0.nupkg.sha512",
     "C:\\Users\\Key1-lab\\.nuget\\packages\\nlog.web.aspnetcore\\4.9.0\\nlog.web.aspnetcore.4.9.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\nuget.frameworks\\4.7.0\\nuget.frameworks.4.7.0.nupkg.sha512",
+    "C:\\Users\\Key1-lab\\.nuget\\packages\\nwebsec.aspnetcore.core\\3.0.0\\nwebsec.aspnetcore.core.3.0.0.nupkg.sha512",
+    "C:\\Users\\Key1-lab\\.nuget\\packages\\nwebsec.aspnetcore.middleware\\3.0.0\\nwebsec.aspnetcore.middleware.3.0.0.nupkg.sha512",
     "C:\\Users\\Key1-lab\\.nuget\\packages\\parbad\\3.3.2\\parbad.3.3.2.nupkg.sha512",
     "C:\\Users\\Key1-lab\\.nuget\\packages\\parbad.aspnetcore\\1.0.4\\parbad.aspnetcore.1.0.4.nupkg.sha512",
     "C:\\Users\\Key1-lab\\.nuget\\packages\\parbad.gateway.zarinpal\\1.0.3\\parbad.gateway.zarinpal.1.0.3.nupkg.sha512",
