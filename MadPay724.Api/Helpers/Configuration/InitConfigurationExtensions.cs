@@ -36,12 +36,13 @@ namespace MadPay724.Api.Helpers.Configuration
              .AddApiExplorer()
              .AddFormatterMappings()
              .AddDataAnnotations()
-             .AddCors(opt =>
-                                 opt.AddPolicy("CorsPolicy", builder =>
-                                builder.WithOrigins("http://localhost:4200")
-                                        .AllowAnyMethod()
-                                        .AllowAnyHeader()
-                                        .AllowCredentials()))
+             .AddCors(opt => {
+                 opt.AddPolicy("CorsPolicy", builder =>
+                builder.WithOrigins("http://localhost:4200")
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials());
+             })
              .AddNewtonsoftJson(opt =>
                 {
                     opt.SerializerSettings.ReferenceLoopHandling =
@@ -77,6 +78,10 @@ namespace MadPay724.Api.Helpers.Configuration
                 opt.MaxAge = TimeSpan.FromDays(180);
                 opt.IncludeSubDomains = true;
                 opt.Preload = true;
+            });
+            services.AddHttpsRedirection(opt =>
+            {
+                opt.RedirectStatusCode = StatusCodes.Status302Found;
             });
             //services.AddResponseCompression(opt => opt.Providers.Add<GzipCompressionProvider>());
             //services.AddRouting( opt => opt.LowercaseUrls = true);

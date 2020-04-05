@@ -22,7 +22,6 @@ namespace MadPay724.Presentation.Helpers.Configuration
         public static void AddMadInitialize(this IServiceCollection services, int? httpsPort)
         {
             services.AddControllersWithViews();
-
             services.AddMvcCore(config =>
             {
                 config.ReturnHttpNotAcceptable = true;
@@ -35,20 +34,18 @@ namespace MadPay724.Presentation.Helpers.Configuration
              .AddApiExplorer()
              .AddFormatterMappings()
              .AddDataAnnotations()
-             .AddCors(opt =>
-                                 opt.AddPolicy("CorsPolicy", builder =>
-                                builder.WithOrigins("http://localhost:4200")
-                                        .AllowAnyMethod()
-                                        .AllowAnyHeader()
-                                        .AllowCredentials()))
+             .AddCors(opt => {
+                 opt.AddPolicy("CorsPolicy", builder =>
+                builder.WithOrigins("http://localhost:4200")
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials());
+             })
              .AddNewtonsoftJson(opt =>
                 {
                     opt.SerializerSettings.ReferenceLoopHandling =
                     Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 });
-
-            services.Configure<MvcOptions>(o =>
-            o.Filters.Add(new RequireHttpsAttribute()));
 
             services.AddResponseCaching();
             services.AddHsts(opt =>
@@ -57,6 +54,12 @@ namespace MadPay724.Presentation.Helpers.Configuration
                 opt.IncludeSubDomains = true;
                 opt.Preload = true;
             });
+
+            services.AddHttpsRedirection(opt =>
+            {
+                opt.RedirectStatusCode = StatusCodes.Status302Found;
+            });
+
             //services.AddResponseCompression(opt => opt.Providers.Add<GzipCompressionProvider>());
             //services.AddRouting( opt => opt.LowercaseUrls = true);
             //services.AddApiVersioning(opt =>

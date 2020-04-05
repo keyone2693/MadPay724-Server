@@ -25,6 +25,18 @@ namespace MadPay724.Payment.Helpers.Configuration
                 config.Filters.Add(typeof(RequireHttpsAttribute));
             });
 
+            services.AddHsts(opt =>
+            {
+                opt.MaxAge = TimeSpan.FromDays(180);
+                opt.IncludeSubDomains = true;
+                opt.Preload = true;
+            });
+
+            services.AddHttpsRedirection(opt =>
+            {
+                opt.RedirectStatusCode = StatusCodes.Status302Found;
+            });
+
             services.AddResponseCaching();
            
         }
