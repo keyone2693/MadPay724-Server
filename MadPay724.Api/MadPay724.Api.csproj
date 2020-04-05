@@ -13,6 +13,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="4.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
     <PackageReference Include="NSwag.AspNetCore" Version="13.3.0" />
+    <PackageReference Include="NWebsec.AspNetCore.Middleware" Version="3.0.0" />
     <PackageReference Include="Parbad.AspNetCore" Version="1.0.4" />
     <PackageReference Include="Parbad.Gateway.ZarinPal" Version="1.0.3" />
     <PackageReference Include="Parbad.Storage.EntityFrameworkCore" Version="1.0.3" />

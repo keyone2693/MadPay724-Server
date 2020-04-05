@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "qLcZoRoFo+yyOPIMqRujCGngAvygawKYRTNRpSHGhUXXGcExn/EVmLKR5QFFXRXWHQ27KCYQuhYprVoQN4YDQQ==",
+  "dgSpecHash": "h2iPQSUglUYh3UeBzS1xgiQu6EWilOh8pwmRlitnREYf62mnxsBlrxIklX70V2LdUUJ7K2IRa+WQqcSfiRPOuA==",
   "success": true,
   "projectFilePath": "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.Api\\MadPay724.Api.csproj",
   "expectedPackageFiles": [
@@ -126,6 +126,8 @@
     "C:\\Users\\Key1-lab\\.nuget\\packages\\nswag.generation\\13.3.0\\nswag.generation.13.3.0.nupkg.sha512",
     "C:\\Users\\Key1-lab\\.nuget\\packages\\nswag.generation.aspnetcore\\13.3.0\\nswag.generation.aspnetcore.13.3.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\nuget.frameworks\\4.7.0\\nuget.frameworks.4.7.0.nupkg.sha512",
+    "C:\\Users\\Key1-lab\\.nuget\\packages\\nwebsec.aspnetcore.core\\3.0.0\\nwebsec.aspnetcore.core.3.0.0.nupkg.sha512",
+    "C:\\Users\\Key1-lab\\.nuget\\packages\\nwebsec.aspnetcore.middleware\\3.0.0\\nwebsec.aspnetcore.middleware.3.0.0.nupkg.sha512",
     "C:\\Users\\Key1-lab\\.nuget\\packages\\parbad\\3.3.0\\parbad.3.3.0.nupkg.sha512",
     "C:\\Users\\Key1-lab\\.nuget\\packages\\parbad.aspnetcore\\1.0.4\\parbad.aspnetcore.1.0.4.nupkg.sha512",
     "C:\\Users\\Key1-lab\\.nuget\\packages\\parbad.gateway.zarinpal\\1.0.3\\parbad.gateway.zarinpal.1.0.3.nupkg.sha512",

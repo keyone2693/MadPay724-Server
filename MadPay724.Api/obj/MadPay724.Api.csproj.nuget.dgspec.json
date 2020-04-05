@@ -77,6 +77,10 @@
               "target": "Package",
               "version": "[13.3.0, )"
             },
+            "NWebsec.AspNetCore.Middleware": {
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
             "Parbad.AspNetCore": {
               "target": "Package",
               "version": "[1.0.4, )"

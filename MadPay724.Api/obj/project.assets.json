@@ -1844,6 +1844,33 @@
           "lib/netstandard1.6/NuGet.Frameworks.dll": {}
         }
       },
+      "NWebsec.AspNetCore.Core/3.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/netcoreapp3.1/NWebsec.AspNetCore.Core.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/NWebsec.AspNetCore.Core.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
+      "NWebsec.AspNetCore.Middleware/3.0.0": {
+        "type": "package",
+        "dependencies": {
+          "NWebsec.AspNetCore.Core": "3.0.0"
+        },
+        "compile": {
+          "lib/netcoreapp3.1/NWebsec.AspNetCore.Middleware.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/NWebsec.AspNetCore.Middleware.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
       "Parbad/3.3.0": {
         "type": "package",
         "dependencies": {
@@ -6420,6 +6447,32 @@
         "lib/netstandard1.6/NuGet.Frameworks.xml",
         "nuget.frameworks.4.7.0.nupkg.sha512",
         "nuget.frameworks.nuspec"
+      ]
+    },
+    "NWebsec.AspNetCore.Core/3.0.0": {
+      "sha512": "dvrs4Lvc7k98KKaMxKPHeOn0kONEIQpVrzweji9SLl9XEn1+XWVJe5f7mNvXoKPKjjcNuBIwVXr3K+g+DzZHEw==",
+      "type": "package",
+      "path": "nwebsec.aspnetcore.core/3.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netcoreapp3.1/NWebsec.AspNetCore.Core.dll",
+        "lib/netcoreapp3.1/NWebsec.AspNetCore.Core.xml",
+        "nwebsec.aspnetcore.core.3.0.0.nupkg.sha512",
+        "nwebsec.aspnetcore.core.nuspec"
+      ]
+    },
+    "NWebsec.AspNetCore.Middleware/3.0.0": {
+      "sha512": "sQJUG6zk/96UaAcFaf3fQuzjAS9rsf2fXyks1YlG4E3QOWl0h6nIO9fMzfKoskRA+abs01rV+6Kc5P7xccXlzw==",
+      "type": "package",
+      "path": "nwebsec.aspnetcore.middleware/3.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netcoreapp3.1/NWebsec.AspNetCore.Middleware.dll",
+        "lib/netcoreapp3.1/NWebsec.AspNetCore.Middleware.xml",
+        "nwebsec.aspnetcore.middleware.3.0.0.nupkg.sha512",
+        "nwebsec.aspnetcore.middleware.nuspec"
       ]
     },
     "Parbad/3.3.0": {
@@ -11656,6 +11709,7 @@
       "Microsoft.AspNetCore.Mvc.Versioning >= 4.1.1",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 3.1.1",
       "NSwag.AspNetCore >= 13.3.0",
+      "NWebsec.AspNetCore.Middleware >= 3.0.0",
       "Parbad.AspNetCore >= 1.0.4",
       "Parbad.Gateway.ZarinPal >= 1.0.3",
       "Parbad.Storage.EntityFrameworkCore >= 1.0.3"
@@ -11737,6 +11791,10 @@
           "NSwag.AspNetCore": {
             "target": "Package",
             "version": "[13.3.0, )"
+          },
+          "NWebsec.AspNetCore.Middleware": {
+            "target": "Package",
+            "version": "[3.0.0, )"
           },
           "Parbad.AspNetCore": {
             "target": "Package",

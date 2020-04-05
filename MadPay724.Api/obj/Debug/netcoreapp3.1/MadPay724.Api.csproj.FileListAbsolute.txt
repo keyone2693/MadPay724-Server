@@ -183,6 +183,6 @@ D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcor
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.InMemory.dll
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\Parbad.Storage.EntityFrameworkCore.dll
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\Parbad.Gateway.ZarinPal.dll
-D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\obj\Debug\netcoreapp3.1\MadPay724.Api.csproj.CoreCompileInputs.cache
-D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\obj\Debug\netcoreapp3.1\MadPay724.Api.MvcApplicationPartsAssemblyInfo.cs
-D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\obj\Debug\netcoreapp3.1\MadPay724.Api.MvcApplicationPartsAssemblyInfo.cache
+D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\AngleSharp.dll
+D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\AngleSharp.Css.dll
+D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\HtmlSanitizer.dll

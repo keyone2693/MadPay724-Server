@@ -103,7 +103,7 @@ namespace MadPay724.Api.Helpers.Configuration
             //app.UseResponseCompression();
             app.UseRouting();
             app.UseImageResizer();
-
+            app.UseXfo(o => o.Deny());
             app.UseStaticFiles();
         }
 

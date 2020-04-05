@@ -85,6 +85,7 @@ namespace MadPay724.Presentation.Helpers.Configuration
             .ImageSources(s => s.Self().CustomSources("res.cloudinary.com", "cloudinary.com"))
             .MediaSources(s => s.Self().CustomSources("res.cloudinary.com", "cloudinary.com"))
             );
+            app.UseXfo(o => o.Deny());
 
             app.UseStaticFiles(new StaticFileOptions()
             {

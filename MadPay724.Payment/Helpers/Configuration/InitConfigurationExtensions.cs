@@ -54,6 +54,7 @@ namespace MadPay724.Payment.Helpers.Configuration
             .ImageSources(s => s.Self().CustomSources("res.cloudinary.com","cloudinary.com"))
             .MediaSources(s => s.Self().CustomSources("res.cloudinary.com","cloudinary.com"))
             );
+            app.UseXfo(o => o.Deny());
         }
 
         public static void UseMadInitializeInProd(this IApplicationBuilder app)
