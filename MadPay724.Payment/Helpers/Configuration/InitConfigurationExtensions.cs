@@ -51,8 +51,11 @@ namespace MadPay724.Payment.Helpers.Configuration
             app.UseStaticFiles();
 
             app.UseCsp(opt => opt.DefaultSources(s => s.Self())
-            .ImageSources(s => s.Self().CustomSources("res.cloudinary.com","cloudinary.com"))
-            .MediaSources(s => s.Self().CustomSources("res.cloudinary.com","cloudinary.com"))
+            .StyleSources(s => s.Self().UnsafeInline())
+            .ScriptSources(s => s.Self().UnsafeInline())
+            .ImageSources(s => s.Self().CustomSources("res.cloudinary.com", "cloudinary.com", "data:"))
+            .MediaSources(s => s.Self().CustomSources("res.cloudinary.com", "cloudinary.com", "data:"))
+            .FontSources(s => s.Self().CustomSources("data:"))
             );
             app.UseXfo(o => o.Deny());
         }
