@@ -71,6 +71,7 @@ namespace MadPay724.Presentation.Helpers.Configuration
                         }
                     };
                 });
+
             services.AddAuthorization(opt =>
             {
                 opt.AddPolicy("RequireNoAccess", policy => policy.RequireRole("NoAccess"));
