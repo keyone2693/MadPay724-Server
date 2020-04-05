@@ -1,6 +1,7 @@
 ﻿using MadPay724.Data.DatabaseContext;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
@@ -17,6 +18,12 @@ namespace MadPay724.Payment.Helpers.Configuration
         public static void AddMadInitialize(this IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddMvcCore(config =>
+            {
+                config.ReturnHttpNotAcceptable = true;
+                config.Filters.Add(typeof(RequireHttpsAttribute));
+            });
 
             services.AddResponseCaching();
            
@@ -35,6 +42,7 @@ namespace MadPay724.Payment.Helpers.Configuration
         public static void UseMadInitializeInProd(this IApplicationBuilder app)
         {
             app.UseHsts();
+            app.UseHttpsRedirection();
             app.UseResponseCaching();
         }
     }

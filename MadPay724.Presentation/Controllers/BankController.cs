@@ -1,14 +1,11 @@
 ﻿using AutoMapper;
 using MadPay724.Common.Helpers.Utilities.Extensions;
 using MadPay724.Data.DatabaseContext;
-using MadPay724.Data.Dtos.Api;
-using MadPay724.Data.Dtos.Api.Pay;
 using MadPay724.Data.Dtos.Common;
 using MadPay724.Data.Models.FinancialDB.Accountant;
 using MadPay724.Repo.Infrastructure;
 using MadPay724.Services.Site.Panel.Wallet.Interface;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Parbad;
@@ -68,8 +65,8 @@ namespace MadPay724.Presentation.Controllers
                 .UseAutoIncrementTrackingNumber()
                 .SetAmount(factorFromRepo.EndPrice)
                 .SetCallbackUrl(callbackUrl)
-                .UseParbadVirtual();
-                //.UseZarinPal("پرداخت از سایت مادپی");
+                //.UseParbadVirtual();
+                .UseZarinPal("پرداخت از سایت مادپی");
                 });
             if (result.IsSucceed)
             {

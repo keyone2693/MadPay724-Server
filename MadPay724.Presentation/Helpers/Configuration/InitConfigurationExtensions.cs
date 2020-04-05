@@ -47,6 +47,9 @@ namespace MadPay724.Presentation.Helpers.Configuration
                     Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 });
 
+            services.Configure<MvcOptions>(o =>
+            o.Filters.Add(new RequireHttpsAttribute()));
+
             services.AddResponseCaching();
             services.AddHsts(opt =>
             {
