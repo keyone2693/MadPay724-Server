@@ -37,7 +37,7 @@ namespace MadPay724.Presentation.Helpers.Configuration
              .AddCors(opt =>
              {
                 opt.AddPolicy("CorsPolicy", builder =>
-                builder.WithOrigins("http://localhost:4200")
+                builder.WithOrigins("http://localhost:4200", "http://127.0.0.1:8080")
                         .AllowAnyMethod()
                         .AllowAnyHeader()
                         .AllowCredentials());
