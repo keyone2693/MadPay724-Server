@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Clients\py\**" />
+    <Content Remove="Clients\py\**" />
+    <EmbeddedResource Remove="Clients\py\**" />
+    <None Remove="Clients\py\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="wwwroot\Files\Json\Seed\UserSeedData.json" />
   </ItemGroup>
 
@@ -28,7 +35,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.3" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.5.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.2" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="NSwag.AspNetCore" Version="13.3.0" />
     <PackageReference Include="NWebsec.AspNetCore.Middleware" Version="3.0.0" />
@@ -36,7 +43,7 @@
     <PackageReference Include="Parbad.Gateway.ZarinPal" Version="1.0.3" />
     <PackageReference Include="Parbad.Storage.EntityFrameworkCore" Version="1.0.3" />
     <PackageReference Include="PersianDate" Version="3.5.5" />
-    <PackageReference Include="Syncfusion.EJ2.AspNet.Core" Version="17.4.0.55" />
+    <PackageReference Include="Syncfusion.EJ2.AspNet.Core" Version="18.1.0.43" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.5.0" />
   </ItemGroup>
   

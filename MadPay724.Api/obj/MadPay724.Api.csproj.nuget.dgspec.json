@@ -71,7 +71,7 @@
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
-              "version": "[3.1.1, )"
+              "version": "[3.1.2, )"
             },
             "NSwag.AspNetCore": {
               "target": "Package",
@@ -159,7 +159,7 @@
           "dependencies": {
             "DnsClient": {
               "target": "Package",
-              "version": "[1.3.0, )"
+              "version": "[1.3.1, )"
             },
             "HtmlSanitizer": {
               "target": "Package",
@@ -179,15 +179,11 @@
             },
             "NLog.Web.AspNetCore": {
               "target": "Package",
-              "version": "[4.9.0, )"
+              "version": "[4.9.1, )"
             },
             "PersianDate": {
               "target": "Package",
               "version": "[3.5.5, )"
-            },
-            "SkiaSharp": {
-              "target": "Package",
-              "version": "[1.68.1.1, )"
             },
             "System.IdentityModel.Tokens.Jwt": {
               "target": "Package",
