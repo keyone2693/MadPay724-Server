@@ -81,19 +81,20 @@ namespace MadPay724.Presentation.Helpers.Configuration
             app.UseRouting();
             app.UseImageResizer();
 
-            app.UseCsp(opt => opt.DefaultSources(s => s.Self())
-            .StyleSources(s=>s.Self().UnsafeInline())
-            .ScriptSources(s=>s.Self().UnsafeInline())
-            .ImageSources(s => s.Self().CustomSources("res.cloudinary.com", "cloudinary.com", "data:"))
-            .MediaSources(s => s.Self().CustomSources("res.cloudinary.com", "cloudinary.com", "data:"))
-            .FontSources(s => s.Self().CustomSources("data:"))
-            );
+            //app.UseCsp(opt => opt.DefaultSources(s => s.Self())
+            //.StyleSources(s=>s.Self().UnsafeInline())
+            //.ScriptSources(s=>s.Self().UnsafeInline())
+            //.ImageSources(s => s.Self().CustomSources("res.cloudinary.com", "cloudinary.com", "data:"))
+            //.MediaSources(s => s.Self().CustomSources("res.cloudinary.com", "cloudinary.com", "data:"))
+            //.FontSources(s => s.Self().CustomSources("data:"))
+            //);
             app.UseXfo(o => o.Deny());
 
             app.UseStaticFiles(new StaticFileOptions()
             {
                 RequestPath = new PathString("/wwwroot")
             });
+
         }
 
         public static void UseMadInitializeInProd(this IApplicationBuilder app)

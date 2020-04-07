@@ -9,6 +9,9 @@ using MadPay724.Services.Seed.Service;
 using MadPay724.Services.Site.Panel.Common.Service;
 using MadPay724.Common.Routes.V1.Site;
 using MadPay724.Presentation.Helpers.Configuration;
+using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace MadPay724.Presentation
 {
@@ -40,9 +43,9 @@ namespace MadPay724.Presentation
             services.AddMadApiVersioning();
             services.AddMadSwagger();
             services.AddMadParbad(Configuration);
-
-
         }
+
+        [System.Obsolete]
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, SeedService seeder)
         {
             app.UseMadExceptionHandle(env);
@@ -51,7 +54,9 @@ namespace MadPay724.Presentation
             app.UseMadSwagger();
             app.UseMadParbad();
 
-                
+          //  app.UseDefaultFiles();
+           // app.UseSpaStaticFiles();
+
             app.UseEndpoints(end =>
             {
                 end.MapControllers();
@@ -61,5 +66,7 @@ namespace MadPay724.Presentation
                 end.MapHub<ChatHubService>(SiteV1Routes.BaseChatPanel + "/chat");
             });
         }
+
     }
+    
 }
