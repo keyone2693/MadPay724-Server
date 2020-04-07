@@ -19,11 +19,19 @@ namespace MadPay724.Presentation.Helpers.Configuration
                     d.Info.Title = "MadPay724 Api Docs For Site Layout";
                 };
             });
-            //
             services.AddOpenApiDocument(document =>
             {
                 document.DocumentName = "v1_Site_Home";
                 document.ApiGroupNames = new[] { "v1_Site_Home" };
+                document.PostProcess = d =>
+                {
+                    d.Info.Title = "MadPay724 Api Docs For Site";
+                };
+            });
+            services.AddOpenApiDocument(document =>
+            {
+                document.DocumentName = "v1_Site_Blog";
+                document.ApiGroupNames = new[] { "v1_Site_Blog" };
                 document.PostProcess = d =>
                 {
                     d.Info.Title = "MadPay724 Api Docs For Site";
