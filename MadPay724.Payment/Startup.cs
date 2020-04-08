@@ -2,6 +2,7 @@ using AutoMapper;
 using MadPay724.Payment.Helpers.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -31,11 +32,12 @@ namespace MadPay724.Payment
             app.UseMadExceptionHandle(env);
             app.UseMadInitialize();
             app.UseMadParbad();
+
+            app.UseRewriter(new RewriteOptions().AddRedirect(@"^\s*$", "https://madpay724.ir",301));
+
+
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                      name: "default",
-                    pattern: "{controller=home}/{action=index}");
                 endpoints.MapControllerRoute(
                       name: "pay",
                     pattern: "{controller=bank}/{action=pay}/{token?}");

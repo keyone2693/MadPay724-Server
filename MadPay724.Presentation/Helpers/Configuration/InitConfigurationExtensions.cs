@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
@@ -60,17 +61,10 @@ namespace MadPay724.Presentation.Helpers.Configuration
             {
                 opt.RedirectStatusCode = StatusCodes.Status302Found;
             });
-
-            //services.AddResponseCompression(opt => opt.Providers.Add<GzipCompressionProvider>());
+            //
+            services.AddResponseCompression(opt => opt.Providers.Add<GzipCompressionProvider>());
             //services.AddRouting( opt => opt.LowercaseUrls = true);
-            //services.AddApiVersioning(opt =>
-            //{
-            //    opt.ApiVersionReader = new MediaTypeApiVersionReader();
-            //    opt.AssumeDefaultVersionWhenUnspecified = true;
-            //    opt.ReportApiVersions = true;
-            //    opt.DefaultApiVersion = new ApiVersion(1,0);
-            //    opt.ApiVersionSelector = new CurrentImplementationApiVersionSelector(opt);
-            //});
+            //
             services.AddImageResizer();
         }
 

@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using MadPay724.Data.Dtos.Common;
 using System.Linq;
+using Microsoft.AspNetCore.Rewrite;
 
 namespace MadPay724.Api
 {
@@ -51,6 +52,10 @@ namespace MadPay724.Api
             app.UseMadAuth();
             app.UseMadSwagger();
             app.UseMadParbad();
+
+            app.UseRewriter(new RewriteOptions().AddRedirect(@"^\s*$", "https://api.madpay724.ir/swagger", 301));
+
+
             app.UseEndpoints(end =>
             {
                 end.MapControllers();

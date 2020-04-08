@@ -34,7 +34,7 @@ namespace MadPay724.Presentation.Helpers.Configuration
                 ContentTypeProvider = provider
             });
             //
-            app.UseRewriter(new RewriteOptions().AddRewrite(@"^\s*$", "/app", skipRemainingRules: true));
+            app.UseRewriter(new RewriteOptions().AddRedirect(@"^\s*$", "/app", 301));
             app.Map("/app", site =>
                 {
                     site.UseSpa(spa =>

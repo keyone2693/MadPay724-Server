@@ -13,7 +13,6 @@ namespace MadPay724.Presentation
     {
         public static void Main(string[] args)
         {
-            
                 CreateHostBuilder(args).Build().Run();
         }
 
