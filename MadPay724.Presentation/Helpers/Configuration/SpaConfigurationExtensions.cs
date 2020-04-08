@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Rewrite;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
@@ -18,8 +20,19 @@ namespace MadPay724.Presentation.Helpers.Configuration
 
         public static void UseMadSpa(this IApplicationBuilder app)
         {
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                RequestPath = new PathString("/wwwroot")
+            });
+
+            var provider = new FileExtensionContentTypeProvider();
+            provider.Mappings[".webmanifest"] = "application/manifest+json";
+
             app.UseDefaultFiles();
-            app.UseSpaStaticFiles();
+            app.UseSpaStaticFiles(new StaticFileOptions
+            {
+                ContentTypeProvider = provider
+            });
             //
             app.UseRewriter(new RewriteOptions().AddRewrite(@"^\s*$", "/app", skipRemainingRules: true));
             app.Map("/app", site =>
