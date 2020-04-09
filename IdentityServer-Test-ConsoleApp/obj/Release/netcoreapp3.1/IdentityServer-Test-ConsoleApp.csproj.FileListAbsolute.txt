@@ -1,0 +1,17 @@
+D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\IdentityServer-Test-ConsoleApp\bin\Release\netcoreapp3.1\IdentityServer-Test-ConsoleApp.exe
+D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\IdentityServer-Test-ConsoleApp\bin\Release\netcoreapp3.1\IdentityServer-Test-ConsoleApp.deps.json
+D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\IdentityServer-Test-ConsoleApp\bin\Release\netcoreapp3.1\IdentityServer-Test-ConsoleApp.runtimeconfig.json
+D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\IdentityServer-Test-ConsoleApp\bin\Release\netcoreapp3.1\IdentityServer-Test-ConsoleApp.runtimeconfig.dev.json
+D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\IdentityServer-Test-ConsoleApp\bin\Release\netcoreapp3.1\IdentityServer-Test-ConsoleApp.dll
+D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\IdentityServer-Test-ConsoleApp\bin\Release\netcoreapp3.1\IdentityServer-Test-ConsoleApp.pdb
+D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\IdentityServer-Test-ConsoleApp\bin\Release\netcoreapp3.1\IdentityModel.dll
+D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\IdentityServer-Test-ConsoleApp\bin\Release\netcoreapp3.1\Newtonsoft.Json.dll
+D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\IdentityServer-Test-ConsoleApp\bin\Release\netcoreapp3.1\RestSharp.dll
+D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\IdentityServer-Test-ConsoleApp\obj\Release\netcoreapp3.1\IdentityServer-Test-ConsoleApp.csprojAssemblyReference.cache
+D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\IdentityServer-Test-ConsoleApp\obj\Release\netcoreapp3.1\IdentityServer-Test-ConsoleApp.csproj.CoreCompileInputs.cache
+D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\IdentityServer-Test-ConsoleApp\obj\Release\netcoreapp3.1\IdentityServer-Test-ConsoleApp.AssemblyInfoInputs.cache
+D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\IdentityServer-Test-ConsoleApp\obj\Release\netcoreapp3.1\IdentityServer-Test-ConsoleApp.AssemblyInfo.cs
+D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\IdentityServer-Test-ConsoleApp\obj\Release\netcoreapp3.1\IdentityServer-Test-ConsoleApp.csproj.CopyComplete
+D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\IdentityServer-Test-ConsoleApp\obj\Release\netcoreapp3.1\IdentityServer-Test-ConsoleApp.dll
+D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\IdentityServer-Test-ConsoleApp\obj\Release\netcoreapp3.1\IdentityServer-Test-ConsoleApp.pdb
+D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\IdentityServer-Test-ConsoleApp\obj\Release\netcoreapp3.1\IdentityServer-Test-ConsoleApp.genruntimeconfig.cache

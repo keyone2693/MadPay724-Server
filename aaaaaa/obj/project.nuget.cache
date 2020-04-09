@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "4pmx6rFfDprkbszarxBKwxKV2sWpNTPUS2vm32Sd2r1ZHN5zthKRR+9nQVFngDNKYsQ664Fgg8LLA1J2OL+GYg==",
+  "success": true,
+  "projectFilePath": "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\aaaaaa\\aaaaaa.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Key1-lab\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.10.8\\microsoft.visualstudio.azure.containers.tools.targets.1.10.8.nupkg.sha512"
+  ],
+  "logs": []
+}

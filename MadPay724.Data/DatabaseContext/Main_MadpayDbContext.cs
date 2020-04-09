@@ -25,7 +25,8 @@ namespace MadPay724.Data.DatabaseContext
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionBuilder)
         {
-            optionBuilder.UseSqlServer(@"Data Source=KEY1-LAB\MSSQLSERVER2016;Initial Catalog=Main_MadPay724db;Integrated Security=True;MultipleActiveResultSets=True;");
+            optionBuilder
+                .UseSqlServer(@"Server=KEY1-LAB\MSSQLSERVER2016;Database=Main_MadPay724db;User Id=sa;Password=sa;Trusted_Connection=True;MultipleActiveResultSets=True;");
         }
 
         public DbSet<Photo> Photos { get; set; }
