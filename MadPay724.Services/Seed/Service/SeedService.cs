@@ -8,30 +8,68 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Internal;
 using System.Linq;
 using MadPay724.Services.Site.Panel.Auth.Interface;
+using MadPay724.Data.DatabaseContext;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace MadPay724.Services.Seed.Service
 {
     public class SeedService : ISeedService
     {
+        private readonly Main_MadPayDbContext _dbMain;
+        private readonly Financial_MadPayDbContext _dbFinancial;
+        private readonly Log_MadPayDbContext _dbLog;
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<Role> _roleManager;
         private readonly IUtilities _utilities;
         private readonly IAuthService _authService;
 
         public SeedService(UserManager<User> userManager, RoleManager<Role> roleManager, IUtilities utilities,
-            IAuthService authService)
+            IAuthService authService, Main_MadPayDbContext dbMain,
+            Financial_MadPayDbContext dbFinancial,
+            Log_MadPayDbContext dbLog)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _utilities = utilities;
             _authService = authService;
+            _dbMain = dbMain;
+            _dbFinancial = dbFinancial;
+            _dbLog = dbLog;
+
         }
 
 
         public void SeedUsers()
         {
+
+            System.Console.WriteLine("Adding Migrations ...");
+
+
+            _dbMain.Database.Migrate();
+            _dbFinancial.Database.Migrate();
+            _dbLog.Database.Migrate();
+
+
+            if (!_dbMain.Settings.Any(p=>p.Id == 1))
+            {
+                _dbMain.Settings.Add(new Setting
+                {
+                    CloudinaryCloudName = "keyone2693",
+                    CloudinaryAPIKey = "392574657416383",
+                    CloudinaryAPISecret = "J7nBtA2rjiyvYmhYUWwe8-sATCs",
+                    UploadLocal = true
+                });
+
+                _dbMain.SaveChanges();
+            }
+
             if (!_userManager.Users.Any())
             {
+                System.Console.WriteLine("Adding Data ...");
+
+
                 var userData = System.IO.File.ReadAllText("wwwroot/Files/Json/Seed/UserSeedData.json");
                 var users = JsonConvert.DeserializeObject<IList<User>>(userData);
 

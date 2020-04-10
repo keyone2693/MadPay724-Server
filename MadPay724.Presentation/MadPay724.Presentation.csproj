@@ -10,12 +10,6 @@
     <NoWarn>1701;1702,CS1998</NoWarn>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Clients\py\**" />
-    <Content Remove="Clients\py\**" />
-    <EmbeddedResource Remove="Clients\py\**" />
-    <None Remove="Clients\py\**" />
-  </ItemGroup>
 
   <ItemGroup>
     <Content Remove="wwwroot\Files\Json\Seed\UserSeedData.json" />
