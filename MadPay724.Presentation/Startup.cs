@@ -9,9 +9,6 @@ using MadPay724.Services.Seed.Service;
 using MadPay724.Services.Site.Panel.Common.Service;
 using MadPay724.Common.Routes.V1.Site;
 using MadPay724.Presentation.Helpers.Configuration;
-using Microsoft.AspNetCore.SpaServices.AngularCli;
-using Microsoft.Extensions.FileProviders;
-using System.IO;
 
 namespace MadPay724.Presentation
 {
@@ -33,7 +30,7 @@ namespace MadPay724.Presentation
         }
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMadDbContext();
+            services.AddMadDbContext(Configuration);
             services.AddMadInitialize(_httpsPort);
             services.AddSignalR();
             services.AddAutoMapper(typeof(Startup));

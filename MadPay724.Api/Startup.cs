@@ -31,7 +31,7 @@ namespace MadPay724.Api
         }
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMadDbContext();
+            services.AddMadDbContext(Configuration);
             services.AddMadInitialize(_httpsPort);
             services.AddSignalR();
             services.AddAutoMapper(typeof(Startup));

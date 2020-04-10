@@ -19,7 +19,7 @@ namespace MadPay724.Payment
         public void ConfigureServices(IServiceCollection services)
         {
             //services.AddRazorPages();
-            services.AddMadDbContext();
+            services.AddMadDbContext(Configuration);
             services.AddMadInitialize();
             services.AddAutoMapper(typeof(Startup));
             services.AddMadDI();

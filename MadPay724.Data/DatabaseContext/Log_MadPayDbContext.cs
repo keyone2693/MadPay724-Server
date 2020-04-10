@@ -15,11 +15,11 @@ namespace MadPay724.Data.DatabaseContext
         {
 
         }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionBuilder)
-        {
-            optionBuilder
-                .UseSqlServer(@"Server=KEY1-LAB\MSSQLSERVER2016;Database=Log_MadPay724db;User Id=sa;Password=sa;Trusted_Connection=True;MultipleActiveResultSets=True;");
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionBuilder)
+        //{
+        //    optionBuilder
+        //        .UseSqlServer(@"Server=KEY1-LAB\MSSQLSERVER2016;Database=Log_MadPay724db;User Id=sa;Password=sa;Trusted_Connection=True;MultipleActiveResultSets=True;");
+        //}
 
         public DbSet<ExtendedLog> Logs { get; set; }
 

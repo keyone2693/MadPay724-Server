@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -16,11 +18,19 @@ namespace MadPay724.Api.Helpers.Configuration
 {
     public static class InitConfigurationExtensions
     {
-        public static void AddMadDbContext(this IServiceCollection services)
+        public static void AddMadDbContext(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<Main_MadPayDbContext>();
-            services.AddDbContext<Financial_MadPayDbContext>();
-            services.AddDbContext<Log_MadPayDbContext>();
+            var con = configuration.GetSection("ConnectionStrings");
+
+            services.AddDbContext<Main_MadPayDbContext>(opt => {
+                opt.UseSqlServer(con.GetSection("Main").Value);
+            });
+            services.AddDbContext<Financial_MadPayDbContext>(opt => {
+                opt.UseSqlServer(con.GetSection("Financial").Value);
+            });
+            services.AddDbContext<Log_MadPayDbContext>(opt => {
+                opt.UseSqlServer(con.GetSection("Log").Value);
+            });
         }
         public static void AddMadInitialize(this IServiceCollection services, int? httpsPort)
         {

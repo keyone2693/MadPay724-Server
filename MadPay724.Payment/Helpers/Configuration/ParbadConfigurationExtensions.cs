@@ -10,6 +10,8 @@ namespace MadPay724.Payment.Helpers.Configuration
     {
         public static void AddMadParbad(this IServiceCollection services, IConfiguration configuration)
         {
+            var con = configuration.GetSection("ConnectionStrings");
+
             services.AddParbad()
                 .ConfigureGateways(gateWayes =>
                 {
@@ -33,7 +35,7 @@ namespace MadPay724.Payment.Helpers.Configuration
                 .ConfigureStorage(bld =>
                 {
                     bld.UseEntityFrameworkCore(ef =>
-                        ef.UseSqlServer(@"Data Source=KEY1-LAB\MSSQLSERVER2016;Initial Catalog=Financial_MadPay724db;Integrated Security=True;MultipleActiveResultSets=True;",
+                        ef.UseSqlServer(con.GetSection("Financial").Value,
                         opt => opt.UseParbadMigrations()))
                     .ConfigureDatabaseInitializer(bld =>
                     {
