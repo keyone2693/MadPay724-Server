@@ -26,7 +26,7 @@ namespace MadPay724.Presentation.Controllers.V1.Panel.Admin
         private readonly string root = "wwwroot\\Files";
 
 
-        public FileMangerController(IHostingEnvironment hostingEnvironment)
+        public FileMangerController(IWebHostEnvironment hostingEnvironment)
         {
             basePath = hostingEnvironment.ContentRootPath;
             opration = new PhysicalFileProvider();

@@ -14,3 +14,4 @@ D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\IdentityServer-Test-ConsoleApp
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\IdentityServer-Test-ConsoleApp\obj\Debug\netcoreapp3.1\IdentityServer-Test-ConsoleApp.dll
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\IdentityServer-Test-ConsoleApp\obj\Debug\netcoreapp3.1\IdentityServer-Test-ConsoleApp.pdb
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\IdentityServer-Test-ConsoleApp\obj\Debug\netcoreapp3.1\IdentityServer-Test-ConsoleApp.genruntimeconfig.cache
+D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\IdentityServer-Test-ConsoleApp\obj\Debug\netcoreapp3.1\IdentityServer-Test-ConsoleApp.csprojAssemblyReference.cache

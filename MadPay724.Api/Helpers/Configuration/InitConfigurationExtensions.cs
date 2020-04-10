@@ -1,4 +1,4 @@
-﻿using ImageResizer.AspNetCore.Helpers;
+﻿//using ImageResizer.AspNetCore.Helpers;
 using MadPay724.Data.DatabaseContext;
 using MadPay724.Data.Dtos.Api;
 using MadPay724.Services.Seed.Service;
@@ -105,14 +105,14 @@ namespace MadPay724.Api.Helpers.Configuration
             //    opt.DefaultApiVersion = new ApiVersion(1,0);
             //    opt.ApiVersionSelector = new CurrentImplementationApiVersionSelector(opt);
             //});
-            services.AddImageResizer();
+            //services.AddImageResizer();
         }
 
         public static void UseMadInitialize(this IApplicationBuilder app)
         {
             //app.UseResponseCompression();
             app.UseRouting();
-            app.UseImageResizer();
+           // app.UseImageResizer();
             app.UseCsp(opt => opt.DefaultSources(s => s.Self())
             .StyleSources(s => s.Self().UnsafeInline())
             .ScriptSources(s => s.Self().UnsafeInline())

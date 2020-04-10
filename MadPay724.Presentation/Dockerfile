@@ -23,4 +23,4 @@ RUN dotnet publish "MadPay724.Presentation.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "MadPay724.Presentation.dll"]
+ENTRYPOINT ["dotnet", "MadPay724.Presentation.dll"]z

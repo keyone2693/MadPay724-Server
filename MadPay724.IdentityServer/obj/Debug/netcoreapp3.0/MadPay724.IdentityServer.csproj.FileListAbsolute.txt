@@ -59,3 +59,4 @@ D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.IdentityServer\obj\D
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.IdentityServer\obj\Debug\netcoreapp3.0\MadPay724.IdentityServer.dll
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.IdentityServer\obj\Debug\netcoreapp3.0\MadPay724.IdentityServer.pdb
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.IdentityServer\obj\Debug\netcoreapp3.0\MadPay724.IdentityServer.genruntimeconfig.cache
+D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.IdentityServer\obj\Debug\netcoreapp3.0\MadPay724.IdentityServer.csprojAssemblyReference.cache

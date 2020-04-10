@@ -15,7 +15,6 @@ D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcor
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\CloudinaryDotNet.dll
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\DnsClient.dll
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\HtmlSanitizer.dll
-D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\ImageResizer.AspNetCore.dll
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Cryptography.Internal.dll
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
@@ -88,8 +87,6 @@ D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcor
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\Parbad.Gateway.ZarinPal.dll
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\Parbad.Storage.EntityFrameworkCore.dll
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\PersianDate.Standard.dll
-D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\SkiaSharp.dll
-D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\SkiaSharp.Views.Desktop.dll
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\SmsIrRestfulNetCore.dll
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\System.Composition.AttributedModel.dll
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\System.Composition.Convention.dll
@@ -101,9 +98,6 @@ D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcor
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\System.Net.WebSockets.WebSocketProtocol.dll
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\System.Runtime.Caching.dll
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\System.Security.Cryptography.ProtectedData.dll
-D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\Xamarin.Forms.Core.dll
-D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\Xamarin.Forms.Platform.dll
-D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\Xamarin.Forms.Xaml.dll
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\ZNetCS.AspNetCore.Logging.EntityFrameworkCore.dll
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\cs\Microsoft.CodeAnalysis.resources.dll
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\de\Microsoft.CodeAnalysis.resources.dll
@@ -162,11 +156,6 @@ D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcor
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\runtimes\win-arm64\native\sni.dll
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\runtimes\win-x64\native\sni.dll
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\sni.dll
-D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\runtimes\osx\native\libSkiaSharp.dylib
-D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\runtimes\tizen-armel\native\libSkiaSharp.so
-D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\runtimes\tizen-x86\native\libSkiaSharp.so
-D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\runtimes\win-x64\native\libSkiaSharp.dll
-D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\libSkiaSharp.dll
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Api\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
