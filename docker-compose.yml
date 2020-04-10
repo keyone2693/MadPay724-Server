@@ -1,16 +1,18 @@
 ﻿version: '3.7'
 services:
-  ms-sql-server:
-    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
-    environment:
-      ACCEPT_EULA: "Y"
-      SA_PASSWORD: "aa#AA!123456aa"
-      MSSQL_PID: Express
-    ports:
-      - "1433:1433"
-  madpay-api:
-    build:
-      context: .
-      dockerfile: MadPay724.Api/Dockerfile
-    ports:
-      - "8080:80"
+    madpay-api:
+        build:
+            context: .
+            dockerfile: MadPay724.Api/Dockerfile
+        ports:
+            - "9095:80"
+        depends_on:
+            - ms-sql-server
+    ms-sql-server:
+        image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+        environment:
+            ACCEPT_EULA: "Y"
+            SA_PASSWORD: "aa#AA!123456aa"
+            MSSQL_PID: Express
+        ports:
+            - "1433:1433"

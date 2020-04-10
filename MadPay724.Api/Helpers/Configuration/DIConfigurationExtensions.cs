@@ -26,6 +26,7 @@ namespace MadPay724.Api.Helpers.Configuration
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
             //
+            services.AddTransient<SeedService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUploadService, UploadService>();

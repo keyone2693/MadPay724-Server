@@ -108,9 +108,11 @@ namespace MadPay724.Api.Helpers.Configuration
             //services.AddImageResizer();
         }
 
-        public static void UseMadInitialize(this IApplicationBuilder app)
+        public static void UseMadInitialize(this IApplicationBuilder app, SeedService seeder)
         {
             //app.UseResponseCompression();
+            seeder.SeedUsers();
+
             app.UseRouting();
            // app.UseImageResizer();
             app.UseCsp(opt => opt.DefaultSources(s => s.Self())

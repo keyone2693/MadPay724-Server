@@ -6,10 +6,13 @@ using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using MadPay724.Data.Dtos.Common;
-using System.Linq;
 using Microsoft.AspNetCore.Rewrite;
+using MadPay724.Services.Seed.Service;
+using MadPay724.Data.DatabaseContext;
+using MadPay724.Data.Models.MainDB;
+using NLog.Extensions.Logging;
+using NLog.Web;
+using ZNetCS.AspNetCore.Logging.EntityFrameworkCore;
 
 namespace MadPay724.Api
 {
@@ -32,6 +35,7 @@ namespace MadPay724.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMadDbContext(Configuration);
+
             services.AddMadInitialize(_httpsPort);
             services.AddSignalR();
             services.AddAutoMapper(typeof(Startup));
@@ -45,10 +49,10 @@ namespace MadPay724.Api
 
 
         }
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, SeedService seeder)
         {
             app.UseMadExceptionHandle(env);
-            app.UseMadInitialize();
+            app.UseMadInitialize(seeder);
             app.UseMadAuth();
             app.UseMadSwagger();
             app.UseMadParbad();

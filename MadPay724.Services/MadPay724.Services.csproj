@@ -24,4 +24,10 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="SmsIrRestfulNetCore" Version="1.1.4" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update="UserSeedData.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
