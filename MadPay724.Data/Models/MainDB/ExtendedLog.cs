@@ -7,16 +7,28 @@ namespace MadPay724.Data.Models.MainDB
     {
         public ExtendedLog(IHttpContextAccessor http)
         {
-            string browser = http.HttpContext.Request.Headers["User-Agent"];
-            if (!string.IsNullOrEmpty(browser) && (browser.Length > 255))
+            if (http != null)
             {
-                browser = browser.Substring(0, 255);
+                string browser = http.HttpContext.Request.Headers["User-Agent"];
+                if (!string.IsNullOrEmpty(browser) && (browser.Length > 255))
+                {
+                    browser = browser.Substring(0, 255);
+                }
+
+                this.Browser = browser;
+                this.Host = http.HttpContext.Connection?.RemoteIpAddress.ToString();
+                this.User = http.HttpContext.User?.Identity.Name;
+                this.Path = http.HttpContext.Request.Path;
+            }
+            else
+            {
+
+                this.Browser = "System Error";
+                this.Host = "System Error";
+                this.User = "System Error";
+                this.Path = "System Error";
             }
 
-            this.Browser = browser;
-            this.Host = http.HttpContext.Connection?.RemoteIpAddress.ToString();
-            this.User = http.HttpContext.User?.Identity.Name;
-            this.Path = http.HttpContext.Request.Path;
 
         }
         public ExtendedLog()

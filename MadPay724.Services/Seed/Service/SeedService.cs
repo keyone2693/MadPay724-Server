@@ -12,6 +12,7 @@ using MadPay724.Data.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using System.IO;
+using Microsoft.Extensions.Logging;
 
 namespace MadPay724.Services.Seed.Service
 {
@@ -24,11 +25,12 @@ namespace MadPay724.Services.Seed.Service
         private readonly RoleManager<Role> _roleManager;
         private readonly IUtilities _utilities;
         private readonly IAuthService _authService;
+        private readonly ILogger<SeedService> _logger;
 
         public SeedService(UserManager<User> userManager, RoleManager<Role> roleManager, IUtilities utilities,
             IAuthService authService, Main_MadPayDbContext dbMain,
             Financial_MadPayDbContext dbFinancial,
-            Log_MadPayDbContext dbLog)
+            Log_MadPayDbContext dbLog, ILogger<SeedService> logger)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -37,7 +39,7 @@ namespace MadPay724.Services.Seed.Service
             _dbMain = dbMain;
             _dbFinancial = dbFinancial;
             _dbLog = dbLog;
-
+            _logger = logger;
         }
 
 
@@ -46,9 +48,16 @@ namespace MadPay724.Services.Seed.Service
 
             System.Console.WriteLine("Adding Migrations ...");
 
+            try
+            {
             _dbLog.Database.Migrate();
             _dbMain.Database.Migrate();
             _dbFinancial.Database.Migrate();
+            }
+            catch (Exception ex){
+                _logger.LogWarning(ex.Message);
+            }
+
 
 
             if (!_dbMain.Settings.Any(p=>p.Id == 1))

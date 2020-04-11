@@ -13,6 +13,7 @@ using MadPay724.Data.Models.MainDB;
 using NLog.Extensions.Logging;
 using NLog.Web;
 using ZNetCS.AspNetCore.Logging.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 
 namespace MadPay724.Api
 {
@@ -57,11 +58,15 @@ namespace MadPay724.Api
             app.UseMadSwagger();
             app.UseMadParbad();
 
-            app.UseRewriter(new RewriteOptions().AddRedirect(@"^\s*$", "https://api.madpay724.ir/swagger", 301));
+            //app.UseRewriter(new RewriteOptions().AddRedirect(@"^\s*$", "https://api.madpay724.ir/swagger", 301));
 
 
             app.UseEndpoints(end =>
             {
+                end.MapGet("/", async context =>
+                {
+                    await context.Response.WriteAsync(System.Diagnostics.Process.GetCurrentProcess().ProcessName);
+                });
                 end.MapControllers();
             });
         }
