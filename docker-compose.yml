@@ -1,18 +1,26 @@
 ﻿version: '3.7'
+networks:
+    localdev:
+        name: localdev
 services:
     madpay-api:
         build:
             context: .
             dockerfile: MadPay724.Api/Dockerfile
         ports:
-            - "9095:80"
+            - "7000:80"
         depends_on:
             - ms-sql-server
+        networks:
+            - localdev
     ms-sql-server:
         image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
         environment:
             ACCEPT_EULA: "Y"
             SA_PASSWORD: "aa#AA!123456aa"
-            MSSQL_PID: Express
+            MSSQL_PID: "Express"
+            MSSQL_TCP_PORT: "1433"
         ports:
-            - "1433:1433"
+            - "1400:1433"
+        networks:
+            - localdev

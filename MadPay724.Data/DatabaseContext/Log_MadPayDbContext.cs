@@ -18,7 +18,7 @@ namespace MadPay724.Data.DatabaseContext
         protected override void OnConfiguring(DbContextOptionsBuilder optionBuilder)
         {
             optionBuilder
-                .UseSqlServer(@"Server=ms-sql-server,1433;Initial Catalog=Log_MadPayDbContext;User Id=SA;Password=aa#AA!123456aa;MultipleActiveResultSets=True;");
+                .UseSqlServer(@"Server=ms-sql-server;Initial Catalog=Log_MadPayDbContext;User Id=SA;Password=aa#AA!123456aa;");
         }
 
         public DbSet<ExtendedLog> Logs { get; set; }
