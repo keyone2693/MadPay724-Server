@@ -108,6 +108,9 @@ namespace MadPay724.Api.Helpers.Configuration
 
         public static void UseMadInitialize(this IApplicationBuilder app, SeedService seeder)
         {
+
+
+
             //app.UseResponseCompression();
             seeder.SeedUsers();
 

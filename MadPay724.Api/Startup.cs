@@ -14,6 +14,7 @@ using NLog.Extensions.Logging;
 using NLog.Web;
 using ZNetCS.AspNetCore.Logging.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace MadPay724.Api
 {
@@ -52,6 +53,12 @@ namespace MadPay724.Api
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, SeedService seeder)
         {
+
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
+
             app.UseMadExceptionHandle(env);
             app.UseMadInitialize(seeder);
             app.UseMadAuth();

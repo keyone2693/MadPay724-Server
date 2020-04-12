@@ -7,7 +7,7 @@ namespace MadPay724.Data.Models.MainDB
     {
         public ExtendedLog(IHttpContextAccessor http)
         {
-            if (http != null)
+            try
             {
                 string browser = http.HttpContext.Request.Headers["User-Agent"];
                 if (!string.IsNullOrEmpty(browser) && (browser.Length > 255))
@@ -20,16 +20,13 @@ namespace MadPay724.Data.Models.MainDB
                 this.User = http.HttpContext.User?.Identity.Name;
                 this.Path = http.HttpContext.Request.Path;
             }
-            else
+            catch
             {
-
                 this.Browser = "System Error";
                 this.Host = "System Error";
                 this.User = "System Error";
                 this.Path = "System Error";
             }
-
-
         }
         public ExtendedLog()
         {
