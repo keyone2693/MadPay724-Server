@@ -180,3 +180,4 @@ D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Payment\obj\Release\
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Payment\obj\Release\netcoreapp3.1\MadPay724.Payment.dll
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Payment\obj\Release\netcoreapp3.1\MadPay724.Payment.pdb
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Payment\obj\Release\netcoreapp3.1\MadPay724.Payment.genruntimeconfig.cache
+D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Payment\bin\Release\netcoreapp3.1\UserSeedData.json

@@ -1,8 +1,8 @@
 {
   "name": "MadPay724",
   "short_name": "MadPay",
-  "theme_color": "#1976d2",
-  "background_color": "#fafafa",
+  "theme_color": "#ff006a",
+  "background_color": "#333",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",

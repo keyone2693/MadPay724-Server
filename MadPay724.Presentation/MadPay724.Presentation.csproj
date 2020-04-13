@@ -19,6 +19,12 @@
     <Content Remove="wwwroot\Files\Json\Seed\UserSeedData.json" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Content Include="Clients\my\assets\css\..act-time\fonts\IRANSansWeb_Boldd41d.html" />
+    <Content Include="Clients\my\assets\css\..act-time\fonts\IRANSansWeb_Medium.html" />
+  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="HtmlSanitizer" Version="5.0.304" />
@@ -55,6 +61,7 @@
   </ItemGroup>
   
   <ItemGroup>
+    <Folder Include="Clients\app\" />
     <Folder Include="wwwroot\Files\Gate\" />
     <Folder Include="wwwroot\Files\TicketContent\" />
     <Folder Include="wwwroot\Files\Pic\Profile\" />
