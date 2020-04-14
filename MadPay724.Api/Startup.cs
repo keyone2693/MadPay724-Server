@@ -59,7 +59,9 @@ namespace MadPay724.Api
             app.UseMadSwagger();
             app.UseMadParbad();
 
-            app.UseRewriter(new RewriteOptions().AddRedirect(@"^\s*$", "https://api.madpay724.ir/swagger", 301));
+            app.UseRewriter(
+                
+                new RewriteOptions().AddRedirect(@"^\s*$", "https://api.madpay724.ir/swagger", 301));
 
 
             app.UseEndpoints(end =>

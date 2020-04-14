@@ -26,7 +26,9 @@ namespace MadPay724.Presentation.Helpers.Configuration
             services.AddDbContext<Financial_MadPayDbContext>(opt => {
                 opt.UseSqlServer(con.GetSection("Financial").Value);
             });
-            services.AddDbContext<Log_MadPayDbContext>();
+            services.AddDbContext<Log_MadPayDbContext>(opt => {
+                opt.UseSqlServer(con.GetSection("Log").Value);
+            });
         }
         public static void AddMadInitialize(this IServiceCollection services, int? httpsPort)
         {

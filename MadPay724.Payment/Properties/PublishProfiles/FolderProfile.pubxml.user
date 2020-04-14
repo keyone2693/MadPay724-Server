@@ -6,6 +6,6 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.Payment\bin\Release\netcoreapp3.1\publish\</_PublishTargetUrl>
+    <_PublishTargetUrl>C:\Users\Key1-lab\Desktop\madpay-payment</_PublishTargetUrl>
   </PropertyGroup>
 </Project>

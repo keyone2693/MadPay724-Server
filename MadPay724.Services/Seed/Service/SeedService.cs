@@ -48,15 +48,15 @@ namespace MadPay724.Services.Seed.Service
 
             System.Console.WriteLine("Adding Migrations ...");
 
-            try
-            {
-            _dbLog.Database.Migrate();
-            _dbMain.Database.Migrate();
-            _dbFinancial.Database.Migrate();
-            }
-            catch (Exception ex){
-                _logger.LogWarning(ex.Message);
-            }
+            //try
+            //{
+            //    _dbLog.Database.Migrate();
+            //    _dbMain.Database.Migrate();
+            //    _dbFinancial.Database.Migrate();
+            //}
+            //catch (Exception ex){
+            //    _logger.LogWarning(ex.Message);
+            //}
 
 
 
