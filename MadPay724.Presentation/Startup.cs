@@ -40,7 +40,7 @@ namespace MadPay724.Presentation
             services.AddMadApiVersioning();
             services.AddMadSwagger();
             services.AddMadParbad(Configuration);
-            services.AddMadSpa();
+            //services.AddMadSpa();
         }
 
         [System.Obsolete]
@@ -62,7 +62,7 @@ namespace MadPay724.Presentation
                 end.MapHub<ChatHubService>(SiteV1Routes.BaseChatPanel + "/chat");
             });
 
-            app.UseMadSpa();
+            //app.UseMadSpa();
         }
 
     }
