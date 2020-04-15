@@ -3,6 +3,7 @@ using MadPay724.Payment.Helpers.Configuration;
 using MadPay724.Payment.Helpers.Filters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,13 +31,18 @@ namespace MadPay724.Payment
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            //app.UseForwardedHeaders(new ForwardedHeadersOptions
+            //{
+            //    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            //});
+
             app.UseMadExceptionHandle(env);
             app.UseMadInitialize();
             app.UseMadParbad();
 
             var rewriteOptions = new RewriteOptions();
             rewriteOptions.Rules.Add(new NonWwwRewriteRule());
-            rewriteOptions.AddRedirect(@"^\s*$", "https://madpay724.ir", 301);
+            //rewriteOptions.AddRedirect(@"^\s*$", "https://madpay724.ir", 301);
 
             app.UseRewriter(rewriteOptions);
 
