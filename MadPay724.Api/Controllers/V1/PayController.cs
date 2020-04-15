@@ -52,7 +52,11 @@ namespace MadPay724.Api.Controllers.V1
         [ProducesResponseType(typeof(GateApiReturn<PayResponseDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(GateApiReturn<string>), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> PaySend(PayRequestDto payRequestDto)
-        {
+        {        
+            var request = HttpContext.Request;
+
+            _logger.LogWarning($"{request.Host}");
+
             var model = new GateApiReturn<PayResponseDto>
             {
                 Status = true,

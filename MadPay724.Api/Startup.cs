@@ -15,6 +15,7 @@ using NLog.Web;
 using ZNetCS.AspNetCore.Logging.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
+using MadPay724.Api.Helpers.Filters;
 
 namespace MadPay724.Api
 {
@@ -60,8 +61,9 @@ namespace MadPay724.Api
             app.UseMadParbad();
 
             app.UseRewriter(
-                
-                new RewriteOptions().AddRedirect(@"^\s*$", "https://api.madpay724.ir/swagger", 301));
+                new RewriteOptions()
+                .Add(new NonWwwRewriteRule())
+                .AddRedirect(@"^\s*$", "https://api.madpay724.ir/swagger", 301));
 
 
             app.UseEndpoints(end =>

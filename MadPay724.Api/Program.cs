@@ -17,14 +17,14 @@ namespace MadPay724.Api
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                })
                 .ConfigureLogging((hostingContext, logging) =>
                 {
                     //logging.AddNLog();
                     logging.AddEntityFramework<Log_MadPayDbContext, ExtendedLog>();
+                }).ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
                 });
+
     }
 }
