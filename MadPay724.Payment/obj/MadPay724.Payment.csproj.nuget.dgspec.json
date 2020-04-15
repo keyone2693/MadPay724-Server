@@ -51,7 +51,7 @@
             },
             "HtmlSanitizer": {
               "target": "Package",
-              "version": "[5.0.304, )"
+              "version": "[5.0.310, )"
             },
             "Microsoft.AspNetCore.Http": {
               "target": "Package",
@@ -266,19 +266,19 @@
             },
             "Parbad": {
               "target": "Package",
-              "version": "[3.3.2, )"
+              "version": "[3.3.3, )"
             },
             "Parbad.AspNetCore": {
               "target": "Package",
-              "version": "[1.0.4, )"
+              "version": "[1.0.5, )"
             },
             "Parbad.Gateway.ZarinPal": {
               "target": "Package",
-              "version": "[1.0.3, )"
+              "version": "[1.0.4, )"
             },
             "Parbad.Storage.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[1.0.3, )"
+              "version": "[1.0.4, )"
             }
           },
           "imports": [

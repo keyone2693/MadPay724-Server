@@ -51,7 +51,7 @@
             },
             "HtmlSanitizer": {
               "target": "Package",
-              "version": "[5.0.304, )"
+              "version": "[5.0.310, )"
             },
             "Microsoft.AspNetCore.Http": {
               "target": "Package",
@@ -248,10 +248,6 @@
               "target": "Package",
               "version": "[7.0.0, )"
             },
-            "HtmlSanitizer": {
-              "target": "Package",
-              "version": "[5.0.304, )"
-            },
             "ImageResizer.AspNetCore": {
               "target": "Package",
               "version": "[1.8.6, )"
@@ -324,15 +320,15 @@
             },
             "Parbad.AspNetCore": {
               "target": "Package",
-              "version": "[1.0.4, )"
+              "version": "[1.0.5, )"
             },
             "Parbad.Gateway.ZarinPal": {
               "target": "Package",
-              "version": "[1.0.3, )"
+              "version": "[1.0.4, )"
             },
             "Parbad.Storage.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[1.0.3, )"
+              "version": "[1.0.4, )"
             },
             "PersianDate": {
               "target": "Package",
@@ -340,7 +336,7 @@
             },
             "Syncfusion.EJ2.AspNet.Core": {
               "target": "Package",
-              "version": "[18.1.0.43, )"
+              "version": "[18.1.0.44, )"
             },
             "System.IdentityModel.Tokens.Jwt": {
               "target": "Package",

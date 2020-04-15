@@ -14,10 +14,10 @@
           "lib/netstandard2.0/AngleSharp.dll": {}
         }
       },
-      "AngleSharp.Css/0.13.0": {
+      "AngleSharp.Css/0.14.0": {
         "type": "package",
         "dependencies": {
-          "AngleSharp": "0.13.0"
+          "AngleSharp": "0.14.0"
         },
         "compile": {
           "lib/netstandard2.0/AngleSharp.Css.dll": {}
@@ -73,11 +73,11 @@
           "lib/netstandard2.1/DnsClient.dll": {}
         }
       },
-      "HtmlSanitizer/5.0.304": {
+      "HtmlSanitizer/5.0.310": {
         "type": "package",
         "dependencies": {
           "AngleSharp": "[0.14.0]",
-          "AngleSharp.Css": "[0.13.0]",
+          "AngleSharp.Css": "[0.14.0]",
           "System.Text.Encoding.CodePages": "4.7.0"
         },
         "compile": {
@@ -1619,7 +1619,7 @@
           "Microsoft.AspNetCore.App"
         ]
       },
-      "Parbad/3.3.2": {
+      "Parbad/3.3.3": {
         "type": "package",
         "dependencies": {
           "Newtonsoft.Json": "11.0.1"
@@ -1634,10 +1634,10 @@
           "Microsoft.AspNetCore.App"
         ]
       },
-      "Parbad.AspNetCore/1.0.4": {
+      "Parbad.AspNetCore/1.0.5": {
         "type": "package",
         "dependencies": {
-          "Parbad": "3.3.0"
+          "Parbad": "3.3.3"
         },
         "compile": {
           "lib/netcoreapp3.0/Parbad.AspNetCore.dll": {}
@@ -1649,10 +1649,10 @@
           "Microsoft.AspNetCore.App"
         ]
       },
-      "Parbad.Gateway.ZarinPal/1.0.3": {
+      "Parbad.Gateway.ZarinPal/1.0.4": {
         "type": "package",
         "dependencies": {
-          "Parbad": "3.3.0"
+          "Parbad": "3.3.3"
         },
         "compile": {
           "lib/netcoreapp3.0/Parbad.Gateway.ZarinPal.dll": {}
@@ -1664,12 +1664,12 @@
           "Microsoft.AspNetCore.App"
         ]
       },
-      "Parbad.Storage.EntityFrameworkCore/1.0.3": {
+      "Parbad.Storage.EntityFrameworkCore/1.0.4": {
         "type": "package",
         "dependencies": {
           "Microsoft.EntityFrameworkCore.InMemory": "3.1.0",
           "Microsoft.EntityFrameworkCore.SqlServer": "3.1.0",
-          "Parbad": "3.2.2"
+          "Parbad": "3.3.3"
         },
         "compile": {
           "lib/netstandard2.0/Parbad.Storage.EntityFrameworkCore.dll": {}
@@ -3485,7 +3485,7 @@
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
           "DnsClient": "1.3.1",
-          "HtmlSanitizer": "5.0.304",
+          "HtmlSanitizer": "5.0.310",
           "MadPay724.Data": "1.0.0",
           "Microsoft.AspNetCore.Http": "2.2.2",
           "Microsoft.AspNetCore.Mvc.Core": "2.2.5",
@@ -3588,17 +3588,21 @@
         "lib/netstandard2.0/AngleSharp.xml"
       ]
     },
-    "AngleSharp.Css/0.13.0": {
-      "sha512": "dx/RayhtYKNVOz6t2UB0SF4BUfvWpPedjrL7KKMJ3aJI4oDNbbBAXD7/JVrIBM1G3fJw6O5jfdIiTxigPXY/3w==",
+    "AngleSharp.Css/0.14.0": {
+      "sha512": "k6jk/4mP5JlMYJYujgRAYWTWBMM5mqZoLeNq0hwgqlz3ay8PWhAuQe5vpF1+oIZfiejh55l/GZSbYq1m5suXvA==",
       "type": "package",
-      "path": "anglesharp.css/0.13.0",
+      "path": "anglesharp.css/0.14.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "anglesharp.css.0.13.0.nupkg.sha512",
+        "anglesharp.css.0.14.0.nupkg.sha512",
         "anglesharp.css.nuspec",
         "lib/net46/AngleSharp.Css.dll",
         "lib/net46/AngleSharp.Css.xml",
+        "lib/net461/AngleSharp.Css.dll",
+        "lib/net461/AngleSharp.Css.xml",
+        "lib/net472/AngleSharp.Css.dll",
+        "lib/net472/AngleSharp.Css.xml",
         "lib/netstandard1.3/AngleSharp.Css.dll",
         "lib/netstandard1.3/AngleSharp.Css.xml",
         "lib/netstandard2.0/AngleSharp.Css.dll",
@@ -3679,14 +3683,14 @@
         "lib/netstandard2.1/DnsClient.xml"
       ]
     },
-    "HtmlSanitizer/5.0.304": {
-      "sha512": "cP92765H+hBcrwj84DkQ2/0npHuIdkPsIxnyqD7B1IjtSCGG+FLPG+ydt5+XRf2ttdNa2XISXu8AHShbnjzzJQ==",
+    "HtmlSanitizer/5.0.310": {
+      "sha512": "IZPxhX9beuKHnYF9xIFM3kEzlP5xNauLCklWcXiM6ggcAtBwLwbBOMtSepHM4AuuJZP+NiU9iG1f+Kn70rmTfw==",
       "type": "package",
-      "path": "htmlsanitizer/5.0.304",
+      "path": "htmlsanitizer/5.0.310",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "htmlsanitizer.5.0.304.nupkg.sha512",
+        "htmlsanitizer.5.0.310.nupkg.sha512",
         "htmlsanitizer.nuspec",
         "lib/net46/HtmlSanitizer.dll",
         "lib/net46/HtmlSanitizer.xml",
@@ -5769,10 +5773,10 @@
         "nwebsec.aspnetcore.middleware.nuspec"
       ]
     },
-    "Parbad/3.3.2": {
-      "sha512": "yOGPg4Wr1IQJsrCD0K2ZJU7bIV/SRRIrsas/b8jY1HFHATv87NEI4/2j2W5aI4rvdhIezukUWaSex8kFmi2L1w==",
+    "Parbad/3.3.3": {
+      "sha512": "IZibB53wKz6pC3RvoNfSTSjj6ZRjL3Ajm+oIsam/oeDKKJgjVXRZM3Xu/zt8H4xtLz+eUb8K7WSnR8nIqf4eDQ==",
       "type": "package",
-      "path": "parbad/3.3.2",
+      "path": "parbad/3.3.3",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -5781,15 +5785,15 @@
         "lib/netcoreapp3.0/Parbad.xml",
         "lib/netstandard2.0/Parbad.dll",
         "lib/netstandard2.0/Parbad.xml",
-        "parbad.3.3.2.nupkg.sha512",
+        "parbad.3.3.3.nupkg.sha512",
         "parbad.nuspec",
         "readme.txt"
       ]
     },
-    "Parbad.AspNetCore/1.0.4": {
-      "sha512": "oFvWASufO08kNyGP3+sAD1kgSg1mbXc08H6CjxrNhWR+SAVugCPVC9ZWd6T0cBeckdFKsKFsYg5JLegVxTC2mg==",
+    "Parbad.AspNetCore/1.0.5": {
+      "sha512": "uYqKVA2eHP/OOlxhBiWQSN9eJSYzPw8YFfOD4Vmzus+Kq4ng5rtElosJXJ6C029AyXhFepx4MRIk2lRJn48t5Q==",
       "type": "package",
-      "path": "parbad.aspnetcore/1.0.4",
+      "path": "parbad.aspnetcore/1.0.5",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -5797,15 +5801,15 @@
         "lib/netcoreapp3.0/Parbad.AspNetCore.xml",
         "lib/netstandard2.0/Parbad.AspNetCore.dll",
         "lib/netstandard2.0/Parbad.AspNetCore.xml",
-        "parbad.aspnetcore.1.0.4.nupkg.sha512",
+        "parbad.aspnetcore.1.0.5.nupkg.sha512",
         "parbad.aspnetcore.nuspec",
         "readme.txt"
       ]
     },
-    "Parbad.Gateway.ZarinPal/1.0.3": {
-      "sha512": "lothsF1Z2rsyvR4MiQC90HCPJWmoEfk0Cdg6sC0Bf8WuCEa0V+7thcNH4ezeyhWn85xENZezKOO7QqybiMUZag==",
+    "Parbad.Gateway.ZarinPal/1.0.4": {
+      "sha512": "d1PAJR9jvKCHsnE9CCCVDKJtyK99N6//hsG060HPiSkul0TnZCqOqXvW3sW48sEAgKs1LL7SwJb/pfvSjl6mFw==",
       "type": "package",
-      "path": "parbad.gateway.zarinpal/1.0.3",
+      "path": "parbad.gateway.zarinpal/1.0.4",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -5813,21 +5817,21 @@
         "lib/netcoreapp3.0/Parbad.Gateway.ZarinPal.xml",
         "lib/netstandard2.0/Parbad.Gateway.ZarinPal.dll",
         "lib/netstandard2.0/Parbad.Gateway.ZarinPal.xml",
-        "parbad.gateway.zarinpal.1.0.3.nupkg.sha512",
+        "parbad.gateway.zarinpal.1.0.4.nupkg.sha512",
         "parbad.gateway.zarinpal.nuspec",
         "readme.txt"
       ]
     },
-    "Parbad.Storage.EntityFrameworkCore/1.0.3": {
-      "sha512": "k0ZB5UhRTIROjZ5g5+q1FSqw0FmYwlY8tvxf4FLF24SAdwlSDWmcYqe3aX9iqPX+f+ycdq0TFd0EnuDvk0AS3g==",
+    "Parbad.Storage.EntityFrameworkCore/1.0.4": {
+      "sha512": "LrQJFpH5H+rBzubSa5fkVpKoH38N42u8mIH5urPwTcPiri/pjNy3bA6RcP6afZ7vJq7+Y7dojUw+XNvbeEpXUw==",
       "type": "package",
-      "path": "parbad.storage.entityframeworkcore/1.0.3",
+      "path": "parbad.storage.entityframeworkcore/1.0.4",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "lib/netstandard2.0/Parbad.Storage.EntityFrameworkCore.dll",
         "lib/netstandard2.0/Parbad.Storage.EntityFrameworkCore.xml",
-        "parbad.storage.entityframeworkcore.1.0.3.nupkg.sha512",
+        "parbad.storage.entityframeworkcore.1.0.4.nupkg.sha512",
         "parbad.storage.entityframeworkcore.nuspec"
       ]
     },
@@ -10481,10 +10485,10 @@
       "Microsoft.AspNetCore.Mvc.NewtonsoftJson >= 3.1.3",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 3.1.2",
       "NWebsec.AspNetCore.Middleware >= 3.0.0",
-      "Parbad >= 3.3.2",
-      "Parbad.AspNetCore >= 1.0.4",
-      "Parbad.Gateway.ZarinPal >= 1.0.3",
-      "Parbad.Storage.EntityFrameworkCore >= 1.0.3"
+      "Parbad >= 3.3.3",
+      "Parbad.AspNetCore >= 1.0.5",
+      "Parbad.Gateway.ZarinPal >= 1.0.4",
+      "Parbad.Storage.EntityFrameworkCore >= 1.0.4"
     ]
   },
   "packageFolders": {
@@ -10554,19 +10558,19 @@
           },
           "Parbad": {
             "target": "Package",
-            "version": "[3.3.2, )"
+            "version": "[3.3.3, )"
           },
           "Parbad.AspNetCore": {
             "target": "Package",
-            "version": "[1.0.4, )"
+            "version": "[1.0.5, )"
           },
           "Parbad.Gateway.ZarinPal": {
             "target": "Package",
-            "version": "[1.0.3, )"
+            "version": "[1.0.4, )"
           },
           "Parbad.Storage.EntityFrameworkCore": {
             "target": "Package",
-            "version": "[1.0.3, )"
+            "version": "[1.0.4, )"
           }
         },
         "imports": [

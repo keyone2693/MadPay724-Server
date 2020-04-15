@@ -9,6 +9,7 @@ using MadPay724.Services.Seed.Service;
 using MadPay724.Services.Site.Panel.Common.Service;
 using MadPay724.Common.Routes.V1.Site;
 using MadPay724.Presentation.Helpers.Configuration;
+using Syncfusion.Licensing;
 
 namespace MadPay724.Presentation
 {
@@ -40,12 +41,16 @@ namespace MadPay724.Presentation
             services.AddMadApiVersioning();
             services.AddMadSwagger();
             services.AddMadParbad(Configuration);
-            //services.AddMadSpa();
+            services.AddMadSpa();
         }
 
         [System.Obsolete]
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, SeedService seeder)
         {
+            SyncfusionLicenseProvider
+                .RegisterLicense(Configuration.GetSection("TokenSetting")
+                .GetSection("SyncfusionKey").Value);
+
             app.UseMadExceptionHandle(env);
 
             app.UseMadInitialize(seeder);
@@ -60,9 +65,9 @@ namespace MadPay724.Presentation
                      name: "default",
                    pattern: "{controller=home}/{action=index}");
                 end.MapHub<ChatHubService>(SiteV1Routes.BaseChatPanel + "/chat");
-            });
-
-            //app.UseMadSpa();
+            }) ;
+            //.UseSpa(_ => { });
+            app.UseMadSpa();
         }
 
     }

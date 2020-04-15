@@ -48,7 +48,7 @@ namespace MadPay724.Presentation.Helpers.Configuration
              .AddCors(opt =>
              {
                 opt.AddPolicy("CorsPolicy", builder =>
-                builder.WithOrigins("http://localhost:4200", "http://127.0.0.1:8080")
+                builder.WithOrigins("https://madpay724.ir", "https://api.madpay724.ir", "https://pay.madpay724.ir")
                         .AllowAnyMethod()
                         .AllowAnyHeader()
                         .AllowCredentials());
@@ -69,7 +69,7 @@ namespace MadPay724.Presentation.Helpers.Configuration
 
             services.AddHttpsRedirection(opt =>
             {
-                opt.RedirectStatusCode = StatusCodes.Status302Found;
+                opt.RedirectStatusCode = StatusCodes.Status301MovedPermanently;
             });
             //
             services.AddResponseCompression(opt => opt.Providers.Add<GzipCompressionProvider>());
@@ -80,17 +80,18 @@ namespace MadPay724.Presentation.Helpers.Configuration
 
         public static void UseMadInitialize(this IApplicationBuilder app, SeedService seeder)
         {
-            //app.UseResponseCompression();
+            app.UseResponseCompression();
             seeder.SeedUsers();
             app.UseRouting();
             app.UseImageResizer();
 
             app.UseCsp(opt => opt
             .StyleSources(s=>s.Self().UnsafeInline().CustomSources("fonts.googleapis.com"))
-            .ScriptSources(s=>s.Self().UnsafeInline().CustomSources("apis.google.com", "connect.facebook.net"))
+            .ScriptSources(s=>s.Self().UnsafeInline().UnsafeEval().CustomSources("apis.google.com", "connect.facebook.net"))
             .FontSources(s => s.Self().CustomSources("fonts.gstatic.com", "data:"))
             .FrameSources(s=>s.Self().CustomSources("accounts.google.com"))
             );
+
             app.UseXfo(o => o.Deny());
 
            
