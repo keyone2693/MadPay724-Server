@@ -1,5 +1,6 @@
 using AutoMapper;
 using MadPay724.Payment.Helpers.Configuration;
+using MadPay724.Payment.Helpers.Filters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Rewrite;
@@ -33,7 +34,11 @@ namespace MadPay724.Payment
             app.UseMadInitialize();
             app.UseMadParbad();
 
-            app.UseRewriter(new RewriteOptions().AddRedirect(@"^\s*$", "https://madpay724.ir",301));
+            var rewriteOptions = new RewriteOptions();
+            rewriteOptions.Rules.Add(new NonWwwRewriteRule());
+            rewriteOptions.AddRedirect(@"^\s*$", "https://madpay724.ir", 301);
+
+            app.UseRewriter(rewriteOptions);
 
 
             app.UseEndpoints(endpoints =>

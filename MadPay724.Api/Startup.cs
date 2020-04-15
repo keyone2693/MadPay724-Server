@@ -52,7 +52,7 @@ namespace MadPay724.Api
 
 
         }
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, SeedService seeder)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, SeedService seeder, IHttpContextAccessor _httpContextAccessor)
         {
             app.UseMadExceptionHandle(env);
             app.UseMadInitialize(seeder);
@@ -60,12 +60,14 @@ namespace MadPay724.Api
             app.UseMadSwagger();
             app.UseMadParbad();
 
-            app.UseRewriter(
-                new RewriteOptions()
-                .Add(new NonWwwRewriteRule())
-                .AddRedirect(@"^\s*$", "https://api.madpay724.ir/swagger", 301));
 
+            var rewriteOptions = new RewriteOptions();
+            rewriteOptions.Rules.Add(new NonWwwRewriteRule());
+            rewriteOptions.AddRedirect(@"^\s*$", "https://api.madpay724.ir/swagger", 301);
 
+            app.UseRewriter(rewriteOptions);
+                
+            
             app.UseEndpoints(end =>
             {
                 end.MapControllers();

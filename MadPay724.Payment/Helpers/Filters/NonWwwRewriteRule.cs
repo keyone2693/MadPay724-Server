@@ -7,7 +7,7 @@ namespace MadPay724.Payment.Helpers.Filters
 {
     public class NonWwwRewriteRule : IRule
     {
-        public void ApplyRule(RewriteContext context)
+        public virtual void ApplyRule(RewriteContext context)
         {
             var request = context.HttpContext.Request;
 

@@ -8,14 +8,14 @@ namespace MadPay724.Api.Helpers.Filters
 {
     public class NonWwwRewriteRule : IRule
     {
-        public void ApplyRule(RewriteContext context)
+        public virtual void ApplyRule(RewriteContext context)
         {
             var request = context.HttpContext.Request;
             if (request.Host.Value.StartsWith("www.", StringComparison.OrdinalIgnoreCase))
             {
                 var response = context.HttpContext.Response;
 
-                string redirectUrl = $"{request.Scheme}://{request.Host}{request.Path}{request.QueryString}";
+                string redirectUrl = $"{request.Scheme}://{request.Host.Value.Replace("www.","")}{request.Path}{request.QueryString}";
                 response.Headers[HeaderNames.Location] = redirectUrl;
                 response.StatusCode = StatusCodes.Status301MovedPermanently;
                 context.Result = RuleResult.EndResponse;
