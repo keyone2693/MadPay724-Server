@@ -14,7 +14,7 @@ namespace MadPay724.Api.Helpers.Filters
             var path = request.Path.ToString().Trim();
            
             var response = context.HttpContext.Response; 
-            if (string.IsNullOrEmpty(path))
+            if (string.IsNullOrEmpty(path) || path == "/")
             {
                 path = "swagger";
                 if (request.Host.Value.StartsWith("www.", StringComparison.OrdinalIgnoreCase))

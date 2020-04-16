@@ -20,6 +20,7 @@ namespace MadPay724.Presentation.Helpers.Configuration
 
         public static void UseMadSpa(this IApplicationBuilder app)
         {
+
             app.UseStaticFiles(new StaticFileOptions()
             {
                 RequestPath = new PathString("/wwwroot")
@@ -34,7 +35,8 @@ namespace MadPay724.Presentation.Helpers.Configuration
                 ContentTypeProvider = provider
             });
             //
-            app.UseRewriter(new RewriteOptions().AddRedirect(@"^\s*$", "/app", 301));
+            app.UseRewriter(new RewriteOptions().AddRedirect(@"^\s*$", "/app/", 301));
+
             app.Map("/app", site =>
                 {
                     site.UseSpa(spa =>

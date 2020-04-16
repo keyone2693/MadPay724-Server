@@ -13,7 +13,7 @@ namespace MadPay724.Payment.Helpers.Filters
             var request = context.HttpContext.Request;
             var path = request.Path.ToString().Trim();
             var response = context.HttpContext.Response;
-            if (string.IsNullOrEmpty(path))
+            if (string.IsNullOrEmpty(path) || path == "/")
             {
                 string redirectUrl = "https://madpay724.ir";
                 response.Headers[HeaderNames.Location] = redirectUrl;

@@ -64,9 +64,11 @@ namespace MadPay724.Presentation
                 end.MapControllerRoute(
                      name: "default",
                    pattern: "{controller=home}/{action=index}");
+                end.MapFallbackToController("Index", "FallBack");
                 end.MapHub<ChatHubService>(SiteV1Routes.BaseChatPanel + "/chat");
-            }) ;
-            //.UseSpa(_ => { });
+
+            });
+
             app.UseMadSpa();
         }
 

@@ -75,8 +75,7 @@ namespace MadPay724.Presentation.Controllers.V1.Panel.Blogger
                 {
                     return BadRequest(new CkEditorUploadImgReaturnMesssage
                     {
-                        uploaded = false,
-                        url = uploadRes.Message
+                        uploaded = false
                     });
                 }
             }
@@ -84,8 +83,7 @@ namespace MadPay724.Presentation.Controllers.V1.Panel.Blogger
             {
                 return BadRequest(new CkEditorUploadImgReaturnMesssage
                 {
-                    uploaded = false,
-                    url = creatDir.message
+                    uploaded = false
                 });
             }
 
