@@ -248,6 +248,10 @@
               "target": "Package",
               "version": "[7.0.0, )"
             },
+            "Galamai.AspNetCore.Rendertron": {
+              "target": "Package",
+              "version": "[1.0.0.13, )"
+            },
             "ImageResizer.AspNetCore": {
               "target": "Package",
               "version": "[1.8.6, )"
@@ -308,7 +312,7 @@
             },
             "NSwag.AspNetCore": {
               "target": "Package",
-              "version": "[13.3.0, )"
+              "version": "[13.4.1, )"
             },
             "NWebsec.AspNetCore.Middleware": {
               "target": "Package",

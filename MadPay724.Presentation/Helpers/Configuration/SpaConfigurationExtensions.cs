@@ -44,7 +44,7 @@ namespace MadPay724.Presentation.Helpers.Configuration
                         spa.Options.SourcePath = "Clients/app";
                         spa.Options.DefaultPageStaticFileOptions = new StaticFileOptions
                         {
-                            FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Clients/app"))
+                            FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Clients","app"))
                         };
                         //spa.UseSpaPrerendering(options =>
                         //{
@@ -59,7 +59,7 @@ namespace MadPay724.Presentation.Helpers.Configuration
                         spa.Options.SourcePath = "Clients/my";
                         spa.Options.DefaultPageStaticFileOptions = new StaticFileOptions
                         {
-                            FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Clients/my"))
+                            FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Clients","my"))
                         };
                     });
                 });

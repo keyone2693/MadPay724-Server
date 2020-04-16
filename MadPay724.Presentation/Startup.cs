@@ -42,6 +42,33 @@ namespace MadPay724.Presentation
             services.AddMadSwagger();
             services.AddMadParbad(Configuration);
             services.AddMadSpa();
+
+            //services.AddRendertron(options =>
+            //{
+            //    options.RendertronUrl = "https://render-tron.appspot.com/render/";
+
+            //    options.UserAgents.Add("firefox");
+            //    options.UserAgents.Add("googlebot");
+            //    options.UserAgents.Add("yandexbot");
+            //    options.UserAgents.Add("duckduckbot");
+            //    options.UserAgents.Add("slurp");
+            //    options.UserAgents.Add("Baiduspider");
+            //    options.UserAgents.Add("bingbot");
+            //    options.UserAgents.Add("Embedly");
+            //    options.UserAgents.Add("facebookexternalhit");
+            //    options.UserAgents.Add("LinkedInBot");
+            //    options.UserAgents.Add("outbrain");
+            //    options.UserAgents.Add("pinterest");
+            //    options.UserAgents.Add("quora link preview");
+            //    options.UserAgents.Add("rogerbot");
+            //    options.UserAgents.Add("showyoubot");
+            //    options.UserAgents.Add("Slackbot");
+            //    options.UserAgents.Add("TelegramBot");
+            //    options.UserAgents.Add("Twitterbot");
+            //    options.UserAgents.Add("vkShare");
+            //    options.UserAgents.Add("W3C_Validator");
+            //    options.UserAgents.Add("WhatsApp");
+            //});
         }
 
         [System.Obsolete]
@@ -57,6 +84,8 @@ namespace MadPay724.Presentation
             app.UseMadAuth();
             app.UseMadSwagger();
             app.UseMadParbad();
+
+            //app.UseRendertron();
 
             app.UseEndpoints(end =>
             {

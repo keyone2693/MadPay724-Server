@@ -75,7 +75,7 @@
             },
             "NSwag.AspNetCore": {
               "target": "Package",
-              "version": "[13.3.0, )"
+              "version": "[13.4.1, )"
             },
             "NWebsec.AspNetCore.Middleware": {
               "target": "Package",

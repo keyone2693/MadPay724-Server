@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Galamai.AspNetCore.Rendertron" Version="1.0.0.13" />
     <PackageReference Include="ImageResizer.AspNetCore" Version="1.8.6" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.3" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Formatters.Json" Version="2.2.0" />
@@ -45,7 +46,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.8" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.2" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="NSwag.AspNetCore" Version="13.3.0" />
+    <PackageReference Include="NSwag.AspNetCore" Version="13.4.1" />
     <PackageReference Include="NWebsec.AspNetCore.Middleware" Version="3.0.0" />
     <PackageReference Include="Parbad.AspNetCore" Version="1.0.5" />
     <PackageReference Include="Parbad.Gateway.ZarinPal" Version="1.0.4" />
@@ -60,7 +61,6 @@
   </ItemGroup>
   
   <ItemGroup>
-    <Folder Include="Clients\app\" />
     <Folder Include="wwwroot\Files\Gate\" />
     <Folder Include="wwwroot\Files\TicketContent\" />
     <Folder Include="wwwroot\Files\Pic\Profile\" />

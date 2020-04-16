@@ -12,15 +12,15 @@ namespace MadPay724.Presentation.Controllers
             var path = Request.Path.Value.ToString();
             if (string.IsNullOrEmpty(path) || path == "/" || path.StartsWith("app") || path.StartsWith("/app"))
             {
-                return PhysicalFile(Path.Combine(Directory.GetCurrentDirectory(), "Clients/app", "index.html"), "text/HTML");
+                return PhysicalFile(Path.Combine(Directory.GetCurrentDirectory(), "Clients","app", "index.html"), "text/HTML");
             }
             else if (path.StartsWith("my") || path.StartsWith("/my"))
             {
-                return PhysicalFile(Path.Combine(Directory.GetCurrentDirectory(), "Clients/my", "index.html"), "text/HTML");
+                return PhysicalFile(Path.Combine(Directory.GetCurrentDirectory(), "Clients","my", "index.html"), "text/HTML");
             }
             else
             {
-                return PhysicalFile(Path.Combine(Directory.GetCurrentDirectory(), "Clients/app", "index.html"), "text/HTML");
+                return PhysicalFile(Path.Combine(Directory.GetCurrentDirectory(), "Clients","app", "index.html"), "text/HTML");
             }
         }
     }
