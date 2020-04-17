@@ -6,7 +6,8 @@ namespace MadPay724.AspNetCore.GateWay.Data
 {
     public static class ApiRoutes
     {
-        public const string BaseApi = "pg";
+        public const string BaseUrl = "https://api.madpay724.ir";
+        public const string BaseApi = BaseUrl + "/v1/pg";
 
         public static class Pay
         {

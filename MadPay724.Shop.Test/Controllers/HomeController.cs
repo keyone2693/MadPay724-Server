@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MadPay724.Shop.Test.Models;
+using MadPay724.AspNetCore.GateWay;
 
 namespace MadPay724.Shop.Test.Controllers
 {
@@ -19,12 +20,6 @@ namespace MadPay724.Shop.Test.Controllers
         }
 
         public IActionResult Index()
-        {
-            return View();
-        }
-
-
-        public IActionResult Verify()
         {
             return View();
         }

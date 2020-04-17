@@ -158,15 +158,14 @@ namespace MadPay724.Payment.Controllers
                 return View("Pay", model);
             }
 
+            //if (!model.Result.Gate.IsDirect)
+            //{
+            //    model.Status = true;
+            //    model.Messages.Clear();
+            //    return View("Pay", model);
+            //}
 
-            if (!model.Result.Gate.IsDirect)
-            {
-                model.Status = true;
-                model.Messages.Clear();
-                return View("Pay", model);
-            }
-
-            var callbackUrl = Url.Action("Verify", "Bank", null, Request.Scheme);
+            var callbackUrl = Url.Action("verify", "bank", null, Request.Scheme);
             var result = await _onlinePayment.RequestAsync(invoice =>
             {
                 invoice

@@ -86,11 +86,20 @@ namespace MadPay724.Presentation.Helpers.Configuration
             app.UseImageResizer();
 
             app.UseCsp(opt => opt
-            .StyleSources(s=>s.Self().UnsafeInline().CustomSources("fonts.googleapis.com"))
-            .ScriptSources(s=>s.Self().UnsafeInline().UnsafeEval().CustomSources("apis.google.com", "connect.facebook.net"))
-            .FontSources(s => s.Self().CustomSources("fonts.gstatic.com", "data:"))
-            .FrameSources(s=>s.Self().CustomSources("accounts.google.com"))
+            .StyleSources(s=>s.Self()
+            .UnsafeInline().CustomSources("pay.madpay724.ir", "api.madpay724.ir","fonts.googleapis.com"))
+            .ScriptSources(s=>s.Self()
+            .UnsafeInline().UnsafeEval().CustomSources("pay.madpay724.ir", "api.madpay724.ir","apis.google.com", "connect.facebook.net"))
+            .ImageSources(s => s.Self()
+            .CustomSources("pay.madpay724.ir", "api.madpay724.ir", "res.cloudinary.com", "cloudinary.com", "data:"))
+            .MediaSources(s => s.Self()
+            .CustomSources("pay.madpay724.ir", "api.madpay724.ir", "res.cloudinary.com", "cloudinary.com", "data:"))
+            .FontSources(s => s.Self()
+            .CustomSources("fonts.gstatic.com", "data:"))
+            .FrameSources(s=>s.Self()
+            .CustomSources("accounts.google.com"))
             );
+
 
             app.UseXfo(o => o.Deny());
 

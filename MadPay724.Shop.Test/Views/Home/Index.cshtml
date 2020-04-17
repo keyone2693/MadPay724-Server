@@ -1,6 +1,7 @@
-﻿@{
-    ViewData["Title"] = "فروشگاه کفش چرم";
-}
+﻿
+    @{
+        ViewData["Title"] = "فروشگاه کفش چرم";
+    }
 
     <div class="text-center">
         <h1 class="display-4">نهایی کردن پرداخت</h1>
@@ -13,7 +14,16 @@
         <br />
         <br />
         <br />
+        @using (Html.BeginForm("Index", "Pay"))
+        {
+            <div class="form-group">
+                <label for="exampleInputEmail1">قیمت قابل پرداخت</label>
+                <input type="text" name="price" value="300000" class="form-control" aria-describedby="emailHelp" placeholder="قیمت مورد نظر را وارد کنید">
+                <small id="emailHelp" class="form-text text-muted">مبلغ به تومان میباشد ...</small>
+            </div>
 
-        <button type="button" class="btn btn-success">پرداخت نهایی با درگاه بانک ملت</button>
+            <button type="submit" class="btn btn-success">پرداخت نهایی با درگاه بانک ملت</button>
+
+        }
 
     </div>

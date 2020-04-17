@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MadPay724.AspNetCore.GateWay.Extentions;
 
 namespace MadPay724.Shop.Test
 {
@@ -24,6 +25,7 @@ namespace MadPay724.Shop.Test
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddMadpay724GateWay();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

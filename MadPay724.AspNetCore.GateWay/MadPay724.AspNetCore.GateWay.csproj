@@ -4,7 +4,7 @@
     <OutputType>Library</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <ApplicationIcon>icon.ico</ApplicationIcon>
-    <Version>1.0.2</Version>
+    <Version>1.1.0</Version>
     <Authors>Keyvan Abdollahzdeh</Authors>
     <Company>Madpay 724</Company>
     <Description>Aspnet core nuget package for madpay724 gateway</Description>
@@ -14,7 +14,7 @@
     <RepositoryUrl>https://github.com/keyone2693/MadPay724-Server/tree/master/MadPay724.AspNetCore.GateWay</RepositoryUrl>
     <RepositoryType>Public</RepositoryType>
     <PackageTags>Iran,GateWay,Bank</PackageTags>
-    <PackageReleaseNotes>first version</PackageReleaseNotes>
+    <PackageReleaseNotes>bugs fixes</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

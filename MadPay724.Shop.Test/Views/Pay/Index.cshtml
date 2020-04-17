@@ -1,0 +1,18 @@
+﻿@using MadPay724.AspNetCore.GateWay.Models
+@model MadPayGateResult<MadPayGatePayResponse>
+
+@{
+    ViewData["Title"] = "فروشگاه کفش چرم";
+}
+    <div class="text-center">
+        <button type="button" class="btn btn-danger">پرداخت شما موفقیت نبود</button>
+        <br />
+        <div class="alert alert-danger" role="alert">
+            @foreach (var error in Model.Messages)
+            {
+                <span>@error</span>
+            }
+        </div>
+        <br />
+        <h2>کفش مردانه ی چرم اصل ایرانی <span class="badge badge-secondary">300,000 تومان</span></h2>
+    </div>

@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>MadPay724.AspNetCore.GateWay</id>
+    <version>1.0.4</version>
+    <authors>Keyvan Abdollahzdeh</authors>
+    <owners>Keyvan Abdollahzdeh</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="file">LICENSE</license>
+    <licenseUrl>https://aka.ms/deprecateLicenseUrl</licenseUrl>
+    <icon>icon-512x512.png</icon>
+    <projectUrl>https://github.com/keyone2693/MadPay724-Server/tree/master/MadPay724.AspNetCore.GateWay</projectUrl>
+    <description>Aspnet core nuget package for madpay724 gateway</description>
+    <releaseNotes>bugs fixes</releaseNotes>
+    <tags>Iran,GateWay,Bank</tags>
+    <repository type="Public" url="https://github.com/keyone2693/MadPay724-Server/tree/master/MadPay724.AspNetCore.GateWay" />
+    <dependencies>
+      <group targetFramework=".NETCoreApp3.1">
+        <dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="3.1.3" exclude="Build,Analyzers" />
+        <dependency id="Newtonsoft.Json" version="12.0.3" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.AspNetCore.GateWay\bin\Release\netcoreapp3.1\MadPay724.AspNetCore.GateWay.dll" target="lib\netcoreapp3.1\MadPay724.AspNetCore.GateWay.dll" />
+    <file src="D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Client\MadPay724-App\src\assets\icons\icon-512x512.png" target="icon-512x512.png" />
+    <file src="D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.AspNetCore.GateWay\LICENSE" target="LICENSE" />
+  </files>
+</package>
