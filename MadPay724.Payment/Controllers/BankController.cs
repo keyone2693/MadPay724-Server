@@ -83,8 +83,8 @@ namespace MadPay724.Payment.Controllers
                     .UseAutoIncrementTrackingNumber()
                     .SetAmount(factorFromRepo.EndPrice)
                     .SetCallbackUrl(callbackUrl)
-                    .UseParbadVirtual();
-                    //.UseZarinPal("پرداخت از سایت مادپی");
+                    //.UseParbadVirtual();
+                    .UseZarinPal("پرداخت از سایت مادپی","info@madpay724.ir", "09361234567");
                 });
                 if (result.IsSucceed)
                 {
@@ -172,8 +172,8 @@ namespace MadPay724.Payment.Controllers
                 .UseAutoIncrementTrackingNumber()
                 .SetAmount(factorFromRepo.EndPrice)
                 .SetCallbackUrl(callbackUrl)
-                .UseParbadVirtual();
-                //.UseZarinPal("پرداخت از سایت مادپی");
+                //.UseParbadVirtual();
+                .UseZarinPal("پرداخت از سایت مادپی");
             });
             if (result.IsSucceed)
             {
