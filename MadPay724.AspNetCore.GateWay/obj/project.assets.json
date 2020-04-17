@@ -80,7 +80,7 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
-    "version": "1.0.0",
+    "version": "1.0.2",
     "restore": {
       "projectUniqueName": "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.AspNetCore.GateWay\\MadPay724.AspNetCore.GateWay.csproj",
       "projectName": "MadPay724.AspNetCore.GateWay",

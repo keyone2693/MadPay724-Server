@@ -15,4 +15,3 @@ namespace MadPay724.AspNetCore.GateWay.Models
         public T Result { get; set; }
     }
 }
-}

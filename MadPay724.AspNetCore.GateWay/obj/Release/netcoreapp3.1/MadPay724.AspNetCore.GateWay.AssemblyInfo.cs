@@ -12,7 +12,7 @@ using System;
 using System.Reflection;
 
 [assembly: System.Reflection.AssemblyCompanyAttribute("Madpay 724")]
-[assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
+[assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyDescriptionAttribute("Aspnet core nuget package for madpay724 gateway")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.2.0")]
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.2")]
