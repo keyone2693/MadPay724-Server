@@ -1,3 +1,6 @@
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.AspNetCore.GateWay\bin\Debug\netcoreapp3.1\MadPay724.AspNetCore.GateWay.exe
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.AspNetCore.GateWay\obj\Debug\netcoreapp3.1\MadPay724.AspNetCore.GateWay.AssemblyInfoInputs.cache
 D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.AspNetCore.GateWay\obj\Debug\netcoreapp3.1\MadPay724.AspNetCore.GateWay.AssemblyInfo.cs
+D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.AspNetCore.GateWay\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.AspNetCore.GateWay\obj\Debug\netcoreapp3.1\MadPay724.AspNetCore.GateWay.csprojAssemblyReference.cache
+D:\Tuts\Daneshjooyar\ProjectFile\MadPay724-Server\MadPay724.AspNetCore.GateWay\obj\Debug\netcoreapp3.1\MadPay724.AspNetCore.GateWay.csproj.CopyComplete

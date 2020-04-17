@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "NLIG9r9EpNaJP/J++h6SIZQN/DPJUVSe4aT8jQOvqJPngONR/ncwRxZ633rnFE+nHRBizJJVcuWCOg85VG209g==",
+  "dgSpecHash": "pMsPsr3AsOsM6nbEx0g/9/+4kTgxMjD9SN0PJ8AFUsQy6hihyN0xRRlElmviUObVKCZmQKOpM8XjzXoAT9/2ng==",
   "success": true,
   "projectFilePath": "D:\\Tuts\\Daneshjooyar\\ProjectFile\\MadPay724-Server\\MadPay724.AspNetCore.GateWay\\MadPay724.AspNetCore.GateWay.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Key1-lab\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\3.1.3\\microsoft.extensions.dependencyinjection.abstractions.3.1.3.nupkg.sha512"
+    "C:\\Users\\Key1-lab\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\3.1.3\\microsoft.extensions.dependencyinjection.abstractions.3.1.3.nupkg.sha512",
+    "C:\\Users\\Key1-lab\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512"
   ],
   "logs": []
 }
