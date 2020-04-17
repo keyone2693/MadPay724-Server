@@ -37,6 +37,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Packages", "Packages", "{5C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MadPay724.AspNetCore.GateWay", "MadPay724.AspNetCore.GateWay\MadPay724.AspNetCore.GateWay.csproj", "{26DEBFD4-6E1D-4DD1-8B1A-40A91F866281}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MadPay724.Shop.Test", "MadPay724.Shop.Test\MadPay724.Shop.Test.csproj", "{5CEF9450-AD04-4C1C-9C0F-025557B8AF7C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{26DEBFD4-6E1D-4DD1-8B1A-40A91F866281}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26DEBFD4-6E1D-4DD1-8B1A-40A91F866281}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26DEBFD4-6E1D-4DD1-8B1A-40A91F866281}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CEF9450-AD04-4C1C-9C0F-025557B8AF7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CEF9450-AD04-4C1C-9C0F-025557B8AF7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CEF9450-AD04-4C1C-9C0F-025557B8AF7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CEF9450-AD04-4C1C-9C0F-025557B8AF7C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -103,6 +109,7 @@ Global
 		{17B3BB04-BCAF-4C31-91CA-0C4BC54B4CF6} = {C02987BD-1D05-490D-960A-3162354705EE}
 		{EC699579-D254-4326-948D-A94CAC13E0C3} = {C02987BD-1D05-490D-960A-3162354705EE}
 		{26DEBFD4-6E1D-4DD1-8B1A-40A91F866281} = {5CD912CB-CC32-4EF2-9577-F9BFD82758D0}
+		{5CEF9450-AD04-4C1C-9C0F-025557B8AF7C} = {68887BBB-98AB-410A-8AC9-398E91D68581}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9548B004-6AD5-4201-B3D2-60A91C6EE88A}
