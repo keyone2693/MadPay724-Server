@@ -21,6 +21,12 @@ namespace MadPay724.AspNetCore.GateWay
         }
 
         #region AsyncMethods
+
+        /// <summary>
+        /// Use this method for requesting a bank gate
+        /// </summary>
+        /// <param name="madPayGatePayRequest"></param>
+        /// <returns></returns>
         public async Task<MadPayGateResult<MadPayGatePayResponse>> PayAsync(MadPayGatePayRequest madPayGatePayRequest)
         {
             _http.DefaultRequestHeaders.Clear();
@@ -57,7 +63,11 @@ namespace MadPay724.AspNetCore.GateWay
                 };
             }
         }
-
+        /// <summary>
+        /// Use this method for verifying the bank result
+        /// </summary>
+        /// <param name="madPayGateVerifyRequest"></param>
+        /// <returns></returns>
         public async Task<MadPayGateResult<MadPayGateVerifyResponse>> VerifyAsync(MadPayGateVerifyRequest madPayGateVerifyRequest)
         {
             _http.DefaultRequestHeaders.Clear();
@@ -94,7 +104,11 @@ namespace MadPay724.AspNetCore.GateWay
                 };
             }
         }
-
+        /// <summary>
+        /// use this method for cancel the transaction
+        /// </summary>
+        /// <param name="madPayGateRefundRequest"></param>
+        /// <returns></returns>
         public async Task<MadPayGateResult<MadPayGateRefundResponse>> RefundAsync(MadPayGateRefundRequest madPayGateRefundRequest)
         {
             _http.DefaultRequestHeaders.Clear();
