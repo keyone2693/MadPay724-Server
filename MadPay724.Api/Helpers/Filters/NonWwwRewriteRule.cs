@@ -16,7 +16,7 @@ namespace MadPay724.Api.Helpers.Filters
             var response = context.HttpContext.Response; 
             if (string.IsNullOrEmpty(path) || path == "/")
             {
-                path = "swagger";
+                path = "/swagger";
                 if (request.Host.Value.StartsWith("www.", StringComparison.OrdinalIgnoreCase))
                 {
                     string redirectUrl = $"{request.Scheme}://{request.Host.Value.Replace("www.", "")}{new PathString(path)}{request.QueryString}";

@@ -20,8 +20,7 @@ namespace MadPay724.Data.DatabaseContext
 
             optionBuilder
                 .UseSqlServer(
-             @"Server=.\MSSQLSERVER2017;Initial Catalog=Log_MadPay724db;User Id=keyvan_madpay724;Password=3?55Tilp;"
-            //"Server=KEY1-LAB\\MSSQLSERVER2016;Database=Log_MadPay724db;User Id=sa;Password=sa;Trusted_Connection=True;MultipleActiveResultSets=True;"
+            "Server=KEY1-LAB\\MSSQLSERVER2016;Database=Log_MadPay724db;User Id=sa;Password=sa;Trusted_Connection=True;MultipleActiveResultSets=True;"
             );
         }
 

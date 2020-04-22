@@ -20,12 +20,10 @@ namespace MadPay724.Presentation
             Host.CreateDefaultBuilder(args)
                 .ConfigureLogging((hostingContext, logging) =>
                 {
-                    //logging.AddNLog();
                     logging.AddEntityFramework<Log_MadPayDbContext, ExtendedLog>();
                 }).ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                })
-                ;
+                });
     }
 }

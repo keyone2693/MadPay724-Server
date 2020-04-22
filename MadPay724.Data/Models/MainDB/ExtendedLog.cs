@@ -11,9 +11,7 @@ namespace MadPay724.Data.Models.MainDB
             {
                 string browser = http.HttpContext.Request.Headers["User-Agent"];
                 if (!string.IsNullOrEmpty(browser) && (browser.Length > 255))
-                {
                     browser = browser.Substring(0, 255);
-                }
 
                 this.Browser = browser;
                 this.Host = http.HttpContext.Connection?.RemoteIpAddress.ToString();
