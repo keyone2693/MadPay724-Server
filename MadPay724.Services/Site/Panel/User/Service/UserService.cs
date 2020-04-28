@@ -3,6 +3,7 @@ using MadPay724.Repo.Infrastructure;
 using System.Threading.Tasks;
 using MadPay724.Common.Helpers.Interface;
 using MadPay724.Services.Site.Panel.User.Interface;
+using Microsoft.AspNetCore.Identity;
 
 namespace MadPay724.Services.Site.Panel.User.Service
 {
@@ -10,11 +11,14 @@ namespace MadPay724.Services.Site.Panel.User.Service
     {
         private readonly IUnitOfWork<Main_MadPayDbContext> _db;
         private readonly IUtilities _utilities;
+        private readonly UserManager<Data.Models.MainDB.User> _userManager;
 
-        public UserService(IUnitOfWork<Main_MadPayDbContext> dbContext,IUtilities utilities)
+        public UserService(IUnitOfWork<Main_MadPayDbContext> dbContext,IUtilities utilities,
+             UserManager<Data.Models.MainDB.User> userManager)
         {
             _db = dbContext;
             _utilities = utilities;
+            _userManager= userManager;
         }
 
  
@@ -41,12 +45,16 @@ namespace MadPay724.Services.Site.Panel.User.Service
             byte[] passwordHash, passwordSalt;
             _utilities.CreatePasswordHash(newPassword, out passwordHash, out passwordSalt);
 
-            //user.PasswordHash = passwordHash;
-            //user.PasswordSalt = passwordSalt;
 
-            _db.UserRepository.Update(user);
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var result = await _userManager.ResetPasswordAsync(user, token, newPassword);
 
-            return await _db.SaveAsync();
+
+            //user.PasswordHash = passwordHash.ToString();
+
+            //_db.UserRepository.Update(user);
+
+            return result.Succeeded;
         }
     }
 }

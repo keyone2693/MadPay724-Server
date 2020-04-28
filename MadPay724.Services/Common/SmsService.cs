@@ -11,7 +11,7 @@ namespace MadPay724.Services.Common
         private readonly string _token;
         public SmsService()
         {
-            _token = new Token().GetToken("fa8d78e8df8e169d20b378e8", "aa00");
+            _token = new Token().GetToken("a66b2008c2c86421dd852008", "09364420203@pezhman!123");
         }
         #region Auth
         public bool SendFastVerificationCode(string mobile, string code)
@@ -21,7 +21,7 @@ namespace MadPay724.Services.Common
                 var fastSend = new UltraFastSend()
                 {
                     Mobile = Convert.ToInt64(mobile),
-                    TemplateId = 21555,
+                    TemplateId = 24922,
                     ParameterArray = new List<UltraFastParameters>{
                         new UltraFastParameters
                         {
